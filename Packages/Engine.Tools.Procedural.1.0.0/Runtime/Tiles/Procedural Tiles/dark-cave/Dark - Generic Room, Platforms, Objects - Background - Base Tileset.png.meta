@@ -1,0 +1,5710 @@
+fileFormatVersion: 2
+guid: d15ddde38d8550b48802d77b1cffcd37
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -6722718660264717946
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_0
+  - first:
+      213: 1072847166355017872
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_1
+  - first:
+      213: 2324610950026183823
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_2
+  - first:
+      213: -669608531433208798
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_3
+  - first:
+      213: 1768895381733486556
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_4
+  - first:
+      213: -2203266859544427438
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_5
+  - first:
+      213: 3338912270090932210
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_6
+  - first:
+      213: -1669410519320549008
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_7
+  - first:
+      213: 3525058181863511469
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_8
+  - first:
+      213: 2571691965780704868
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_9
+  - first:
+      213: 224531829333849477
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_10
+  - first:
+      213: -4209426358091649748
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_11
+  - first:
+      213: 5225109493576496666
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_12
+  - first:
+      213: -7971842666887578892
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_13
+  - first:
+      213: -65286536402862252
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_14
+  - first:
+      213: 7245018729800463242
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_15
+  - first:
+      213: -995567892897826257
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_16
+  - first:
+      213: 7442878758709835569
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_17
+  - first:
+      213: -1642052922475478692
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_18
+  - first:
+      213: -9013674647645829932
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_19
+  - first:
+      213: 2811795095168653956
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_20
+  - first:
+      213: -707581509039406230
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_21
+  - first:
+      213: -80042740290578634
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_22
+  - first:
+      213: 2935670722858817838
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_23
+  - first:
+      213: 6044168873051456940
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_24
+  - first:
+      213: 2597990737740080693
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_25
+  - first:
+      213: 7578907699213897914
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_26
+  - first:
+      213: -7671885282150385971
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_27
+  - first:
+      213: 2024214870750816314
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_28
+  - first:
+      213: -928132596942162656
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_29
+  - first:
+      213: -3465713786268760004
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_30
+  - first:
+      213: 4034836772318291513
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_31
+  - first:
+      213: -1420358457067124459
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_32
+  - first:
+      213: -963188564360784744
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_33
+  - first:
+      213: -516253210539667125
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_34
+  - first:
+      213: -3801716174152799419
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_35
+  - first:
+      213: 2310609727189227287
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_36
+  - first:
+      213: -1487553509791150943
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_37
+  - first:
+      213: 2633499432034703540
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_38
+  - first:
+      213: -4738381042863401150
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_39
+  - first:
+      213: 2851439823982151502
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_40
+  - first:
+      213: -6166388845635813838
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_41
+  - first:
+      213: 3940242461502721709
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_42
+  - first:
+      213: 5174075861425637391
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_43
+  - first:
+      213: -1869452110826240404
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_44
+  - first:
+      213: -2457527315102759050
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_45
+  - first:
+      213: -8964938353196105005
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_46
+  - first:
+      213: 6938220783051922452
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_47
+  - first:
+      213: -4853301664953310842
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_48
+  - first:
+      213: -2217528029321925728
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_49
+  - first:
+      213: 8829696476763517674
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_50
+  - first:
+      213: 7861273862624971218
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_51
+  - first:
+      213: -701276354939425250
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_52
+  - first:
+      213: -3989878327570612720
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_53
+  - first:
+      213: 9057053559523084062
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_54
+  - first:
+      213: 5473802736032710967
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_55
+  - first:
+      213: -4631565840614997115
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_56
+  - first:
+      213: -1553888560673457073
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_57
+  - first:
+      213: -550710506851258117
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_58
+  - first:
+      213: -5496533397196345191
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_59
+  - first:
+      213: 3535500382295487678
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_60
+  - first:
+      213: -4649071286221723740
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_61
+  - first:
+      213: 2244961704003420716
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_62
+  - first:
+      213: 2286100942955609909
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_63
+  - first:
+      213: -8656476150962994084
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_64
+  - first:
+      213: -7252554520911702941
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_65
+  - first:
+      213: -3267821672218053518
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_66
+  - first:
+      213: -4459058259802883992
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_67
+  - first:
+      213: -5595044106548711686
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_68
+  - first:
+      213: 2722582044202759334
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_69
+  - first:
+      213: -1890372956556820215
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_70
+  - first:
+      213: 3593361460711014040
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_71
+  - first:
+      213: -4483755534815935696
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_72
+  - first:
+      213: 814762178399168050
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_73
+  - first:
+      213: -6130907112776571274
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_74
+  - first:
+      213: 2228057608223598305
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_75
+  - first:
+      213: -5296158260352933519
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_76
+  - first:
+      213: -1847761680571016537
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_77
+  - first:
+      213: 4392467152095416489
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_78
+  - first:
+      213: -4291081638850246696
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_79
+  - first:
+      213: 6831959168464435991
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_80
+  - first:
+      213: 6725456629139373117
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_81
+  - first:
+      213: 3862608997245117992
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_82
+  - first:
+      213: 7787958429834835496
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_83
+  - first:
+      213: -7286534572057132425
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_84
+  - first:
+      213: -3102626533823220572
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_85
+  - first:
+      213: -435910751821237592
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_86
+  - first:
+      213: -6039301483072326459
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_87
+  - first:
+      213: 4218760530547956901
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_88
+  - first:
+      213: -2827847160989656566
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_89
+  - first:
+      213: 1863907239335049641
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_90
+  - first:
+      213: 3542668542534925525
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_91
+  - first:
+      213: 1178264840597264633
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_92
+  - first:
+      213: 2844111061185987908
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_93
+  - first:
+      213: -4101591786346152739
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_94
+  - first:
+      213: 7109364043958552177
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_95
+  - first:
+      213: -8707476693793231736
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_96
+  - first:
+      213: 1399681204305097723
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_97
+  - first:
+      213: 5307350821615400687
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_98
+  - first:
+      213: -3290949710552717040
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_99
+  - first:
+      213: 1444598974234244135
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_100
+  - first:
+      213: -5339171304669830447
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_101
+  - first:
+      213: 5317891592685285884
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_102
+  - first:
+      213: -2933557585251844733
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_103
+  - first:
+      213: -6496358741017185016
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_104
+  - first:
+      213: -1993518683358582311
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_105
+  - first:
+      213: -5466063022045482644
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_106
+  - first:
+      213: -2114427496170278501
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_107
+  - first:
+      213: 7635681824610399314
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_108
+  - first:
+      213: -8292566990191960833
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_109
+  - first:
+      213: -674487752543007731
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_110
+  - first:
+      213: -7307461248912491654
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_111
+  - first:
+      213: -2300029812401337437
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_112
+  - first:
+      213: -7411040243894269426
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_113
+  - first:
+      213: -8636510131322085023
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_114
+  - first:
+      213: -7288483726312398150
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_115
+  - first:
+      213: -4481848990772167990
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_116
+  - first:
+      213: -440077461260827151
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_117
+  - first:
+      213: 8170793153456099774
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_118
+  - first:
+      213: -3411815655074709512
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_119
+  - first:
+      213: 1163388631335346217
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_120
+  - first:
+      213: -7260929500392975260
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_121
+  - first:
+      213: -5763444509363408727
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_122
+  - first:
+      213: 190522175482368723
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_123
+  - first:
+      213: -7703632844436017311
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_124
+  - first:
+      213: -9128836148063872054
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_125
+  - first:
+      213: -8434176798328498533
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_126
+  - first:
+      213: 2810530253426508041
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_127
+  - first:
+      213: -2559124705485979040
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_128
+  - first:
+      213: 4470490318563924694
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_129
+  - first:
+      213: -9210996474026514756
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_130
+  - first:
+      213: -6800408558071362903
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_131
+  - first:
+      213: 2159590687770681940
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_132
+  - first:
+      213: 7811333247657174957
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_133
+  - first:
+      213: 3712425349693203257
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_134
+  - first:
+      213: 8763859986193830035
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_135
+  - first:
+      213: -1985515991690894289
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_136
+  - first:
+      213: -2049609166477329194
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_137
+  - first:
+      213: 858368659839699492
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_138
+  - first:
+      213: 9017795153737513492
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_139
+  - first:
+      213: -1030425416613944746
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_140
+  - first:
+      213: -7600384165675480869
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_141
+  - first:
+      213: 5274373797541048307
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_142
+  - first:
+      213: 2859253341191046192
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_143
+  - first:
+      213: 8156101466863412278
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_144
+  - first:
+      213: -3544542518904710806
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_145
+  - first:
+      213: 8400297326138219645
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_146
+  - first:
+      213: 509819945603208553
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_147
+  - first:
+      213: 9219473538299202290
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_148
+  - first:
+      213: -7524039522342701545
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_149
+  - first:
+      213: 4552349957596277992
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_150
+  - first:
+      213: -1398074079672352262
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_151
+  - first:
+      213: 2125990637749066465
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_152
+  - first:
+      213: 7031653571540277320
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_153
+  - first:
+      213: 4289265048551515151
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_154
+  - first:
+      213: -4434280680152356890
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_155
+  - first:
+      213: -6122455309388814448
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_156
+  - first:
+      213: -7907761965985547008
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_157
+  - first:
+      213: 8746477731039056555
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_158
+  - first:
+      213: 9076125328454992818
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_159
+  - first:
+      213: 5168293852027528824
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_160
+  - first:
+      213: -5939109045793641892
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_161
+  - first:
+      213: 5908348622509382434
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_162
+  - first:
+      213: -8161590232689145888
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_163
+  - first:
+      213: -3028242502539786563
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_164
+  - first:
+      213: 8414285875033583508
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_165
+  - first:
+      213: 2129848982211999084
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_166
+  - first:
+      213: -427338448328679672
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_167
+  - first:
+      213: -6593357264730295826
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_168
+  - first:
+      213: 4486443282027605439
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_169
+  - first:
+      213: 2259337912197973353
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_170
+  - first:
+      213: 5699712998268141159
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_171
+  - first:
+      213: 3572530251612101463
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_172
+  - first:
+      213: 4350031183237258110
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_173
+  - first:
+      213: -6494931371563744086
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_174
+  - first:
+      213: -9131181632920298395
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_175
+  - first:
+      213: -355712754548485304
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_176
+  - first:
+      213: 8962571447303843600
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_177
+  - first:
+      213: -1701006361682266223
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_178
+  - first:
+      213: 8826098364553054799
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_179
+  - first:
+      213: -750402082776069720
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_180
+  - first:
+      213: -2054531339369660275
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_181
+  - first:
+      213: 2864554520920078849
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_182
+  - first:
+      213: -2542322356150431424
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_183
+  - first:
+      213: 4084877708417409713
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_184
+  - first:
+      213: -3553881477788936352
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_185
+  - first:
+      213: 4892014868296375877
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_186
+  - first:
+      213: 3397363620134331448
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_187
+  - first:
+      213: 9035971416657757880
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_188
+  - first:
+      213: -1356824340289299758
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_189
+  - first:
+      213: 731194269855246481
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_190
+  - first:
+      213: -3591280609254175983
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_191
+  - first:
+      213: 714664192774948618
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_192
+  - first:
+      213: 6392049862659237923
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_193
+  - first:
+      213: -6121850859079064078
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_194
+  - first:
+      213: -8126176880183545636
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_195
+  - first:
+      213: 131056599913754009
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_196
+  - first:
+      213: 1924340971974140711
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_197
+  - first:
+      213: -8906576006571120512
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_198
+  - first:
+      213: -7095567331458607720
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_199
+  - first:
+      213: -7378735386720737878
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_200
+  - first:
+      213: 7861389994367578611
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_201
+  - first:
+      213: -9105173485334859352
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_202
+  - first:
+      213: 4929216781643273592
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_203
+  - first:
+      213: 971340253700749010
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_204
+  - first:
+      213: -356726992976909280
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_205
+  - first:
+      213: 694328179102265178
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_206
+  - first:
+      213: -8939351123333132206
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_207
+  - first:
+      213: -1559890156260771594
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_208
+  - first:
+      213: -3448215700121843460
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_209
+  - first:
+      213: -131495322009903476
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_210
+  - first:
+      213: 5842471417824050278
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_211
+  - first:
+      213: -8753340273712575396
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_212
+  - first:
+      213: 8139766810806839988
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_213
+  - first:
+      213: 1382137434195496923
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_214
+  - first:
+      213: -8086739033202021654
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_215
+  - first:
+      213: -4648732462113765614
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_216
+  - first:
+      213: -1948075896173583307
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_217
+  - first:
+      213: -8953907076136818219
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_218
+  - first:
+      213: -7118572954026287311
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_219
+  - first:
+      213: -3560341730711524588
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_220
+  - first:
+      213: 5236022919277783215
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_221
+  - first:
+      213: 7101776694928850530
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_222
+  - first:
+      213: 944563844945781142
+    second: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_223
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 240
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 681180a3ffa14b2a0800000000000000
+      internalID: -6722718660264717946
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_1
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 240
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 09010e840d483ee00800000000000000
+      internalID: 1072847166355017872
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_2
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 240
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f844b4db75da24020800000000000000
+      internalID: 2324610950026183823
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_3
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 240
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2244a51a69215b6f0800000000000000
+      internalID: -669608531433208798
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_4
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 240
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cdfad094af06c8810800000000000000
+      internalID: 1768895381733486556
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_5
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 240
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 254c673f67c6c61e0800000000000000
+      internalID: -2203266859544427438
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_6
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 240
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2ff86f2f403365e20800000000000000
+      internalID: 3338912270090932210
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_7
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 240
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 07929934aff05d8e0800000000000000
+      internalID: -1669410519320549008
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_8
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 240
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: da51f866db58be030800000000000000
+      internalID: 3525058181863511469
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_9
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 240
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 46eb51ca73c70b320800000000000000
+      internalID: 2571691965780704868
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_10
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 240
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 58576385282bd1300800000000000000
+      internalID: 224531829333849477
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_11
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 240
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c2de7c1a70d1595c0800000000000000
+      internalID: -4209426358091649748
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_12
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 240
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a16f52d8661538840800000000000000
+      internalID: 5225109493576496666
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_13
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 240
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4fafcd2c4535e5190800000000000000
+      internalID: -7971842666887578892
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_14
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 224
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 45f7715bd3e081ff0800000000000000
+      internalID: -65286536402862252
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_15
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 224
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a83fec4262a7b8460800000000000000
+      internalID: 7245018729800463242
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_16
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 224
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f2a7a02b6480f22f0800000000000000
+      internalID: -995567892897826257
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_17
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 224
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 13733370cca6a4760800000000000000
+      internalID: 7442878758709835569
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_18
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 224
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c51057521914639e0800000000000000
+      internalID: -1642052922475478692
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_19
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 224
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4d4402a1aaef8e280800000000000000
+      internalID: -9013674647645829932
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_20
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 224
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 48a96b4ddb0850720800000000000000
+      internalID: 2811795095168653956
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_21
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 224
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a634210dd5a2e26f0800000000000000
+      internalID: -707581509039406230
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_22
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 224
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 63791224d81a3eef0800000000000000
+      internalID: -80042740290578634
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_23
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 224
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e299385f7f89db820800000000000000
+      internalID: 2935670722858817838
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_24
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 224
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ca584b0119331e350800000000000000
+      internalID: 6044168873051456940
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_25
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 224
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 536a0ccafcaed0420800000000000000
+      internalID: 2597990737740080693
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_26
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 224
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ab01e1dc560bd2960800000000000000
+      internalID: 7578907699213897914
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_27
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 224
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dc6f0e7bbfcf78590800000000000000
+      internalID: -7671885282150385971
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_28
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 208
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a386a2043b4771c10800000000000000
+      internalID: 2024214870750816314
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_29
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 208
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0253dce025c9e13f0800000000000000
+      internalID: -928132596942162656
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_30
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 208
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c38c64c6caf47efc0800000000000000
+      internalID: -3465713786268760004
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_31
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 208
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 93627bcbaae9ef730800000000000000
+      internalID: 4034836772318291513
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_32
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 208
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 519cac8328fd94ce0800000000000000
+      internalID: -1420358457067124459
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_33
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 208
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8949e899a1112a2f0800000000000000
+      internalID: -963188564360784744
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_34
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 208
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b41d0a3b076e5d8f0800000000000000
+      internalID: -516253210539667125
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_35
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 208
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 54be3ce28479d3bc0800000000000000
+      internalID: -3801716174152799419
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_36
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 208
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7171da30e4fe01020800000000000000
+      internalID: 2310609727189227287
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_37
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 208
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1ac4388d6f52b5be0800000000000000
+      internalID: -1487553509791150943
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_38
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 208
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4b81f92d7c11c8420800000000000000
+      internalID: 2633499432034703540
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_39
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 208
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2479ea9eb83ed3eb0800000000000000
+      internalID: -4738381042863401150
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_40
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 208
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e47cbde8969529720800000000000000
+      internalID: 2851439823982151502
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_41
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 208
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 23e32fc04069c6aa0800000000000000
+      internalID: -6166388845635813838
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_42
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 192
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: daec7c674ad8ea630800000000000000
+      internalID: 3940242461502721709
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_43
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 192
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f08c23125920ec740800000000000000
+      internalID: 5174075861425637391
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_44
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 192
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c660991c53f5e06e0800000000000000
+      internalID: -1869452110826240404
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_45
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 192
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6770b7d6deb15edd0800000000000000
+      internalID: -2457527315102759050
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_46
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 192
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3d28878e014269380800000000000000
+      internalID: -8964938353196105005
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_47
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 192
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 41cda0bba03894060800000000000000
+      internalID: 6938220783051922452
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_48
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 192
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 68165a089db95acb0800000000000000
+      internalID: -4853301664953310842
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_49
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 192
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0ab6bcc9102c931e0800000000000000
+      internalID: -2217528029321925728
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_50
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 192
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ae2f104f922698a70800000000000000
+      internalID: 8829696476763517674
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_51
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 192
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2d903df5dead81d60800000000000000
+      internalID: 7861273862624971218
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_52
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 192
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e1e6476eed09446f0800000000000000
+      internalID: -701276354939425250
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_53
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 192
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 01ebf14ecca11a8c0800000000000000
+      internalID: -3989878327570612720
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_54
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 192
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e178f0fd93e11bd70800000000000000
+      internalID: 9057053559523084062
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_55
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 192
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7318ac3469ad6fb40800000000000000
+      internalID: 5473802736032710967
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_56
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 176
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5834f44386f59bfb0800000000000000
+      internalID: -4631565840614997115
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_57
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 176
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f4cf380469a7f6ae0800000000000000
+      internalID: -1553888560673457073
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_58
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 176
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bf03e0936bb7b58f0800000000000000
+      internalID: -550710506851258117
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_59
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 176
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9907a044ff368b3b0800000000000000
+      internalID: -5496533397196345191
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_60
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 176
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eb4faf5adde901130800000000000000
+      internalID: 3535500382295487678
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_61
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 176
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4a729490c4e2b7fb0800000000000000
+      internalID: -4649071286221723740
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_62
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 176
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c22ca7586c4b72f10800000000000000
+      internalID: 2244961704003420716
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_63
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 176
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 53ffd8102bcd9bf10800000000000000
+      internalID: 2286100942955609909
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_64
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 176
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c54c53ffdc40ed780800000000000000
+      internalID: -8656476150962994084
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_65
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 176
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 36497e2c610c95b90800000000000000
+      internalID: -7252554520911702941
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_66
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 176
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 274be16b08d56a2d0800000000000000
+      internalID: -3267821672218053518
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_67
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 176
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8687da7432e3e12c0800000000000000
+      internalID: -4459058259802883992
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_68
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 176
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: afe658667096a52b0800000000000000
+      internalID: -5595044106548711686
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_69
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 176
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6a4ff80c1fd88c520800000000000000
+      internalID: 2722582044202759334
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_70
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 160
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9010d67cfcb04c5e0800000000000000
+      internalID: -1890372956556820215
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_71
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 160
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 89e3247c53f2ed130800000000000000
+      internalID: 3593361460711014040
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_72
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 160
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 033ca97d81086c1c0800000000000000
+      internalID: -4483755534815935696
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_73
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 160
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 236e7eb62ed9e4b00800000000000000
+      internalID: 814762178399168050
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_74
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 160
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6766900c674aaeaa0800000000000000
+      internalID: -6130907112776571274
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_75
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 160
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1e626450796abee10800000000000000
+      internalID: 2228057608223598305
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_76
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 160
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 171a9695f144086b0800000000000000
+      internalID: -5296158260352933519
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_77
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 160
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7aa5cf79a8e6b56e0800000000000000
+      internalID: -1847761680571016537
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_78
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 160
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9a018304a9d25fc30800000000000000
+      internalID: 4392467152095416489
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_79
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 160
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8d7412e0cf30374c0800000000000000
+      internalID: -4291081638850246696
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_80
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 160
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 71bbb4c9aaeffce50800000000000000
+      internalID: 6831959168464435991
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_81
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 160
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d3cf524db2f955d50800000000000000
+      internalID: 6725456629139373117
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_82
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 160
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 826e5030b6eba9530800000000000000
+      internalID: 3862608997245117992
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_83
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 160
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 82670d7fde2641c60800000000000000
+      internalID: 7787958429834835496
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_84
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 144
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7728ee4996701ea90800000000000000
+      internalID: -7286534572057132425
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_85
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 144
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4a4f3cc1b9141f4d0800000000000000
+      internalID: -3102626533823220572
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_86
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 144
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8a2fbe31b7553f9f0800000000000000
+      internalID: -435910751821237592
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_87
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 144
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5c4fbf97c47103ca0800000000000000
+      internalID: -6039301483072326459
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_88
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 144
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5acdfbfb95c0c8a30800000000000000
+      internalID: 4218760530547956901
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_89
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 144
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a0a5d1a5df771c8d0800000000000000
+      internalID: -2827847160989656566
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_90
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 144
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9a938de32cdedd910800000000000000
+      internalID: 1863907239335049641
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_91
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 144
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5dcbeb205461a2130800000000000000
+      internalID: 3542668542534925525
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_92
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 144
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9f8d12b31a90a5010800000000000000
+      internalID: 1178264840597264633
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_93
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 144
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 44500cff0ff487720800000000000000
+      internalID: 2844111061185987908
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_94
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 144
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ddc7d2160083417c0800000000000000
+      internalID: -4101591786346152739
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_95
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 144
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 17685135ee889a260800000000000000
+      internalID: 7109364043958552177
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_96
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 144
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 88c2678c414d82780800000000000000
+      internalID: -8707476693793231736
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_97
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 144
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bf37565b3aaac6310800000000000000
+      internalID: 1399681204305097723
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_98
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 128
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fe673c4e37f77a940800000000000000
+      internalID: 5307350821615400687
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_99
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 128
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 019a4d8aca23452d0800000000000000
+      internalID: -3290949710552717040
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_100
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 128
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 724302efc1f3c0410800000000000000
+      internalID: 1444598974234244135
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_101
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 128
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1d2223e8cf377e5b0800000000000000
+      internalID: -5339171304669830447
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_102
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 128
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cf1fa086a32fcc940800000000000000
+      internalID: 5317891592685285884
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_103
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 128
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 38d39ea3be8e947d0800000000000000
+      internalID: -2933557585251844733
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_104
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 128
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 805ba2ce42c48d5a0800000000000000
+      internalID: -6496358741017185016
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_105
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 128
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9d9ae41d1599554e0800000000000000
+      internalID: -1993518683358582311
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_106
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 128
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c61b41354a4a424b0800000000000000
+      internalID: -5466063022045482644
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_107
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 128
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b91b37b156b08a2e0800000000000000
+      internalID: -2114427496170278501
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_108
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 128
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2543fc5f92467f960800000000000000
+      internalID: 7635681824610399314
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_109
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 128
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ffc5a712242eaec80800000000000000
+      internalID: -8292566990191960833
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_110
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 128
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d0c825076fcb3a6f0800000000000000
+      internalID: -674487752543007731
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_111
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 128
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a7b73a0f5bea69a90800000000000000
+      internalID: -7307461248912491654
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_112
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 112
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3ab820b5217a410e0800000000000000
+      internalID: -2300029812401337437
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_113
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 112
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e0ace8ed922b62990800000000000000
+      internalID: -7411040243894269426
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_114
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 112
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1612c733bc3f42880800000000000000
+      internalID: -8636510131322085023
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_115
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 112
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ab22fedbaaa1ada90800000000000000
+      internalID: -7288483726312398150
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_116
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 112
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: acaf418b6164dc1c0800000000000000
+      internalID: -4481848990772167990
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_117
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 112
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1f584ef61e784e9f0800000000000000
+      internalID: -440077461260827151
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_118
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 112
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eb1d1f4151d746170800000000000000
+      internalID: 8170793153456099774
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_119
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 112
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8ffb7200dbbc6a0d0800000000000000
+      internalID: -3411815655074709512
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_120
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 112
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 920a87adbcf252010800000000000000
+      internalID: 1163388631335346217
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_121
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 112
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4641ce5e61ffb3b90800000000000000
+      internalID: -7260929500392975260
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_122
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 112
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9a0f7b831c12400b0800000000000000
+      internalID: -5763444509363408727
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_123
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 112
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3d2167fb8eed4a200800000000000000
+      internalID: 190522175482368723
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_124
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 112
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 16feb5b5eb2371590800000000000000
+      internalID: -7703632844436017311
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_125
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 112
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: acb58e5d3ebdf4180800000000000000
+      internalID: -9128836148063872054
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_126
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 96
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b96d9ca53e8c3fa80800000000000000
+      internalID: -8434176798328498533
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_127
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 96
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 901c9f9ef52010720800000000000000
+      internalID: 2810530253426508041
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_128
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 96
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0620591a3a92c7cd0800000000000000
+      internalID: -2559124705485979040
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_129
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 96
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6da53d1524f5a0e30800000000000000
+      internalID: 4470490318563924694
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_130
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 96
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cb626424287fb2080800000000000000
+      internalID: -9210996474026514756
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_131
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 96
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9aa41a0527810a1a0800000000000000
+      internalID: -6800408558071362903
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_132
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 96
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 45220dcd94868fd10800000000000000
+      internalID: 2159590687770681940
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_133
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 96
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: da7edc8d33e676c60800000000000000
+      internalID: 7811333247657174957
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_134
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 96
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9336e9faf2f258330800000000000000
+      internalID: 3712425349693203257
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_135
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 96
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 390d75a793c7f9970800000000000000
+      internalID: 8763859986193830035
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_136
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 96
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f24286ba9b70274e0800000000000000
+      internalID: -1985515991690894289
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_137
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 96
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6dcfbb782535e83e0800000000000000
+      internalID: -2049609166477329194
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_138
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 96
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 42ac2109fb989eb00800000000000000
+      internalID: 858368659839699492
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_139
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 96
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 41a73cbf9e4a52d70800000000000000
+      internalID: 9017795153737513492
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_140
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 80
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 65221330b8133b1f0800000000000000
+      internalID: -1030425416613944746
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_141
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 80
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bd8c860bed2068690800000000000000
+      internalID: -7600384165675480869
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_142
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 80
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3ffef072607523940800000000000000
+      internalID: 5274373797541048307
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_143
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 80
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0348a8cc3cb1ea720800000000000000
+      internalID: 2859253341191046192
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_144
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 80
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 634af6c321b403170800000000000000
+      internalID: 8156101466863412278
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_145
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 80
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a699a6ddb514fcec0800000000000000
+      internalID: -3544542518904710806
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_146
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 80
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d7cd12459e9d39470800000000000000
+      internalID: 8400297326138219645
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_147
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 80
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 96596151a8e331700800000000000000
+      internalID: 509819945603208553
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_148
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 80
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2fa0072165622ff70800000000000000
+      internalID: 9219473538299202290
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_149
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 80
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 71673c22bed359790800000000000000
+      internalID: -7524039522342701545
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_150
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 80
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8ec6ac3ca223d2f30800000000000000
+      internalID: 4552349957596277992
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_151
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 80
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: af1c277280b099ce0800000000000000
+      internalID: -1398074079672352262
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_152
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 80
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1ead6d69839018d10800000000000000
+      internalID: 2125990637749066465
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_153
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 80
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 848d3430ba3759160800000000000000
+      internalID: 7031653571540277320
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_154
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 64
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f04696e06d7868b30800000000000000
+      internalID: 4289265048551515151
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_155
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 64
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6e7242917354672c0800000000000000
+      internalID: -4434280680152356890
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_156
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 64
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 097eca2955ba80ba0800000000000000
+      internalID: -6122455309388814448
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_157
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 64
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 00d3619936cf14290800000000000000
+      internalID: -7907761965985547008
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_158
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 64
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ba29272d72bb16970800000000000000
+      internalID: 8746477731039056555
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_159
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 64
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2b34c7b16efd4fd70800000000000000
+      internalID: 9076125328454992818
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_160
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 64
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 876afe820e779b740800000000000000
+      internalID: 5168293852027528824
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_161
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 64
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c5a29232acb049da0800000000000000
+      internalID: -5939109045793641892
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_162
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 64
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 22b17d5b4cbaef150800000000000000
+      internalID: 5908348622509382434
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_163
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 64
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0e70442ece43cbe80800000000000000
+      internalID: -8161590232689145888
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_164
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 64
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: db6406efc7589f5d0800000000000000
+      internalID: -3028242502539786563
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_165
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 64
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 49fa6fb2c6c85c470800000000000000
+      internalID: 8414285875033583508
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_166
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 64
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c6539f96d5ebe8d10800000000000000
+      internalID: 2129848982211999084
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_167
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 64
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 80f908402f9c11af0800000000000000
+      internalID: -427338448328679672
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_168
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 48
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ee172863080bf74a0800000000000000
+      internalID: -6593357264730295826
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_169
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 48
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fbd6132156c034e30800000000000000
+      internalID: 4486443282027605439
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_170
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 48
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 96502245cd7ca5f10800000000000000
+      internalID: 2259337912197973353
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_171
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 48
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 76ef27706c2791f40800000000000000
+      internalID: 5699712998268141159
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_172
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 48
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 75b1da4f55d249130800000000000000
+      internalID: 3572530251612101463
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_173
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 48
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e7b9abe405a6e5c30800000000000000
+      internalID: 4350031183237258110
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_174
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 48
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aa40765445e5dd5a0800000000000000
+      internalID: -6494931371563744086
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_175
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 48
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 56cd6361fa6874180800000000000000
+      internalID: -9131181632920298395
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_176
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 48
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 843df076221401bf0800000000000000
+      internalID: -355712754548485304
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_177
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 48
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 01faa9ede33716c70800000000000000
+      internalID: 8962571447303843600
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_178
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 48
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 197bf33f9bfc468e0800000000000000
+      internalID: -1701006361682266223
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_179
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 48
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f4a47db23b99c7a70800000000000000
+      internalID: 8826098364553054799
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_180
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 48
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8a94b6118490695f0800000000000000
+      internalID: -750402082776069720
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_181
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 48
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d80c6f8d1a6dc73e0800000000000000
+      internalID: -2054531339369660275
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_182
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 32
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 10a3e23e821f0c720800000000000000
+      internalID: 2864554520920078849
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_183
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 32
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0419e11794bd7bcd0800000000000000
+      internalID: -2542322356150431424
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_184
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 32
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1b2a12912a660b830800000000000000
+      internalID: 4084877708417409713
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_185
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 32
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 067dc8e00a31eaec0800000000000000
+      internalID: -3553881477788936352
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_186
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 32
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 54e1cbc8a9de3e340800000000000000
+      internalID: 4892014868296375877
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_187
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 32
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 83421f6663cd52f20800000000000000
+      internalID: 3397363620134331448
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_188
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 32
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8b6087af028366d70800000000000000
+      internalID: 9035971416657757880
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_189
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 32
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2dad37683779b2de0800000000000000
+      internalID: -1356824340289299758
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_190
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 32
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 198e58c7059b52a00800000000000000
+      internalID: 731194269855246481
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_191
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 32
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 11b08a43055392ec0800000000000000
+      internalID: -3591280609254175983
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_192
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 32
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a07ca000c4ffae900800000000000000
+      internalID: 714664192774948618
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_193
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 32
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 328636acb7f15b850800000000000000
+      internalID: 6392049862659237923
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_194
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 32
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2f52ca02411da0ba0800000000000000
+      internalID: -6121850859079064078
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_195
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 32
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cd0faaa8e250a3f80800000000000000
+      internalID: -8126176880183545636
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_196
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 99d6453884b91d100800000000000000
+      internalID: 131056599913754009
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_197
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 723af3d1be1a4ba10800000000000000
+      internalID: 1924340971974140711
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_198
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 088af43af4c756480800000000000000
+      internalID: -8906576006571120512
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_199
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8951b802b1b778d90800000000000000
+      internalID: -7095567331458607720
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_200
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aa5e7ee8247799990800000000000000
+      internalID: -7378735386720737878
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_201
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3f1f6176c84491d60800000000000000
+      internalID: 7861389994367578611
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_202
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8a17f44d4fce3a180800000000000000
+      internalID: -9105173485334859352
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_203
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 875ddbafb88186440800000000000000
+      internalID: 4929216781643273592
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_204
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2d6fed970d4ea7d00800000000000000
+      internalID: 971340253700749010
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_205
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 02c61dd90b6ac0bf0800000000000000
+      internalID: -356726992976909280
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_206
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a5f2fe8dccfb2a900800000000000000
+      internalID: 694328179102265178
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_207
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2505d3b148b01f380800000000000000
+      internalID: -8939351123333132206
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_208
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6f8b273ea282a5ae0800000000000000
+      internalID: -1559890156260771594
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_209
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cf80055171a7520d0800000000000000
+      internalID: -3448215700121843460
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_210
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c8e59f983b5dc2ef0800000000000000
+      internalID: -131495322009903476
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_211
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 66c76cdbcc0a41150800000000000000
+      internalID: 5842471417824050278
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_212
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c5ccd33f563e58680800000000000000
+      internalID: -8753340273712575396
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_213
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4bae7a0c9c246f070800000000000000
+      internalID: 8139766810806839988
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_214
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bdf0efb6ca65e2310800000000000000
+      internalID: 1382137434195496923
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_215
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aea25b6d1b126cf80800000000000000
+      internalID: -8086739033202021654
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_216
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 217c1eba4726c7fb0800000000000000
+      internalID: -4648732462113765614
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_217
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 534a2153b4b07f4e0800000000000000
+      internalID: -1948075896173583307
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_218
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5d9220f34f45db380800000000000000
+      internalID: -8953907076136818219
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_219
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 13f5f873d9fb53d90800000000000000
+      internalID: -7118572954026287311
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_220
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 41ba0f53f00279ec0800000000000000
+      internalID: -3560341730711524588
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_221
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fa82b5b7a171aa840800000000000000
+      internalID: 5236022919277783215
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_222
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 26eb167f6449e8260800000000000000
+      internalID: 7101776694928850530
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark - Generic Room, Platforms, Objects - Background - Base Tileset_223
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 691abadffc3cb1d00800000000000000
+      internalID: 944563844945781142
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: ea51275e137f1f54581457a1308e62ad
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_36: 2310609727189227287
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_35: -3801716174152799419
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_101: -5339171304669830447
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_46: -8964938353196105005
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_13: -7971842666887578892
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_54: 9057053559523084062
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_218: -8953907076136818219
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_135: 8763859986193830035
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_119: -3411815655074709512
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_181: -2054531339369660275
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_103: -2933557585251844733
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_0: -6722718660264717946
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_140: -1030425416613944746
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_95: 7109364043958552177
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_3: -669608531433208798
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_29: -928132596942162656
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_219: -7118572954026287311
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_115: -7288483726312398150
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_217: -1948075896173583307
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_26: 7578907699213897914
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_112: -2300029812401337437
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_63: 2286100942955609909
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_207: -8939351123333132206
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_139: 9017795153737513492
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_210: -131495322009903476
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_6: 3338912270090932210
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_64: -8656476150962994084
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_78: 4392467152095416489
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_22: -80042740290578634
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_193: 6392049862659237923
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_197: 1924340971974140711
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_179: 8826098364553054799
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_203: 4929216781643273592
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_131: -6800408558071362903
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_74: -6130907112776571274
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_128: -2559124705485979040
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_151: -1398074079672352262
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_66: -3267821672218053518
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_221: 5236022919277783215
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_194: -6121850859079064078
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_174: -6494931371563744086
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_30: -3465713786268760004
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_170: 2259337912197973353
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_216: -4648732462113765614
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_71: 3593361460711014040
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_223: 944563844945781142
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_102: 5317891592685285884
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_204: 971340253700749010
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_200: -7378735386720737878
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_161: -5939109045793641892
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_152: 2125990637749066465
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_162: 5908348622509382434
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_2: 2324610950026183823
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_5: -2203266859544427438
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_157: -7907761965985547008
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_51: 7861273862624971218
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_163: -8161590232689145888
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_72: -4483755534815935696
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_182: 2864554520920078849
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_180: -750402082776069720
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_177: 8962571447303843600
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_89: -2827847160989656566
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_187: 3397363620134331448
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_143: 2859253341191046192
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_148: 9219473538299202290
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_198: -8906576006571120512
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_8: 3525058181863511469
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_56: -4631565840614997115
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_146: 8400297326138219645
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_104: -6496358741017185016
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_111: -7307461248912491654
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_116: -4481848990772167990
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_50: 8829696476763517674
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_70: -1890372956556820215
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_126: -8434176798328498533
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_34: -516253210539667125
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_96: -8707476693793231736
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_185: -3553881477788936352
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_75: 2228057608223598305
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_100: 1444598974234244135
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_94: -4101591786346152739
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_31: 4034836772318291513
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_57: -1553888560673457073
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_42: 3940242461502721709
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_124: -7703632844436017311
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_167: -427338448328679672
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_147: 509819945603208553
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_136: -1985515991690894289
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_176: -355712754548485304
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_208: -1559890156260771594
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_105: -1993518683358582311
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_186: 4892014868296375877
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_130: -9210996474026514756
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_67: -4459058259802883992
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_171: 5699712998268141159
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_52: -701276354939425250
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_85: -3102626533823220572
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_41: -6166388845635813838
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_212: -8753340273712575396
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_129: 4470490318563924694
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_39: -4738381042863401150
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_122: -5763444509363408727
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_169: 4486443282027605439
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_158: 8746477731039056555
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_127: 2810530253426508041
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_110: -674487752543007731
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_172: 3572530251612101463
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_69: 2722582044202759334
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_87: -6039301483072326459
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_65: -7252554520911702941
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_60: 3535500382295487678
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_215: -8086739033202021654
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_189: -1356824340289299758
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_12: 5225109493576496666
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_196: 131056599913754009
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_76: -5296158260352933519
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_134: 3712425349693203257
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_205: -356726992976909280
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_77: -1847761680571016537
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_121: -7260929500392975260
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_61: -4649071286221723740
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_166: 2129848982211999084
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_138: 858368659839699492
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_114: -8636510131322085023
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_137: -2049609166477329194
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_178: -1701006361682266223
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_17: 7442878758709835569
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_133: 7811333247657174957
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_53: -3989878327570612720
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_120: 1163388631335346217
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_214: 1382137434195496923
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_25: 2597990737740080693
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_20: 2811795095168653956
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_59: -5496533397196345191
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_168: -6593357264730295826
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_201: 7861389994367578611
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_49: -2217528029321925728
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_38: 2633499432034703540
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_156: -6122455309388814448
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_68: -5595044106548711686
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_211: 5842471417824050278
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_155: -4434280680152356890
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_98: 5307350821615400687
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_86: -435910751821237592
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_141: -7600384165675480869
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_19: -9013674647645829932
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_93: 2844111061185987908
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_106: -5466063022045482644
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_32: -1420358457067124459
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_192: 714664192774948618
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_15: 7245018729800463242
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_132: 2159590687770681940
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_213: 8139766810806839988
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_173: 4350031183237258110
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_117: -440077461260827151
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_108: 7635681824610399314
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_23: 2935670722858817838
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_79: -4291081638850246696
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_9: 2571691965780704868
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_47: 6938220783051922452
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_99: -3290949710552717040
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_144: 8156101466863412278
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_18: -1642052922475478692
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_175: -9131181632920298395
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_190: 731194269855246481
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_80: 6831959168464435991
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_199: -7095567331458607720
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_91: 3542668542534925525
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_220: -3560341730711524588
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_11: -4209426358091649748
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_109: -8292566990191960833
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_33: -963188564360784744
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_4: 1768895381733486556
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_58: -550710506851258117
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_113: -7411040243894269426
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_43: 5174075861425637391
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_142: 5274373797541048307
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_48: -4853301664953310842
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_149: -7524039522342701545
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_154: 4289265048551515151
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_188: 9035971416657757880
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_24: 6044168873051456940
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_118: 8170793153456099774
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_195: -8126176880183545636
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_28: 2024214870750816314
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_123: 190522175482368723
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_84: -7286534572057132425
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_44: -1869452110826240404
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_165: 8414285875033583508
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_160: 5168293852027528824
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_222: 7101776694928850530
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_90: 1863907239335049641
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_153: 7031653571540277320
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_191: -3591280609254175983
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_159: 9076125328454992818
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_183: -2542322356150431424
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_202: -9105173485334859352
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_73: 814762178399168050
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_209: -3448215700121843460
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_40: 2851439823982151502
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_150: 4552349957596277992
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_88: 4218760530547956901
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_184: 4084877708417409713
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_82: 3862608997245117992
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_107: -2114427496170278501
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_14: -65286536402862252
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_81: 6725456629139373117
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_62: 2244961704003420716
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_1: 1072847166355017872
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_206: 694328179102265178
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_7: -1669410519320549008
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_10: 224531829333849477
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_92: 1178264840597264633
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_37: -1487553509791150943
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_83: 7787958429834835496
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_97: 1399681204305097723
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_21: -707581509039406230
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_164: -3028242502539786563
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_16: -995567892897826257
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_55: 5473802736032710967
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_45: -2457527315102759050
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_145: -3544542518904710806
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_27: -7671885282150385971
+      Dark - Generic Room, Platforms, Objects - Background - Base Tileset_125: -9128836148063872054
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

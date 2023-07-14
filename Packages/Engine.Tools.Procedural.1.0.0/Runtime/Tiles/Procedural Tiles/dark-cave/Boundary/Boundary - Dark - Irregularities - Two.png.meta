@@ -1,0 +1,1010 @@
+fileFormatVersion: 2
+guid: 31afb7cd3f4f3af4fba29ccc9dcd10e7
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 2681408268005299764
+    second: Boundary - Dark - Irregularities - Two_0
+  - first:
+      213: -4246273611418105195
+    second: Boundary - Dark - Irregularities - Two_1
+  - first:
+      213: -6260271346599676307
+    second: Boundary - Dark - Irregularities - Two_2
+  - first:
+      213: 2511525201033919048
+    second: Boundary - Dark - Irregularities - Two_3
+  - first:
+      213: -9131228883841576108
+    second: Boundary - Dark - Irregularities - Two_4
+  - first:
+      213: -5561880065703850105
+    second: Boundary - Dark - Irregularities - Two_5
+  - first:
+      213: -2456433183343598323
+    second: Boundary - Dark - Irregularities - Two_6
+  - first:
+      213: -6759721103775010509
+    second: Boundary - Dark - Irregularities - Two_7
+  - first:
+      213: 5346743905021593581
+    second: Boundary - Dark - Irregularities - Two_8
+  - first:
+      213: 392123781904692192
+    second: Boundary - Dark - Irregularities - Two_9
+  - first:
+      213: -376540276955580473
+    second: Boundary - Dark - Irregularities - Two_10
+  - first:
+      213: 6486931660797616164
+    second: Boundary - Dark - Irregularities - Two_11
+  - first:
+      213: 2214634800056470027
+    second: Boundary - Dark - Irregularities - Two_12
+  - first:
+      213: 1194487337032587555
+    second: Boundary - Dark - Irregularities - Two_13
+  - first:
+      213: 6944165769832959637
+    second: Boundary - Dark - Irregularities - Two_14
+  - first:
+      213: -970504436263847463
+    second: Boundary - Dark - Irregularities - Two_15
+  - first:
+      213: -6628101497089143382
+    second: Boundary - Dark - Irregularities - Two_16
+  - first:
+      213: -7834666675680153459
+    second: Boundary - Dark - Irregularities - Two_17
+  - first:
+      213: -3045633701997169889
+    second: Boundary - Dark - Irregularities - Two_18
+  - first:
+      213: 8793014677816251218
+    second: Boundary - Dark - Irregularities - Two_19
+  - first:
+      213: 2731341670775220152
+    second: Boundary - Dark - Irregularities - Two_20
+  - first:
+      213: -6502379487731873232
+    second: Boundary - Dark - Irregularities - Two_21
+  - first:
+      213: 4902451309840393847
+    second: Boundary - Dark - Irregularities - Two_22
+  - first:
+      213: -2794244296442533184
+    second: Boundary - Dark - Irregularities - Two_23
+  - first:
+      213: -143313409568476977
+    second: Boundary - Dark - Irregularities - Two_24
+  - first:
+      213: -191361837210035326
+    second: Boundary - Dark - Irregularities - Two_25
+  - first:
+      213: 6257022908699808516
+    second: Boundary - Dark - Irregularities - Two_26
+  - first:
+      213: -3926993550842381854
+    second: Boundary - Dark - Irregularities - Two_27
+  - first:
+      213: 6729350126412851398
+    second: Boundary - Dark - Irregularities - Two_28
+  - first:
+      213: -2671754429400650009
+    second: Boundary - Dark - Irregularities - Two_29
+  - first:
+      213: 2156420241289053474
+    second: Boundary - Dark - Irregularities - Two_30
+  - first:
+      213: 2254498135259716988
+    second: Boundary - Dark - Irregularities - Two_31
+  - first:
+      213: 6128483659869250365
+    second: Boundary - Dark - Irregularities - Two_32
+  - first:
+      213: 1917748565332643035
+    second: Boundary - Dark - Irregularities - Two_33
+  - first:
+      213: 5060382128519035839
+    second: Boundary - Dark - Irregularities - Two_34
+  - first:
+      213: -4346405806472793313
+    second: Boundary - Dark - Irregularities - Two_35
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Boundary - Dark - Irregularities - Two_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 112
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4365040fc96463520800000000000000
+      internalID: 2681408268005299764
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boundary - Dark - Irregularities - Two_1
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 112
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 59a0f4ce5a43215c0800000000000000
+      internalID: -4246273611418105195
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boundary - Dark - Irregularities - Two_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 96
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d66be5ce06c0f19a0800000000000000
+      internalID: -6260271346599676307
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boundary - Dark - Irregularities - Two_3
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 96
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 84a711c1ddabad220800000000000000
+      internalID: 2511525201033919048
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boundary - Dark - Irregularities - Two_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 64
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 45316df95bb574180800000000000000
+      internalID: -9131228883841576108
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boundary - Dark - Irregularities - Two_5
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 64
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 78f45606c8b30d2b0800000000000000
+      internalID: -5561880065703850105
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boundary - Dark - Irregularities - Two_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 48
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d05a254d80ff8edd0800000000000000
+      internalID: -2456433183343598323
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boundary - Dark - Irregularities - Two_7
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 48
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 33177cc7875a032a0800000000000000
+      internalID: -6759721103775010509
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boundary - Dark - Irregularities - Two_8
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: de70ccbd043733a40800000000000000
+      internalID: 5346743905021593581
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boundary - Dark - Irregularities - Two_9
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0e37968808a117500800000000000000
+      internalID: 392123781904692192
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boundary - Dark - Irregularities - Two_10
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7c77f64fc9246caf0800000000000000
+      internalID: -376540276955580473
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boundary - Dark - Irregularities - Two_11
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 420a31ce9f5360a50800000000000000
+      internalID: 6486931660797616164
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boundary - Dark - Irregularities - Two_12
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 112
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b0a8594fd96fbbe10800000000000000
+      internalID: 2214634800056470027
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boundary - Dark - Irregularities - Two_13
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 112
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 329978487eba39010800000000000000
+      internalID: 1194487337032587555
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boundary - Dark - Irregularities - Two_14
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 96
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 59e0254d9f1ae5060800000000000000
+      internalID: 6944165769832959637
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boundary - Dark - Irregularities - Two_15
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 96
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9d97d8f6b531882f0800000000000000
+      internalID: -970504436263847463
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boundary - Dark - Irregularities - Two_16
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 112
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aad44ca3ec04404a0800000000000000
+      internalID: -6628101497089143382
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boundary - Dark - Irregularities - Two_17
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 112
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d807e761b2ca54390800000000000000
+      internalID: -7834666675680153459
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boundary - Dark - Irregularities - Two_18
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 96
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f133084d84cbbb5d0800000000000000
+      internalID: -3045633701997169889
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boundary - Dark - Irregularities - Two_19
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 96
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 25398081340170a70800000000000000
+      internalID: 8793014677816251218
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boundary - Dark - Irregularities - Two_20
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 64
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8b767ce37cca7e520800000000000000
+      internalID: 2731341670775220152
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boundary - Dark - Irregularities - Two_21
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 64
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 03a84f69e48e2c5a0800000000000000
+      internalID: -6502379487731873232
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boundary - Dark - Irregularities - Two_22
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 48
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7766fa3fd71090440800000000000000
+      internalID: 4902451309840393847
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boundary - Dark - Irregularities - Two_23
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 48
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0caa1eeed99d839d0800000000000000
+      internalID: -2794244296442533184
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boundary - Dark - Irregularities - Two_24
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fc0fe1b9639d20ef0800000000000000
+      internalID: -143313409568476977
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boundary - Dark - Irregularities - Two_25
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 28b97854c65285df0800000000000000
+      internalID: -191361837210035326
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boundary - Dark - Irregularities - Two_26
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 40398803f2965d650800000000000000
+      internalID: 6257022908699808516
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boundary - Dark - Irregularities - Two_27
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2e93aceeb248089c0800000000000000
+      internalID: -3926993550842381854
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boundary - Dark - Irregularities - Two_28
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 64
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6c8611e4944736d50800000000000000
+      internalID: 6729350126412851398
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boundary - Dark - Irregularities - Two_29
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 64
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7ee6f7480850cead0800000000000000
+      internalID: -2671754429400650009
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boundary - Dark - Irregularities - Two_30
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 48
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2250f74c8c42ded10800000000000000
+      internalID: 2156420241289053474
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boundary - Dark - Irregularities - Two_31
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 48
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c7d9fe2fb16994f10800000000000000
+      internalID: 2254498135259716988
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boundary - Dark - Irregularities - Two_32
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d33ea462b6fbc0550800000000000000
+      internalID: 6128483659869250365
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boundary - Dark - Irregularities - Two_33
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bdcca25d8263d9a10800000000000000
+      internalID: 1917748565332643035
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boundary - Dark - Irregularities - Two_34
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fbbbc1e1cb61a3640800000000000000
+      internalID: 5060382128519035839
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boundary - Dark - Irregularities - Two_35
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f137e7f72f67ea3c0800000000000000
+      internalID: -4346405806472793313
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 858001f9bdc19cf4b84c77c2b962b03d
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      Boundary - Dark - Irregularities - Two_33: 1917748565332643035
+      Boundary - Dark - Irregularities - Two_21: -6502379487731873232
+      Boundary - Dark - Irregularities - Two_23: -2794244296442533184
+      Boundary - Dark - Irregularities - Two_14: 6944165769832959637
+      Boundary - Dark - Irregularities - Two_3: 2511525201033919048
+      Boundary - Dark - Irregularities - Two_35: -4346405806472793313
+      Boundary - Dark - Irregularities - Two_20: 2731341670775220152
+      Boundary - Dark - Irregularities - Two_24: -143313409568476977
+      Boundary - Dark - Irregularities - Two_29: -2671754429400650009
+      Boundary - Dark - Irregularities - Two_32: 6128483659869250365
+      Boundary - Dark - Irregularities - Two_4: -9131228883841576108
+      Boundary - Dark - Irregularities - Two_8: 5346743905021593581
+      Boundary - Dark - Irregularities - Two_19: 8793014677816251218
+      Boundary - Dark - Irregularities - Two_0: 2681408268005299764
+      Boundary - Dark - Irregularities - Two_28: 6729350126412851398
+      Boundary - Dark - Irregularities - Two_16: -6628101497089143382
+      Boundary - Dark - Irregularities - Two_25: -191361837210035326
+      Boundary - Dark - Irregularities - Two_11: 6486931660797616164
+      Boundary - Dark - Irregularities - Two_30: 2156420241289053474
+      Boundary - Dark - Irregularities - Two_26: 6257022908699808516
+      Boundary - Dark - Irregularities - Two_2: -6260271346599676307
+      Boundary - Dark - Irregularities - Two_15: -970504436263847463
+      Boundary - Dark - Irregularities - Two_12: 2214634800056470027
+      Boundary - Dark - Irregularities - Two_31: 2254498135259716988
+      Boundary - Dark - Irregularities - Two_13: 1194487337032587555
+      Boundary - Dark - Irregularities - Two_7: -6759721103775010509
+      Boundary - Dark - Irregularities - Two_27: -3926993550842381854
+      Boundary - Dark - Irregularities - Two_17: -7834666675680153459
+      Boundary - Dark - Irregularities - Two_34: 5060382128519035839
+      Boundary - Dark - Irregularities - Two_5: -5561880065703850105
+      Boundary - Dark - Irregularities - Two_6: -2456433183343598323
+      Boundary - Dark - Irregularities - Two_22: 4902451309840393847
+      Boundary - Dark - Irregularities - Two_10: -376540276955580473
+      Boundary - Dark - Irregularities - Two_18: -3045633701997169889
+      Boundary - Dark - Irregularities - Two_1: -4246273611418105195
+      Boundary - Dark - Irregularities - Two_9: 392123781904692192
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

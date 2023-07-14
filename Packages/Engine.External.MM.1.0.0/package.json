@@ -1,0 +1,17 @@
+{
+  "name": "com.omniengine.core.mmexternal",
+  "displayName": "Engine Core - MM External Feedbacks, Interfaces, & Tools",
+  "description": "The MoreMountains package for MMFeedbacks. Licensed to the Top Down Engine.",
+  "version": "1.0.0",
+  "unity": "2021.3",
+  "unityRelease": "1f1",
+  "author": {
+    "name": "Ryan IO",
+    "email": "ryan@ryandeveloper.io",
+    "url": "ryandeveloper.io"
+  },
+  "repository": {
+    "url": "https://github.com/ryanunitydeveloper/enginecore-mmexternal.git",
+    "type": "git"
+  }
+}
