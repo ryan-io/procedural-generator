@@ -5,10 +5,10 @@
 		}
 
 		public const string BACKSLASH = "/";
-		
+
 		public const string SERIALIZED_DATA_FOLDER_NAME = "SerializedData/";
-		
-		public const string SEED_TRACKER_FILE_NAME      = "seedTracker";
+
+		public const string SEED_TRACKER_FILE_NAME = "seedTracker";
 
 		public const string SAVE_ASTAR_PREFIX = "AstarGraph_";
 
@@ -27,6 +27,8 @@
 		public const string EDGE_COLLIDER_GO_NAME = "Procedural Edge Colliders";
 
 		public const string UNDERSCORE = "_";
+
+		public const string SPACE = " ";
 
 		public const string PATHFINDING_TAG = "Pathfinding";
 

@@ -19,21 +19,25 @@ namespace Engine.Procedural {
 
 #region REQUIRED_MONOBEHAVIORS
 
-		[field: SerializeField, Title("Required Components"), Required]
+		[field: SerializeField, Title("Components", titleAlignment: TitleAlignments.Left), Required]
 		public GameObject Pathfinder { get; private set; }
 
-		[field: SerializeField, Required, Title("Required Components")]
+		[field: SerializeField, Required] public MeshFilter MeshFilter { get; private set; }
+		
+		[field: SerializeField, Required, Title("Tilemaps", horizontalLine: false)] public Grid Grid { get; private set; }
+		
+		[field: SerializeField, Required]
 		public GameObject TilemapContainer { get; private set; }
 
-		[field: SerializeField, Required] public MeshFilter MeshFilter { get; private set; }
-
-		[field: SerializeField] public List<GraphColliderCutter> ColliderCutters { get; private set; } = new();
-
-		[field: SerializeField, InlineEditor(InlineEditorObjectFieldModes.Hidden)]
+		[field: SerializeField, InlineEditor(InlineEditorObjectFieldModes.Foldout), Title("Serializers",horizontalLine:false)]
 		public SerializerSetup SeedInfoSerializer { get; private set; }
 
-		[field: SerializeField, InlineEditor(InlineEditorObjectFieldModes.Hidden), ShowIf("@ErodePathfindingGrid")]
+		[field: SerializeField, InlineEditor(InlineEditorObjectFieldModes.Foldout)]
 		public SerializerSetup PathfindingSerializer { get; private set; }
+		
+		[field: SerializeField, Title("Optional", horizontalLine: false)] 
+		public List<GraphColliderCutter> ColliderCutters { get; private set; } = new();
+
 
 #region FINDING_OBJECTS
 
@@ -69,11 +73,11 @@ namespace Engine.Procedural {
 #region GENERATION_STATE
 
 		[field: SerializeField, EnumToggleButtons, Title("Generation State")]
-		public ApplicationState ApplicationState { get; private set; } = ApplicationState.Editor;
+		public bool IsBuild { get; private set; }
 
 		[field: SerializeField]
 		[field: EnumToggleButtons]
-		public RuntimeState RuntimeState { get; set; } = RuntimeState.Generate;
+		public bool ShouldGenerate { get; set; } = true;
 
 #endregion
 
@@ -120,13 +124,16 @@ namespace Engine.Procedural {
 		public bool ShouldCreateTileLabels { get; private set; }
 
 		[field: SerializeField] public bool ShouldGenerateAngles { get; private set; }
+		
+		[field: SerializeField] public TileMapDictionary TileMapDictionary { get; private set; }
 
-		[field: SerializeField, Required] public Grid Grid { get; private set; }
-
-		[field: SerializeField, Required] public TileMapDictionary TileMapDictionary { get; private set; }
-
-		[field: SerializeField, ReadOnly]
+		[field: SerializeField, DictionaryDrawerSettings(DisplayMode = DictionaryDisplayOptions.CollapsedFoldout)]
 		public TileDictionary TileDictionary { get; private set; } = TileDictionary.GetDefault();
+
+		[Button]
+		void PopulateTileDictionary() {
+			TileDictionary = TileDictionary.GetDefault();
+		}
 
 #endregion
 
@@ -144,20 +151,19 @@ namespace Engine.Procedural {
 
 		[field: SerializeField]
 		[field: Range(0.5f, 100.0f)]
-		[field: ShowIf("@CollisionType == ColliderType.Capsule")]
+		[field: ShowIf("@NavGraphCollisionType == ColliderType.Capsule")]
 		public float NavGraphCollisionDetectionHeight { get; private set; } = 1.0f;
 
 		[field: SerializeField, Range(.1f, 8), ShowIf("@ErodePathfindingGrid")]
-		public float NavGraphNodeSize { get; private set; } = 3;
+		public float NavGraphNodeSize { get; private set; } = 0.5f;
 
 		[field: SerializeField] public LayerMask NavGraphHeightTestLayerMask { get; private set; } = 0;
 
 #endregion
 
-#region PATHFINDING_EROSION
+#region PATHFINDING_EROSION	
 
-		[Title("Erosion Settings")]
-		[field: SerializeField]
+		[field: SerializeField, Title("Erosion Settings")]
 		public bool ErodePathfindingGrid { get; private set; } = true;
 
 		[field: SerializeField, Range(.1f, 8), ShowIf("@ErodePathfindingGrid")]
@@ -188,7 +194,7 @@ namespace Engine.Procedural {
 #region MAP_COLLIDERS
 
 		[Title("Map Collider Settings")]
-		[field: SerializeField]
+		[field: SerializeField, EnumToggleButtons]
 		public ColliderSolverType SolverType { get; private set; } = ColliderSolverType.Edge;
 
 #region BOX_COLLIDER_SETTINGS
@@ -229,10 +235,7 @@ namespace Engine.Procedural {
 
 #region EVENTS
 
-		[field: SerializeField, BoxGroup("0", false), Title("Events")]
-		public OnDataGenerated OnData { get; private set; }
-
-		[field: SerializeField, BoxGroup("0", false), DictionaryDrawerSettings(IsReadOnly = true)]
+		[field: SerializeField, BoxGroup("0", false), DictionaryDrawerSettings(IsReadOnly = true), Title("Events")]
 		public EventDictionary SerializedEvents { get; private set; } = new() {
 			{ ProcessStep.Cleaning, default },
 			{ ProcessStep.Initializing, default },

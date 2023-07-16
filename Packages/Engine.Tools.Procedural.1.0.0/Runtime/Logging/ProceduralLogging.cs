@@ -15,7 +15,7 @@ namespace Engine.Procedural {
 		// public const string LevelGeneratorTag = "LevelGenerator";
 
 		public const string SPACE           = " ";
-		const        string TIMESTAMP_LABEL = ":::: TIMESTAMP - ";
+		const        string TIMESTAMP_LABEL = ":::: ELAPSED - ";
 		const        string UNIT            = "sec.";
 
 		public static void LogWithTimeStamp(LogLevel level, float totalTime, string msg, string ctx) {

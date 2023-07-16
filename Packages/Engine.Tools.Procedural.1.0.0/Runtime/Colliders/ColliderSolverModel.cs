@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Engine.Procedural.ColliderSolver {
+namespace Engine.Procedural {
 	public readonly struct CollisionSolverDto {
 		public List<List<int>> Outlines           { get; }
 		public List<Vector3>   WalkableVertices   { get; }

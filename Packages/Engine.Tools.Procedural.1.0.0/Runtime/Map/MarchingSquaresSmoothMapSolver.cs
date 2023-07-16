@@ -21,7 +21,7 @@ namespace Engine.Procedural {
 		/// <param name="mapSpan">The primary map span</param>
 		public override unsafe void Smooth(Span2D<int> mapSpan) {
 			int* copyToAllocationPointer = stackalloc int[MapWidth * MapHeight];
-			var  mapSpanCopy             = new Span2D<int>(copyToAllocationPointer, MapHeight, MapWidth, 0);
+			var mapSpanCopy = new Span2D<int>(copyToAllocationPointer, MapHeight, MapWidth, 0);
 			mapSpan.CopyTo(mapSpanCopy);
 
 			//IDictionary<ValueTuple<int, int>, int> hash = new Dictionary<(int, int), int>(new ValueTupleIntComparer());

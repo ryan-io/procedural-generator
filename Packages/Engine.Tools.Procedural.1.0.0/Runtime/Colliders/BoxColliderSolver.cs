@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityBCL;
 using UnityEngine;
 
-namespace Engine.Procedural.ColliderSolver {
+namespace Engine.Procedural {
 	public class BoxCollisionSolver : CollisionSolver {
 		GameObject                     RootGameObject { get; }
 		Dictionary<string, GameObject> ColliderOwners { get; }

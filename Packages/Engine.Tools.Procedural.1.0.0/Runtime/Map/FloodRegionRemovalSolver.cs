@@ -104,21 +104,3 @@ namespace Engine.Procedural {
 		readonly MapConnectionSolver _mapConnectionSolver;
 	}
 }
-
-// TO REFACTOR:
-/*
- 
- 
-		const    string              RoomDataSuffix = "_RoomData";
-	
-		public RoomData SaveSolution(string hash, string seed) {
-#if UNITY_STANDALONE || UNITY_EDITOR
-			var log = new UnityLogging();
-			log.Msg("Invoking save from the map process... ", size: 15, italic: true, bold: true,
-#endif
-				ctx: $"{Strings.ProcGen} Saving Rooms - SO Saver");
-			var instance = ScriptableObject.CreateInstance<RoomData>();
-			var date     = DateTime.UtcNow.ToString("HH-mm-ss_dd-M-yyyy");
-			instance.Inject(_rooms, "seed-" + seed + "_date-" + date + "_hash-" + hash + "-" + RoomDataSuffix);
-			return instance;
-		}*/

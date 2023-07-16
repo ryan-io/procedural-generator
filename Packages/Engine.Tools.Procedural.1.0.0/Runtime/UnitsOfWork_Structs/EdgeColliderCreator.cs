@@ -1,11 +1,20 @@
-using UnityBCL;
 using UnityEngine;
 
 namespace Engine.Procedural {
 	public readonly struct EdgeColliderCreator {
 		public GameObject Create(ProceduralGenerator generator) {
-			generator.gameObject.RemoveChildGameObjects();
-			
+			var trs = generator.gameObject.GetComponentsInChildren<Transform>();
+
+			foreach (var tr in trs) {
+				if (tr && tr.gameObject != generator.gameObject) {
+#if UNITY_EDITOR
+					Object.DestroyImmediate(tr.gameObject);
+#else
+					Object.Destroy(tr.gameObject);
+#endif
+				}
+			}
+
 			var o = new GameObject(Constants.EDGE_COLLIDER_GO_NAME) {
 				transform = {
 					parent = generator.transform

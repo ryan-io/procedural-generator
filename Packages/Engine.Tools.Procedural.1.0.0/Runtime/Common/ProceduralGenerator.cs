@@ -1,109 +1,15 @@
 using System;
-using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 using BCL;
 using CommunityToolkit.HighPerformance;
 using Cysharp.Threading.Tasks;
-using Engine.Procedural.ColliderSolver;
-using Engine.Tools.Serializer;
-using Pathfinding;
 using Sirenix.OdinInspector;
 using StateMachine;
 using UnityBCL;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
 namespace Engine.Procedural {
-	public class NavGraphRulesSolver {
-		Tilemap GroundTilemap   { get; }
-		Tilemap BoundaryTilemap { get; }
-
-		public void ResetGridGraphRules(GridGraph graph) {
-			new GridGraphRuleRemover().Remove(graph);
-		}
-
-		public void SetGridGraphRules(GridGraph graph) {
-			var walkabilityRule = new WalkabilityRule(BoundaryTilemap, GroundTilemap, Constants.CELL_SIZE);
-			graph.rules.AddRule(walkabilityRule);
-		}
-
-		public NavGraphRulesSolver(ProceduralConfig config) {
-			GroundTilemap   = config.TileMapDictionary[TileMapType.Ground];
-			BoundaryTilemap = config.TileMapDictionary[TileMapType.Boundary];
-		}
-	}
-
-	public abstract class NavGraphBuilder<T> where T : NavGraph {
-		public abstract T Build();
-	}
-
-	public abstract class MeshAndColliderSolver {
-		public abstract MeshGenerationData SolveAndCreate(int[,] mapBorder);
-	}
-
-	public class SimpleMeshAndColliderSolver : MeshAndColliderSolver {
-		ProceduralConfig   Config             { get; }
-		StopWatchWrapper   StopWatch          { get; }
-		GameObject         RootGameObject     { get; }
-		GameObject         ColliderGameObject { get; }
-		MeshFilter         MeshFilter         { get; }
-		ISeedInfo          ProcGenInfo        { get; }
-		ColliderSolverType CollisionType      { get; }
-		LayerMask          BoundaryMask       { get; }
-		LayerMask          ObstaclesMask      { get; }
-
-
-		public override MeshGenerationData SolveAndCreate(int[,] mapBorder) {
-			var (triangles, vertices) = _meshTriangulationSolver.Triangulate(mapBorder);
-
-			CreateColliders(vertices, ObstaclesMask, BoundaryMask);
-			var roomMeshes = new RoomMeshDictionary();
-
-			//TODO: any use for this?
-			//var characteristics = new MapCharacteristics(_meshTriangulationSolver.Outlines, vertices);
-
-			return new MeshGenerationData(_meshTriangulationSolver.SolvedMesh, roomMeshes, vertices, triangles);
-		}
-
-		void CreateColliders(List<Vector3> vertices, LayerMask obstacleLayer, LayerMask boundary) {
-			CollisionSolver solver;
-
-			var dto = new CollisionSolverDto(
-				_meshTriangulationSolver.Outlines,
-				ColliderGameObject,
-				vertices,
-				obstacleLayer,
-				boundary);
-
-			if (CollisionType == ColliderSolverType.Box)
-				solver = new BoxCollisionSolver(Config, RootGameObject);
-
-			else if (CollisionType == ColliderSolverType.Edge)
-				solver = new EdgeCollisionSolver(Config, StopWatch);
-
-			else
-				solver = new PrimitiveCollisionSolver(Config);
-
-			solver.CreateCollider(dto);
-		}
-
-		public SimpleMeshAndColliderSolver(
-			ProceduralConfig config, GameObject colliderObj, ProceduralGenerator procGen, StopWatchWrapper stopWatch) {
-			_meshTriangulationSolver = new MarchingSquaresMeshTriangulationSolver(config);
-			Config                   = config;
-			MeshFilter               = config.MeshFilter;
-			ObstaclesMask            = config.ObstacleLayerMask;
-			BoundaryMask             = config.BoundaryLayerMask;
-			CollisionType            = config.GeneratedColliderType;
-			ColliderGameObject       = colliderObj;
-			RootGameObject           = procGen.gameObject;
-			ProcGenInfo              = procGen;
-			StopWatch                = stopWatch;
-		}
-
-		readonly MeshTriangulationSolver _meshTriangulationSolver;
-	}
-
 	/// <summary>
 	///     Verifies the scene contains the required components in order to run procedural generation logic
 	///     This class will also kickoff the generation process
@@ -114,9 +20,6 @@ namespace Engine.Procedural {
 	                                   ISeedInfo {
 		[field: SerializeField] [field: Required]
 		ProceduralConfig _config = null!;
-
-		[field: SerializeField] [field: Required]
-		SerializerSetup _generatorSerializer = null!;
 
 		public ObservableCollection<string> Observables { get; private set; }
 		public TileHashset                  TileHashset { get; private set; }
@@ -166,7 +69,8 @@ namespace Engine.Procedural {
 		///     Starts the generation process. By default, will also invoke Initialize().
 		/// </summary>
 		/// <param name="alsoInitialize">If true, will invoke Initialize().</param>
-		public unsafe void StartGeneration(bool alsoInitialize = true) {
+		[Button]
+		unsafe void StartGeneration(bool alsoInitialize = true) {
 			try {
 #region CLEAN
 
@@ -181,15 +85,20 @@ namespace Engine.Procedural {
 				StateMachine.ChangeState(ProcessStep.Initializing);
 				Observables[StateObservableId.ON_INIT].Signal();
 
-				if (_config.RuntimeState == RuntimeState.DoNotGenerate)
+				if (!_config.ShouldGenerate)
 					// do not proceed any further; redirect control elsewhere
 					return;
 
-				if (alsoInitialize)
+				if (alsoInitialize) {
 					InitializeGenerator();
+				}
 
-				var primaryPointer = stackalloc int[_config.Width * _config.Height];
-				var primarySpan    = new Span2D<int>(primaryPointer, _config.Height, _config.Width, 0);
+				// rowsOrHeight = GetLength(0)
+				// colsOrWidth = GetLength(1)
+				// this is clearly opposite of what I thought
+				// https://stackoverflow.com/questions/4260207/how-do-you-get-the-width-and-height-of-a-multi-dimensional-array
+				var rowsOrHeight = _config.Width;
+				var colsOrWidth  = _config.Height;
 
 #endregion
 
@@ -198,11 +107,14 @@ namespace Engine.Procedural {
 				StateMachine.ChangeState(ProcessStep.Running);
 				Observables[StateObservableId.ON_RUN].Signal();
 
-				FillMapSolver.Fill(primarySpan);
-				SmoothMapSolver.Smooth(primarySpan);
-				RegionRemoverSolver.Remove(primarySpan);
-				var mapBorder = BorderBoundsSolver.DetermineBorderMap(primarySpan);
-				TileTypeSolver.SetTiles(primarySpan);
+				var primaryPointer = stackalloc int[rowsOrHeight * colsOrWidth];
+				var mapSpan    = new Span2D<int>(primaryPointer, rowsOrHeight, colsOrWidth, 0);
+				
+				FillMapSolver.Fill(mapSpan);
+				SmoothMapSolver.Smooth(mapSpan);
+				RegionRemoverSolver.Remove(mapSpan);
+				var mapBorder = BorderBoundsSolver.DetermineBorderMap(mapSpan);
+				TileTypeSolver.SetTiles(mapSpan);
 				new TileMapCompressor(_config.TilemapContainer).Compress();
 
 				Tools.SetGridOrigin();
@@ -216,6 +128,8 @@ namespace Engine.Procedural {
 				NavGraphRulesSolver.ResetGridGraphRules(gridGraph);
 				NavGraphRulesSolver.SetGridGraphRules(gridGraph);
 				ErosionSolver.Erode(gridGraph);
+
+				// walkability solver logic goes here
 
 				var scannerArgs = new GraphScanner.Args(
 					gridGraph,
@@ -236,11 +150,10 @@ namespace Engine.Procedural {
 				 */
 
 				new SerializeSeedInfo().Serialize(GetSeedInfo(), _config.SeedInfoSerializer, _config.Name, StopWatch);
-				
+
 #endregion
 
 				// map of data goes here
-				var map = primarySpan.ToArray();
 			}
 			catch (StackOverflowException e) {
 				GenLogging.LogWithTimeStamp(
@@ -253,11 +166,13 @@ namespace Engine.Procedural {
 			}
 
 			catch (Exception e) {
+				var stackTrace = new StackTrace(e).GetFrame(0).GetMethod().Name;
+
 				GenLogging.LogWithTimeStamp(
 					LogLevel.Error,
 					StopWatch.TimeElapsed,
 					e.Message,
-					Message.CTX_ERROR);
+					Message.CTX_ERROR + Constants.SPACE + e.TargetSite.Name + Constants.UNDERSCORE + stackTrace);
 
 				HandleErrorState();
 			}
@@ -279,6 +194,7 @@ namespace Engine.Procedural {
 				StateMachine.ChangeState(ProcessStep.Disposing);
 				Observables[StateObservableId.ON_DISPOSE].Signal();
 				StateMachine.DeleteSubscribers();
+
 #endregion
 			}
 		}
@@ -288,6 +204,7 @@ namespace Engine.Procedural {
 			Observables[StateObservableId.ON_ERROR].Signal();
 		}
 
+		[Button]
 		void CleanGenerator() {
 			new ConfigCleaner().Clean(_config);
 			new TilemapCleaner().Clean(_config);
@@ -302,6 +219,7 @@ namespace Engine.Procedural {
 			await NodeSerializationSolver.FireTask(CancellationToken);
 		}
 
+		[Button]
 		void InitializeGenerator() {
 			new SeedValidator(_config).Validate();
 			new GetActiveAstarData().Retrieve();
@@ -314,9 +232,9 @@ namespace Engine.Procedural {
 			SmoothMapSolver         = new MarchingSquaresSmoothMapSolver(_config, StopWatch);
 			BorderBoundsSolver      = new IterativeBorderAndBoundsSolver(_config, StopWatch);
 			TileTypeSolver          = new SetAllTilesSyncTileTypeSolver(_config, TileHashset, StopWatch);
-			NodeSerializationSolver = new NodeSerializationSolver(_config, _generatorSerializer, this, StopWatch);
+			NodeSerializationSolver = new NodeSerializationSolver(_config, this, StopWatch);
 			RegionRemoverSolver     = new FloodRegionRemovalSolver(_config);
-			ErosionSolver           = new ErosionSolver(_config);
+			ErosionSolver           = new ErosionSolver(_config, TileHashset);
 			GeneratedCollidersObj   = new EdgeColliderCreator().Create(this);
 			MeshAndColliderSolver   = new SimpleMeshAndColliderSolver(_config, GeneratedCollidersObj, this, StopWatch);
 			GridGraphBuilder        = new GridGraphBuilder(_config);

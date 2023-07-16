@@ -10,8 +10,7 @@ namespace Engine.Procedural {
 		int              BorderSize    { get; }
 
 		public override unsafe int[,] DetermineBorderMap(Span2D<int> mapSpan) {
-			var borderWidth = BorderSize * 2;
-
+			var  borderWidth   = BorderSize * 2;
 			int* borderPointer = stackalloc int[(MapWidth + borderWidth) * (MapHeight + borderWidth)];
 			var borderSpan = new Span2D<int>(
 				borderPointer, MapHeight + borderWidth, MapWidth + borderWidth, 0);

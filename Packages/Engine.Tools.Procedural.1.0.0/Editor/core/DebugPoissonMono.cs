@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Engine.Procedural {
+namespace Engine.Procedural.Editor {
 	public class DebugPoissonMono : MonoBehaviour {
 		[SerializeField] DebugPoissonSpawner spawner;
 

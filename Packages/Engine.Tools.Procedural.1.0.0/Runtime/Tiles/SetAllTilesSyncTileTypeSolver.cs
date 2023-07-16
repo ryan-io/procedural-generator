@@ -75,10 +75,13 @@ namespace Engine.Procedural {
 			TileDictionary    = config.TileDictionary;
 			TileHashset       = tileHashset;
 
+			_generatorTools = new GeneratorTools(config, stopWatch);
 			_tileMapper = new TileMapper(config, stopWatch);
+			
 			_tileWeightDictionary = new TileWeightDictionary {
 				{ OUTLINES, new WeightedRandom<int> { { 0, 75 }, { 1, 25 } } }
 			};
+
 		}
 
 		readonly TileWeightDictionary _tileWeightDictionary;

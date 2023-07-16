@@ -17,7 +17,6 @@ namespace Engine.Procedural {
 				{ TileId.SOUTH_POCKET, default },
 				{ TileId.EAST_POCKET, default },
 				{ TileId.WEST_POCKET, default },
-				{ TileId.WEST_POCKET, default },
 				{ TileId.SOUTH_OUTLINE, default },
 			};
 

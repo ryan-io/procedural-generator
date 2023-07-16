@@ -79,8 +79,7 @@ namespace Engine.Procedural {
 			return (groundTilemapStatus, boundaryTilemapStatus);
 		}
 
-		public NodeSerializationSolver(ProceduralConfig config, SerializerSetup serializerSetup,
-			ISeedInfo seedInfo, StopWatchWrapper stopWatch) {
+		public NodeSerializationSolver(ProceduralConfig config, ISeedInfo seedInfo, StopWatchWrapper stopWatch) {
 			GraphScanner = new GraphScanner(stopWatch);
 			WalkabilityRule = new WalkabilityRule(
 				config.TileMapDictionary[TileMapType.Boundary],
@@ -95,7 +94,7 @@ namespace Engine.Procedural {
 			HeightTestLayerMask        = config.NavGraphHeightTestLayerMask;
 			CollisionDetectionDiameter = config.NavGraphCollisionDetectionDiameter;
 			CollisionDetectionHeight   = config.NavGraphCollisionDetectionHeight;
-			SerializedDataSaveLocation = serializerSetup.SaveLocation;
+			SerializedDataSaveLocation = Constants.SERIALIZED_DATA_FOLDER_NAME;
 			StopWatch                  = stopWatch;
 		}
 	}

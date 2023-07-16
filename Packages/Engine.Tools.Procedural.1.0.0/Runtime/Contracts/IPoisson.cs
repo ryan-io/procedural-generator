@@ -2,7 +2,7 @@
 using BCL;
 using UnityEngine;
 
-namespace Engine.Procedural.Poisson_Spawning {
+namespace Engine.Procedural {
 	public interface IPoisson {
 		IEnumerable<GameObject> SpawnObjects(
 			List<Vector2> points, WeightedRandom<GameObject> objects, Transform spawnLocation);

@@ -2,7 +2,7 @@ using System;
 using UnityBCL;
 using UnityEngine;
 
-namespace Engine.Procedural.ColliderSolver {
+namespace Engine.Procedural {
 	public abstract class CollisionSolver {
 		public abstract void CreateCollider(CollisionSolverDto dto);
 

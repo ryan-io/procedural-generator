@@ -3,7 +3,7 @@ using BCL;
 using UnityBCL;
 using UnityEngine;
 
-namespace Engine.Procedural.ColliderSolver {
+namespace Engine.Procedural {
 	public class EdgeCollisionSolver : CollisionSolver {
 		public EdgeCollider2D[] Colliders          { get; }
 		StopWatchWrapper        StopWatch          { get; }

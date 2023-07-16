@@ -13,15 +13,19 @@ namespace Engine.Procedural {
 		/// This method takes a Span and randomly changes value to '1' based on a WeightedRandom
 		/// There is no need to stackalloc a copy of the span in this context
 		/// </summary>
-		/// <param name="primarySpan">Primary map span</param>
-		public override void Fill(Span2D<int> primarySpan) {
-			var pseudoRandom = CreateRandom();
+		/// <param name="primaryMap">Primary map span</param>
+		public override unsafe void Fill(Span2D<int> primaryMap) {
+			// rowsOrHeight = GetLength(0)
+			// colsOrWidth = GetLength(1)
+			// this is clearly opposite of what I thought
+			// https://stackoverflow.com/questions/4260207/how-do-you-get-the-width-and-height-of-a-multi-dimensional-array
+			var pseudoRandom   = CreateRandom();
 
 			var startTime = StopWatch.TimeElapsed;
 
-			for (var x = 0; x < MapWidth; x++) {
-				for (var y = 0; y < MapHeight; y++) {
-					primarySpan[x, y] = DetermineWallFill(x, y, pseudoRandom);
+			for (var x = 0; x < primaryMap.Height; x++) {
+				for (var y = 0; y < primaryMap.Width; y++) {
+					primaryMap[x, y] = DetermineWallFill(x, y, pseudoRandom);
 				}
 			}
 

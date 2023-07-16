@@ -1,5 +1,3 @@
-using Engine.Procedural.Nodes;
-
 namespace Engine.Procedural {
 	public class Square {
 		public int  BitwiseNodesSum;

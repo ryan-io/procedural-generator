@@ -2,7 +2,7 @@ using ProceduralAuxiliary;
 using UnityBCL;
 using UnityEngine;
 
-namespace Engine.Procedural.ColliderSolver {
+namespace Engine.Procedural {
 	public class PrimitiveCollisionSolver : CollisionSolver {
 		float SkinWidth { get; }
 		float Radius    { get; }

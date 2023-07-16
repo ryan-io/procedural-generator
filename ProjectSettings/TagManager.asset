@@ -3,7 +3,26 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - LevelBounds
+  - Fx
+  - Enemy
+  - World
+  - NoMask
+  - LevelGenerator
+  - Model
+  - Missile
+  - Weapon
+  - Projectile
+  - Awareness
+  - PatrolNode
+  - LabelDebug
+  - Obstacle
+  - Sensors
+  - UICamera
+  - EnemyProjectile
+  - PlayerProjectile
+  - Pathfinding
   layers:
   - Default
   - TransparentFX
@@ -13,30 +32,30 @@ TagManager:
   - UI
   - 
   - 
+  - PlayerCamera
+  - CutsceneCamera
+  - UICamera
+  - ExternalCamera
+  - UIParticles
+  - Ground
+  - Obstacles
+  - ObstaclesDoors
+  - MovingPlatform
+  - Hole
+  - NoPathfinding
+  - Awareness
+  - Projectile
+  - DamageInflictor
+  - Sensors
+  - Hostile
+  - Debug
+  - Boundary
   - 
   - 
   - 
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Player
   m_SortingLayers:
   - name: Default
     uniqueID: 0
