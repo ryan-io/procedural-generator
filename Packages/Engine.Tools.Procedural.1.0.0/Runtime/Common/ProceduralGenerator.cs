@@ -99,6 +99,9 @@ namespace Engine.Procedural {
 				// https://stackoverflow.com/questions/4260207/how-do-you-get-the-width-and-height-of-a-multi-dimensional-array
 				var rowsOrHeight = _config.Width;
 				var colsOrWidth  = _config.Height;
+				
+				var primaryPointer = stackalloc int[rowsOrHeight * colsOrWidth];
+				var mapSpan        = new Span2D<int>(primaryPointer, rowsOrHeight, colsOrWidth, 0);
 
 #endregion
 
@@ -107,9 +110,6 @@ namespace Engine.Procedural {
 				StateMachine.ChangeState(ProcessStep.Running);
 				Observables[StateObservableId.ON_RUN].Signal();
 
-				var primaryPointer = stackalloc int[rowsOrHeight * colsOrWidth];
-				var mapSpan    = new Span2D<int>(primaryPointer, rowsOrHeight, colsOrWidth, 0);
-				
 				FillMapSolver.Fill(mapSpan);
 				SmoothMapSolver.Smooth(mapSpan);
 				RegionRemoverSolver.Remove(mapSpan);
@@ -123,7 +123,7 @@ namespace Engine.Procedural {
 				//TODO: The reset of the  generation will utilize the previous array code instead of span
 				var meshData = MeshAndColliderSolver.SolveAndCreate(mapBorder);
 				//var meshData = MeshTriangulationSolver.Triangulate(mapBorder);
-				new PrepPathfindingMesh().Prep(PathfindingMeshObj, meshData);
+				new PrepPathfindingMesh(gameObject).Prep( PathfindingMeshObj, meshData);
 				var gridGraph = GridGraphBuilder.Build();
 				NavGraphRulesSolver.ResetGridGraphRules(gridGraph);
 				NavGraphRulesSolver.SetGridGraphRules(gridGraph);
@@ -180,6 +180,7 @@ namespace Engine.Procedural {
 #region COMPLETE
 
 			finally {
+				new SetAllEdgeColliderRadius(_config.EdgeColliderRadius).Set(gameObject);
 				StopWatch.Stop();
 				StateMachine.ChangeState(ProcessStep.Completing);
 				Observables[StateObservableId.ON_COMPLETE].Signal();
@@ -212,6 +213,7 @@ namespace Engine.Procedural {
 			new MeshCleaner().Clean(gameObject);
 			new GridCleaner().Clean(_config);
 			new GraphCleaner().Clean();
+			new EnsureMapFitsOnStack().Ensure(_config);
 		}
 
 		async UniTask HandleGeneratorDidNotRun() {

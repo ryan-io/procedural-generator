@@ -3,22 +3,27 @@ using CommunityToolkit.HighPerformance;
 
 namespace Engine.Procedural {
 	public class IterativeBorderAndBoundsSolver : BorderAndBoundsSolver {
-		StopWatchWrapper StopWatch     { get; }
-		int              MapWidth      { get; }
-		int              MapHeight     { get; }
-		int              MapBorderSize { get; }
-		int              BorderSize    { get; }
+		StopWatchWrapper StopWatch       { get; }
+		int              NumberOfRows    { get; set; }
+		int              NumberOfColumns { get; set; }
+		int              MapBorderSize   { get; }
+		int              BorderSize      { get; }
 
 		public override unsafe int[,] DetermineBorderMap(Span2D<int> mapSpan) {
+			NumberOfRows    = mapSpan.Height;
+			NumberOfColumns = mapSpan.Width;
+			
 			var  borderWidth   = BorderSize * 2;
-			int* borderPointer = stackalloc int[(MapWidth + borderWidth) * (MapHeight + borderWidth)];
-			var borderSpan = new Span2D<int>(
-				borderPointer, MapHeight + borderWidth, MapWidth + borderWidth, 0);
-			var lengthX = borderSpan.Width;
-			var lengthY = borderSpan.Height;
-
-			for (var x = 0; x < lengthX; x++) {
-				for (var y = 0; y < lengthY; y++)
+			int* borderPointer = stackalloc int[(NumberOfRows + borderWidth) * (NumberOfColumns + borderWidth)];
+			
+			var  borderSpan    = new Span2D<int>(
+				borderPointer, 
+				NumberOfRows + borderWidth, 
+				NumberOfColumns + borderWidth, 
+				0);
+			
+			for (var x = 0; x < NumberOfRows; x++) {
+				for (var y = 0; y < NumberOfColumns; y++)
 					borderSpan[x, y] = DetermineIfTileIsBorder(borderSpan, mapSpan, x, y);
 			}
 
@@ -32,12 +37,10 @@ namespace Engine.Procedural {
 			return borderMapSpan[x, y] = 1;
 		}
 
-		bool IsBorder(int x, int y) => x >= MapBorderSize && x < MapWidth  + MapBorderSize &&
-		                               y >= MapBorderSize && y < MapHeight + MapBorderSize;
+		bool IsBorder(int x, int y) => x >= MapBorderSize && x < NumberOfRows    + MapBorderSize &&
+		                               y >= MapBorderSize && y < NumberOfColumns + MapBorderSize;
 
 		public IterativeBorderAndBoundsSolver(ProceduralConfig config, StopWatchWrapper stopWatch) {
-			MapWidth      = config.Width;
-			MapHeight     = config.Height;
 			MapBorderSize = config.BorderSize;
 			BorderSize    = config.BorderSize;
 			StopWatch     = stopWatch;

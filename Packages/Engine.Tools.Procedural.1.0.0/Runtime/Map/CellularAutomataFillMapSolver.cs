@@ -5,8 +5,6 @@ namespace Engine.Procedural {
 	public class CellularAutomataFillMapSolver : FillMapSolver {
 		StopWatchWrapper StopWatch          { get; }
 		int              SeedHash           { get; }
-		int              MapWidth           { get; }
-		int              MapHeight          { get; }
 		int              WallFillPercentage { get; }
 
 		/// <summary>
@@ -19,13 +17,14 @@ namespace Engine.Procedural {
 			// colsOrWidth = GetLength(1)
 			// this is clearly opposite of what I thought
 			// https://stackoverflow.com/questions/4260207/how-do-you-get-the-width-and-height-of-a-multi-dimensional-array
-			var pseudoRandom   = CreateRandom();
+			var pseudoRandom = CreateRandom();
+			var rowLength    = primaryMap.Height;
+			var columnLength = primaryMap.Width;
+			var startTime    = StopWatch.TimeElapsed;
 
-			var startTime = StopWatch.TimeElapsed;
-
-			for (var x = 0; x < primaryMap.Height; x++) {
-				for (var y = 0; y < primaryMap.Width; y++) {
-					primaryMap[x, y] = DetermineWallFill(x, y, pseudoRandom);
+			for (var x = 0; x < rowLength; x++) {
+				for (var y = 0; y < columnLength; y++) {
+					primaryMap[x, y] = DetermineWallFill(rowLength, columnLength, x, y, pseudoRandom);
 				}
 			}
 
@@ -52,13 +51,11 @@ namespace Engine.Procedural {
 			return pseudoRandom;
 		}
 
-		int DetermineWallFill(int x, int y, WeightedRandom<int> pseudoRandom)
-			=> Utility.IsBoundary(MapWidth, MapHeight, x, y) ? 1 : pseudoRandom.Pop();
+		int DetermineWallFill(int rowLength, int columnLength, int x, int y, WeightedRandom<int> pseudoRandom)
+			=> Utility.IsBoundary(rowLength, columnLength, x, y) ? 1 : pseudoRandom.Pop();
 
 		public CellularAutomataFillMapSolver(ProceduralConfig model, StopWatchWrapper stopWatch) {
 			SeedHash           = model.Seed.GetHashCode();
-			MapWidth           = model.Width;
-			MapHeight          = model.Height;
 			WallFillPercentage = model.WallFillPercentage;
 			StopWatch          = stopWatch;
 		}

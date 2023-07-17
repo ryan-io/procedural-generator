@@ -4,6 +4,8 @@ using UnityEngine;
 
 namespace Engine.Procedural {
 	public readonly struct PrepPathfindingMesh {
+		GameObject Owner { get; }
+		
 		public void Prep(GameObject pathfindingMeshObj, MeshGenerationData meshData) {
 			if (pathfindingMeshObj) {
 #if UNITY_EDITOR
@@ -20,7 +22,11 @@ namespace Engine.Procedural {
 			var pathfindingMeshFilter = pathfindingMeshObj.AddComponent<MeshFilter>();
 			pathfindingMeshFilter.mesh = meshData.GeneratedMesh;
 
-			pathfindingMeshObj.transform.parent = pathfindingMeshObj.transform;
+			pathfindingMeshObj.transform.parent = Owner.transform;
+		}
+
+		public PrepPathfindingMesh(GameObject owner) {
+			Owner = owner;
 		}
 	}
 }

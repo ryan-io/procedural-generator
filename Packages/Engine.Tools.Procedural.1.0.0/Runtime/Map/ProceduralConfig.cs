@@ -62,7 +62,7 @@ namespace Engine.Procedural {
 		public bool UseRandomSeed { get; private set; } = true;
 
 		[field: SerializeField, ShowIf("UseRandomSeed")]
-		public string Seed { get; internal set; } = NumberSeeding.CreateRandomSeed();
+		public string Seed { get; internal set; }
 
 		[field: SerializeField, ReadOnly] public string LastSeed { get; set; }
 
@@ -83,11 +83,13 @@ namespace Engine.Procedural {
 
 #region MAP
 
-		[field: SerializeField, Title("Map Settings"), Range(50, 1000)]
-		public int Height { get; private set; } = 100;
+		[Tooltip(Message.MAP_WILL_BE_RESIZED)]
+		[field: SerializeField, Title("Map Settings"), Range(50, Constants.MAP_DIMENSION_LIMIT)]
+		public int Height { get; set; } = 100;
 
-		[field: SerializeField, Range(50, 1000)]
-		public int Width { get; private set; } = 100;
+		[Tooltip(Message.MAP_WILL_BE_RESIZED)]
+		[field: SerializeField, Range(50, Constants.MAP_DIMENSION_LIMIT)]
+		public int Width { get; set; } = 100;
 
 		[field: SerializeField, Range(1, 10)] public int BorderSize { get; private set; } = 1;
 

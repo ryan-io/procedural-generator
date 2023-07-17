@@ -39,5 +39,7 @@
 		public const string TXT_FILE_TYPE = ".txt";
 
 		public const int CELL_SIZE = 1;
+
+		public const int MAP_DIMENSION_LIMIT = 320;
 	}
 }

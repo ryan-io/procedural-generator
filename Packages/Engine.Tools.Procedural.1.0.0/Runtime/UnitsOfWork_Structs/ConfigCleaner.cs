@@ -1,5 +1,7 @@
 ﻿// Engine.Procedural
 
+using System.Runtime.CompilerServices;
+
 namespace Engine.Procedural {
 	public readonly struct ConfigCleaner {
 		public void Clean(ProceduralConfig config) {

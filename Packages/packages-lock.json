@@ -34,7 +34,7 @@
       "source": "embedded",
       "dependencies": {}
     },
-    "com.omniengine.tools.procedural": {
+    "com.omniengine.procedural": {
       "version": "file:Engine.Tools.Procedural.1.0.0",
       "depth": 0,
       "source": "embedded",

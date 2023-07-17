@@ -16,5 +16,7 @@
 		public const string CANNOT_CAST_GRAPH_ERROR = "Could not successfully cast to NavGraph.";
 
 		public const string CANNOT_GET_SERIALIZED_ASTAR_DATA = "Could not find serialized astar data with the output ";
+		
+		public const string MAP_WILL_BE_RESIZED =  "Max size will be modified if border-size > 1";
 	}
 }

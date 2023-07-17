@@ -10,6 +10,11 @@ namespace Engine.Procedural {
 		int                MapWidth          { get; }
 		int                MapHeight         { get; }
 
+		
+		/// <summary>
+		/// span is still allocated on the stack during this invocation
+		/// </summary>
+		/// <param name="span">Pre-stack allocated span for generating primary amap</param>
 		public override void SetTiles(Span2D<int> span) {
 			for (var x = 0; x < MapWidth; x++) {
 				for (var y = 0; y < MapHeight; y++)

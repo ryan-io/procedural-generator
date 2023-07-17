@@ -4,11 +4,11 @@ using CommunityToolkit.HighPerformance;
 namespace Engine.Procedural {
 	public class MarchingSquaresSmoothMapSolver : SmoothMapSolver {
 		StopWatchWrapper StopWatch           { get; }
-		int              MapWidth            { get; }
-		int              MapHeight           { get; }
 		int              UpperNeighborLimit  { get; }
 		int              LowerNeighborLimit  { get; }
 		int              SmoothingIterations { get; }
+		int              NumberOfRows        { get; set; }
+		int              NumberOfCols        { get; set; }
 
 		/// <summary>
 		/// ** Research on optimizing O(n^2) to O(n) should be researched (hashtable)
@@ -20,8 +20,11 @@ namespace Engine.Procedural {
 		/// </summary>
 		/// <param name="mapSpan">The primary map span</param>
 		public override unsafe void Smooth(Span2D<int> mapSpan) {
-			int* copyToAllocationPointer = stackalloc int[MapWidth * MapHeight];
-			var mapSpanCopy = new Span2D<int>(copyToAllocationPointer, MapHeight, MapWidth, 0);
+			NumberOfRows = mapSpan.Height;
+			NumberOfCols = mapSpan.Width;
+			int* copyToAllocationPointer = stackalloc int[NumberOfRows * NumberOfCols];
+			var  mapSpanCopy             = new Span2D<int>(copyToAllocationPointer, NumberOfRows, NumberOfCols, 0);
+
 			mapSpan.CopyTo(mapSpanCopy);
 
 			//IDictionary<ValueTuple<int, int>, int> hash = new Dictionary<(int, int), int>(new ValueTupleIntComparer());
@@ -51,8 +54,8 @@ namespace Engine.Procedural {
 		// }
 
 		void GetSmoothedMap(Span2D<int> mapSpanOriginal, Span2D<int> mapSpanCopy) {
-			for (var x = 0; x < MapWidth; x++) {
-				for (var y = 0; y < MapHeight; y++) {
+			for (var x = 0; x < NumberOfRows; x++) {
+				for (var y = 0; y < NumberOfCols; y++) {
 					DetermineNeighborLimits(x, y, mapSpanCopy, mapSpanOriginal);
 				}
 			}
@@ -93,11 +96,9 @@ namespace Engine.Procedural {
 		}
 
 		bool IsWithinBoundary(int neighborX, int neighborY)
-			=> neighborX >= 0 && neighborX < MapWidth && neighborY >= 0 && neighborY < MapHeight;
+			=> neighborX >= 0 && neighborX < NumberOfRows && neighborY >= 0 && neighborY < NumberOfCols;
 
 		public MarchingSquaresSmoothMapSolver(ProceduralConfig config, StopWatchWrapper stopWatch) {
-			MapWidth            = config.Width;
-			MapHeight           = config.Height;
 			UpperNeighborLimit  = config.UpperNeighborLimit;
 			LowerNeighborLimit  = config.LowerNeighborLimit;
 			SmoothingIterations = config.SmoothingIterations;
