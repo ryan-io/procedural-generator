@@ -1,4 +1,7 @@
-﻿namespace Engine.Procedural {
+﻿
+using UnityEngine;
+
+namespace Engine.Procedural {
 	public static class Constants {
 		public static class Layers {
 			public const string OBSTACLES = "Obstacles";
@@ -41,5 +44,8 @@
 		public const int CELL_SIZE = 1;
 
 		public const int MAP_DIMENSION_LIMIT = 320;
+		
+		public static readonly Color[] Color =
+			{ UnityEngine.Color.red, UnityEngine.Color.green, UnityEngine.Color.cyan, UnityEngine.Color.yellow, UnityEngine.Color.magenta, UnityEngine.Color.blue, UnityEngine.Color.white };
 	}
 }

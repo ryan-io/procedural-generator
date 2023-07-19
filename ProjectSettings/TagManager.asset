@@ -60,3 +60,33 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Ground
+    uniqueID: 2024493761
+    locked: 0
+  - name: Light
+    uniqueID: 109659790
+    locked: 0
+  - name: Background
+    uniqueID: 332801758
+    locked: 0
+  - name: Obstacles
+    uniqueID: 253430384
+    locked: 0
+  - name: Foreground - 1
+    uniqueID: 0
+    locked: 0
+  - name: Foreground - 2
+    uniqueID: 159298038
+    locked: 0
+  - name: Foreground - 3
+    uniqueID: 0
+    locked: 0
+  - name: Characters
+    uniqueID: 751597202
+    locked: 0
+  - name: Y-Sorting
+    uniqueID: 1548119012
+    locked: 0
+  - name: Above
+    uniqueID: 0
+    locked: 0

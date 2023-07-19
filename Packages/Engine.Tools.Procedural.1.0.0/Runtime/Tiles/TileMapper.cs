@@ -328,8 +328,8 @@ namespace Engine.Procedural {
 			TileMapDictionary      = config.TileMapDictionary;
 			TileDictionary         = config.TileDictionary;
 			ShouldCreateTileLabels = config.ShouldCreateTileLabels;
-			MapWidth               = config.Width;
-			MapHeight              = config.Height;
+			MapWidth               = config.Rows;
+			MapHeight              = config.Columns;
 			GridObj                = config.Grid;
 		}
 	}

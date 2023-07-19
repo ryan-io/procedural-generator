@@ -14,8 +14,8 @@ namespace Engine.Procedural {
 		public int        Seed                 { get; }
 
 		public MapSolverModel(ProceduralConfig config) {
-			MapWidth             = config.Width;
-			MapHeight            = config.Height;
+			MapWidth             = config.Rows;
+			MapHeight            = config.Columns;
 			WallFillPercentage   = config.WallFillPercentage;
 			SmoothingIterations  = config.SmoothingIterations;
 			UpperNeighborLimit   = config.UpperNeighborLimit;

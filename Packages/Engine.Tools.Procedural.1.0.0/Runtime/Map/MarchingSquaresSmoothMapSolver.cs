@@ -33,8 +33,10 @@ namespace Engine.Procedural {
 			for (var i = 0; i < SmoothingIterations; i++) {
 				//var hashTable = GetNewHashTable(mapSpanCopy, hash);
 				GetSmoothedMap(mapSpan, mapSpanCopy);
-				mapSpanCopy.CopyTo(mapSpan);
+				//mapSpanCopy.CopyTo(mapSpan);
 			}
+			
+			mapSpanCopy.CopyTo(mapSpan);
 		}
 
 		// IDictionary<ValueTuple<int, int>, int> GetNewHashTable(Span2D<int> span,

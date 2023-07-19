@@ -85,11 +85,11 @@ namespace Engine.Procedural {
 
 		[Tooltip(Message.MAP_WILL_BE_RESIZED)]
 		[field: SerializeField, Title("Map Settings"), Range(50, Constants.MAP_DIMENSION_LIMIT)]
-		public int Height { get; set; } = 100;
+		public int Columns { get; set; } = 100;
 
 		[Tooltip(Message.MAP_WILL_BE_RESIZED)]
 		[field: SerializeField, Range(50, Constants.MAP_DIMENSION_LIMIT)]
-		public int Width { get; set; } = 100;
+		public int Rows { get; set; } = 100;
 
 		[field: SerializeField, Range(1, 10)] public int BorderSize { get; private set; } = 1;
 

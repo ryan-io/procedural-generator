@@ -1,3 +1,4 @@
+using System;
 using System.Text;
 using BCL;
 using UnityBCL;
@@ -10,7 +11,11 @@ namespace Engine.Procedural {
 		Vector2                 EdgeColliderOffset { get; }
 		float                   EdgeColliderRadius { get; }
 
-		public override void CreateCollider(CollisionSolverDto dto) {
+		/// <summary>
+		///					*****   THIS IS AN UNSAFE METHOD   *****
+		/// </summary>
+		/// <param name="dto">Relevant data transfer object to create colliders</param>
+		public override unsafe void CreateCollider(CollisionSolverDto dto) {
 			dto.ColliderGameObject.ZeroPosition();
 			dto.ColliderGameObject.MakeStatic(false);
 
@@ -20,28 +25,30 @@ namespace Engine.Procedural {
 				GetVerifyRoomsMsg(dto.Outlines.Count),
 				CTX);
 
+			var  highestCount  = DetermineHighestCollectionCount(dto);
+			int* tempAllocator = stackalloc int[highestCount];
+			var  iteratorSpan  = new Span<int>(tempAllocator, highestCount);
+
 			for (var i = 0; i < dto.Outlines.Count; i++) {
-				var roomObject = AddRoom(dto.ColliderGameObject);
+				iteratorSpan.Clear();
+				var outlineSpan = dto.Outlines[i].ToArray().AsSpan();
+				outlineSpan.CopyTo(iteratorSpan);
+				var iteratorLength = outlineSpan.Length;
+				var workingSlice   = iteratorSpan[..iteratorLength];
+				
+				var roomObject = AddRoom(dto.ColliderGameObject, identifier: i.ToString());
 				roomObject.MakeStatic(true);
+				roomObject.SetLayer(Constants.Layers.OBSTACLES);
 
-				if (IsValidLayer(dto.ObstacleLayer))
-					roomObject.SetLayer(dto.ObstacleLayer);
-				else
-					GenLogging.LogWithTimeStamp(
-						LogLevel.Warning,
-						StopWatch.TimeElapsed,
-						GetCouldNotSetWarning(roomObject.name, dto.ObstacleLayer),
-						CTX);
-
-				var outline      = dto.Outlines[i];
 				var edgeCollider = roomObject.AddComponent<EdgeCollider2D>();
-				var edgePoints   = new Vector2[outline.Count];
-				var count        = outline.Count;
+				var edgePoints   = new Vector2[iteratorLength];
+
 				edgeCollider.offset = EdgeColliderOffset;
 
-				for (var j = 0; j < count; j++)
-					edgePoints[j] = new Vector2(dto.WalkableVertices[outline[j]].x,
-						dto.WalkableVertices[outline[j]].y);
+				for (var j = 0; j < iteratorLength; j++)
+					edgePoints[j] = new Vector2(
+						dto.WalkableVertices[workingSlice[j]].x,
+						dto.WalkableVertices[workingSlice[j]].y);
 
 				edgeCollider.points = edgePoints;
 
@@ -52,6 +59,17 @@ namespace Engine.Procedural {
 			}
 
 			SetColliderRadius(dto);
+		}
+		
+		int DetermineHighestCollectionCount(CollisionSolverDto dto) {
+			int currentHighestCount = 0;
+
+			foreach (var outline in dto.Outlines) {
+				if (outline.Count > currentHighestCount)
+					currentHighestCount = outline.Count;
+			}
+
+			return currentHighestCount;
 		}
 
 		string GetVerifyRoomsMsg(int count) {
@@ -81,8 +99,6 @@ namespace Engine.Procedural {
 				Colliders[i].edgeRadius = EdgeColliderRadius;
 			}
 		}
-
-		bool IsValidLayer(int layerMask) => layerMask is >= 0 and <= 31;
 
 		public EdgeCollisionSolver(ProceduralConfig config, StopWatchWrapper stopWatch) {
 			_sB                = new StringBuilder();

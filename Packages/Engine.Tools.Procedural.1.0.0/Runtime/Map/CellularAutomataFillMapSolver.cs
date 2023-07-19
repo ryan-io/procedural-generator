@@ -12,7 +12,7 @@ namespace Engine.Procedural {
 		/// There is no need to stackalloc a copy of the span in this context
 		/// </summary>
 		/// <param name="primaryMap">Primary map span</param>
-		public override unsafe void Fill(Span2D<int> primaryMap) {
+		public override void Fill(Span2D<int> primaryMap) {
 			// rowsOrHeight = GetLength(0)
 			// colsOrWidth = GetLength(1)
 			// this is clearly opposite of what I thought

@@ -152,8 +152,8 @@ namespace Engine.Procedural {
 
 		public MapConnectionSolver(ProceduralConfig config) {
 			_random       = new Random();
-			MapWidth      = config.Width;
-			MapHeight     = config.Height;
+			MapWidth      = config.Rows;
+			MapHeight     = config.Columns;
 			CorridorWidth = config.CorridorWidth;
 		}
 

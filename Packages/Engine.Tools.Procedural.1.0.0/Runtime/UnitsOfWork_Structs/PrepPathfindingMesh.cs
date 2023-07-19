@@ -6,7 +6,7 @@ namespace Engine.Procedural {
 	public readonly struct PrepPathfindingMesh {
 		GameObject Owner { get; }
 		
-		public void Prep(GameObject pathfindingMeshObj, MeshGenerationData meshData) {
+		public void Prep(GameObject pathfindingMeshObj, MeshAndColliderSolverData meshCollisionData) {
 			if (pathfindingMeshObj) {
 #if UNITY_EDITOR
 				Object.DestroyImmediate(pathfindingMeshObj);
@@ -20,7 +20,7 @@ namespace Engine.Procedural {
 			};
 
 			var pathfindingMeshFilter = pathfindingMeshObj.AddComponent<MeshFilter>();
-			pathfindingMeshFilter.mesh = meshData.GeneratedMesh;
+			pathfindingMeshFilter.mesh = meshCollisionData.Mesh;
 
 			pathfindingMeshObj.transform.parent = Owner.transform;
 		}

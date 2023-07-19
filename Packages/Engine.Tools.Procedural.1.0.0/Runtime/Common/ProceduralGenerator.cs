@@ -4,6 +4,7 @@ using System.Threading;
 using BCL;
 using CommunityToolkit.HighPerformance;
 using Cysharp.Threading.Tasks;
+using JetBrains.Annotations;
 using Sirenix.OdinInspector;
 using StateMachine;
 using UnityBCL;
@@ -21,8 +22,11 @@ namespace Engine.Procedural {
 		[field: SerializeField] [field: Required]
 		ProceduralConfig _config = null!;
 
-		public ObservableCollection<string> Observables { get; private set; }
-		public TileHashset                  TileHashset { get; private set; }
+		[SerializeField, HideInInspector] MapData _data;
+
+		public             ObservableCollection<string> Observables { get; private set; }
+		public             TileHashset                  TileHashset { get; private set; }
+		[CanBeNull] public MapData                      Data        => IsDataSet ? _data : default;
 
 		FillMapSolver           FillMapSolver           { get; set; }
 		SmoothMapSolver         SmoothMapSolver         { get; set; }
@@ -38,6 +42,7 @@ namespace Engine.Procedural {
 		NavGraphRulesSolver   NavGraphRulesSolver   { get; set; }
 		GraphScanner          GraphScanner          { get; set; }
 		AstarSerializer       AstarSerializer       { get; set; }
+		DataProcessor         DataProcessor         { get; set; }
 
 		GameObject                GeneratedCollidersObj { get; set; }
 		GameObject                PathfindingMeshObj    { get; set; }
@@ -45,6 +50,7 @@ namespace Engine.Procedural {
 		StateMachine<ProcessStep> StateMachine          { get; set; }
 		StopWatchWrapper          StopWatch             { get; set; }
 		CancellationToken         CancellationToken     { get; set; }
+		bool                      IsDataSet             { get; set; }
 
 		string GetAstarSerializationName {
 			get {
@@ -97,9 +103,9 @@ namespace Engine.Procedural {
 				// colsOrWidth = GetLength(1)
 				// this is clearly opposite of what I thought
 				// https://stackoverflow.com/questions/4260207/how-do-you-get-the-width-and-height-of-a-multi-dimensional-array
-				var rowsOrHeight = _config.Width;
-				var colsOrWidth  = _config.Height;
-				
+				var rowsOrHeight = _config.Rows;
+				var colsOrWidth  = _config.Columns;
+
 				var primaryPointer = stackalloc int[rowsOrHeight * colsOrWidth];
 				var mapSpan        = new Span2D<int>(primaryPointer, rowsOrHeight, colsOrWidth, 0);
 
@@ -111,6 +117,7 @@ namespace Engine.Procedural {
 				Observables[StateObservableId.ON_RUN].Signal();
 
 				FillMapSolver.Fill(mapSpan);
+
 				SmoothMapSolver.Smooth(mapSpan);
 				RegionRemoverSolver.Remove(mapSpan);
 				var mapBorder = BorderBoundsSolver.DetermineBorderMap(mapSpan);
@@ -121,15 +128,17 @@ namespace Engine.Procedural {
 				Tools.SetGridScale(Constants.CELL_SIZE);
 
 				//TODO: The reset of the  generation will utilize the previous array code instead of span
-				var meshData = MeshAndColliderSolver.SolveAndCreate(mapBorder);
-				//var meshData = MeshTriangulationSolver.Triangulate(mapBorder);
-				new PrepPathfindingMesh(gameObject).Prep( PathfindingMeshObj, meshData);
+				var meshAndColliderData = MeshAndColliderSolver.SolveAndCreate(mapBorder);
+
+				new PrepPathfindingMesh(gameObject).Prep(PathfindingMeshObj, meshAndColliderData);
 				var gridGraph = GridGraphBuilder.Build();
+
 				NavGraphRulesSolver.ResetGridGraphRules(gridGraph);
 				NavGraphRulesSolver.SetGridGraphRules(gridGraph);
 				ErosionSolver.Erode(gridGraph);
 
-				// walkability solver logic goes here
+				var mapData = new MapData(TileHashset, meshAndColliderData);
+				DataProcessor = new DataProcessor(_config, mapData, RegionRemoverSolver.Rooms);
 
 				var scannerArgs = new GraphScanner.Args(
 					gridGraph,
@@ -207,13 +216,21 @@ namespace Engine.Procedural {
 
 		[Button]
 		void CleanGenerator() {
-			new ConfigCleaner().Clean(_config);
-			new TilemapCleaner().Clean(_config);
-			new ColliderGameObjectCleaner().Clean(gameObject);
-			new MeshCleaner().Clean(gameObject);
-			new GridCleaner().Clean(_config);
-			new GraphCleaner().Clean();
-			new EnsureMapFitsOnStack().Ensure(_config);
+			try {
+				IsDataSet = false;
+				new ConfigCleaner().Clean(_config);
+				new TilemapCleaner().Clean(_config);
+				new ColliderGameObjectCleaner().Clean(gameObject);
+				new MeshCleaner().Clean(gameObject);
+				new GridCleaner().Clean(_config);
+				new GraphCleaner().Clean();
+				new EnsureMapFitsOnStack().Ensure(_config);
+				new DeallocateRoomMemory().Deallocate(RegionRemoverSolver);
+			}
+			catch (Exception e) {
+				GenLogging.LogWithTimeStamp(LogLevel.Error, 0f, e.Message, "CleanGenerator");
+				throw;
+			}
 		}
 
 		async UniTask HandleGeneratorDidNotRun() {
@@ -223,6 +240,7 @@ namespace Engine.Procedural {
 
 		[Button]
 		void InitializeGenerator() {
+			IsDataSet = false;
 			new SeedValidator(_config).Validate();
 			new GetActiveAstarData().Retrieve();
 
@@ -267,6 +285,13 @@ namespace Engine.Procedural {
 			};
 
 			CancellationToken = this.GetCancellationTokenOnDestroy();
+		}
+
+		void OnDrawGizmosSelected() {
+			if (DataProcessor == null || !_config.DrawDebugGizmos) return;
+
+			//RoomCalculator.DrawRooms();
+			DataProcessor.DrawMapBoundary();
 		}
 	}
 }

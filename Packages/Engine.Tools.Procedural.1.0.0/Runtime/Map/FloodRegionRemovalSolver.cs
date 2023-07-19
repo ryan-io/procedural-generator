@@ -5,15 +5,14 @@ using UnityEngine;
 
 namespace Engine.Procedural {
 	public class FloodRegionRemovalSolver : RegionRemovalSolver {
-		List<Room> Rooms                { get; set; }
-		int        WallRemovalThreshold { get; }
-		int        RoomRemovalThreshold { get; }
-		int        NumberOfRows         { get; set; }
-		int        NumberOfCols         { get; set; }
+		public override List<Room> Rooms                { get; protected set; }
+		int                        WallRemovalThreshold { get; }
+		int                        RoomRemovalThreshold { get; }
+		int                        NumberOfRows         { get; set; }
+		int                        NumberOfCols         { get; set; }
 
 		public FloodRegionRemovalSolver(ProceduralConfig config) {
 			_mapConnectionSolver = new MapConnectionSolver(config);
-			Rooms                = new List<Room>();
 			WallRemovalThreshold = config.WallRemovalThreshold;
 			RoomRemovalThreshold = config.RoomRemovalThreshold;
 		}

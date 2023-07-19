@@ -9,14 +9,14 @@ namespace Engine.Procedural {
 				return;
 			}
 
-			var height = config.Height;
-			var width  = config.Width;
+			var height = config.Columns;
+			var width  = config.Rows;
 
 			if (height + borderSize + 1 > Constants.MAP_DIMENSION_LIMIT)
-				config.Height = height - borderSize + 1;
+				config.Columns = height - borderSize + 1;
 			
 			if (height + borderSize + 1 > Constants.MAP_DIMENSION_LIMIT)
-				config.Width  = width  - borderSize + 1;
+				config.Rows  = width  - borderSize + 1;
 		}
 	}
 }

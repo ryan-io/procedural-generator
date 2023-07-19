@@ -18,16 +18,19 @@ namespace Engine.Procedural {
 		LayerMask          ObstaclesMask      { get; }
 
 
-		public override MeshGenerationData SolveAndCreate(int[,] mapBorder) {
+		public override MeshAndColliderSolverData SolveAndCreate(int[,] mapBorder) {
 			var (triangles, vertices) = _meshTriangulationSolver.Triangulate(mapBorder);
 
 			CreateColliders(vertices, ObstaclesMask, BoundaryMask);
 			var roomMeshes = new RoomMeshDictionary();
 
-			//TODO: any use for this?
-			//var characteristics = new MapCharacteristics(_meshTriangulationSolver.Outlines, vertices);
-
-			return new MeshGenerationData(_meshTriangulationSolver.SolvedMesh, roomMeshes, vertices, triangles);
+			return new MeshAndColliderSolverData(
+				_meshTriangulationSolver.SolvedMesh,
+				vertices,
+				triangles,
+				_meshTriangulationSolver.Outlines,
+				roomMeshes
+			);
 		}
 
 		void CreateColliders(List<Vector3> vertices, LayerMask obstacleLayer, LayerMask boundary) {

@@ -2,6 +2,6 @@
 
 namespace Engine.Procedural {
 	public abstract class MeshAndColliderSolver {
-		public abstract MeshGenerationData SolveAndCreate(int[,] mapBorder);
+		public abstract MeshAndColliderSolverData SolveAndCreate(int[,] mapBorder);
 	}
 }

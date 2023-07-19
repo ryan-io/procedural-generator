@@ -4,13 +4,13 @@ using UnityEngine;
 
 namespace Engine.Procedural {
 	public class SetAllTilesSyncTileTypeSolver : TileTypeSolver {
-		public TileHashset TileHashset       { get; }
-		TileMapDictionary  TileMapDictionary { get; }
-		TileDictionary     TileDictionary    { get; }
-		int                MapWidth          { get; }
-		int                MapHeight         { get; }
+		TileHashset       TileHashset       { get; }
+		TileMapDictionary TileMapDictionary { get; }
+		TileDictionary    TileDictionary    { get; }
+		int               MapWidth          { get; }
+		int               MapHeight         { get; }
 
-		
+
 		/// <summary>
 		/// span is still allocated on the stack during this invocation
 		/// </summary>
@@ -75,18 +75,17 @@ namespace Engine.Procedural {
 			TileHashset tileHashset,
 			StopWatchWrapper stopWatch) {
 			TileMapDictionary = config.TileMapDictionary;
-			MapWidth          = config.Width;
-			MapHeight         = config.Height;
+			MapWidth          = config.Rows;
+			MapHeight         = config.Columns;
 			TileDictionary    = config.TileDictionary;
 			TileHashset       = tileHashset;
 
 			_generatorTools = new GeneratorTools(config, stopWatch);
-			_tileMapper = new TileMapper(config, stopWatch);
-			
+			_tileMapper     = new TileMapper(config, stopWatch);
+
 			_tileWeightDictionary = new TileWeightDictionary {
 				{ OUTLINES, new WeightedRandom<int> { { 0, 75 }, { 1, 25 } } }
 			};
-
 		}
 
 		readonly TileWeightDictionary _tileWeightDictionary;
