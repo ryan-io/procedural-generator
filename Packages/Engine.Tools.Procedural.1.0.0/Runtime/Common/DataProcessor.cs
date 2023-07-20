@@ -18,6 +18,28 @@ namespace Engine.Procedural {
 		int                 NumOfCols       { get; }
 		int                 BorderSize      { get; }
 
+		public Vector3[] GetBorderCellPositions() {
+			var output = new List<Vector3>();
+			
+			foreach (var record in MapData.TileHashset) {
+				if (!record.IsMapBoundary)
+					continue;
+
+				var shiftedBorder = BorderSize / 2f;
+				var shiftedX      = Mathf.CeilToInt(-NumOfRows  / 2f);
+				var shiftedY      = Mathf.FloorToInt(-NumOfCols / 2f);
+
+				var pos = new Vector3(
+					record.Coordinate.x + shiftedX + shiftedBorder,
+					record.Coordinate.y + shiftedY + shiftedBorder,
+					0);
+
+				output.Add(pos);
+			}
+
+			return output.ToArray();
+		}
+
 		public void DrawRooms() {
 			if (Rooms.IsEmptyOrNull()) {
 				return;
@@ -79,31 +101,11 @@ namespace Engine.Procedural {
 		///					*****   THIS IS AN UNSAFE METHOD   *****
 		/// </summary>
 		public void DrawMapBoundary() {
-			if (Rooms.IsEmptyOrNull()) {
-				return;
-			}
+			var shiftedPositions = GetBorderCellPositions();
 
-			var colorCounter = 0;
+			foreach (var position in shiftedPositions) {
+				DebugExt.DrawCircle(position, Color.white, true, .2f);
 
-			foreach (var record in MapData.TileHashset) {
-				if (!record.IsMapBoundary)
-					continue;
-
-				var shiftedBorder = BorderSize / 2f;
-				var shiftedX      = Mathf.CeilToInt(-NumOfRows  / 2f);
-				var shiftedY      = Mathf.FloorToInt(-NumOfCols / 2f);
-
-				var pos = new Vector3(
-					record.Coordinate.x + shiftedX + shiftedBorder,
-					record.Coordinate.y + shiftedY + shiftedBorder,
-					0);
-
-				DebugExt.DrawCircle(pos, Color.white, true, .2f);
-
-				if (colorCounter > Constants.Color.Length - 1)
-					colorCounter = 0;
-				else
-					colorCounter++;
 			}
 		}
 

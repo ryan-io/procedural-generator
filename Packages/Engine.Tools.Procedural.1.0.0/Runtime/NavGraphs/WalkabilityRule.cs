@@ -79,13 +79,19 @@ namespace Engine.Procedural {
 						var hasTileGround    = GroundTilemap.HasTile(worldPosGround);
 						var hasTileBoundary  = BoundaryTilemap.HasTile(worldPosBoundary);
 
+						// RayCastHit & RayCastCommand buffers
 						var results      = new NativeArray<RaycastHit>(1, Allocator.TempJob);
 						var commands     = new NativeArray<RaycastCommand>(1, Allocator.TempJob);
+						
 						var direction    = -Vector3.forward;
 						var positionCast = new Vector3(position.x, position.y, -0.5f);
-						commands[0] = new RaycastCommand(positionCast, direction);
+						
+						commands[0] = new RaycastCommand(positionCast, direction, QueryParameters.Default);
+						
 						var handlePhys = RaycastCommand.ScheduleBatch(commands, results, 1);
+						
 						handlePhys.Complete();
+						
 						var batchedHit = results[0];
 
 						if (!hasTileGround || hasTileBoundary) {

@@ -6,7 +6,7 @@ using BCL;
 using UnityEngine;
 
 namespace Engine.Procedural {
-	public class SimpleMeshAndColliderSolver : MeshAndColliderSolver {
+	public class MarchingSquaresMeshSolver : MeshSolver {
 		ProceduralConfig   Config             { get; }
 		StopWatchWrapper   StopWatch          { get; }
 		GameObject         RootGameObject     { get; }
@@ -18,13 +18,12 @@ namespace Engine.Procedural {
 		LayerMask          ObstaclesMask      { get; }
 
 
-		public override MeshAndColliderSolverData SolveAndCreate(int[,] mapBorder) {
+		public override MeshSolverData SolveAndCreate(int[,] mapBorder) {
 			var (triangles, vertices) = _meshTriangulationSolver.Triangulate(mapBorder);
 
-			CreateColliders(vertices, ObstaclesMask, BoundaryMask);
 			var roomMeshes = new RoomMeshDictionary();
 
-			return new MeshAndColliderSolverData(
+			return new MeshSolverData(
 				_meshTriangulationSolver.SolvedMesh,
 				vertices,
 				triangles,
@@ -33,29 +32,7 @@ namespace Engine.Procedural {
 			);
 		}
 
-		void CreateColliders(List<Vector3> vertices, LayerMask obstacleLayer, LayerMask boundary) {
-			CollisionSolver solver;
-
-			var dto = new CollisionSolverDto(
-				_meshTriangulationSolver.Outlines,
-				ColliderGameObject,
-				vertices,
-				obstacleLayer,
-				boundary);
-
-			if (CollisionType == ColliderSolverType.Box)
-				solver = new BoxCollisionSolver(Config, RootGameObject);
-
-			else if (CollisionType == ColliderSolverType.Edge)
-				solver = new EdgeCollisionSolver(Config, StopWatch);
-
-			else
-				solver = new PrimitiveCollisionSolver(Config);
-
-			solver.CreateCollider(dto);
-		}
-
-		public SimpleMeshAndColliderSolver(
+		public MarchingSquaresMeshSolver(
 			ProceduralConfig config, GameObject colliderObj, ProceduralGenerator procGen, StopWatchWrapper stopWatch) {
 			_meshTriangulationSolver = new MarchingSquaresMeshTriangulationSolver(config);
 			Config                   = config;

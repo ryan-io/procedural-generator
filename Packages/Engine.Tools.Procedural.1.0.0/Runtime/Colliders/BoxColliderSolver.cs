@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityBCL;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 namespace Engine.Procedural {
 	public class BoxCollisionSolver : CollisionSolver {
@@ -9,7 +10,11 @@ namespace Engine.Procedural {
 		float                          SkinWidth      { get; }
 
 
+		protected override Tilemap GroundTilemap { get; }
+
 		public override void CreateCollider(CollisionSolverDto dto) {
+			var data = dto.MapData;
+			
 			CreateRotateColliderObject(ZERO_ANGLE,            0f);
 			CreateRotateColliderObject(FORTY_FIVE_ANGLE,      45f);
 			CreateRotateColliderObject(ONE_THIRTY_FIVE_ANGLE, 135f);
@@ -17,14 +22,14 @@ namespace Engine.Procedural {
 			var roomObject = AddRoom(dto.ColliderGameObject);
 			roomObject.MakeStatic(true);
 
-			for (var i = 0; i < dto.Outlines.Count; i++) {
-				var outline = dto.Outlines[i];
+			for (var i = 0; i < data.RoomOutlines.Count; i++) {
+				var outline = data.RoomOutlines[i];
 				for (var j = 0; j < outline.Count; j++) {
 					if (j + 1 >= outline.Count)
 						continue;
 
-					var point0 = dto.WalkableVertices[outline[j]];
-					var point1 = dto.WalkableVertices[outline[j + 1]];
+					var point0 = data.MeshVertices[outline[j]];
+					var point1 =  data.MeshVertices[outline[j + 1]];
 
 					var cx = (point0.x + point1.x) / 2f;
 					var cy = (point0.y + point1.y) / 2f;
@@ -60,6 +65,7 @@ namespace Engine.Procedural {
 			ColliderOwners = new Dictionary<string, GameObject>();
 			RootGameObject = rootGameObject;
 			SkinWidth      = config.BoxColliderSkinWidth;
+			GroundTilemap  = config.TileMapDictionary[TileMapType.Ground];
 		}
 
 		const string ZERO_ANGLE            = "zeroAngle";

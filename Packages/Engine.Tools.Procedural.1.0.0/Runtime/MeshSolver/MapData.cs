@@ -12,7 +12,7 @@ namespace Engine.Procedural {
 		[field: SerializeField] public List<List<int>>    RoomOutlines       { get; private set; }
 		[field: SerializeField] public RoomMeshDictionary RoomMeshDictionary { get; private set; }
 
-		public MapData(TileHashset tileHashset, MeshAndColliderSolverData meshCollisionData) {
+		public MapData(TileHashset tileHashset, MeshSolverData meshCollisionData) {
 			TileHashset        = tileHashset;
 			Mesh               = meshCollisionData.Mesh;
 			RoomOutlines       = meshCollisionData.RoomOutlines;

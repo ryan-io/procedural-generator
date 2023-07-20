@@ -4,14 +4,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace Engine.Procedural {
-	public readonly struct MeshAndColliderSolverData {
+	public readonly struct MeshSolverData {
 		public Mesh               Mesh               { get; }
 		public List<Vector3>      MeshVertices       { get; }
 		public List<int>          MeshTriangles      { get; }
 		public List<List<int>>    RoomOutlines       { get; }
 		public RoomMeshDictionary RoomMeshDictionary { get; }
 
-		public MeshAndColliderSolverData(
+		public MeshSolverData(
 			Mesh mesh,
 			List<Vector3> meshVertices,
 			List<int> meshTriangles,

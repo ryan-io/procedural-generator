@@ -1,22 +1,18 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Engine.Procedural {
 	public readonly struct CollisionSolverDto {
-		public List<List<int>> Outlines           { get; }
-		public List<Vector3>   WalkableVertices   { get; }
-		public GameObject      ColliderGameObject { get; }
-		public LayerMask       ObstacleLayer      { get; }
-		public LayerMask       BoundaryLayer      { get; }
+		public MapData    MapData            { get; }
+		public GameObject ColliderGameObject { get; }
+		public LayerMask  ObstacleLayer      { get; }
+		public LayerMask  BoundaryLayer      { get; }
 
 		public CollisionSolverDto(
-			List<List<int>> outlines,
+			MapData mapData,
 			GameObject colliderGameObject,
-			List<Vector3> walkableVertices,
 			LayerMask obstacleLayer, LayerMask boundaryLayer) {
-			Outlines           = outlines;
+			MapData            = mapData;
 			ColliderGameObject = colliderGameObject;
-			WalkableVertices   = walkableVertices;
 			ObstacleLayer      = obstacleLayer;
 			BoundaryLayer      = boundaryLayer;
 		}

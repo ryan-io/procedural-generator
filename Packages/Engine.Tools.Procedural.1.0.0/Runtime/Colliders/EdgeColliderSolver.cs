@@ -1,8 +1,12 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using BCL;
 using UnityBCL;
 using UnityEngine;
+using UnityEngine.Tilemaps;
+using Object = UnityEngine.Object;
 
 namespace Engine.Procedural {
 	public class EdgeCollisionSolver : CollisionSolver {
@@ -11,60 +15,105 @@ namespace Engine.Procedural {
 		Vector2                 EdgeColliderOffset { get; }
 		float                   EdgeColliderRadius { get; }
 
+		protected override Tilemap GroundTilemap { get; }
+
 		/// <summary>
 		///					*****   THIS IS AN UNSAFE METHOD   *****
 		/// </summary>
 		/// <param name="dto">Relevant data transfer object to create colliders</param>
 		public override unsafe void CreateCollider(CollisionSolverDto dto) {
+			var data    = dto.MapData;
+			var hashSet = data.TileHashset;
+			
 			dto.ColliderGameObject.ZeroPosition();
 			dto.ColliderGameObject.MakeStatic(false);
 
 			GenLogging.LogWithTimeStamp(
 				LogLevel.Normal,
 				StopWatch.TimeElapsed,
-				GetVerifyRoomsMsg(dto.Outlines.Count),
+				GetVerifyRoomsMsg(data.RoomOutlines.Count),
 				CTX);
 
-			var  highestCount  = DetermineHighestCollectionCount(dto);
+			var  highestCount  = DetermineHighestCollectionCount(data);
 			int* tempAllocator = stackalloc int[highestCount];
 			var  iteratorSpan  = new Span<int>(tempAllocator, highestCount);
 
-			for (var i = 0; i < dto.Outlines.Count; i++) {
+			for (var i = 0; i < data.RoomOutlines.Count; i++) {
 				iteratorSpan.Clear();
-				var outlineSpan = dto.Outlines[i].ToArray().AsSpan();
+				var outlineSpan = data.RoomOutlines[i].ToArray().AsSpan();
 				outlineSpan.CopyTo(iteratorSpan);
 				var iteratorLength = outlineSpan.Length;
 				var workingSlice   = iteratorSpan[..iteratorLength];
-				
+
 				var roomObject = AddRoom(dto.ColliderGameObject, identifier: i.ToString());
 				roomObject.MakeStatic(true);
 				roomObject.SetLayer(Constants.Layers.OBSTACLES);
 
 				var edgeCollider = roomObject.AddComponent<EdgeCollider2D>();
-				var edgePoints   = new Vector2[iteratorLength];
+				var edgePoints   = new List<Vector2>();
 
 				edgeCollider.offset = EdgeColliderOffset;
 
-				for (var j = 0; j < iteratorLength; j++)
-					edgePoints[j] = new Vector2(
-						dto.WalkableVertices[workingSlice[j]].x,
-						dto.WalkableVertices[workingSlice[j]].y);
+				for (var j = 0; j < iteratorLength; j++) {
+					var testPos = new Vector3(
+						data.MeshVertices[workingSlice[j]].x,
+						data.MeshVertices[workingSlice[j]].y,
+						0);
 
-				edgeCollider.points = edgePoints;
+					var worldPos = GroundTilemap.WorldToCell(testPos);
+					var hasTile  = GroundTilemap.HasTile(worldPos);
+
+					if (hasTile) {
+						var comparer = new Vector2Int(worldPos.x, worldPos.y);
+						var item = hashSet.FirstOrDefault(record =>
+							                                  record.Coordinate == comparer &&
+							                                  record.IsLocalBoundary        &&
+							                                  !record.IsMapBoundary);
+
+						if (item == null)
+							continue;
+
+						if (i > 0 && i < iteratorLength) {
+							if (edgePoints.Count < 1) {
+								edgePoints.Add(item.Coordinate);
+							}
+
+							else {
+								var previousPoint = edgePoints.Last();
+
+								if (Vector2.Distance(previousPoint, item.Coordinate) <= 20.0f)
+									edgePoints.Add(item.Coordinate);
+							}
+						}
+						else {
+							if (!edgePoints.Contains(item.Coordinate))
+								edgePoints.Add(item.Coordinate);
+						}
+					}
+				}
+
+				if (edgePoints.IsEmptyOrNull() || edgePoints.Count <= CLOSED_COLLIDER_POINTS) {
+#if UNITY_EDITOR
+					Object.DestroyImmediate(roomObject);
+#else
+					Object.DestroyImmediate(roomObject);
+#endif
+					continue;
+				}
+
+				edgeCollider.points = edgePoints.ToArray();
 
 				if (i >= Colliders.Length)
 					continue;
 
 				Colliders[i] = edgeCollider;
 			}
-
-			SetColliderRadius(dto);
 		}
-		
-		int DetermineHighestCollectionCount(CollisionSolverDto dto) {
+
+		int DetermineHighestCollectionCount(MapData data) {
 			int currentHighestCount = 0;
 
-			foreach (var outline in dto.Outlines) {
+			foreach (var outline in data.RoomOutlines) {
 				if (outline.Count > currentHighestCount)
 					currentHighestCount = outline.Count;
 			}
@@ -90,29 +139,21 @@ namespace Engine.Procedural {
 			return _sB.ToString();
 		}
 
-		void SetColliderRadius(CollisionSolverDto dto) {
-			var count = dto.Outlines.Count;
-
-			for (var i = 0; i < count; i++) {
-				if (i >= Colliders.Length)
-					continue;
-				Colliders[i].edgeRadius = EdgeColliderRadius;
-			}
-		}
-
 		public EdgeCollisionSolver(ProceduralConfig config, StopWatchWrapper stopWatch) {
 			_sB                = new StringBuilder();
 			Colliders          = new EdgeCollider2D[COLLIDER_ALLOCATION_SIZE];
+			GroundTilemap      = config.TileMapDictionary[TileMapType.Ground];
 			StopWatch          = stopWatch;
 			EdgeColliderOffset = config.EdgeColliderOffset;
 			EdgeColliderRadius = config.EdgeColliderRadius;
 		}
 
 		readonly StringBuilder _sB;
-		const    string        VERIFY_ROOMS_PREFIX  = "Veriying the number of rooms: ";
-		const    string        COULD_NOT_SET_PREFIX = "Could not set ";
-		const    string        TO_LAYER             = " to layer ";
-		const    string        CTX                  = "EdgeColliderSolver";
+		const    string        VERIFY_ROOMS_PREFIX    = "Veriying the number of rooms: ";
+		const    string        COULD_NOT_SET_PREFIX   = "Could not set ";
+		const    string        TO_LAYER               = " to layer ";
+		const    string        CTX                    = "EdgeColliderSolver";
+		const    int           CLOSED_COLLIDER_POINTS = 4;
 
 		// TODO - Why was 50 chosen?
 		const int COLLIDER_ALLOCATION_SIZE = 50;

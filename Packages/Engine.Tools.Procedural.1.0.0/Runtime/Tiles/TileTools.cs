@@ -32,6 +32,8 @@ namespace Engine.Procedural {
 
 		public void CreateTileLabel(int x, int y, string text) {
 			return;
+			/*
+			
 			var tileSizeOffset = GridObj.cellSize;
 
 			var position = new Vector3(
@@ -40,7 +42,7 @@ namespace Engine.Procedural {
 				10);
 
 			position *= Constants.CELL_SIZE;
-
+			*/
 
 			//TODO - a world txt function will need to be created if we want this functionality back in the future
 			// var label = global::Utility.CreateWorldTextTMP(

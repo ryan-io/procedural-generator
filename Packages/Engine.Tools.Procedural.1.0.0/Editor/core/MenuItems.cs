@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Engine.Procedural.Editor {
 	public class MenuItems {
 		[MenuItem("Procedural Generation/Utility/Remove Tile Labels")]
-		public void RemoveLabels() {
+		public static void RemoveLabels() {
 			var objects = GameObject.FindGameObjectsWithTag(Constants.TILE_LABEL);
 			var length  = objects.Length;
 

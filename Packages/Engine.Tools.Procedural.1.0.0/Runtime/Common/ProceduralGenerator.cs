@@ -14,7 +14,12 @@ namespace Engine.Procedural {
 	/// <summary>
 	///     Verifies the scene contains the required components in order to run procedural generation logic
 	///     This class will also kickoff the generation process
+	/// 
 	///     *** The Procedural Generator requires unsafe context ***
+	/// 
+	/// rowsOrHeight = GetLength(0)
+	/// this is clearly opposite of what I thought
+	/// https://stackoverflow.com/questions/4260207/how-do-you-get-the-width-and-height-of-a-multi-dimensional-array
 	/// </summary>
 	[RequireComponent(typeof(MeshFilter))]
 	public class ProceduralGenerator : Singleton<ProceduralGenerator, ProceduralGenerator>,
@@ -37,12 +42,13 @@ namespace Engine.Procedural {
 		ErosionSolver           ErosionSolver           { get; set; }
 
 		//TODO: this should be refactored to be more granular; it is too deep
-		MeshAndColliderSolver MeshAndColliderSolver { get; set; }
-		GridGraphBuilder      GridGraphBuilder      { get; set; }
-		NavGraphRulesSolver   NavGraphRulesSolver   { get; set; }
-		GraphScanner          GraphScanner          { get; set; }
-		AstarSerializer       AstarSerializer       { get; set; }
-		DataProcessor         DataProcessor         { get; set; }
+		MeshSolver          MeshSolver          { get; set; }
+		ColliderSolver      ColliderSolver      { get; set; }
+		GridGraphBuilder    GridGraphBuilder    { get; set; }
+		NavGraphRulesSolver NavGraphRulesSolver { get; set; }
+		GraphScanner        GraphScanner        { get; set; }
+		AstarSerializer     AstarSerializer     { get; set; }
+		DataProcessor       DataProcessor       { get; set; }
 
 		GameObject                GeneratedCollidersObj { get; set; }
 		GameObject                PathfindingMeshObj    { get; set; }
@@ -91,6 +97,9 @@ namespace Engine.Procedural {
 				StateMachine.ChangeState(ProcessStep.Initializing);
 				Observables[StateObservableId.ON_INIT].Signal();
 
+				Tools.SetGridOrigin();
+				Tools.SetGridScale(Constants.CELL_SIZE);
+
 				if (!_config.ShouldGenerate)
 					// do not proceed any further; redirect control elsewhere
 					return;
@@ -99,10 +108,6 @@ namespace Engine.Procedural {
 					InitializeGenerator();
 				}
 
-				// rowsOrHeight = GetLength(0)
-				// colsOrWidth = GetLength(1)
-				// this is clearly opposite of what I thought
-				// https://stackoverflow.com/questions/4260207/how-do-you-get-the-width-and-height-of-a-multi-dimensional-array
 				var rowsOrHeight = _config.Rows;
 				var colsOrWidth  = _config.Columns;
 
@@ -124,20 +129,19 @@ namespace Engine.Procedural {
 				TileTypeSolver.SetTiles(mapSpan);
 				new TileMapCompressor(_config.TilemapContainer).Compress();
 
-				Tools.SetGridOrigin();
-				Tools.SetGridScale(Constants.CELL_SIZE);
-
 				//TODO: The reset of the  generation will utilize the previous array code instead of span
-				var meshAndColliderData = MeshAndColliderSolver.SolveAndCreate(mapBorder);
-
-				new PrepPathfindingMesh(gameObject).Prep(PathfindingMeshObj, meshAndColliderData);
+				var meshSolverData = MeshSolver.SolveAndCreate(mapBorder);
+				var mapData        = new MapData(TileHashset, meshSolverData);
+				
+				ColliderSolver.Solve(mapData);
+				
+				new PrepPathfindingMesh(gameObject).Prep(PathfindingMeshObj, meshSolverData);
 				var gridGraph = GridGraphBuilder.Build();
 
 				NavGraphRulesSolver.ResetGridGraphRules(gridGraph);
 				NavGraphRulesSolver.SetGridGraphRules(gridGraph);
 				ErosionSolver.Erode(gridGraph);
 
-				var mapData = new MapData(TileHashset, meshAndColliderData);
 				DataProcessor = new DataProcessor(_config, mapData, RegionRemoverSolver.Rooms);
 
 				var scannerArgs = new GraphScanner.Args(
@@ -150,21 +154,18 @@ namespace Engine.Procedural {
 					true);
 
 				GraphScanner.FireForget(scannerArgs, CancellationToken);
+
 				new CutGraphColliders().Cut(_config.ColliderCutters);
-
-				//TODO: solver(s) pertaining to rooms go here (WIP)
-				/*
-				 * _roomSolver = new SimpleRoomSolver();
-				 * await _roomSolver.Solve();
-				 */
-
 				new SerializeSeedInfo().Serialize(GetSeedInfo(), _config.SeedInfoSerializer, _config.Name, StopWatch);
+				new CreateBoundaryColliders(DataProcessor).Create(GeneratedCollidersObj);
 
 #endregion
 
 				// map of data goes here
 			}
 			catch (StackOverflowException e) {
+#region STACKOVERFLOW
+
 				GenLogging.LogWithTimeStamp(
 					LogLevel.Error,
 					StopWatch.TimeElapsed,
@@ -172,9 +173,12 @@ namespace Engine.Procedural {
 					Message.STACK_OVERFLOW_ERROR);
 
 				HandleErrorState();
-			}
 
+#endregion
+			}
 			catch (Exception e) {
+#region EXCEPTIONS
+
 				var stackTrace = new StackTrace(e).GetFrame(0).GetMethod().Name;
 
 				GenLogging.LogWithTimeStamp(
@@ -184,11 +188,12 @@ namespace Engine.Procedural {
 					Message.CTX_ERROR + Constants.SPACE + e.TargetSite.Name + Constants.UNDERSCORE + stackTrace);
 
 				HandleErrorState();
-			}
 
+#endregion
+			}
+			finally {
 #region COMPLETE
 
-			finally {
 				new SetAllEdgeColliderRadius(_config.EdgeColliderRadius).Set(gameObject);
 				StopWatch.Stop();
 				StateMachine.ChangeState(ProcessStep.Completing);
@@ -256,7 +261,8 @@ namespace Engine.Procedural {
 			RegionRemoverSolver     = new FloodRegionRemovalSolver(_config);
 			ErosionSolver           = new ErosionSolver(_config, TileHashset);
 			GeneratedCollidersObj   = new EdgeColliderCreator().Create(this);
-			MeshAndColliderSolver   = new SimpleMeshAndColliderSolver(_config, GeneratedCollidersObj, this, StopWatch);
+			MeshSolver              = new MarchingSquaresMeshSolver(_config, GeneratedCollidersObj, this, StopWatch);
+			ColliderSolver          = new ColliderSolver(_config, gameObject, GeneratedCollidersObj, StopWatch);
 			GridGraphBuilder        = new GridGraphBuilder(_config);
 			NavGraphRulesSolver     = new NavGraphRulesSolver(_config);
 			GraphScanner            = new GraphScanner(StopWatch);

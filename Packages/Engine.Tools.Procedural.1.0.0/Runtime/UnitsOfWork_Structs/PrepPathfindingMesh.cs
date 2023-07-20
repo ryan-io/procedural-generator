@@ -6,7 +6,7 @@ namespace Engine.Procedural {
 	public readonly struct PrepPathfindingMesh {
 		GameObject Owner { get; }
 		
-		public void Prep(GameObject pathfindingMeshObj, MeshAndColliderSolverData meshCollisionData) {
+		public void Prep(GameObject pathfindingMeshObj, MeshSolverData meshCollisionData) {
 			if (pathfindingMeshObj) {
 #if UNITY_EDITOR
 				Object.DestroyImmediate(pathfindingMeshObj);

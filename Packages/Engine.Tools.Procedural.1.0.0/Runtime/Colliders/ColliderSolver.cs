@@ -1,9 +1,12 @@
 using System;
 using UnityBCL;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 namespace Engine.Procedural {
 	public abstract class CollisionSolver {
+		protected abstract Tilemap GroundTilemap { get; }
+		
 		public abstract void CreateCollider(CollisionSolverDto dto);
 
 		protected GameObject AddRoom(GameObject parent, string identifier = "", params Type[] componentsToAdd) {
