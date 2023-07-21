@@ -5,7 +5,7 @@ using UnityEngine.Tilemaps;
 
 namespace Engine.Procedural {
 	public abstract class CollisionSolver {
-		protected abstract Tilemap GroundTilemap { get; }
+		protected abstract Tilemap BoundaryTilemap { get; }
 		
 		public abstract void CreateCollider(CollisionSolverDto dto);
 

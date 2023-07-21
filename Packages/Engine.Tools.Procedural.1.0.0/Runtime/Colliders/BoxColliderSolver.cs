@@ -10,7 +10,7 @@ namespace Engine.Procedural {
 		float                          SkinWidth      { get; }
 
 
-		protected override Tilemap GroundTilemap { get; }
+		protected override Tilemap BoundaryTilemap { get; }
 
 		public override void CreateCollider(CollisionSolverDto dto) {
 			var data = dto.MapData;
@@ -65,7 +65,7 @@ namespace Engine.Procedural {
 			ColliderOwners = new Dictionary<string, GameObject>();
 			RootGameObject = rootGameObject;
 			SkinWidth      = config.BoxColliderSkinWidth;
-			GroundTilemap  = config.TileMapDictionary[TileMapType.Ground];
+			BoundaryTilemap  = config.TileMapDictionary[TileMapType.Ground];
 		}
 
 		const string ZERO_ANGLE            = "zeroAngle";

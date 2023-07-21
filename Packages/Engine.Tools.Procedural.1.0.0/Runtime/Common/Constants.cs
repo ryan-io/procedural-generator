@@ -47,5 +47,19 @@ namespace Engine.Procedural {
 		
 		public static readonly Color[] Color =
 			{ UnityEngine.Color.red, UnityEngine.Color.green, UnityEngine.Color.cyan, UnityEngine.Color.yellow, UnityEngine.Color.magenta, UnityEngine.Color.blue, UnityEngine.Color.white };
+
+		public static Color[] GetColorArray() {
+			var output = new [] {
+				UnityEngine.Color.red, 
+				UnityEngine.Color.green, 
+				UnityEngine.Color.cyan, 
+				UnityEngine.Color.yellow, 
+				UnityEngine.Color.magenta, 
+				UnityEngine.Color.blue, 
+				UnityEngine.Color.white
+			};
+
+			return output;
+		}
 	}
 }

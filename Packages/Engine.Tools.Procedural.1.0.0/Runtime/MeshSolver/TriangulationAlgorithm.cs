@@ -115,8 +115,8 @@ namespace Engine.Procedural {
 		}
 
 		void TrackTriangle(int vertexKey, Triangle triangle, IDictionary<int, List<Triangle>> triangleTracker) {
-			if (triangleTracker.ContainsKey(vertexKey))
-				triangleTracker[vertexKey].Add(triangle);
+			if (triangleTracker.TryGetValue(vertexKey, out var value))
+				value.Add(triangle);
 
 			else
 				triangleTracker.Add(vertexKey, new List<Triangle> { triangle });

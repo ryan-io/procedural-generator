@@ -35,7 +35,7 @@ namespace Engine.Procedural {
 
 			File.AppendAllText(trackerPath, sanitizedName + Environment.NewLine);
 
-			GenLogging.LogWithTimeStamp(
+			GenLogging.Instance.LogWithTimeStamp(
 				LogLevel.Normal,
 				stopwatch.TimeElapsed,
 				Message.UPDATED_SEED_TRACKER,

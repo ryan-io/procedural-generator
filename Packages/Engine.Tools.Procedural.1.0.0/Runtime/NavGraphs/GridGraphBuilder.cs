@@ -1,4 +1,5 @@
 using System;
+using BCL;
 using Pathfinding;
 using Unity.Mathematics;
 using UnityEngine;
@@ -19,7 +20,7 @@ namespace Engine.Procedural {
 
 			if (graph == null) {
 				var exception = new Exception(Message.CANNOT_CAST_GRAPH_ERROR);
-				throw exception;
+				GenLogging.Instance.Log(exception.Message, "BuildGridGraph", LogLevel.Error);
 			}
 
 			graph.name = Constants.ASTAR_GRAPH_NAME;

@@ -38,7 +38,7 @@ namespace Engine.Procedural {
 			if (hasData)
 				AstarPath.active.data.DeserializeGraphs(data);
 			else {
-				GenLogging.LogWithTimeStamp(
+				GenLogging.Instance.LogWithTimeStamp(
 					LogLevel.Warning,
 					StopWatch.TimeElapsed,
 					Message.CANNOT_GET_SERIALIZED_ASTAR_DATA + output,

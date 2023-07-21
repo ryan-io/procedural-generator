@@ -19,10 +19,14 @@ namespace Engine.Procedural {
 		StopWatchWrapper StopWatch { get; }
 
 		protected override async UniTask TaskLogic(Args args, CancellationToken token) {
-			if (args.IsAsync)
+			if (args.IsAsync) {
 				await ScanGraphAsync(args, token);
-			else
+				
+			}
+			else {
+				
 				ScanGraph(args.Graph);
+			}
 		}
 
 		void ScanGraph(NavGraph graph) => AstarPath.active.Scan(graph);
@@ -40,7 +44,7 @@ namespace Engine.Procedural {
 				sB.Append(GenLogging.SPACE);
 				sB.Append(progress.progress * 100);
 
-				GenLogging.LogWithTimeStamp(LogLevel.Normal, StopWatch.TimeElapsed, sB.ToString(),
+				GenLogging.Instance.LogWithTimeStamp(LogLevel.Normal, StopWatch.TimeElapsed, sB.ToString(),
 					"GraphScanAsync");
 #endif
 
@@ -49,7 +53,7 @@ namespace Engine.Procedural {
 					sB.Clear();
 					sB.Append("Cancellation was requested. Cleaning up Pathfinding.");
 
-					GenLogging.LogWithTimeStamp(
+					GenLogging.Instance.LogWithTimeStamp(
 						LogLevel.Error, StopWatch.TimeElapsed, sB.ToString(), "GraphScanAsync_Cancelled");
 #endif
 					yield break;
@@ -64,14 +68,14 @@ namespace Engine.Procedural {
 			sB.Clear();
 			sB.Append("Pathfinding has completed.");
 
-			GenLogging.LogWithTimeStamp(LogLevel.Normal, StopWatch.TimeElapsed, sB.ToString(),
+			GenLogging.Instance.LogWithTimeStamp(LogLevel.Normal, StopWatch.TimeElapsed, sB.ToString(),
 				"GraphScanAsync_Complete");
 
 			sB.Clear();
 			sB.Append(PATHFINDING_NODES);
 			sB.Append(args.Graph.CountNodes());
 
-			GenLogging.LogWithTimeStamp(LogLevel.Normal, StopWatch.TimeElapsed, sB.ToString(),
+			GenLogging.Instance.LogWithTimeStamp(LogLevel.Normal, StopWatch.TimeElapsed, sB.ToString(),
 				"GraphScanAsync_TotalNodes");
 #endif
 		}

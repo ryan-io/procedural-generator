@@ -8,6 +8,7 @@ using UnityEngine;
 namespace Engine.Procedural {
 	public readonly struct CreateBoundaryColliders {
 		DataProcessor Processor { get; }
+		float         Radius    { get; }
 
 		public void Create(GameObject parent) {
 			var vectors = Processor.GetBorderCellPositions();
@@ -35,9 +36,11 @@ namespace Engine.Procedural {
 			var pointList = new List<Vector2>() { bottomLeft, topLeft, topRight, bottomRight, bottomLeft };
 
 			edgeCollider.SetPoints(pointList);
+			edgeCollider.edgeRadius = Radius;
 		}
 
-		public CreateBoundaryColliders(DataProcessor processor) {
+		public CreateBoundaryColliders(ProceduralConfig config, DataProcessor processor) {
+			Radius    = config.EdgeColliderRadius;
 			Processor = processor;
 		}
 	}

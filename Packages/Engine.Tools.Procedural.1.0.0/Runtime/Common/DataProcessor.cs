@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using BCL;
 using UnityBCL;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -8,6 +9,8 @@ using Random = UnityEngine.Random;
 
 namespace Engine.Procedural {
 	public class DataProcessor {
+		public bool IsReady { get; set; } = false;
+
 		Tilemap             BoundaryTilemap { get; }
 		MapData             MapData         { get; }
 		IReadOnlyList<Room> Rooms           { get; }
@@ -20,7 +23,7 @@ namespace Engine.Procedural {
 
 		public Vector3[] GetBorderCellPositions() {
 			var output = new List<Vector3>();
-			
+
 			foreach (var record in MapData.TileHashset) {
 				if (!record.IsMapBoundary)
 					continue;
@@ -64,17 +67,28 @@ namespace Engine.Procedural {
 		///					*****   THIS IS AN UNSAFE METHOD   *****
 		/// </summary>
 		public unsafe void DrawRoomOutlines() {
-			if (Rooms.IsEmptyOrNull()) {
+			if (MapData.RoomOutlines.IsEmptyOrNull()) {
 				return;
 			}
 
-			var colorCounter = 0;
-			var outlineSpan  = MapData.RoomOutlines.ToArray().AsSpan();
+			var colors = new[] {
+				Color.red,
+				Color.green,
+				Color.cyan,
+				Color.yellow,
+				Color.magenta,
+				Color.blue,
+				Color.white
+			};
 
+			var outlineSpan = MapData.RoomOutlines.ToArray().AsSpan();
 			var  currentHighestCount = DetermineHighestRoomCount();
 			int* tempAllocator       = stackalloc int[currentHighestCount];
 			var  iteratorSpan        = new Span<int>(tempAllocator, currentHighestCount);
+			
+			var constantLength = colors.Length;
 
+			var colorCounter = 0;
 			foreach (var outline in outlineSpan) {
 				var groupSpan = outline.ToArray().AsSpan();
 
@@ -83,17 +97,52 @@ namespace Engine.Procedural {
 
 				for (var i = 0; i < groupSpan.Length; i++) {
 					var point = new Vector3(
-						MapData.MeshVertices[iteratorSpan[i]].x + OffSet.x,
-						MapData.MeshVertices[iteratorSpan[i]].y + OffSet.y,
+						MapData.MeshVertices[iteratorSpan[i]].x, //+ OffSet.x,
+						MapData.MeshVertices[iteratorSpan[i]].y, //+ OffSet.y,
 						0);
 
-					DebugExt.DrawCircle(point, Color.white, true, .2f);
+					if (colorCounter >= constantLength)
+						colorCounter = 0;
+					
+					DebugExt.DrawCircle(point, colors[colorCounter], true, .2f);
 				}
 
-				if (colorCounter > Constants.Color.Length - 1)
+				if (colorCounter >= constantLength)
 					colorCounter = 0;
 				else
 					colorCounter++;
+			}
+		}
+
+		public unsafe void DrawTilePositionsShifted() {
+			var ctx = IsReady ? "Ready; " + MapData.TilePositionsShifted.Count() : "NotReady";
+			GenLogging.Instance.Log("Status of data processor: " + ctx, "NodeCount");
+
+			if (MapData.TilePositionsShifted.IsEmptyOrNull() || !IsReady) {
+				return;
+			}
+
+			GenLogging.Instance.Log("Processing nodes: " + MapData.TilePositionsShifted.Count, "NodeCount");
+
+			var tiles = MapData.TilePositionsShifted;
+			//int* tempAllocator = fixed int[tiles.Count];
+			var span = MapData.TilePositionsShifted.ToArray().AsSpan();
+
+			var records = MapData.TileHashset;
+
+			try {
+				// for (var i = 0; i < MapData.TilePositionsShifted.Count; i++) {
+				// 	span[i] = tiles[i];
+				// }
+
+				foreach (var vector in span) {
+					var pos = new Vector2Int((int)vector.x, (int)vector.y);
+					if (records[pos] != null)
+						DebugExt.DrawCircle(vector, Color.cyan, true, .2f);
+				}
+			}
+			catch (Exception e) {
+				GenLogging.Instance.Log(e.TargetSite.Name, "DrawShiftedTilePositions", LogLevel.Error);
 			}
 		}
 
@@ -105,7 +154,6 @@ namespace Engine.Procedural {
 
 			foreach (var position in shiftedPositions) {
 				DebugExt.DrawCircle(position, Color.white, true, .2f);
-
 			}
 		}
 
@@ -131,7 +179,10 @@ namespace Engine.Procedural {
 			return GridToDrawOn.CellToWorld(new Vector3Int(t.x, t.y, 0));
 		}
 
-		public DataProcessor(ProceduralConfig config, MapData mapData, IReadOnlyList<Room> rooms) {
+		public DataProcessor(
+			ProceduralConfig config,
+			MapData mapData,
+			IReadOnlyList<Room> rooms) {
 			GridToDrawOn    = config.Grid;
 			Rooms           = rooms;
 			MapData         = mapData;

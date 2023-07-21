@@ -9,6 +9,7 @@ using Sirenix.OdinInspector;
 using StateMachine;
 using UnityBCL;
 using UnityEngine;
+using Debug = UnityEngine.Debug;
 
 namespace Engine.Procedural {
 	/// <summary>
@@ -122,31 +123,45 @@ namespace Engine.Procedural {
 				Observables[StateObservableId.ON_RUN].Signal();
 
 				FillMapSolver.Fill(mapSpan);
-
 				SmoothMapSolver.Smooth(mapSpan);
 				RegionRemoverSolver.Remove(mapSpan);
+
 				var mapBorder = BorderBoundsSolver.DetermineBorderMap(mapSpan);
+
 				TileTypeSolver.SetTiles(mapSpan);
+
 				new TileMapCompressor(_config.TilemapContainer).Compress();
 
 				//TODO: The reset of the  generation will utilize the previous array code instead of span
 				var meshSolverData = MeshSolver.SolveAndCreate(mapBorder);
-				var mapData        = new MapData(TileHashset, meshSolverData);
-				
-				ColliderSolver.Solve(mapData);
-				
+
+				_data = new MapData(TileHashset, meshSolverData);
+
+				ColliderSolver.Solve(_data);
+
 				new PrepPathfindingMesh(gameObject).Prep(PathfindingMeshObj, meshSolverData);
 				var gridGraph = GridGraphBuilder.Build();
 
 				NavGraphRulesSolver.ResetGridGraphRules(gridGraph);
 				NavGraphRulesSolver.SetGridGraphRules(gridGraph);
-				ErosionSolver.Erode(gridGraph);
-
-				DataProcessor = new DataProcessor(_config, mapData, RegionRemoverSolver.Rooms);
+				
+				DataProcessor = new DataProcessor(_config, _data, RegionRemoverSolver.Rooms);
 
 				var scannerArgs = new GraphScanner.Args(
 					gridGraph,
 					() => {
+						var erosionData = ErosionSolver.Erode(gridGraph);
+						
+						GenLogging.Instance.Log("Setting shifted tile positions in map data", "MapData");
+						
+						_data.TilePositionsShifted = erosionData.TilePositionsShifted;
+						
+						new CutGraphColliders().Cut(_config.ColliderCutters);
+						new SerializeSeedInfo().Serialize(GetSeedInfo(), _config.SeedInfoSerializer, _config.Name, StopWatch);
+						new CreateBoundaryColliders(_config, DataProcessor).Create(GeneratedCollidersObj);
+
+						DataProcessor.IsReady = true;
+						
 						AstarSerializer.SerializeCurrentAstarGraph(
 							_config.PathfindingSerializer,
 							GetAstarSerializationName);
@@ -155,10 +170,6 @@ namespace Engine.Procedural {
 
 				GraphScanner.FireForget(scannerArgs, CancellationToken);
 
-				new CutGraphColliders().Cut(_config.ColliderCutters);
-				new SerializeSeedInfo().Serialize(GetSeedInfo(), _config.SeedInfoSerializer, _config.Name, StopWatch);
-				new CreateBoundaryColliders(DataProcessor).Create(GeneratedCollidersObj);
-
 #endregion
 
 				// map of data goes here
@@ -166,7 +177,7 @@ namespace Engine.Procedural {
 			catch (StackOverflowException e) {
 #region STACKOVERFLOW
 
-				GenLogging.LogWithTimeStamp(
+				GenLogging.Instance.LogWithTimeStamp(
 					LogLevel.Error,
 					StopWatch.TimeElapsed,
 					e.Message,
@@ -181,7 +192,7 @@ namespace Engine.Procedural {
 
 				var stackTrace = new StackTrace(e).GetFrame(0).GetMethod().Name;
 
-				GenLogging.LogWithTimeStamp(
+				GenLogging.Instance.LogWithTimeStamp(
 					LogLevel.Error,
 					StopWatch.TimeElapsed,
 					e.Message,
@@ -223,6 +234,8 @@ namespace Engine.Procedural {
 		void CleanGenerator() {
 			try {
 				IsDataSet = false;
+				GenLogging.Instance.ClearConsole();
+				
 				new ConfigCleaner().Clean(_config);
 				new TilemapCleaner().Clean(_config);
 				new ColliderGameObjectCleaner().Clean(gameObject);
@@ -233,7 +246,7 @@ namespace Engine.Procedural {
 				new DeallocateRoomMemory().Deallocate(RegionRemoverSolver);
 			}
 			catch (Exception e) {
-				GenLogging.LogWithTimeStamp(LogLevel.Error, 0f, e.Message, "CleanGenerator");
+				GenLogging.Instance.LogWithTimeStamp(LogLevel.Error, 0f, e.Message, "CleanGenerator");
 				throw;
 			}
 		}
@@ -261,7 +274,7 @@ namespace Engine.Procedural {
 			RegionRemoverSolver     = new FloodRegionRemovalSolver(_config);
 			ErosionSolver           = new ErosionSolver(_config, TileHashset);
 			GeneratedCollidersObj   = new EdgeColliderCreator().Create(this);
-			MeshSolver              = new MarchingSquaresMeshSolver(_config, GeneratedCollidersObj, this, StopWatch);
+			MeshSolver              = new MarchingSquaresMeshSolver(_config);
 			ColliderSolver          = new ColliderSolver(_config, gameObject, GeneratedCollidersObj, StopWatch);
 			GridGraphBuilder        = new GridGraphBuilder(_config);
 			NavGraphRulesSolver     = new NavGraphRulesSolver(_config);
@@ -294,10 +307,12 @@ namespace Engine.Procedural {
 		}
 
 		void OnDrawGizmosSelected() {
-			if (DataProcessor == null || !_config.DrawDebugGizmos) return;
+			if (DataProcessor == null || !_config.DrawDebugGizmos || !DataProcessor.IsReady) return;
 
 			//RoomCalculator.DrawRooms();
-			DataProcessor.DrawMapBoundary();
+			// DataProcessor.DrawMapBoundary();
+			 DataProcessor.DrawRoomOutlines();
+			//DataProcessor.DrawTilePositionsShifted();
 		}
 	}
 }

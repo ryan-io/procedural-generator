@@ -1,15 +1,19 @@
 ﻿// Engine.Procedural
 
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using BCL;
 using Pathfinding;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using Debug = UnityEngine.Debug;
 
 namespace Engine.Procedural {
 	public class ErosionSolver {
-		public List<Vector3> NodePositions        { get; }
-		public List<Vector3> TilePositions        { get; }
-		public List<Vector3> TilePositionsShifted { get; }
+		List<Vector3> NodePositions        { get; }
+		List<Vector3> TilePositions        { get; }
+		List<Vector3> TilePositionsShifted { get; }
 
 		TileHashset TileHashset                { get; }
 		Tilemap     BoundaryTilemap            { get; }
@@ -26,16 +30,17 @@ namespace Engine.Procedural {
 		int NodesWithTile               { get; set; }
 		int NodesWithoutTile            { get; set; }
 
-		public void Erode(GridGraph graph) {
-			graph.erosionUseTags = ErodeNodesAtBoundaries;
-
-			if (!ErodeNodesAtBoundaries)
-				return;
-
+		public ErosionSolverData Erode(GridGraph graph) {
+			graph.erosionUseTags  = ErodeNodesAtBoundaries;
 			graph.erodeIterations = NodesToErodeAtBoundaries;
 			graph.erosionFirstTag = StartingNodeIndexToErode;
 
 			ProcessErosion(graph);
+
+			GenLogging.Instance.Log("Counting nodes passed: " + graph.CountNodes(), "AnotherNodeCountVeri.");
+			GenLogging.Instance.Log("Total shifted tile positions is: " + TilePositionsShifted.Count, "TilePositions");
+
+			return new ErosionSolverData(NodePositions, TilePositions, TilePositionsShifted);
 		}
 
 		void ProcessErosion(GridGraph graph) {
@@ -46,13 +51,16 @@ namespace Engine.Procedural {
 			//monoModel.ErosionIterator = (int)Mathf.Sqrt(monoModel.NumberOfErodedNodesPerTile);
 			graph.GetNodes(node => NodePositions.Add((Vector3)node.position));
 
-			for (var i = 0; i < NodePositions.Count; i++)
+			// int* pointer  = stackalloc int[NodePositions.Count];
+			// var  span     = new Span<Vector3>(pointer, NodePositions.Count);
+			var span = new Span<Vector3>(NodePositions.ToArray());
+
+			for (var i = 0; i < span.Length; i++)
 				QueryGridDataForNodes(i, bounds, graph);
 		}
 
 		void QueryGridDataForNodes(int i, BoundsInt bounds, NavGraph gridGraph) {
 			var nodePosition = NodePositions[i];
-
 			var nodePositionPrime = new Vector3Int(
 				Mathf.FloorToInt(nodePosition.x) + bounds.xMax / 2,
 				Mathf.FloorToInt(nodePosition.y) + bounds.yMax / 2,
@@ -74,7 +82,7 @@ namespace Engine.Procedural {
 					NodesCheckedThatWereNotNull++;
 				else
 					NodesCheckThatWereNull++;
-						
+
 				NodesWithTile++;
 			}
 			else {

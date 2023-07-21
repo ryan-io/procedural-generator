@@ -14,8 +14,11 @@ namespace Engine.Procedural {
 		StopWatchWrapper        StopWatch          { get; }
 		Vector2                 EdgeColliderOffset { get; }
 		float                   EdgeColliderRadius { get; }
+		int                     BorderSize         { get; }
+		int                     NumOfRows          { get; }
+		int                     NumOfCols          { get; }
 
-		protected override Tilemap GroundTilemap { get; }
+		protected override Tilemap BoundaryTilemap { get; }
 
 		/// <summary>
 		///					*****   THIS IS AN UNSAFE METHOD   *****
@@ -25,10 +28,10 @@ namespace Engine.Procedural {
 			var data    = dto.MapData;
 			var hashSet = data.TileHashset;
 			
-			dto.ColliderGameObject.ZeroPosition();
-			dto.ColliderGameObject.MakeStatic(false);
+			// dto.ColliderGameObject.ZeroPosition();
+			// dto.ColliderGameObject.MakeStatic(false);
 
-			GenLogging.LogWithTimeStamp(
+			GenLogging.Instance.LogWithTimeStamp(
 				LogLevel.Normal,
 				StopWatch.TimeElapsed,
 				GetVerifyRoomsMsg(data.RoomOutlines.Count),
@@ -60,35 +63,40 @@ namespace Engine.Procedural {
 						data.MeshVertices[workingSlice[j]].y,
 						0);
 
-					var worldPos = GroundTilemap.WorldToCell(testPos);
-					var hasTile  = GroundTilemap.HasTile(worldPos);
+					var worldPos = BoundaryTilemap.WorldToCell(testPos);
+					var hasTile  = BoundaryTilemap.HasTile(worldPos);
 
 					if (hasTile) {
 						var comparer = new Vector2Int(worldPos.x, worldPos.y);
 						var item = hashSet.FirstOrDefault(record =>
 							                                  record.Coordinate == comparer &&
-							                                  record.IsLocalBoundary        &&
-							                                  !record.IsMapBoundary);
+							                                  record.IsLocalBoundary);
 
 						if (item == null)
 							continue;
-
+						
+						var shiftedBorder = BorderSize / 2f;
+						var shiftedX      = Mathf.CeilToInt(-NumOfRows  / 2f);
+						var shiftedY      = Mathf.FloorToInt(-NumOfCols / 2f);
+						
+						var pos = new Vector2(
+							item.Coordinate.x + shiftedX + shiftedBorder,
+							item.Coordinate.y + shiftedY + shiftedBorder);
+						
 						if (i > 0 && i < iteratorLength) {
-							if (edgePoints.Count < 1) {
-								edgePoints.Add(item.Coordinate);
-							}
+							if (edgePoints.Count < 1) 
+								edgePoints.Add(pos);
 
 							else {
 								var previousPoint = edgePoints.Last();
 
-								if (Vector2.Distance(previousPoint, item.Coordinate) <= 20.0f)
-									edgePoints.Add(item.Coordinate);
+								if (Vector2.Distance(previousPoint, pos) <= 20.0f)
+									edgePoints.Add(pos);
 							}
 						}
-						else {
+						else 
 							if (!edgePoints.Contains(item.Coordinate))
-								edgePoints.Add(item.Coordinate);
-						}
+								edgePoints.Add(pos);
 					}
 				}
 
@@ -142,13 +150,17 @@ namespace Engine.Procedural {
 		public EdgeCollisionSolver(ProceduralConfig config, StopWatchWrapper stopWatch) {
 			_sB                = new StringBuilder();
 			Colliders          = new EdgeCollider2D[COLLIDER_ALLOCATION_SIZE];
-			GroundTilemap      = config.TileMapDictionary[TileMapType.Ground];
+			BoundaryTilemap      = config.TileMapDictionary[TileMapType.Boundary];
 			StopWatch          = stopWatch;
 			EdgeColliderOffset = config.EdgeColliderOffset;
 			EdgeColliderRadius = config.EdgeColliderRadius;
+			BorderSize         = config.BorderSize;
+			NumOfRows          = config.Rows;
+			NumOfCols          = config.Columns;
 		}
 
 		readonly StringBuilder _sB;
+		
 		const    string        VERIFY_ROOMS_PREFIX    = "Veriying the number of rooms: ";
 		const    string        COULD_NOT_SET_PREFIX   = "Could not set ";
 		const    string        TO_LAYER               = " to layer ";

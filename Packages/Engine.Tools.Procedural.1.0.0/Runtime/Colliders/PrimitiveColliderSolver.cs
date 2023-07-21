@@ -5,7 +5,7 @@ using UnityEngine.Tilemaps;
 
 namespace Engine.Procedural {
 	public class PrimitiveCollisionSolver : CollisionSolver {
-		protected override Tilemap GroundTilemap { get; }
+		protected override Tilemap BoundaryTilemap { get; }
 		float SkinWidth { get; }
 		float Radius    { get; }
 
@@ -87,7 +87,7 @@ namespace Engine.Procedural {
 		public PrimitiveCollisionSolver(ProceduralConfig config) {
 			SkinWidth     = config.PrimitiveColliderRadius;
 			Radius        = config.PrimitiveColliderRadius;
-			GroundTilemap = config.TileMapDictionary[TileMapType.Ground];
+			BoundaryTilemap = config.TileMapDictionary[TileMapType.Ground];
 		}
 	}
 }

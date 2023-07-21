@@ -20,7 +20,7 @@ namespace Engine.Procedural {
 		}
 
 		public void LogHeapMemoryAllocated() {
-			GenLogging.LogWithTimeStamp(
+			GenLogging.Instance.LogWithTimeStamp(
 				LogLevel.Normal,
 				StopWatch.TimeElapsed,
 				Message.HEAP_ALLOCATION + TotalMemoryAllocated,

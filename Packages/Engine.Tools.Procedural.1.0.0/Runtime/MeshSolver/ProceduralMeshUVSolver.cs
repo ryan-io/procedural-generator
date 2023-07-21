@@ -22,10 +22,6 @@ namespace Engine.Procedural {
 				uvs[i] = new Vector2(uvX, uvY);
 			}
 
-#if UNITY_EDITOR || UNITY_STANDALONE
-			var log = new UnityLogging();
-			log.Msg("UV's have been calculated.");
-#endif
 			return uvs;
 		}
 	}

@@ -1,10 +1,12 @@
 ﻿using System.Globalization;
+using System.Reflection;
 using System.Text;
 using BCL;
 using UnityBCL;
+using UnityEngine;
 
 namespace Engine.Procedural {
-	public static class GenLogging {
+	public class GenLogging : Singleton<GenLogging> {
 		// public const string GeneratedMeshBackground = "Generated Mesh Background";
 		// public const string GroundLayerName         = "Ground";
 		// public const string ObstaclesLayerName      = "Obstacles";
@@ -18,7 +20,27 @@ namespace Engine.Procedural {
 		const        string TIMESTAMP_LABEL = ":::: ELAPSED - ";
 		const        string UNIT            = "sec.";
 
-		public static void LogWithTimeStamp(LogLevel level, float totalTime, string msg, string ctx) {
+		public void ClearConsole() {
+
+		}
+		
+		public void Log(string msg, string ctx, LogLevel level = LogLevel.Normal) {
+#if UNITY_EDITOR || UNITY_STANDALONE
+			Sb.Clear();
+			Sb.Append(ctx);
+			Sb.Append(SPACE);
+			Sb.Append(UNIT);
+
+			if (level == LogLevel.Normal)
+				Logger.Msg(msg, size: 14, italic: true, ctx: Sb.ToString());
+			else if (level == LogLevel.Warning)
+				Logger.Warning(msg, size: 14, italic: true, ctx: Sb.ToString());
+			else if (level == LogLevel.Error)
+				Logger.Error(msg, size: 15, italic: true, bold: true, ctx: Sb.ToString());
+#endif
+		}
+
+		public void LogWithTimeStamp(LogLevel level, float totalTime, string msg, string ctx) {
 #if UNITY_EDITOR || UNITY_STANDALONE
 			Sb.Clear();
 			Sb.Append(ctx);
@@ -34,6 +56,11 @@ namespace Engine.Procedural {
 			else if (level == LogLevel.Error)
 				Logger.Error(msg, size: 15, italic: true, bold: true, ctx: Sb.ToString());
 #endif
+		}
+
+
+		public GenLogging() {
+			
 		}
 
 		static readonly UnityLogging  Logger = new();

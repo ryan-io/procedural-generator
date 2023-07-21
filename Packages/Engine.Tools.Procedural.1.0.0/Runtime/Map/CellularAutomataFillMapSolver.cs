@@ -30,7 +30,7 @@ namespace Engine.Procedural {
 
 			var timeDelta = StopWatch.TimeElapsed - startTime;
 
-			GenLogging.LogWithTimeStamp(
+			GenLogging.Instance.LogWithTimeStamp(
 				LogLevel.Normal,
 				StopWatch.TimeElapsed,
 				"Total time to fill map: " + timeDelta,
