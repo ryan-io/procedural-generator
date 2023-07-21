@@ -28,8 +28,6 @@ namespace Engine.Procedural {
 #if UNITY_EDITOR || UNITY_STANDALONE
 			Sb.Clear();
 			Sb.Append(ctx);
-			Sb.Append(SPACE);
-			Sb.Append(UNIT);
 
 			if (level == LogLevel.Normal)
 				Logger.Msg(msg, size: 14, italic: true, ctx: Sb.ToString());

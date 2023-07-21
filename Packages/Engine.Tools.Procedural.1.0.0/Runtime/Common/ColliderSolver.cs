@@ -1,5 +1,7 @@
 // Engine.Procedural
 
+using System;
+using System.Runtime.CompilerServices;
 using BCL;
 using UnityEngine;
 
@@ -7,37 +9,42 @@ namespace Engine.Procedural {
 	public class ColliderSolver {
 		ProceduralConfig   Config       { get; }
 		StopWatchWrapper   StopWatch    { get; }
-		GameObject         ProcGenObj  { get; }
+		GameObject         ProcGenObj   { get; }
 		GameObject         ColliderObj  { get; }
 		ColliderSolverType SolverType   { get; }
 		LayerMask          ObstacleMask { get; }
 		LayerMask          BoundaryMask { get; }
 
-		public void Solve(MapData mapData) {
-			CollisionSolver solver;
+		public void Solve(MapData mapData, [CallerMemberName] string caller = "") {
+			try {
+				CollisionSolver solver;
 
-			var dto = new CollisionSolverDto(
-				mapData,
-				ColliderObj,
-				ObstacleMask,
-				BoundaryMask);
+				var dto = new CollisionSolverDto(
+					mapData,
+					ColliderObj,
+					ObstacleMask,
+					BoundaryMask);
 
-			if (SolverType == ColliderSolverType.Box)
-				solver = new BoxCollisionSolver(Config, ProcGenObj);
+				if (SolverType == ColliderSolverType.Box)
+					solver = new BoxCollisionSolver(Config, ProcGenObj);
 
-			else if (SolverType == ColliderSolverType.Edge)
-				solver = new EdgeCollisionSolver(Config, StopWatch);
+				else if (SolverType == ColliderSolverType.Edge)
+					solver = new EdgeCollisionSolver(Config, StopWatch);
 
-			else
-				solver = new PrimitiveCollisionSolver(Config);
+				else
+					solver = new PrimitiveCollisionSolver(Config);
 
-			solver.CreateCollider(dto);
+				solver.CreateCollider(dto);
+			}
+			catch (Exception) {
+				GenLogging.Instance.Log("Error thrown " + caller, "ColliderSolver", LogLevel.Error);
+			}
 		}
 
 		public ColliderSolver(
-			ProceduralConfig config, 
+			ProceduralConfig config,
 			GameObject procGenObj,
-			GameObject colliderObj, 
+			GameObject colliderObj,
 			StopWatchWrapper stopWatch) {
 			Config       = config;
 			ObstacleMask = config.ObstacleLayerMask;

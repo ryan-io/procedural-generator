@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using ProceduralAuxiliary;
 using UnityBCL;
 using UnityEngine;
@@ -6,13 +7,13 @@ using UnityEngine.Tilemaps;
 namespace Engine.Procedural {
 	public class PrimitiveCollisionSolver : CollisionSolver {
 		protected override Tilemap BoundaryTilemap { get; }
-		float SkinWidth { get; }
-		float Radius    { get; }
+		float                      SkinWidth       { get; }
+		float                      Radius          { get; }
 
 
-		public override void CreateCollider(CollisionSolverDto dto) {
+		public override void CreateCollider(CollisionSolverDto dto, [CallerMemberName] string caller = "") {
 			var data = dto.MapData;
-			
+
 			dto.ColliderGameObject.MakeStatic(true);
 			dto.ColliderGameObject.ZeroPosition();
 
@@ -85,8 +86,8 @@ namespace Engine.Procedural {
 		}
 
 		public PrimitiveCollisionSolver(ProceduralConfig config) {
-			SkinWidth     = config.PrimitiveColliderRadius;
-			Radius        = config.PrimitiveColliderRadius;
+			SkinWidth       = config.PrimitiveColliderRadius;
+			Radius          = config.PrimitiveColliderRadius;
 			BoundaryTilemap = config.TileMapDictionary[TileMapType.Ground];
 		}
 	}

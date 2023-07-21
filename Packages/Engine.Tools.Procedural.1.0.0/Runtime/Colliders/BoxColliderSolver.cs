@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityBCL;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -12,7 +13,7 @@ namespace Engine.Procedural {
 
 		protected override Tilemap BoundaryTilemap { get; }
 
-		public override void CreateCollider(CollisionSolverDto dto) {
+		public override void CreateCollider(CollisionSolverDto dto, [CallerMemberName] string caller = "") {
 			var data = dto.MapData;
 			
 			CreateRotateColliderObject(ZERO_ANGLE,            0f);

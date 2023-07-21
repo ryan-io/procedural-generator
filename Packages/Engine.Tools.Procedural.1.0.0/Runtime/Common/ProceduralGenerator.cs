@@ -1,5 +1,7 @@
 using System;
 using System.Diagnostics;
+using System.Linq;
+using System.Reflection;
 using System.Threading;
 using BCL;
 using CommunityToolkit.HighPerformance;
@@ -136,32 +138,31 @@ namespace Engine.Procedural {
 				var meshSolverData = MeshSolver.SolveAndCreate(mapBorder);
 
 				_data = new MapData(TileHashset, meshSolverData);
-
-				ColliderSolver.Solve(_data);
-
+				
 				new PrepPathfindingMesh(gameObject).Prep(PathfindingMeshObj, meshSolverData);
 				var gridGraph = GridGraphBuilder.Build();
 
 				NavGraphRulesSolver.ResetGridGraphRules(gridGraph);
 				NavGraphRulesSolver.SetGridGraphRules(gridGraph);
-				
+
 				DataProcessor = new DataProcessor(_config, _data, RegionRemoverSolver.Rooms);
 
 				var scannerArgs = new GraphScanner.Args(
 					gridGraph,
 					() => {
 						var erosionData = ErosionSolver.Erode(gridGraph);
-						
+						ColliderSolver.Solve(_data);
+
 						GenLogging.Instance.Log("Setting shifted tile positions in map data", "MapData");
-						
+
 						_data.TilePositionsShifted = erosionData.TilePositionsShifted;
-						
+
 						new CutGraphColliders().Cut(_config.ColliderCutters);
 						new SerializeSeedInfo().Serialize(GetSeedInfo(), _config.SeedInfoSerializer, _config.Name, StopWatch);
 						new CreateBoundaryColliders(_config, DataProcessor).Create(GeneratedCollidersObj);
 
 						DataProcessor.IsReady = true;
-						
+
 						AstarSerializer.SerializeCurrentAstarGraph(
 							_config.PathfindingSerializer,
 							GetAstarSerializationName);
@@ -190,15 +191,11 @@ namespace Engine.Procedural {
 			catch (Exception e) {
 #region EXCEPTIONS
 
-				var stackTrace = new StackTrace(e).GetFrame(0).GetMethod().Name;
-
 				GenLogging.Instance.LogWithTimeStamp(
 					LogLevel.Error,
 					StopWatch.TimeElapsed,
-					e.Message,
-					Message.CTX_ERROR + Constants.SPACE + e.TargetSite.Name + Constants.UNDERSCORE + stackTrace);
-
-				HandleErrorState();
+					e.Message + Constants.UNDERSCORE + e.Source,
+					Message.CTX_ERROR + Constants.SPACE + e.TargetSite.Name + Constants.UNDERSCORE + e.GetMethodThatThrew(out _));
 
 #endregion
 			}
@@ -221,6 +218,12 @@ namespace Engine.Procedural {
 				Observables[StateObservableId.ON_DISPOSE].Signal();
 				StateMachine.DeleteSubscribers();
 
+				GenLogging.Instance.LogWithTimeStamp(
+					LogLevel.Normal,
+					StopWatch.TimeElapsed,
+					"Generation complete.",
+					"Completion");
+
 #endregion
 			}
 		}
@@ -235,7 +238,7 @@ namespace Engine.Procedural {
 			try {
 				IsDataSet = false;
 				GenLogging.Instance.ClearConsole();
-				
+
 				new ConfigCleaner().Clean(_config);
 				new TilemapCleaner().Clean(_config);
 				new ColliderGameObjectCleaner().Clean(gameObject);
@@ -311,7 +314,7 @@ namespace Engine.Procedural {
 
 			//RoomCalculator.DrawRooms();
 			// DataProcessor.DrawMapBoundary();
-			 DataProcessor.DrawRoomOutlines();
+			DataProcessor.DrawRoomOutlines();
 			//DataProcessor.DrawTilePositionsShifted();
 		}
 	}
