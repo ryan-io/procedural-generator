@@ -153,10 +153,10 @@ namespace Engine.Procedural {
 				var lastPoint = edgePoints.Last();
 
 				if (Vector2.Distance(pos, lastPoint) <= MAX_DISTANCE_BETWEEN_POINTS) {
-					if (!IsInLine(pos.x, lastPoint.x) &&
-					    !IsInLine(pos.y, lastPoint.y)) {
+					// if (!IsInLine(pos.x, lastPoint.x) &&
+					//     !IsInLine(pos.y, lastPoint.y)) {
 						AddEdgePoint(edgePoints, pos);
-					}
+					//}
 				}
 			}
 			else {
