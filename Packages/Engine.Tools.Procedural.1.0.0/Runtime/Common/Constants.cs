@@ -44,6 +44,8 @@ namespace Engine.Procedural {
 		public const int CELL_SIZE = 1;
 
 		public const int MAP_DIMENSION_LIMIT = 320;
+
+		public const float FLOATING_POINT_ERROR = 0.0005f;
 		
 		public static readonly Color[] Color =
 			{ UnityEngine.Color.red, UnityEngine.Color.green, UnityEngine.Color.cyan, UnityEngine.Color.yellow, UnityEngine.Color.magenta, UnityEngine.Color.blue, UnityEngine.Color.white };

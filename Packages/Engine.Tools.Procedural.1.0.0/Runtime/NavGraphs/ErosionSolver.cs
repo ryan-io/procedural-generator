@@ -3,6 +3,9 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 using BCL;
 using Pathfinding;
 using UnityEngine;
@@ -35,34 +38,43 @@ namespace Engine.Procedural {
 			graph.erodeIterations = NodesToErodeAtBoundaries;
 			graph.erosionFirstTag = StartingNodeIndexToErode;
 
-			ProcessErosion(graph);
-
-			GenLogging.Instance.Log("Counting nodes passed: " + graph.CountNodes(), "AnotherNodeCountVeri.");
-			GenLogging.Instance.Log("Total shifted tile positions is: " + TilePositionsShifted.Count, "TilePositions");
+			try {
+				ProcessErosion(graph);
+				GenLogging.Instance.Log("Counting nodes passed: " + graph.CountNodes(), "AnotherNodeCountVeri.");
+				GenLogging.Instance.Log("Total shifted tile positions is: " + TilePositionsShifted.Count,
+					"TilePositions");
+			}
+			catch (Exception e) {
+				GenLogging.Instance.Log(e.Message, e.GetMethodThatThrew(out _), LogLevel.Error);
+			}
 
 			return new ErosionSolverData(NodePositions, TilePositions, TilePositionsShifted);
 		}
 
-		 void ProcessErosion(GridGraph graph) {
+		unsafe void ProcessErosion(GridGraph graph, [CallerMemberName] string caller = "") {
 			// may need to use Astar.Active.gridGraph
 			// grab the node positions within from the active graph. do not try to create a vector in a roundabout way.
 			// graph node positions are constructed assuming x-z coords. y-axis is for height testing.
 			var bounds = BoundaryTilemap.cellBounds;
-			//monoModel.ErosionIterator = (int)Mathf.Sqrt(monoModel.NumberOfErodedNodesPerTile);
 			graph.GetNodes(node => NodePositions.Add((Vector3)node.position));
 
-			var span = NodePositions.ToArray().AsSpan();
+			var  array   = NodePositions.ToArray();
+			int* pointer = stackalloc int[3*array.Length];
+			var  span    = new Span<Vector3>(pointer, array.Length);
+
+			for (var i = 0; i < span.Length; i++) {
+				span[i] = array[i];
+			}
 
 			for (var i = 0; i < span.Length; i++)
-				QueryGridDataForNodes(i, bounds, graph);
+				QueryGridDataForNodes(span[i], bounds, graph);
 		}
 
-		void QueryGridDataForNodes(int i, BoundsInt bounds, NavGraph gridGraph) {
-			var nodePosition = NodePositions[i];
+		void QueryGridDataForNodes(Vector3 position, BoundsInt bounds, NavGraph gridGraph) {
 			var nodePositionPrime = new Vector3Int(
-				Mathf.FloorToInt(nodePosition.x) + bounds.xMax / 2,
-				Mathf.FloorToInt(nodePosition.y) + bounds.yMax / 2,
-				Mathf.FloorToInt(nodePosition.z) + bounds.zMax / 2);
+				Mathf.FloorToInt(position.x) + bounds.xMax / 2,
+				Mathf.FloorToInt(position.y) + bounds.yMax / 2,
+				Mathf.FloorToInt(position.z) + bounds.zMax / 2);
 
 			var cellPositionPrime = GroundTilemap.GetCellCenterWorld(nodePositionPrime);
 			var cellPosition2D    = new Vector2Int(nodePositionPrime.x, nodePositionPrime.y);
@@ -84,13 +96,12 @@ namespace Engine.Procedural {
 				NodesWithTile++;
 			}
 			else {
-				LocalFloodFill(NumberOfErosionIterations, gridGraph, nodePosition);
+				LocalFloodFill(NumberOfErosionIterations, gridGraph, position);
 				NodesWithoutTile++;
 			}
 		}
 
-		 void LocalFloodFill(int iterator, NavGraph gridGraph, Vector3 shiftPosition) {
-
+		void LocalFloodFill(int iterator, NavGraph gridGraph, Vector3 shiftPosition) {
 			for (var x = 0; x < iterator; x++) {
 				for (var y = 0; y < iterator; y++) {
 					var iteratorNode = gridGraph.GetNearest(shiftPosition).node;

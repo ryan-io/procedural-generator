@@ -138,7 +138,7 @@ namespace Engine.Procedural {
 				var meshSolverData = MeshSolver.SolveAndCreate(mapBorder);
 
 				_data = new MapData(TileHashset, meshSolverData);
-				
+
 				new PrepPathfindingMesh(gameObject).Prep(PathfindingMeshObj, meshSolverData);
 				var gridGraph = GridGraphBuilder.Build();
 
@@ -147,29 +147,97 @@ namespace Engine.Procedural {
 
 				DataProcessor = new DataProcessor(_config, _data, RegionRemoverSolver.Rooms);
 
-				var scannerArgs = new GraphScanner.Args(
-					gridGraph,
-					() => {
-						var erosionData = ErosionSolver.Erode(gridGraph);
-						ColliderSolver.Solve(_data);
+// 				var scannerArgs = new GraphScanner.Args(
+// 					gridGraph, 
+// 					() => {
+// 						//var erosionData = ErosionSolver.Erode(gridGraph);
+// 						ColliderSolver.Solve(_data);
+// 					
+// 						GenLogging.Instance.Log("Setting shifted tile positions in map data", "MapData");
+// 					
+// 						//_data.TilePositionsShifted = erosionData.TilePositionsShifted;
+// 					
+// 						new CutGraphColliders().Cut(_config.ColliderCutters);
+// 						new SerializeSeedInfo().Serialize(GetSeedInfo(), _config.SeedInfoSerializer, _config.Name, StopWatch);
+// 						new CreateBoundaryColliders(_config, DataProcessor).Create(GeneratedCollidersObj);
+// 					
+// 						//DataProcessor.IsReady = true;
+// 					
+// 						AstarSerializer.SerializeCurrentAstarGraph(
+// 							_config.PathfindingSerializer,
+// 							GetAstarSerializationName);
+// 						
+// #region COMPLETE
+//
+// 						new SetAllEdgeColliderRadius(_config.EdgeColliderRadius).Set(gameObject);
+// 						StopWatch.Stop();
+// 						StateMachine.ChangeState(ProcessStep.Completing);
+// 						Observables[StateObservableId.ON_COMPLETE].Signal();
+//
+// #endregion
+//
+// #region DISPOSE
+//
+// 						// cleanup
+//
+// 						StateMachine.ChangeState(ProcessStep.Disposing);
+// 						Observables[StateObservableId.ON_DISPOSE].Signal();
+// 						StateMachine.DeleteSubscribers();
+//
+// 						GenLogging.Instance.LogWithTimeStamp(
+// 							LogLevel.Normal,
+// 							StopWatch.TimeElapsed,
+// 							"Generation complete.",
+// 							"Completion");
+//
+// #endregion
+// 					},
+// 					true);
+// 				
+				//GraphScanner.FireForget(scannerArgs, CancellationToken);
+				
+				GraphScanner.ScanGraph(gridGraph);
+				//var erosionData = ErosionSolver.Erode(gridGraph);
+				ColliderSolver.Solve(_data);
+					
+				GenLogging.Instance.Log("Setting shifted tile positions in map data", "MapData");
+					
+				//_data.TilePositionsShifted = erosionData.TilePositionsShifted;
+					
+				new CutGraphColliders().Cut(_config.ColliderCutters);
+				new SerializeSeedInfo().Serialize(GetSeedInfo(), _config.SeedInfoSerializer, _config.Name, StopWatch);
+				new CreateBoundaryColliders(_config, DataProcessor).Create(GeneratedCollidersObj);
+					
+				//DataProcessor.IsReady = true;
+					
+				AstarSerializer.SerializeCurrentAstarGraph(
+					_config.PathfindingSerializer,
+					GetAstarSerializationName);
+						
+#region COMPLETE
 
-						GenLogging.Instance.Log("Setting shifted tile positions in map data", "MapData");
+				new SetAllEdgeColliderRadius(_config.EdgeColliderRadius).Set(gameObject);
+				StopWatch.Stop();
+				StateMachine.ChangeState(ProcessStep.Completing);
+				Observables[StateObservableId.ON_COMPLETE].Signal();
 
-						_data.TilePositionsShifted = erosionData.TilePositionsShifted;
+#endregion
 
-						new CutGraphColliders().Cut(_config.ColliderCutters);
-						new SerializeSeedInfo().Serialize(GetSeedInfo(), _config.SeedInfoSerializer, _config.Name, StopWatch);
-						new CreateBoundaryColliders(_config, DataProcessor).Create(GeneratedCollidersObj);
+#region DISPOSE
 
-						DataProcessor.IsReady = true;
+				// cleanup
 
-						AstarSerializer.SerializeCurrentAstarGraph(
-							_config.PathfindingSerializer,
-							GetAstarSerializationName);
-					},
-					true);
+				StateMachine.ChangeState(ProcessStep.Disposing);
+				Observables[StateObservableId.ON_DISPOSE].Signal();
+				StateMachine.DeleteSubscribers();
 
-				GraphScanner.FireForget(scannerArgs, CancellationToken);
+				GenLogging.Instance.LogWithTimeStamp(
+					LogLevel.Normal,
+					StopWatch.TimeElapsed,
+					"Generation complete.",
+					"Completion");
+
+#endregion
 
 #endregion
 
@@ -195,34 +263,8 @@ namespace Engine.Procedural {
 					LogLevel.Error,
 					StopWatch.TimeElapsed,
 					e.Message + Constants.UNDERSCORE + e.Source,
-					Message.CTX_ERROR + Constants.SPACE + e.TargetSite.Name + Constants.UNDERSCORE + e.GetMethodThatThrew(out _));
-
-#endregion
-			}
-			finally {
-#region COMPLETE
-
-				new SetAllEdgeColliderRadius(_config.EdgeColliderRadius).Set(gameObject);
-				StopWatch.Stop();
-				StateMachine.ChangeState(ProcessStep.Completing);
-				Observables[StateObservableId.ON_COMPLETE].Signal();
-				Tools.LogHeapMemoryAllocated();
-
-#endregion
-
-#region DISPOSE
-
-				// cleanup
-
-				StateMachine.ChangeState(ProcessStep.Disposing);
-				Observables[StateObservableId.ON_DISPOSE].Signal();
-				StateMachine.DeleteSubscribers();
-
-				GenLogging.Instance.LogWithTimeStamp(
-					LogLevel.Normal,
-					StopWatch.TimeElapsed,
-					"Generation complete.",
-					"Completion");
+					Message.CTX_ERROR + Constants.SPACE + e.TargetSite.Name + Constants.UNDERSCORE +
+					e.GetMethodThatThrew(out _));
 
 #endregion
 			}
