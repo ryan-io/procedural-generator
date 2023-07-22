@@ -43,17 +43,15 @@ namespace Engine.Procedural {
 			return new ErosionSolverData(NodePositions, TilePositions, TilePositionsShifted);
 		}
 
-		void ProcessErosion(GridGraph graph) {
-			// may need to use Atar.Active.gridGraph
+		 void ProcessErosion(GridGraph graph) {
+			// may need to use Astar.Active.gridGraph
 			// grab the node positions within from the active graph. do not try to create a vector in a roundabout way.
 			// graph node positions are constructed assuming x-z coords. y-axis is for height testing.
 			var bounds = BoundaryTilemap.cellBounds;
 			//monoModel.ErosionIterator = (int)Mathf.Sqrt(monoModel.NumberOfErodedNodesPerTile);
 			graph.GetNodes(node => NodePositions.Add((Vector3)node.position));
 
-			// int* pointer  = stackalloc int[NodePositions.Count];
-			// var  span     = new Span<Vector3>(pointer, NodePositions.Count);
-			var span = new Span<Vector3>(NodePositions.ToArray());
+			var span = NodePositions.ToArray().AsSpan();
 
 			for (var i = 0; i < span.Length; i++)
 				QueryGridDataForNodes(i, bounds, graph);
@@ -91,7 +89,8 @@ namespace Engine.Procedural {
 			}
 		}
 
-		void LocalFloodFill(int iterator, NavGraph gridGraph, Vector3 shiftPosition) {
+		 void LocalFloodFill(int iterator, NavGraph gridGraph, Vector3 shiftPosition) {
+
 			for (var x = 0; x < iterator; x++) {
 				for (var y = 0; y < iterator; y++) {
 					var iteratorNode = gridGraph.GetNearest(shiftPosition).node;

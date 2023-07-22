@@ -25,115 +25,30 @@ namespace Engine.Procedural {
 		///					*****   THIS IS AN UNSAFE METHOD   *****
 		/// </summary>
 		/// <param name="dto">Relevant data transfer object to create colliders</param>
-		public override void CreateCollider(CollisionSolverDto dto, [CallerMemberName] string caller = "") {
+		public override unsafe void CreateCollider(CollisionSolverDto dto, [CallerMemberName] string caller = "") {
 			try {
 				var data = dto.MapData;
-				GenLogging.Instance.LogWithTimeStamp(
-					LogLevel.Normal,
-					StopWatch.TimeElapsed,
-					GetVerifyRoomsMsg(data.RoomOutlines.Count),
-					CTX);
-
+				LogOutlineCount(data);
 				var outlineCounter = 0;
-				GenLogging.Instance.Log("Total roomoulines: "+ data.RoomOutlines.Count.ToString(), "RoomOUtlines", LogLevel.Test);
+				LogRoomOutlineCount(data);
 
-				var edgePoints = new List<Vector2>();
-				
+				var edgePoints     = new List<Vector2>();
+				var allocationSize = GetLargestCount(data.RoomOutlines);
+
+				int* pointer = stackalloc int[allocationSize];
+				var  span    = new Span<int>(pointer, allocationSize);
+
 				foreach (var outline in data.RoomOutlines) {
+					span.Clear();
+					var array = outline.ToArray();
+
+					for (var i = 0; i < array.Length; i++) 
+						span[i] = array[i];
+					
 					if (outline.Count < 2)
 						continue;
 
-					edgePoints.Clear();
-					outlineCounter++;
-					
-					GenLogging.Instance.Log(
-						"Total nodes for outline #" + outlineCounter + ": " + outline.Count,
-						"CreateColliders");
-
-					// iteratorSpan.Clear();
-					// outlineSpan.CopyTo(iteratorSpan);
-
-					var roomObject = CreateRoom(dto, outlineCounter);
-					var edgeCollider = roomObject.AddComponent<EdgeCollider2D>();
-					edgeCollider.offset = EdgeColliderOffset;
-
-					//var workingSlice = iteratorSpan.Slice(0, outlineSpan.Length);
-
-					for (var i = 0; i < outline.Count; i++) {
-						var pos = new Vector3(
-							data.MeshVertices[outline[i]].x,
-							data.MeshVertices[outline[i]].y,
-							0);
-
-						if (i >= 1) {
-							var lastPost = edgePoints.Last();
-
-							if (Vector2.Distance(pos, lastPost) <= 20f) {
-								edgePoints.Add(pos);
-							}
-						}
-						else {
-							edgePoints.Add(pos);
-							
-						}
-						
-						// var worldPos = BoundaryTilemap.WorldToCell(testPos);
-						// var hasTile  = BoundaryTilemap.HasTile(worldPos);
-
-						/*
-						if (hasTile) {
-							var comparer = new Vector2Int(worldPos.x, worldPos.y);
-							var item = hashSet.FirstOrDefault(record =>
-								                                  record.Coordinate == comparer &&
-								                                  record.IsLocalBoundary);
-	
-							if (item == null)
-								continue;
-							
-							var shiftedBorder = BorderSize / 2f;
-							var shiftedX      = Mathf.CeilToInt(-NumOfRows  / 2f);
-							var shiftedY      = Mathf.FloorToInt(-NumOfCols / 2f);
-							
-							var pos = new Vector2(
-								item.Coordinate.x + shiftedX + shiftedBorder,
-								item.Coordinate.y + shiftedY + shiftedBorder);
-							
-							if (i > 0 && i < iteratorLength) {
-								if (edgePoints.Count < 1) 
-									edgePoints.Add(pos);
-	
-								else {
-									var previousPoint = edgePoints.Last();
-	
-									if (Vector2.Distance(previousPoint, pos) <= 20.0f)
-										edgePoints.Add(pos);
-								}
-							}
-							else 
-								if (!edgePoints.Contains(item.Coordinate))
-									edgePoints.Add(pos);
-						}*/
-					}
-
-					if (edgePoints.IsEmptyOrNull() || edgePoints.Count <= 2) {
-						if (roomObject) {
-#if UNITY_EDITOR
-
-							Object.DestroyImmediate(roomObject);
-							
-#else
-							Object.DestroyImmediate(roomObject);
-#endif
-							continue;
-						}
-					}
-
-					var array = edgePoints.ToArray();
-					GenLogging.Instance.Log("Total edgepoints: " + edgePoints.Count, "EgePoints");
-					edgeCollider.points = array;
-
-					// Colliders[outlineCounter] = edgeCollider;
-					// outlineCounter++;
+					outlineCounter = ProcessOutline(dto, edgePoints, outlineCounter, outline, data);
 				}
 			}
 
@@ -144,6 +59,93 @@ namespace Engine.Procedural {
 			}
 		}
 
+		int GetLargestCount(List<List<int>> outlines) {
+			var output = 0;
+
+			foreach (var item in outlines) {
+				if (item.Count > output)
+					output = item.Count;
+			}
+
+			return output;
+		}
+
+		static void LogRoomOutlineCount(MapData data) {
+			GenLogging.Instance.Log("Total roomoulines: " + data.RoomOutlines.Count.ToString(), "RoomOUtlines",
+				LogLevel.Test);
+		}
+
+		void LogOutlineCount(MapData data) {
+			GenLogging.Instance.LogWithTimeStamp(
+				LogLevel.Normal,
+				StopWatch.TimeElapsed,
+				GetVerifyRoomsMsg(data.RoomOutlines.Count),
+				CTX);
+		}
+
+		unsafe int ProcessOutline(
+			CollisionSolverDto dto, List<Vector2> edgePoints,
+			int outlineCounter,
+			List<int> outline,
+			MapData data) {
+			edgePoints.Clear();
+			outlineCounter++;
+
+			GenLogging.Instance.Log(
+				"Total nodes for outline #" + outlineCounter + ": " + outline.Count,
+				"CreateColliders");
+
+			var roomObject   = CreateRoom(dto, outlineCounter);
+			var edgeCollider = roomObject.AddComponent<EdgeCollider2D>();
+			edgeCollider.offset = EdgeColliderOffset;
+
+			var  array   = outline.ToArray();
+			int* pointer = stackalloc int[array.Length];
+			var  span    = new Span<int>(pointer, array.Length);
+
+			for (var i = 0; i < array.Length; i++) {
+				span[i] = array[i];
+			}
+			
+			for (var i = 0; i < array.Length; i++)
+				DetermineColliderOutline(data, span, i, edgePoints);
+
+			if (edgePoints.IsEmptyOrNull() || edgePoints.Count <= MIN_POINTS_REQUIRED) {
+				if (roomObject) {
+#if UNITY_EDITOR
+
+					Object.DestroyImmediate(roomObject);
+
+#else
+					Object.DestroyImmediate(roomObject);
+#endif
+					return outlineCounter;
+				}
+			}
+			else
+				edgeCollider.points = edgePoints.ToArray();
+
+			return outlineCounter;
+		}
+
+		static void DetermineColliderOutline(MapData data, Span<int> outline, int i, List<Vector2> edgePoints) {
+			var pos = new Vector3(
+				data.MeshVertices[outline[i]].x,
+				data.MeshVertices[outline[i]].y,
+				0);
+
+			if (i >= 1) {
+				var lastPost = edgePoints.Last();
+
+				if (Vector2.Distance(pos, lastPost) <= MAX_DISTANCE_BETWEEN_POINTS) {
+					edgePoints.Add(pos);
+				}
+			}
+			else {
+				edgePoints.Add(pos);
+			}
+		}
+
 		GameObject CreateRoom(CollisionSolverDto dto, int outlineCounter) {
 			var roomObject = AddRoom(dto.ColliderGameObject, identifier: outlineCounter.ToString());
 			roomObject.MakeStatic(true);
@@ -151,31 +153,10 @@ namespace Engine.Procedural {
 			return roomObject;
 		}
 
-		int DetermineHighestCollectionCount(MapData data) {
-			int currentHighestCount = 0;
-
-			foreach (var outline in data.RoomOutlines) {
-				if (outline.Count > currentHighestCount)
-					currentHighestCount = outline.Count;
-			}
-
-			return currentHighestCount;
-		}
-
 		string GetVerifyRoomsMsg(int count) {
 			_sB.Clear();
 			_sB.Append(VERIFY_ROOMS_PREFIX);
 			_sB.Append(count);
-
-			return _sB.ToString();
-		}
-
-		string GetCouldNotSetWarning(string roomName, LayerMask layer) {
-			_sB.Clear();
-			_sB.Append(COULD_NOT_SET_PREFIX);
-			_sB.Append(roomName);
-			_sB.Append(TO_LAYER);
-			_sB.Append(layer.ToString());
 
 			return _sB.ToString();
 		}
@@ -194,11 +175,10 @@ namespace Engine.Procedural {
 
 		readonly StringBuilder _sB;
 
-		const string VERIFY_ROOMS_PREFIX    = "Veriying the number of rooms: ";
-		const string COULD_NOT_SET_PREFIX   = "Could not set ";
-		const string TO_LAYER               = " to layer ";
-		const string CTX                    = "EdgeColliderSolver";
-		const int    CLOSED_COLLIDER_POINTS = 4;
+		const string VERIFY_ROOMS_PREFIX         = "Veriying the number of rooms: ";
+		const string CTX                         = "EdgeColliderSolver";
+		const int    MIN_POINTS_REQUIRED         = 2;
+		const float  MAX_DISTANCE_BETWEEN_POINTS = 10f;
 
 		// TODO - Why was 50 chosen?
 		const int COLLIDER_ALLOCATION_SIZE = 150;

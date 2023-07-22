@@ -314,7 +314,7 @@ namespace Engine.Procedural {
 
 			//RoomCalculator.DrawRooms();
 			// DataProcessor.DrawMapBoundary();
-			DataProcessor.DrawRoomOutlines();
+			//DataProcessor.DrawRoomOutlines();
 			//DataProcessor.DrawTilePositionsShifted();
 		}
 	}
