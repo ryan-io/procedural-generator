@@ -29,7 +29,7 @@ namespace Engine.Procedural {
 			}
 		}
 
-		void ScanGraph(NavGraph graph) => AstarPath.active.Scan(graph);
+		public void ScanGraph(NavGraph graph) => AstarPath.active.Scan(graph);
 
 		IEnumerator ScanGraphAsync(Args args, CancellationToken token) {
 			Physics.SyncTransforms();

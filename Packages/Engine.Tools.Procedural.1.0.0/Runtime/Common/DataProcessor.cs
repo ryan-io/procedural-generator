@@ -124,9 +124,9 @@ namespace Engine.Procedural {
 
 			GenLogging.Instance.Log("Processing nodes: " + MapData.TilePositionsShifted.Count, "NodeCount");
 
-			var tiles = MapData.TilePositionsShifted;
-			//int* tempAllocator = fixed int[tiles.Count];
-			var span = MapData.TilePositionsShifted.ToArray().AsSpan();
+			var  tiles         = MapData.TilePositionsShifted.ToArray();
+			int* tempAllocator = stackalloc int[tiles.Length];
+			var  span          = new Span<Vector3>(tempAllocator, tiles.Length);
 
 			var records = MapData.TileHashset;
 
