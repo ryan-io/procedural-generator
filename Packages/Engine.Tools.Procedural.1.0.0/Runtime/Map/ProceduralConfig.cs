@@ -1,5 +1,7 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Engine.Tools.Serializer;
 using Pathfinding;
 using Sirenix.OdinInspector;
@@ -14,6 +16,16 @@ namespace Engine.Procedural {
 #region NAME
 
 		[field: SerializeField, Title("Name")] public string Name { get; set; } = "map_" + Guid.NewGuid();
+
+#endregion
+
+#region DESERIALIZATION
+
+		[field: SerializeField, Title("Deserialization"), ValueDropdown(@"GetAllSeedsWrapper")] 
+		public string NameSeedIteration { get; private set; }
+		
+		IEnumerable GetAllSeedsWrapper() 
+			=> SeedInfoSerializer == null ? Enumerable.Empty<string>() : ProceduralSerializer.GetAllSeeds(SeedInfoSerializer);
 
 #endregion
 

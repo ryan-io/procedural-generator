@@ -38,15 +38,15 @@ namespace Engine.Procedural {
 			graph.erodeIterations = NodesToErodeAtBoundaries;
 			graph.erosionFirstTag = StartingNodeIndexToErode;
 
-			try {
-				ProcessErosion(graph);
-				GenLogging.Instance.Log("Counting nodes passed: " + graph.CountNodes(), "AnotherNodeCountVeri.");
-				GenLogging.Instance.Log("Total shifted tile positions is: " + TilePositionsShifted.Count,
-					"TilePositions");
-			}
-			catch (Exception e) {
-				GenLogging.Instance.Log(e.Message, e.GetMethodThatThrew(out _), LogLevel.Error);
-			}
+			// try {
+			// 	ProcessErosion(graph);
+			// 	GenLogging.Instance.Log("Counting nodes passed: " + graph.CountNodes(), "AnotherNodeCountVeri.");
+			// 	GenLogging.Instance.Log("Total shifted tile positions is: " + TilePositionsShifted.Count,
+			// 		"TilePositions");
+			// }
+			// catch (Exception e) {
+			// 	GenLogging.Instance.Log(e.Message, e.GetMethodThatThrew(out _), LogLevel.Error);
+			// }
 
 			return new ErosionSolverData(NodePositions, TilePositions, TilePositionsShifted);
 		}

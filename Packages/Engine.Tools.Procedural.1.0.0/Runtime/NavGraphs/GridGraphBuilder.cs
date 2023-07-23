@@ -29,7 +29,7 @@ namespace Engine.Procedural {
 			return graph;
 		}
 
-		void SetGraph(GridGraph graph) {
+		public void SetGraph(GridGraph graph) {
 			graph.cutCorners = true;
 			graph.is2D       = true;
 			graph.rotation   = new Vector3(90f, 0, 0);

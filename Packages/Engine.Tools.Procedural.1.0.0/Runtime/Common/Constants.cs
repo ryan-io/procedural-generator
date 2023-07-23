@@ -9,7 +9,7 @@ namespace Engine.Procedural {
 
 		public const string BACKSLASH = "/";
 
-		public const string SERIALIZED_DATA_FOLDER_NAME = "SerializedData/";
+		public const string SERIALIZED_DATA_FOLDER_ROOT = "SerializedData/";
 
 		public const string SEED_TRACKER_FILE_NAME = "seedTracker";
 

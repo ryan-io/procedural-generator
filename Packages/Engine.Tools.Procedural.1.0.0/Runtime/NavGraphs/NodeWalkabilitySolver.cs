@@ -3,7 +3,6 @@
 using System.Threading;
 using BCL;
 using Cysharp.Threading.Tasks;
-using Engine.Tools.Serializer;
 using Pathfinding;
 using UnityBCL;
 using UnityEngine;
@@ -62,10 +61,10 @@ namespace Engine.Procedural {
 
 		void DeserializeAstarNodeData() {
 			var info = SeedInfo.GetSeedInfo();
-			var job = new AstarSerializer.Job(
-				SerializedDataSaveLocation, info.LastSeed, info.LastIteration, Name);
-
-			new AstarSerializer(StopWatch).DeserializeAstarGraph(job);
+			// var job = new ProceduralSerializer.Job(
+			// 	SerializedDataSaveLocation, info.LastSeed, info.LastIteration, Name);
+			//
+			// new ProceduralSerializer(StopWatch).DeserializeAstarGraph(job);
 		}
 
 		(bool groundStatus, bool boundaryStatus) SetInitialTilemapStatus(
@@ -94,8 +93,8 @@ namespace Engine.Procedural {
 			HeightTestLayerMask        = config.NavGraphHeightTestLayerMask;
 			CollisionDetectionDiameter = config.NavGraphCollisionDetectionDiameter;
 			CollisionDetectionHeight   = config.NavGraphCollisionDetectionHeight;
-			SerializedDataSaveLocation = Constants.SERIALIZED_DATA_FOLDER_NAME;
 			StopWatch                  = stopWatch;
+			SerializedDataSaveLocation = Constants.SERIALIZED_DATA_FOLDER_ROOT;
 		}
 	}
 }

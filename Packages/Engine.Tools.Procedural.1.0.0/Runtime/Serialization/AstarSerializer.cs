@@ -1,9 +1,32 @@
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using BCL;
 using Engine.Tools.Serializer;
 using Pathfinding.Serialization;
 
 namespace Engine.Procedural {
-	public class AstarSerializer {
+	public class ProceduralSerializer {
+		SerializerSetup SeedSetup  { get; }
+		SerializerSetup AstarSetup { get; }
+		
+		public static IEnumerable<string> GetAllSeeds(SerializerSetup seedSetup) {
+			var lines = File.ReadAllLines(
+				seedSetup.SaveLocation               +
+				Constants.BACKSLASH              +
+				Constants.SEED_TRACKER_FILE_NAME +
+				Constants.TXT_FILE_TYPE);
+
+			var newLines = new string[lines.Length];
+
+			for (var i = 0; i < newLines.Length; i++) {
+				var l = lines[i];
+				newLines[i] = l.Replace(Constants.SAVE_SEED_PREFIX, "");
+			}
+
+			return newLines.AsEnumerable();
+		}
+
 		StopWatchWrapper StopWatch { get; }
 
 		/// <summary>
@@ -22,47 +45,61 @@ namespace Engine.Procedural {
 			Serializer.SaveBytesData(serializationJob, true);
 		}
 
-		public void DeserializeAstarGraph(Job job) {
-			var output =
-				job.DataPath                +
-				Constants.SAVE_ASTAR_PREFIX +
-				job.NameOfMap               +
-				Constants.UNDERSCORE        +
-				job.Seed                    +
-				Constants.UID               +
-				job.Iteration               +
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="config">The map name, string, and generation iteration as a string</param>
+		public void DeserializeAstarGraph(ProceduralConfig config) {
+			if (string.IsNullOrWhiteSpace(config.NameSeedIteration))
+				return;
+
+			var validationPath = 
+				AstarSetup.SaveLocation     + 
+				Constants.SAVE_ASTAR_PREFIX + 
+				config.NameSeedIteration    +
 				Constants.TXT_FILE_TYPE;
 
-			var hasData = Serializer.TryLoadBytesData(output, out var data);
+			var isValid = File.Exists(validationPath);
 
-			if (hasData)
+			if (!isValid) {
+				GenLogging.Instance.Log(
+					"The provided id: " + config.NameSeedIteration + ", could not be found", 
+					"DeserializeAstarData",
+					LogLevel.Error);
+				return;
+			}
+			
+			var hasData = Serializer.TryLoadBytesData(validationPath, out var data);
+
+			if (hasData) {
+				new GetActiveAstarData().Retrieve();
+				var scanner = new GraphScanner(default);
+				var builder = new GridGraphBuilder(config);
+				var rule    = new NavGraphRulesSolver(config);
+				
 				AstarPath.active.data.DeserializeGraphs(data);
+				var gridGraph = AstarPath.active.data.gridGraph;
+				
+				builder.SetGraph(gridGraph);
+				rule.ResetGridGraphRules(gridGraph);
+				rule.SetGridGraphRules(gridGraph);
+				
+				scanner.ScanGraph(gridGraph);
+			}
 			else {
 				GenLogging.Instance.LogWithTimeStamp(
 					LogLevel.Warning,
 					StopWatch.TimeElapsed,
-					Message.CANNOT_GET_SERIALIZED_ASTAR_DATA + output,
+					Message.CANNOT_GET_SERIALIZED_ASTAR_DATA + 	validationPath,
 					Constants.DESERIALIZE_ASTAR_CTX
 				);
 			}
 		}
 
-		public readonly struct Job {
-			public int    Iteration { get; }
-			public string DataPath  { get; }
-			public string Seed      { get; }
-			public string NameOfMap { get; }
-
-			public Job(string dataPath, string seed, int iteration, string nameOfMap) {
-				DataPath  = dataPath;
-				Seed      = seed;
-				Iteration = iteration;
-				NameOfMap = nameOfMap;
-			}
-		}
-
-		public AstarSerializer(StopWatchWrapper stopWatch) {
-			StopWatch = stopWatch;
+		public ProceduralSerializer(ProceduralConfig config, StopWatchWrapper stopWatch) {
+			SeedSetup  = config.SeedInfoSerializer;
+			AstarSetup = config.PathfindingSerializer;
+			StopWatch  = stopWatch;
 		}
 	}
 }

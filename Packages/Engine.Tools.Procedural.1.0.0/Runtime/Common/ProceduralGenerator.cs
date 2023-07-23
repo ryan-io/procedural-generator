@@ -25,8 +25,7 @@ namespace Engine.Procedural {
 	/// https://stackoverflow.com/questions/4260207/how-do-you-get-the-width-and-height-of-a-multi-dimensional-array
 	/// </summary>
 	[RequireComponent(typeof(MeshFilter))]
-	public class ProceduralGenerator : Singleton<ProceduralGenerator, ProceduralGenerator>,
-	                                   ISeedInfo {
+	public class ProceduralGenerator : Singleton<ProceduralGenerator, ProceduralGenerator>, ISeedInfo {
 		[field: SerializeField] [field: Required]
 		ProceduralConfig _config = null!;
 
@@ -45,13 +44,13 @@ namespace Engine.Procedural {
 		ErosionSolver           ErosionSolver           { get; set; }
 
 		//TODO: this should be refactored to be more granular; it is too deep
-		MeshSolver          MeshSolver          { get; set; }
-		ColliderSolver      ColliderSolver      { get; set; }
-		GridGraphBuilder    GridGraphBuilder    { get; set; }
-		NavGraphRulesSolver NavGraphRulesSolver { get; set; }
-		GraphScanner        GraphScanner        { get; set; }
-		AstarSerializer     AstarSerializer     { get; set; }
-		DataProcessor       DataProcessor       { get; set; }
+		MeshSolver           MeshSolver           { get; set; }
+		ColliderSolver       ColliderSolver       { get; set; }
+		GridGraphBuilder     GridGraphBuilder     { get; set; }
+		NavGraphRulesSolver  NavGraphRulesSolver  { get; set; }
+		GraphScanner         GraphScanner         { get; set; }
+		ProceduralSerializer ProceduralSerializer { get; set; }
+		DataProcessor        DataProcessor        { get; set; }
 
 		GameObject                GeneratedCollidersObj { get; set; }
 		GameObject                PathfindingMeshObj    { get; set; }
@@ -195,25 +194,25 @@ namespace Engine.Procedural {
 // 					true);
 // 				
 				//GraphScanner.FireForget(scannerArgs, CancellationToken);
-				
+
+				var erosionData = ErosionSolver.Erode(gridGraph);
 				GraphScanner.ScanGraph(gridGraph);
-				//var erosionData = ErosionSolver.Erode(gridGraph);
 				ColliderSolver.Solve(_data);
-					
+
 				GenLogging.Instance.Log("Setting shifted tile positions in map data", "MapData");
-					
+
 				//_data.TilePositionsShifted = erosionData.TilePositionsShifted;
-					
+
 				new CutGraphColliders().Cut(_config.ColliderCutters);
 				new SerializeSeedInfo().Serialize(GetSeedInfo(), _config.SeedInfoSerializer, _config.Name, StopWatch);
 				new CreateBoundaryColliders(_config, DataProcessor).Create(GeneratedCollidersObj);
-					
+
 				//DataProcessor.IsReady = true;
-					
-				AstarSerializer.SerializeCurrentAstarGraph(
+
+				ProceduralSerializer.SerializeCurrentAstarGraph(
 					_config.PathfindingSerializer,
 					GetAstarSerializationName);
-						
+
 #region COMPLETE
 
 				new SetAllEdgeColliderRadius(_config.EdgeColliderRadius).Set(gameObject);
@@ -296,15 +295,25 @@ namespace Engine.Procedural {
 			}
 		}
 
-		async UniTask HandleGeneratorDidNotRun() {
+		void HandleGeneratorDidNotRun() {
 			// deserialize Astar data and try to parse serialized data to a pathfinding gridGraph
-			await NodeSerializationSolver.FireTask(CancellationToken);
+			ProceduralSerializer.DeserializeAstarGraph(_config);
+			
+			//await NodeSerializationSolver.FireTask(CancellationToken);
+		}
+
+		public readonly struct TilemapSetup {
+			public void Setup(ProceduralConfig config) {
+				
+			}
+
 		}
 
 		[Button]
 		void InitializeGenerator() {
 			IsDataSet = false;
 			new SeedValidator(_config).Validate();
+			new TilemapSetup().Setup(_config);
 			new GetActiveAstarData().Retrieve();
 
 			StateMachine            = new StateMachine<ProcessStep>(gameObject, true);
@@ -324,7 +333,7 @@ namespace Engine.Procedural {
 			GridGraphBuilder        = new GridGraphBuilder(_config);
 			NavGraphRulesSolver     = new NavGraphRulesSolver(_config);
 			GraphScanner            = new GraphScanner(StopWatch);
-			AstarSerializer         = new AstarSerializer(StopWatch);
+			ProceduralSerializer    = new ProceduralSerializer(_config, StopWatch);
 
 			Observables = new ObservableCollection<string> {
 				{
@@ -358,6 +367,11 @@ namespace Engine.Procedural {
 			// DataProcessor.DrawMapBoundary();
 			//DataProcessor.DrawRoomOutlines();
 			//DataProcessor.DrawTilePositionsShifted();
+		}
+
+		[Button]
+		void ValidateSerializedFiles() {
+			ProceduralSerializer.DeserializeAstarGraph(_config);
 		}
 	}
 }

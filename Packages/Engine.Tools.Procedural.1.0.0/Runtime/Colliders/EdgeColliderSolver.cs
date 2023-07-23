@@ -219,8 +219,8 @@ namespace Engine.Procedural {
 
 		const string VERIFY_ROOMS_PREFIX         = "Veriying the number of rooms: ";
 		const string CTX                         = "EdgeColliderSolver";
-		const int    MIN_POINTS_REQUIRED         = 4;
-		const float  MAX_DISTANCE_BETWEEN_POINTS = 10f;
+		const int    MIN_POINTS_REQUIRED         = 3;
+		const float  MAX_DISTANCE_BETWEEN_POINTS = 6f;
 
 		// TODO - Why was 50 chosen?
 		const int COLLIDER_ALLOCATION_SIZE = 150;

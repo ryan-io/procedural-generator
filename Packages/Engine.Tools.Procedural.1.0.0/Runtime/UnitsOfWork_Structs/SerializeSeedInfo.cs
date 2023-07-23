@@ -18,19 +18,15 @@ namespace Engine.Procedural {
 			                    Constants.UID              +
 			                    seedInfo.LastIteration;
 
-			Serializer.EnsureDirectoryExists(
-				setup.SaveRoot + Constants.SERIALIZED_DATA_FOLDER_NAME, setup.SaveRoot);
-
 			Serializer.EnsureFileExists(
-				setup.SaveRoot + Constants.SERIALIZED_DATA_FOLDER_NAME,
+				setup.SaveLocation,
 				Constants.SEED_TRACKER_FILE_NAME,
 				setup.FileFormat);
 
 			var trackerPath =
-				setup.SaveRoot                        +
-				Constants.SERIALIZED_DATA_FOLDER_NAME +
-				Constants.BACKSLASH                   +
-				Constants.SEED_TRACKER_FILE_NAME      +
+				setup.SaveLocation               +
+				Constants.BACKSLASH              +
+				Constants.SEED_TRACKER_FILE_NAME +
 				Constants.TXT_FILE_TYPE;
 
 			File.AppendAllText(trackerPath, sanitizedName + Environment.NewLine);
