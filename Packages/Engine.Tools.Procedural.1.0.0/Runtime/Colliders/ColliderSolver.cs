@@ -4,7 +4,7 @@ using UnityBCL;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-namespace Engine.Procedural {
+namespace Engine.Procedural.Runtime {
 	public abstract class CollisionSolver {
 		protected abstract Tilemap BoundaryTilemap { get; }
 		

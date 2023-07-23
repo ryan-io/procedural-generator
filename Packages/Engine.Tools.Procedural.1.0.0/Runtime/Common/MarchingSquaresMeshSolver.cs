@@ -2,7 +2,7 @@
 
 using System;
 
-namespace Engine.Procedural {
+namespace Engine.Procedural.Runtime {
 	public class MarchingSquaresMeshSolver : MeshSolver {
 		public override MeshSolverData SolveAndCreate(int[,] mapBorder) {
 			var (triangles, vertices) = _meshTriangulationSolver.Triangulate(mapBorder);

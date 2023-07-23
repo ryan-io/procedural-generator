@@ -1,8 +1,6 @@
 ﻿// Engine.Procedural
 
-using System.Runtime.CompilerServices;
-
-namespace Engine.Procedural {
+namespace Engine.Procedural.Runtime {
 	public readonly struct ConfigCleaner {
 		public void Clean(ProceduralConfig config) {
 			config.Name = SanitizeName(config.Name);

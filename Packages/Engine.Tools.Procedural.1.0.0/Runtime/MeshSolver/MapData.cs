@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Engine.Procedural {
+namespace Engine.Procedural.Runtime {
 	[Serializable]
 	public class MapData {
 		[field: SerializeField] public TileHashset        TileHashset          { get; private set; }

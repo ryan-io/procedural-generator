@@ -3,7 +3,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Engine.Procedural.Poisson_Spawning {
+namespace Engine.Procedural.Runtime {
 	public class PoissonObjects : Dictionary<GameObject, float> {
 	}
 }

@@ -1,7 +1,7 @@
 using BCL;
 using CommunityToolkit.HighPerformance;
 
-namespace Engine.Procedural {
+namespace Engine.Procedural.Runtime {
 	public class MarchingSquaresSmoothMapSolver : SmoothMapSolver {
 		StopWatchWrapper StopWatch           { get; }
 		int              UpperNeighborLimit  { get; }
@@ -56,11 +56,20 @@ namespace Engine.Procedural {
 		// }
 
 		void GetSmoothedMap(Span2D<int> mapSpanOriginal, Span2D<int> mapSpanCopy) {
-			for (var x = 0; x < NumberOfRows; x++) {
-				for (var y = 0; y < NumberOfCols; y++) {
-					DetermineNeighborLimits(x, y, mapSpanCopy, mapSpanOriginal);
-				}
+			for (var i = 0; i < NumberOfRows * NumberOfCols; i++) {
+				var row   = i / NumberOfCols;
+				var colum = i % NumberOfCols;
+				
+				DetermineNeighborLimits(row, colum, mapSpanCopy, mapSpanOriginal);
 			}
+			
+			
+			//
+			// for (var x = 0; x < NumberOfRows; x++) {
+			// 	for (var y = 0; y < NumberOfCols; y++) {
+			// 		DetermineNeighborLimits(x, y, mapSpanCopy, mapSpanOriginal);
+			// 	}
+			// }
 		}
 
 		void DetermineNeighborLimits(int x, int y, Span2D<int> mapSpanCopy, Span2D<int> mapSpanOriginal) {
@@ -75,7 +84,7 @@ namespace Engine.Procedural {
 
 		int GetAdjacentWallsCount(int x, int y, Span2D<int> mapSpanOriginal) {
 			var count = 0;
-
+			
 			for (var neighborX = x - 1; neighborX <= x + 1; neighborX++) {
 				for (var neighborY = y - 1; neighborY <= y + 1; neighborY++)
 					count = DetermineCount(x, y, neighborX, neighborY, count, mapSpanOriginal);

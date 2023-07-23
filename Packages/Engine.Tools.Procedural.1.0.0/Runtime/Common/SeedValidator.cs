@@ -2,7 +2,7 @@
 
 using UnityBCL;
 
-namespace Engine.Procedural {
+namespace Engine.Procedural.Runtime {
 	public class SeedValidator {
 		public void Validate() {
 			if (_config.UseRandomSeed)

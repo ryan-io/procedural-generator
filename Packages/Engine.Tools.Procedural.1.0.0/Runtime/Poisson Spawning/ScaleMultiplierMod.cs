@@ -1,8 +1,7 @@
-﻿using Engine.Procedural.Poisson_Spawning;
-using Sirenix.OdinInspector;
+﻿using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace Engine.Procedural {
+namespace Engine.Procedural.Runtime {
 	[CreateAssetMenu(fileName = "ScaleMultiplier", menuName = "Utlity/Poisson Spawn Mods/Scale Multiplier")]
 	public sealed class ScaleMultiplierMod : PoissonMod {
 		[SerializeField] [MinMaxSlider(0.1f, 50f, true)]

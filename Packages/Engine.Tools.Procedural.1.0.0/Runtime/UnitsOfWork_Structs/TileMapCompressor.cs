@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-namespace Engine.Procedural {
+namespace Engine.Procedural.Runtime {
 	public readonly struct TileMapCompressor {
 		GameObject TileMapContainer { get; }
 		

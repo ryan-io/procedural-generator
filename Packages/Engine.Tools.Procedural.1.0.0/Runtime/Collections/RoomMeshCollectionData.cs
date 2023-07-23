@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Engine.Procedural {
+namespace Engine.Procedural.Runtime {
 	public class RoomMeshCollectionData : Dictionary<int, RoomMeshData> {
 	}
 }

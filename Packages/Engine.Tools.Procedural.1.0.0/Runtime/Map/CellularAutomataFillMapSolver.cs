@@ -1,7 +1,7 @@
 using BCL;
 using CommunityToolkit.HighPerformance;
 
-namespace Engine.Procedural {
+namespace Engine.Procedural.Runtime {
 	public class CellularAutomataFillMapSolver : FillMapSolver {
 		StopWatchWrapper StopWatch          { get; }
 		int              SeedHash           { get; }
@@ -21,12 +21,21 @@ namespace Engine.Procedural {
 			var rowLength    = primaryMap.Height;
 			var columnLength = primaryMap.Width;
 			var startTime    = StopWatch.TimeElapsed;
-
-			for (var x = 0; x < rowLength; x++) {
-				for (var y = 0; y < columnLength; y++) {
-					primaryMap[x, y] = DetermineWallFill(rowLength, columnLength, x, y, pseudoRandom);
-				}
+			
+			for (var i = 0; i < rowLength * columnLength; i++) {
+				var row   = i / columnLength;
+				var colum = i % columnLength;
+				
+				primaryMap[row, colum] = DetermineWallFill(rowLength, columnLength, row, colum, pseudoRandom);
 			}
+
+			//
+			//
+			// for (var x = 0; x < rowLength; x++) {
+			// 	for (var y = 0; y < columnLength; y++) {
+			// 		primaryMap[x, y] = DetermineWallFill(rowLength, columnLength, x, y, pseudoRandom);
+			// 	}
+			// }
 
 			var timeDelta = StopWatch.TimeElapsed - startTime;
 

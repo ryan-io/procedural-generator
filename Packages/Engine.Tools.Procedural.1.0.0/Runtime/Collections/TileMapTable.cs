@@ -3,7 +3,7 @@ using Sirenix.OdinInspector;
 using UnityBCL;
 using UnityEngine.Tilemaps;
 
-namespace Engine.Procedural {
+namespace Engine.Procedural.Runtime {
 	[Serializable]
 	[TableList]
 	[DictionaryDrawerSettings(KeyLabel = "Map Id", ValueLabel = "Map", DisplayMode = DictionaryDisplayOptions.OneLine)]

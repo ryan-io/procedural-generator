@@ -1,7 +1,7 @@
 using BCL;
 using CommunityToolkit.HighPerformance;
 
-namespace Engine.Procedural {
+namespace Engine.Procedural.Runtime {
 	public class IterativeBorderAndBoundsSolver : BorderAndBoundsSolver {
 		StopWatchWrapper StopWatch       { get; }
 		int              NumberOfRows    { get; set; }
@@ -22,10 +22,17 @@ namespace Engine.Procedural {
 				NumberOfColumns + borderWidth, 
 				0);
 			
-			for (var x = 0; x < NumberOfRows; x++) {
-				for (var y = 0; y < NumberOfColumns; y++)
-					borderSpan[x, y] = DetermineIfTileIsBorder(borderSpan, mapSpan, x, y);
+			for (var i = 0; i < NumberOfRows * NumberOfColumns; i++) {
+				var row   = i / NumberOfColumns;
+				var column = i % NumberOfColumns;
+				
+				borderSpan[row, column] = DetermineIfTileIsBorder(borderSpan, mapSpan, row, column);
 			}
+			
+			// for (var x = 0; x < NumberOfRows; x++) {
+			// 	for (var y = 0; y < NumberOfColumns; y++)
+			// 		borderSpan[x, y] = DetermineIfTileIsBorder(borderSpan, mapSpan, x, y);
+			// }
 
 			return borderSpan.ToArray();
 		}

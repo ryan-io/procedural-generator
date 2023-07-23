@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using Random = UnityEngine.Random;
 
-namespace Engine.Procedural {
+namespace Engine.Procedural.Runtime {
 	public class DataProcessor {
 		public bool IsReady { get; set; } = false;
 

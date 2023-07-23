@@ -8,7 +8,7 @@ using UnityBCL;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-namespace Engine.Procedural {
+namespace Engine.Procedural.Runtime {
 	public class NodeSerializationSolver : AsyncUnitOfWork {
 		GraphScanner      GraphScanner               { get; }
 		ISeedInfo         SeedInfo                   { get; }
@@ -94,7 +94,7 @@ namespace Engine.Procedural {
 			CollisionDetectionDiameter = config.NavGraphCollisionDetectionDiameter;
 			CollisionDetectionHeight   = config.NavGraphCollisionDetectionHeight;
 			StopWatch                  = stopWatch;
-			SerializedDataSaveLocation = Constants.SERIALIZED_DATA_FOLDER_ROOT;
+			SerializedDataSaveLocation = Constants.SERIALIZED_DATA_FOLDER;
 		}
 	}
 }

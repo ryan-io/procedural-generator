@@ -2,17 +2,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Reflection;
 using System.Runtime.CompilerServices;
-using BCL;
 using Pathfinding;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using Debug = UnityEngine.Debug;
 
-namespace Engine.Procedural {
+namespace Engine.Procedural.Runtime {
 	public class ErosionSolver {
 		List<Vector3> NodePositions        { get; }
 		List<Vector3> TilePositions        { get; }

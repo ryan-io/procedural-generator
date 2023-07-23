@@ -2,7 +2,7 @@
 
 using UnityEngine;
 
-namespace Engine.Procedural {
+namespace Engine.Procedural.Runtime {
 	public readonly struct GridCleaner {
 		public void Clean(ProceduralConfig config) {
 			config.Grid.transform.position = new Vector3(

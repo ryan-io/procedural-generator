@@ -3,7 +3,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Engine.Procedural {
+namespace Engine.Procedural.Runtime {
 	internal class ValueTupleIntComparer : EqualityComparer<(int, int)> {
 		public override bool Equals(ValueTuple<int, int> tuple1, ValueTuple<int, int> tuple2) {
 			return tuple1.Item1 == tuple2.Item1 &&

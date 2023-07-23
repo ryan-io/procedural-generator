@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace Engine.Procedural.Poisson_Spawning {
+namespace Engine.Procedural.Runtime {
 	public static class PoissonModProcessor {
 		public static void Process(Transform tr, IEnumerable<PoissonMod> mods) {
 			if (tr == null) return;

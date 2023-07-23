@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Engine.Procedural {
+namespace Engine.Procedural.Runtime {
 	public readonly struct RoomMeshData {
 		public RoomMeshData(List<Vector3> vertices, List<int> triangles) {
 			Vertices  = vertices;

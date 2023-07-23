@@ -2,7 +2,7 @@
 using System.Linq;
 using UnityEngine;
 
-namespace Engine.Procedural {
+namespace Engine.Procedural.Runtime {
 	public class TileHashset : HashSet<TileRecord> {
 		public TileRecord this[Vector2Int coordinate]
 			=> this.FirstOrDefault(t => t.Coordinate == coordinate);

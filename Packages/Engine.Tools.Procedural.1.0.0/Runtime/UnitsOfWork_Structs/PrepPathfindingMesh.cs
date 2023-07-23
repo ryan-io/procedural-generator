@@ -2,7 +2,7 @@
 
 using UnityEngine;
 
-namespace Engine.Procedural {
+namespace Engine.Procedural.Runtime {
 	public readonly struct PrepPathfindingMesh {
 		GameObject Owner { get; }
 		

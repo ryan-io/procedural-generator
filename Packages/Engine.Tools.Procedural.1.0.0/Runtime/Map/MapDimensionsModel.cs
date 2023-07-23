@@ -1,4 +1,4 @@
-namespace Engine.Procedural {
+namespace Engine.Procedural.Runtime {
 	public readonly struct MapDimensionsModel {
 		public int MapWidth   { get; }
 		public int MapHeight  { get; }

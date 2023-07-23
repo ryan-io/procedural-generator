@@ -1,6 +1,4 @@
 using System;
-using System.Diagnostics;
-using System.Linq;
 using System.Reflection;
 using System.Threading;
 using BCL;
@@ -11,9 +9,9 @@ using Sirenix.OdinInspector;
 using StateMachine;
 using UnityBCL;
 using UnityEngine;
-using Debug = UnityEngine.Debug;
+using UnityEngine.UI;
 
-namespace Engine.Procedural {
+namespace Engine.Procedural.Runtime {
 	/// <summary>
 	///     Verifies the scene contains the required components in order to run procedural generation logic
 	///     This class will also kickoff the generation process
@@ -83,10 +81,17 @@ namespace Engine.Procedural {
 		///     Starts the generation process. By default, will also invoke Initialize().
 		/// </summary>
 		/// <param name="alsoInitialize">If true, will invoke Initialize().</param>
-		[Button]
 		unsafe void StartGeneration(bool alsoInitialize = true) {
 			try {
 #region CLEAN
+
+				if (!_config.ShouldGenerate)
+					// do not proceed any further; redirect control elsewhere
+					return;
+
+				if (alsoInitialize) {
+					InitializeGenerator();
+				}
 
 				StateMachine.ChangeState(ProcessStep.Cleaning);
 				Observables[StateObservableId.ON_CLEAN].Signal();
@@ -101,14 +106,6 @@ namespace Engine.Procedural {
 
 				Tools.SetGridOrigin();
 				Tools.SetGridScale(Constants.CELL_SIZE);
-
-				if (!_config.ShouldGenerate)
-					// do not proceed any further; redirect control elsewhere
-					return;
-
-				if (alsoInitialize) {
-					InitializeGenerator();
-				}
 
 				var rowsOrHeight = _config.Rows;
 				var colsOrWidth  = _config.Columns;
@@ -126,7 +123,6 @@ namespace Engine.Procedural {
 				FillMapSolver.Fill(mapSpan);
 				SmoothMapSolver.Smooth(mapSpan);
 				RegionRemoverSolver.Remove(mapSpan);
-
 				var mapBorder = BorderBoundsSolver.DetermineBorderMap(mapSpan);
 
 				TileTypeSolver.SetTiles(mapSpan);
@@ -204,14 +200,20 @@ namespace Engine.Procedural {
 				//_data.TilePositionsShifted = erosionData.TilePositionsShifted;
 
 				new CutGraphColliders().Cut(_config.ColliderCutters);
-				new SerializeSeedInfo().Serialize(GetSeedInfo(), _config.SeedInfoSerializer, _config.Name, StopWatch);
 				new CreateBoundaryColliders(_config, DataProcessor).Create(GeneratedCollidersObj);
 
 				//DataProcessor.IsReady = true;
 
-				ProceduralSerializer.SerializeCurrentAstarGraph(
-					_config.PathfindingSerializer,
-					GetAstarSerializationName);
+				if (_config.ShouldSerializeSeed)
+					ProceduralSerializer.SerializeSeed(GetSeedInfo(), _config);
+
+				if (_config.ShouldSerializePathfinding)
+					ProceduralSerializer.SerializeCurrentAstarGraph(
+						_config.PathfindingSerializer,
+						GetAstarSerializationName);
+
+				if (_config.ShouldSerializeMapPrefab)
+					ProceduralSerializer.SerializeMapGameObject(_config);
 
 #region COMPLETE
 
@@ -277,6 +279,12 @@ namespace Engine.Procedural {
 		[Button]
 		void CleanGenerator() {
 			try {
+#if UNITY_EDITOR
+				var assembly = Assembly.GetAssembly(typeof(UnityEditor.Editor));
+				var type = assembly.GetType("UnityEditor.LogEntries");
+				var method = type.GetMethod("Clear");
+				method?.Invoke(new object(), null);
+#endif
 				IsDataSet = false;
 				GenLogging.Instance.ClearConsole();
 
@@ -298,15 +306,13 @@ namespace Engine.Procedural {
 		void HandleGeneratorDidNotRun() {
 			// deserialize Astar data and try to parse serialized data to a pathfinding gridGraph
 			ProceduralSerializer.DeserializeAstarGraph(_config);
-			
+
 			//await NodeSerializationSolver.FireTask(CancellationToken);
 		}
 
 		public readonly struct TilemapSetup {
 			public void Setup(ProceduralConfig config) {
-				
 			}
-
 		}
 
 		[Button]
@@ -369,8 +375,13 @@ namespace Engine.Procedural {
 			//DataProcessor.DrawTilePositionsShifted();
 		}
 
-		[Button]
-		void ValidateSerializedFiles() {
+		[Button(ButtonStyle.CompactBox)]
+		void Generate() {
+			StartGeneration(true);
+		}
+
+		[Button(ButtonStyle.CompactBox)]
+		void DeserializeAstar() {
 			ProceduralSerializer.DeserializeAstarGraph(_config);
 		}
 	}

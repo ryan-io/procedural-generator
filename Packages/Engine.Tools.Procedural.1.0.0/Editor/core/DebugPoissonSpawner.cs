@@ -4,7 +4,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace Engine.Procedural.Editor {
+namespace Engine.Procedural.Editor.Editor {
 	[InlineEditor(InlineEditorObjectFieldModes.Boxed)]
 	[CreateAssetMenu(fileName = "Poisson Spawner", menuName = "Utility/Debug/Poisson Spawner")]
 	public class DebugPoissonSpawner : ScriptableObject {

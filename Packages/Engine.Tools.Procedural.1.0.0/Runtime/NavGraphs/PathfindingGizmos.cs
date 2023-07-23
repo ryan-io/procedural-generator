@@ -2,7 +2,7 @@
 using UnityBCL;
 using UnityEngine;
 
-namespace Engine.Procedural {
+namespace Engine.Procedural.Runtime {
 	public class PathfindingGizmos {
 		public List<Vector3> NodePositions        { get; set; }
 		public List<Vector3> TilePositions        { get; set; }

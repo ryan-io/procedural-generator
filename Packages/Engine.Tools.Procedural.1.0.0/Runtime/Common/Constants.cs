@@ -1,15 +1,18 @@
-﻿
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Engine.Procedural {
+namespace Engine.Procedural.Runtime {
 	public static class Constants {
 		public static class Layers {
 			public const string OBSTACLES = "Obstacles";
 		}
 
+		public const string ASSETS_FOLDER = "Assets/";
+		
+		public const string PREFAB_FILE_TYPE = ".prefab";
+		
 		public const string BACKSLASH = "/";
 
-		public const string SERIALIZED_DATA_FOLDER_ROOT = "SerializedData/";
+		public const string SERIALIZED_DATA_FOLDER = "SerializedData/";
 
 		public const string SEED_TRACKER_FILE_NAME = "seedTracker";
 

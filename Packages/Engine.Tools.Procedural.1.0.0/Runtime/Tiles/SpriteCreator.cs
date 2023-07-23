@@ -4,7 +4,7 @@ using Sirenix.OdinInspector;
 using UnityEditor;
 using UnityEngine;
 
-namespace Engine.Procedural {
+namespace Engine.Procedural.Runtime {
 	public class SpriteCreator : MonoBehaviour {
 		public Texture2D texture;
 

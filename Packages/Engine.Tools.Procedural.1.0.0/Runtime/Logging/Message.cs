@@ -1,4 +1,4 @@
-﻿namespace Engine.Procedural {
+﻿namespace Engine.Procedural.Runtime {
 	public static class Message {
 		public const string UPDATED_SEED_TRACKER = "Updated the procedural seed tracker.";
 		

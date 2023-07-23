@@ -1,8 +1,7 @@
-﻿using Engine.Procedural.Poisson_Spawning;
-using Sirenix.OdinInspector;
+﻿using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace Engine.Procedural {
+namespace Engine.Procedural.Runtime {
 	[CreateAssetMenu(fileName = "ScalePercent", menuName = "Utlity/Poisson Spawn Mods/Scale Percent")]
 	public sealed class ScalePercentageMod : PoissonMod {
 		[SerializeField] [MinMaxSlider(-50, 50, true)]

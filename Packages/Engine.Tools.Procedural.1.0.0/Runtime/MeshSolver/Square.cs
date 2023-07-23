@@ -1,4 +1,4 @@
-namespace Engine.Procedural {
+namespace Engine.Procedural.Runtime {
 	public class Square {
 		public int  BitwiseNodesSum;
 		public Node CenterTop, CenterRight, CenterBottom, CenterLeft;

@@ -1,7 +1,8 @@
+using Engine.Procedural.Runtime;
 using UnityEditor;
 using UnityEngine;
 
-namespace Engine.Procedural.Editor {
+namespace Engine.Procedural.Editor.Editor {
 	public class MenuItems {
 		[MenuItem("Procedural Generation/Utility/Remove Tile Labels")]
 		public static void RemoveLabels() {

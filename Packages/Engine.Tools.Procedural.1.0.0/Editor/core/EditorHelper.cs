@@ -1,6 +1,6 @@
 using System.Reflection;
 
-namespace Engine.Procedural.Editor {
+namespace Engine.Procedural.Editor.Editor {
 	public static class EditorHelper {
 		public static void ClearConsole() {
 #if UNITY_EDITOR || UNITY_STANDALONE

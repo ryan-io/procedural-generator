@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Engine.Procedural {
+namespace Engine.Procedural.Runtime {
 	public class MarchingSquaresMeshTriangulationSolver : MeshTriangulationSolver {
 		HashSet<int>                    CheckedVertices { get; }
 		SquareGrid                      SquareGrid      { get; }
@@ -33,11 +33,21 @@ namespace Engine.Procedural {
 			var xLength = SquareGrid.Squares.GetLength(0);
 			var yLength = SquareGrid.Squares.GetLength(1);
 
-			for (var x = 0; x < xLength; x++) {
-				for (var y = 0; y < yLength; y++)
-					_triangulationAlgorithm.TriangulateSquare(
-						SquareGrid.Squares[x, y], CheckedVertices, TriangleTracker);
+				
+			for (var i = 0; i < xLength * yLength; i++) {
+				var row    = i / yLength;
+				var column = i % yLength;
+				
+				_triangulationAlgorithm.TriangulateSquare(
+					SquareGrid.Squares[row, column], CheckedVertices, TriangleTracker);
 			}
+
+			
+			// for (var x = 0; x < xLength; x++) {
+			// 	for (var y = 0; y < yLength; y++)
+			// 		_triangulationAlgorithm.TriangulateSquare(
+			// 			SquareGrid.Squares[x, y], CheckedVertices, TriangleTracker);
+			// }
 		}
 
 		void SolveMesh(int[,] mapBorder) {

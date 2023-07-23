@@ -2,7 +2,7 @@
 using UnityBCL;
 using UnityEngine.Tilemaps;
 
-namespace Engine.Procedural {
+namespace Engine.Procedural.Runtime {
 	[Serializable]
 	public class TileDictionary : SerializedDictionary<string, TileBase> {
 		public static TileDictionary GetDefault() {

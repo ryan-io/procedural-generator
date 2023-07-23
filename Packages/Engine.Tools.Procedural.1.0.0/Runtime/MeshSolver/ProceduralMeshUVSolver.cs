@@ -1,8 +1,7 @@
 using System.Collections.Generic;
-using UnityBCL;
 using UnityEngine;
 
-namespace Engine.Procedural {
+namespace Engine.Procedural.Runtime {
 	public class ProceduralMeshUVSolver {
 		public Vector2[] CalculateUVs(
 			int[,] mapBorder, IReadOnlyList<Vector3> vertices, float squareSize, int tilingMod = 1) {

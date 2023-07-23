@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityBCL;
 using UnityEngine;
 
-namespace Engine.Procedural {
+namespace Engine.Procedural.Runtime {
 	public static class OutLineConnectionSolver {
 		public static void Solve(List<Vector3> verticesWalkable, HashSet<int> checkedVertices,
 			List<List<int>> outlines, Dictionary<int, List<Triangle>> triangleTracker) {

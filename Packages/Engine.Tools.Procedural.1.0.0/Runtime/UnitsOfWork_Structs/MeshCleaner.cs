@@ -2,7 +2,7 @@
 
 using UnityEngine;
 
-namespace Engine.Procedural {
+namespace Engine.Procedural.Runtime {
 	public readonly struct MeshCleaner {
 		public void Clean(GameObject procGenGo) {
 			var meshFilter = procGenGo.GetComponent<MeshFilter>();

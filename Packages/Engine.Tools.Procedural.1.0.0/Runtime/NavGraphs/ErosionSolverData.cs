@@ -3,7 +3,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Engine.Procedural {
+namespace Engine.Procedural.Runtime {
 	public readonly struct ErosionSolverData {
 		public List<Vector3> NodePositions        { get; }
 		public List<Vector3> TilePositions        { get; }

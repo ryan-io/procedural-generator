@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Engine.Procedural {
+namespace Engine.Procedural.Runtime {
 	[Serializable]
 	public enum TileMapType {
 		Ground,

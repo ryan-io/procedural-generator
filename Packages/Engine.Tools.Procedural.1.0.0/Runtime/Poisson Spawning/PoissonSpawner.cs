@@ -5,7 +5,7 @@ using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
 
-namespace Engine.Procedural.Poisson_Spawning {
+namespace Engine.Procedural.Runtime {
 	[RequireComponent(typeof(Poisson))]
 	[ExecuteInEditMode]
 	public class PoissonSpawner : MonoBehaviour {

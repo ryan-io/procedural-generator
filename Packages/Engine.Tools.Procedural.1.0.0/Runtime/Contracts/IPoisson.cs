@@ -2,7 +2,7 @@
 using BCL;
 using UnityEngine;
 
-namespace Engine.Procedural {
+namespace Engine.Procedural.Runtime {
 	public interface IPoisson {
 		IEnumerable<GameObject> SpawnObjects(
 			List<Vector2> points, WeightedRandom<GameObject> objects, Transform spawnLocation);

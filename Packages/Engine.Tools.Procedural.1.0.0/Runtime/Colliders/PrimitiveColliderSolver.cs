@@ -4,7 +4,7 @@ using UnityBCL;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-namespace Engine.Procedural {
+namespace Engine.Procedural.Runtime {
 	public class PrimitiveCollisionSolver : CollisionSolver {
 		protected override Tilemap BoundaryTilemap { get; }
 		float                      SkinWidth       { get; }

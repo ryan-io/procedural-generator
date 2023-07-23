@@ -2,15 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Engine.Tools.Serializer;
 using Pathfinding;
 using Sirenix.OdinInspector;
+using Standalone.Serialization;
 using UnityBCL;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using Object = UnityEngine.Object;
 
-namespace Engine.Procedural {
+namespace Engine.Procedural.Runtime {
 	[Serializable]
 	public class ProceduralConfig {
 #region NAME
@@ -41,11 +40,21 @@ namespace Engine.Procedural {
 		[field: SerializeField, Required]
 		public GameObject TilemapContainer { get; private set; }
 
-		[field: SerializeField, InlineEditor(InlineEditorObjectFieldModes.Foldout), Title("Serializers",horizontalLine:false)]
+		[field: SerializeField, Title("Serializers", horizontalLine: false)]
+		public bool ShouldSerializeSeed { get; private set; } = true;
+
+		[field: SerializeField] public bool ShouldSerializePathfinding { get; private set; } = true;
+
+		[field: SerializeField] public bool ShouldSerializeMapPrefab { get; private set; } = true;
+		
+		[field: SerializeField, InlineEditor(InlineEditorObjectFieldModes.Foldout), ShowIf("@ShouldSerializeSeed")]
 		public SerializerSetup SeedInfoSerializer { get; private set; }
 
-		[field: SerializeField, InlineEditor(InlineEditorObjectFieldModes.Foldout)]
+		[field: SerializeField, InlineEditor(InlineEditorObjectFieldModes.Foldout), ShowIf("@ShouldSerializePathfinding")]
 		public SerializerSetup PathfindingSerializer { get; private set; }
+		
+		[field: SerializeField, InlineEditor(InlineEditorObjectFieldModes.Foldout), ShowIf("@ShouldSerializeMapPrefab")]
+		public SerializerSetup MapSerializer { get; private set; }
 		
 		[field: SerializeField, Title("Optional", horizontalLine: false)] 
 		public List<GraphColliderCutter> ColliderCutters { get; private set; } = new();
@@ -95,12 +104,22 @@ namespace Engine.Procedural {
 
 #region MAP
 
+		void CheckIfEven() {
+			if (Columns % 2 != 0) {
+				Columns++;
+			}
+
+			if (Rows % 2 != 0) {
+				Rows++;
+			}
+		}
+
 		[Tooltip(Message.MAP_WILL_BE_RESIZED)]
-		[field: SerializeField, Title("Map Settings"), Range(50, Constants.MAP_DIMENSION_LIMIT)]
+		[field: SerializeField, Title("Map Settings"), Range(50, Constants.MAP_DIMENSION_LIMIT), OnValueChanged("CheckIfEven")]
 		public int Columns { get; set; } = 100;
 
 		[Tooltip(Message.MAP_WILL_BE_RESIZED)]
-		[field: SerializeField, Range(50, Constants.MAP_DIMENSION_LIMIT)]
+		[field: SerializeField, Range(50, Constants.MAP_DIMENSION_LIMIT), OnValueChanged("CheckIfEven")]
 		public int Rows { get; set; } = 100;
 
 		[field: SerializeField, Range(1, 10)] public int BorderSize { get; private set; } = 1;

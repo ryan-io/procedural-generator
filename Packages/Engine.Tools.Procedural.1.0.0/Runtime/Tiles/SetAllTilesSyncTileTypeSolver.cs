@@ -2,7 +2,7 @@ using BCL;
 using CommunityToolkit.HighPerformance;
 using UnityEngine;
 
-namespace Engine.Procedural {
+namespace Engine.Procedural.Runtime {
 	public class SetAllTilesSyncTileTypeSolver : TileTypeSolver {
 		TileHashset       TileHashset       { get; }
 		TileMapDictionary TileMapDictionary { get; }
@@ -16,10 +16,18 @@ namespace Engine.Procedural {
 		/// </summary>
 		/// <param name="span">Pre-stack allocated span for generating primary amap</param>
 		public override void SetTiles(Span2D<int> span) {
-			for (var x = 0; x < MapWidth; x++) {
-				for (var y = 0; y < MapHeight; y++)
-					TileTaskCreator(span, x, y);
+			for (var i = 0; i < MapWidth * MapHeight; i++) {
+				var row   = i / MapHeight;
+				var column = i % MapHeight;
+				
+				TileTaskCreator(span, row, column);
 			}
+
+			//
+			// for (var x = 0; x < MapWidth; x++) {
+			// 	for (var y = 0; y < MapHeight; y++)
+			// 		TileTaskCreator(span, x, y);
+			// }
 		}
 
 		void TileTaskCreator(Span2D<int> span, int currentX, int currentY) {

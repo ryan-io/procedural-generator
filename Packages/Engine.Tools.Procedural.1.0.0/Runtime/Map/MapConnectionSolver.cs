@@ -4,7 +4,7 @@ using CommunityToolkit.HighPerformance;
 using UnityEngine;
 using Random = System.Random;
 
-namespace Engine.Procedural {
+namespace Engine.Procedural.Runtime {
 	public class MapConnectionSolver {
 		Vector2Int CorridorWidth { get; }
 		int        MapHeight     { get; }

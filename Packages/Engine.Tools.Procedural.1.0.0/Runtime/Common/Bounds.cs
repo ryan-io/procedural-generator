@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using Engine.Procedural.Poisson_Spawning;
 using UnityEngine;
 
-namespace Engine.Procedural {
+namespace Engine.Procedural.Runtime {
 	public static class Bounds {
 		public static IDictionary<GameObject, float> GetBounds(GameObjectWeightTable objects) {
 			var bounds = new PoissonObjects();

@@ -1,10 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Threading;
-using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-namespace Engine.Procedural {
+namespace Engine.Procedural.Runtime {
 	public abstract class MeshTriangulationSolver {
 		public          List<List<int>>                 Outlines   { get; protected set; }
 		public          Mesh                            SolvedMesh { get; protected set; }

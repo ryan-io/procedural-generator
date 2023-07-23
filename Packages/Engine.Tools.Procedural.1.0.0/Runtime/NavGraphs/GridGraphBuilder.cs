@@ -4,7 +4,7 @@ using Pathfinding;
 using Unity.Mathematics;
 using UnityEngine;
 
-namespace Engine.Procedural {
+namespace Engine.Procedural.Runtime {
 	public class GridGraphBuilder : NavGraphBuilder<GridGraph> {
 		int2         RealMapDimensions         { get; }
 		ColliderType ColliderType              { get; }

@@ -5,7 +5,7 @@ using Sirenix.OdinInspector;
 using UnityBCL;
 using UnityEngine;
 
-namespace Engine.Procedural.Poisson_Spawning {
+namespace Engine.Procedural.Runtime {
 	[HideMonoScript]
 	public class Poisson : Singleton<Poisson, IPoisson>,
 	                                    IPoisson {

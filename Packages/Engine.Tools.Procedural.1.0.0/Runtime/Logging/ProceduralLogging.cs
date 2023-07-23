@@ -1,11 +1,9 @@
 ﻿using System.Globalization;
-using System.Reflection;
 using System.Text;
 using BCL;
 using UnityBCL;
-using UnityEngine;
 
-namespace Engine.Procedural {
+namespace Engine.Procedural.Runtime {
 	public class GenLogging : Singleton<GenLogging> {
 		// public const string GeneratedMeshBackground = "Generated Mesh Background";
 		// public const string GroundLayerName         = "Ground";

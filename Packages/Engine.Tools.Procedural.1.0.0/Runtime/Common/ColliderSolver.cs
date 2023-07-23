@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 using BCL;
 using UnityEngine;
 
-namespace Engine.Procedural {
+namespace Engine.Procedural.Runtime {
 	public class ColliderSolver {
 		ProceduralConfig   Config       { get; }
 		StopWatchWrapper   StopWatch    { get; }

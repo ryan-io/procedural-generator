@@ -4,7 +4,7 @@ using CommunityToolkit.HighPerformance;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace Engine.Procedural {
+namespace Engine.Procedural.Runtime {
 	[Serializable]
 	public class Room : IComparable<Room> {
 		[ShowInInspector] [ReadOnly] [SerializeField]

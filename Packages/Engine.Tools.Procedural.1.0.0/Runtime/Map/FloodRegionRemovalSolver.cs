@@ -3,7 +3,7 @@ using System.Linq;
 using CommunityToolkit.HighPerformance;
 using UnityEngine;
 
-namespace Engine.Procedural {
+namespace Engine.Procedural.Runtime {
 	public class FloodRegionRemovalSolver : RegionRemovalSolver {
 		public override List<Room> Rooms                { get; protected set; }
 		int                        WallRemovalThreshold { get; }

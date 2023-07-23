@@ -2,7 +2,7 @@
 
 using Unity.Mathematics;
 
-namespace Engine.Procedural {
+namespace Engine.Procedural.Runtime {
 	public readonly struct MapDimensionsIncludeCellSize {
 		int MapWidth  { get; }
 		int MapHeight { get; }

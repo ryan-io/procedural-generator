@@ -2,7 +2,7 @@
 
 using System;
 
-namespace Engine.Procedural {
+namespace Engine.Procedural.Runtime {
 	[Serializable]
 	public enum Terrain {
 		Dirt,

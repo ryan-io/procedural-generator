@@ -3,9 +3,9 @@
 using System;
 using System.IO;
 using BCL;
-using Engine.Tools.Serializer;
+using Standalone.Serialization;
 
-namespace Engine.Procedural {
+namespace Engine.Procedural.Runtime {
 	public readonly struct SerializeSeedInfo {
 		public void Serialize(
 			SeedInfo seedInfo, SerializerSetup setup, string nameToAppend, StopWatchWrapper stopwatch) {

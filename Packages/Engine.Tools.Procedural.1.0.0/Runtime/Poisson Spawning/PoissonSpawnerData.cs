@@ -4,7 +4,7 @@ using BCL;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace Engine.Procedural.Poisson_Spawning {
+namespace Engine.Procedural.Runtime {
 	[Serializable]
 	public class PoissonSpawnerData {
 		[VerticalGroup("Prefabs")] [HorizontalGroup("Prefabs/H1")] [SerializeField]

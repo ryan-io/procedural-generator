@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Engine.Procedural {
+namespace Engine.Procedural.Runtime {
 	public class TriangulationAlgorithm {
 		public TriangulationAlgorithm() {
 			GetWalkableTriangles = new List<int>();

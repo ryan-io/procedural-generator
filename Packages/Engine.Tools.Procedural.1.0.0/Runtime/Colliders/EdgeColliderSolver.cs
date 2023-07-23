@@ -4,19 +4,19 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using BCL;
-using Pathfinding.Util;
 using UnityBCL;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using Object = UnityEngine.Object;
 
-namespace Engine.Procedural {
+namespace Engine.Procedural.Runtime {
 	public class EdgeCollisionSolver : CollisionSolver {
-		public EdgeCollider2D[] Colliders           { get; private set; }
-		StopWatchWrapper        StopWatch           { get; }
-		Vector2                 LastCalculatedPoint { get; set; }
+		public EdgeCollider2D[] Colliders                   { get; private set; }
+		Vector2                 LastCalculatedPosition      { get; set; }
+		StopWatchWrapper        StopWatch                   { get; }
+		Vector2                 LastCalculatedPoint         { get; set; }
 		Vector2                 LastCalculatedStartingPoint { get; set; }
-		Vector2                 EdgeColliderOffset  { get; }
+		Vector2                 EdgeColliderOffset          { get; }
 
 		float EdgeColliderRadius { get; }
 		int   BorderSize         { get; }

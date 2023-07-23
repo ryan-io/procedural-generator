@@ -1,6 +1,6 @@
 ﻿// Algorthims
 
-namespace Engine.Procedural {
+namespace Engine.Procedural.Runtime {
 	public struct Triangle {
 		public   int   vertexIndexA;
 		public   int   vertexIndexB;
