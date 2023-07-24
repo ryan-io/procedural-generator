@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using ProceduralAuxiliary;
 using UnityBCL;
@@ -20,19 +21,28 @@ namespace Engine.Procedural.Runtime {
 			for (var i = 0; i < data.RoomOutlines.Count; i++) {
 				var col              = CreateNewPrimitiveCollider(dto.ColliderGameObject, i.ToString());
 				var outline          = data.RoomOutlines[i];
-				var extractedCorners = col.corners;
+				//var extractedCorners = col.corners;
+				var objList = new GameObject[3];
 
 				for (var k = 0; k < 3; k++) {
 					var newPoint = new Vector3(
 						data.MeshVertices[outline[k]].x, data.MeshVertices[outline[k]].y, 0);
-					extractedCorners[k].transform.position = newPoint;
-					extractedCorners[k].gameObject.MakeStatic(true);
+					col.corners[k].transform.position = newPoint;
+					col.corners[k].gameObject.MakeStatic(true);
+					objList[k] = col.corners[k].gameObject;
 				}
 
-				for (var j = 3; j < outline.Count; j++) {
+				for (var j = 0; j < outline.Count; j++) {
 					var newPoint = new Vector3(
 						data.MeshVertices[outline[j]].x, data.MeshVertices[outline[j]].y, 0);
 					CreateHandle(col, newPoint, col.corners[^1], col.corners[^1].GetSiblingIndex() + 1);
+				}
+
+				foreach (var obj in objList) {
+					if (Application.isEditor)
+						Object.DestroyImmediate(obj);
+					else 
+						Object.DestroyImmediate(obj);
 				}
 			}
 
