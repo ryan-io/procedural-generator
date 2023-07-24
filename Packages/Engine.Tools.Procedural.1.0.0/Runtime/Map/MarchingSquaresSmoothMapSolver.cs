@@ -22,38 +22,18 @@ namespace Engine.Procedural.Runtime {
 		public override unsafe void Smooth(Span2D<int> mapSpan) {
 			NumberOfRows = mapSpan.Height;
 			NumberOfCols = mapSpan.Width;
-			int* copyToAllocationPointer = stackalloc int[NumberOfRows * NumberOfCols];
+			int* copyToAllocationPointer = stackalloc int[3 * NumberOfRows * NumberOfCols];
 			var  mapSpanCopy             = new Span2D<int>(copyToAllocationPointer, NumberOfRows, NumberOfCols, 0);
 
 			mapSpan.CopyTo(mapSpanCopy);
-
-			//IDictionary<ValueTuple<int, int>, int> hash = new Dictionary<(int, int), int>(new ValueTupleIntComparer());
-
+			
 			// SmoothingIterations is relatively small in all scenarios
 			for (var i = 0; i < SmoothingIterations; i++) {
 				//var hashTable = GetNewHashTable(mapSpanCopy, hash);
-				GetSmoothedMap(mapSpan, mapSpanCopy);
+				GetSmoothedMap(mapSpan, mapSpan);
 				//mapSpanCopy.CopyTo(mapSpan);
 			}
-			
-			mapSpanCopy.CopyTo(mapSpan);
 		}
-
-		// IDictionary<ValueTuple<int, int>, int> GetNewHashTable(Span2D<int> span,
-		// 	IDictionary<ValueTuple<int, int>, int> currentHash) {
-		// 	currentHash.Clear();
-		//
-		// 	var row = span.GetRow(1);
-		//
-		// 	foreach (var item in row) {
-		// 		
-		// 	}
-		// 	
-		// 	foreach (var element in span) {
-		// 		var valueT = new ValueTuple<int, int>(2, 0);
-		// 		
-		// 	}
-		// }
 
 		void GetSmoothedMap(Span2D<int> mapSpanOriginal, Span2D<int> mapSpanCopy) {
 			for (var i = 0; i < NumberOfRows * NumberOfCols; i++) {

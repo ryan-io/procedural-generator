@@ -28,15 +28,7 @@ namespace Engine.Procedural.Runtime {
 				
 				primaryMap[row, colum] = DetermineWallFill(rowLength, columnLength, row, colum, pseudoRandom);
 			}
-
-			//
-			//
-			// for (var x = 0; x < rowLength; x++) {
-			// 	for (var y = 0; y < columnLength; y++) {
-			// 		primaryMap[x, y] = DetermineWallFill(rowLength, columnLength, x, y, pseudoRandom);
-			// 	}
-			// }
-
+			
 			var timeDelta = StopWatch.TimeElapsed - startTime;
 
 			GenLogging.Instance.LogWithTimeStamp(

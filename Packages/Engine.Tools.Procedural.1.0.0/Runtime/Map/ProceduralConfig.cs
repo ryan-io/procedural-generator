@@ -14,13 +14,48 @@ namespace Engine.Procedural.Runtime {
 	public class ProceduralConfig {
 #region NAME
 
-		[field: SerializeField, Title("Name")] public string Name { get; set; } = "map_" + Guid.NewGuid();
+		[field: SerializeField, BoxGroup("Map Name"), HideLabel] public string Name { 
+		get; set; } = "map_" + Guid.NewGuid();
 
 #endregion
 
+#region REQUIRED_MONOBEHAVIORS
+
+		[field: SerializeField,  Required, FoldoutGroup("Required Components", false)]
+		public GameObject Pathfinder { get; private set; }
+
+		[field: SerializeField, Required, FoldoutGroup("Required Components", false)] public MeshFilter MeshFilter { get; private set; }
+		
+		[field: SerializeField, Required, FoldoutGroup("Required Components", false)]public Grid Grid { get; private set; }
+		
+		[field: SerializeField, Required, FoldoutGroup("Required Components", false)]
+		public GameObject TilemapContainer { get; private set; }
+
+#endregion
+
+#region SERIALIZATION
+
+		[field: SerializeField, FoldoutGroup("Serialization", false)]
+		public bool ShouldSerializeSeed { get; private set; } = true;
+
+		[field: SerializeField, FoldoutGroup("Serialization", false)] public bool ShouldSerializePathfinding { get; private set; } = true;
+
+		[field: SerializeField, FoldoutGroup("Serialization", false)] public bool ShouldSerializeMapPrefab { get; private set; } = true;
+		
+		[field: SerializeField, InlineEditor(InlineEditorObjectFieldModes.Foldout), ShowIf("@ShouldSerializeSeed"), FoldoutGroup("Serialization", false)]
+		public SerializerSetup SeedInfoSerializer { get; private set; }
+
+		[field: SerializeField, InlineEditor(InlineEditorObjectFieldModes.Foldout), ShowIf("@ShouldSerializePathfinding"), FoldoutGroup("Serialization", false)]
+		public SerializerSetup PathfindingSerializer { get; private set; }
+		
+		[field: SerializeField, InlineEditor(InlineEditorObjectFieldModes.Foldout), ShowIf("@ShouldSerializeMapPrefab"), FoldoutGroup("Serialization", false)]
+		public SerializerSetup MapSerializer { get; private set; }
+		
+#endregion
+		
 #region DESERIALIZATION
 
-		[field: SerializeField, Title("Deserialization"), ValueDropdown(@"GetAllSeedsWrapper")] 
+		[field: SerializeField, FoldoutGroup("Deserialization", false), ValueDropdown(@"GetAllSeedsWrapper")] 
 		public string NameSeedIteration { get; private set; }
 		
 		IEnumerable GetAllSeedsWrapper() 
@@ -28,76 +63,26 @@ namespace Engine.Procedural.Runtime {
 
 #endregion
 
-#region REQUIRED_MONOBEHAVIORS
-
-		[field: SerializeField, Title("Components", titleAlignment: TitleAlignments.Left), Required]
-		public GameObject Pathfinder { get; private set; }
-
-		[field: SerializeField, Required] public MeshFilter MeshFilter { get; private set; }
-		
-		[field: SerializeField, Required, Title("Tilemaps", horizontalLine: false)] public Grid Grid { get; private set; }
-		
-		[field: SerializeField, Required]
-		public GameObject TilemapContainer { get; private set; }
-
-		[field: SerializeField, Title("Serializers", horizontalLine: false)]
-		public bool ShouldSerializeSeed { get; private set; } = true;
-
-		[field: SerializeField] public bool ShouldSerializePathfinding { get; private set; } = true;
-
-		[field: SerializeField] public bool ShouldSerializeMapPrefab { get; private set; } = true;
-		
-		[field: SerializeField, InlineEditor(InlineEditorObjectFieldModes.Foldout), ShowIf("@ShouldSerializeSeed")]
-		public SerializerSetup SeedInfoSerializer { get; private set; }
-
-		[field: SerializeField, InlineEditor(InlineEditorObjectFieldModes.Foldout), ShowIf("@ShouldSerializePathfinding")]
-		public SerializerSetup PathfindingSerializer { get; private set; }
-		
-		[field: SerializeField, InlineEditor(InlineEditorObjectFieldModes.Foldout), ShowIf("@ShouldSerializeMapPrefab")]
-		public SerializerSetup MapSerializer { get; private set; }
-		
-		[field: SerializeField, Title("Optional", horizontalLine: false)] 
-		public List<GraphColliderCutter> ColliderCutters { get; private set; } = new();
-
-
-#region FINDING_OBJECTS
-
-		[Button, ShowIf("@ShouldShowFindCutters")]
-		void FindGraphColliderCuttersInScene() =>
-			ColliderCutters = new ObjectFinder().FindGraphColliderCuttersInScene(ColliderCutters);
-
-		[Button, ShowIf("@ShouldShowFindPathfinder")]
-		void FindPathfinderInScene() =>
-			Pathfinder = new ObjectFinder().FindPathfinderInScene(Pathfinder);
-
-		bool ShouldShowFindCutters    => ColliderCutters.IsEmptyOrNull();
-		bool ShouldShowFindPathfinder => !Pathfinder;
-
-#endregion
-
-#endregion
-
 #region SEEDING
 
-		[field: SerializeField, Title("Seeding")]
+		[field: SerializeField, FoldoutGroup("Seeding", false)]
 		public bool UseRandomSeed { get; private set; } = true;
 
-		[field: SerializeField, ShowIf("UseRandomSeed")]
+		[field: SerializeField, ShowIf("UseRandomSeed"), FoldoutGroup("Seeding", false)]
 		public string Seed { get; internal set; }
 
-		[field: SerializeField, ReadOnly] public string LastSeed { get; set; }
+		[field: SerializeField, ReadOnly, FoldoutGroup("Seeding", false)] public string LastSeed { get; set; }
 
-		[field: SerializeField, ReadOnly] public int LastIteration { get; set; }
+		[field: SerializeField, ReadOnly, FoldoutGroup("Seeding", false)] public int LastIteration { get; set; }
 
 #endregion
 
 #region GENERATION_STATE
 
-		[field: SerializeField, EnumToggleButtons, Title("Generation State")]
+		[field: SerializeField, EnumToggleButtons, FoldoutGroup("State", false)]
 		public bool IsBuild { get; private set; }
 
-		[field: SerializeField]
-		[field: EnumToggleButtons]
+		[field: SerializeField, EnumToggleButtons, FoldoutGroup("State", false)]
 		public bool ShouldGenerate { get; set; } = true;
 
 #endregion
@@ -115,150 +100,150 @@ namespace Engine.Procedural.Runtime {
 		}
 
 		[Tooltip(Message.MAP_WILL_BE_RESIZED)]
-		[field: SerializeField, Title("Map Settings"), Range(50, Constants.MAP_DIMENSION_LIMIT), OnValueChanged("CheckIfEven")]
+		[field: SerializeField, Range(50, Constants.MAP_DIMENSION_LIMIT), OnValueChanged("CheckIfEven"), FoldoutGroup("Generation Settings", false)]
 		public int Columns { get; set; } = 100;
 
 		[Tooltip(Message.MAP_WILL_BE_RESIZED)]
-		[field: SerializeField, Range(50, Constants.MAP_DIMENSION_LIMIT), OnValueChanged("CheckIfEven")]
+		[field: SerializeField, Range(50, Constants.MAP_DIMENSION_LIMIT), OnValueChanged("CheckIfEven"), FoldoutGroup("Generation Settings", false)]
 		public int Rows { get; set; } = 100;
 
-		[field: SerializeField, Range(1, 10)] public int BorderSize { get; private set; } = 1;
+		[field: SerializeField, Range(1, 10), FoldoutGroup("Generation Settings", false)] public int BorderSize { get; private set; } = 1;
 
-		[field: SerializeField, Title("Procedural"), Range(1, 125)]
+		[field: SerializeField, Range(1, 125), FoldoutGroup("Generation Settings", false)]
 		public int SmoothingIterations { get; private set; } = 5;
 
-		[field: SerializeField, Range(10, 1000)]
+		[field: SerializeField, Range(10, 1000), FoldoutGroup("Generation Settings", false)]
 		public int WallRemovalThreshold { get; private set; } = 50;
 
-		[field: SerializeField, Range(10, 1000)]
+		[field: SerializeField, Range(10, 1000), FoldoutGroup("Generation Settings", false)]
 		public int RoomRemovalThreshold { get; private set; } = 50;
 
-		[field: SerializeField, Range(1, 4)] public int LowerNeighborLimit { get; private set; } = 4;
-		[field: SerializeField, Range(4, 8)] public int UpperNeighborLimit { get; private set; } = 4;
+		[field: SerializeField, Range(1, 4), FoldoutGroup("Generation Settings", false)] public int LowerNeighborLimit { get; private set; } = 4;
+		[field: SerializeField, Range(4, 8), FoldoutGroup("Generation Settings", false)] public int UpperNeighborLimit { get; private set; } = 4;
 
-		[field: SerializeField, PropertyTooltip(Message.PERCENTAGE_WALLS), Range(40, 55)]
+		[field: SerializeField, PropertyTooltip(Message.PERCENTAGE_WALLS), Range(40, 55), FoldoutGroup("Generation Settings", false)]
 		public int WallFillPercentage { get; private set; } = 47;
 
-		[field: SerializeField, MinMaxSlider(1, 12)]
+		[field: SerializeField, MinMaxSlider(1, 12), FoldoutGroup("Generation Settings", false)]
 		public Vector2Int CorridorWidth { get; private set; } = new(1, 6);
 
-		[field: SerializeField] public LayerMask GroundLayerMask { get; private set; }
+		
+		[field: SerializeField, FoldoutGroup("Layer Definitions", false)] 
+		public LayerMask GroundLayerMask { get; private set; }
 
-		[field: SerializeField] public LayerMask ObstacleLayerMask { get; private set; }
+		[field: SerializeField, FoldoutGroup("Layer Definitions", false)] public LayerMask ObstacleLayerMask { get; private set; }
 
-		[field: SerializeField] public LayerMask BoundaryLayerMask { get; private set; }
+		[field: SerializeField, FoldoutGroup("Layer Definitions", false)] public LayerMask BoundaryLayerMask { get; private set; }
+		
+		[field: SerializeField, FoldoutGroup("Layer Definitions", false)] public LayerMask NavGraphHeightTestLayerMask { get; private set; } = 0;
 
 #endregion
 
 #region TILEMAP
 
-		[field: SerializeField, Title("Tilemap Settings")]
+		[field: SerializeField, FoldoutGroup("Tilemaps", false)]
 
 		public bool ShouldCreateTileLabels { get; private set; }
 
-		[field: SerializeField] public bool ShouldGenerateAngles { get; private set; }
+		[field: SerializeField, FoldoutGroup("Tilemaps", false)] public bool ShouldGenerateAngles { get; private set; }
 		
-		[field: SerializeField] public TileMapDictionary TileMapDictionary { get; private set; }
+		[field: SerializeField, FoldoutGroup("Tilemaps", false), DictionaryDrawerSettings(DisplayMode = DictionaryDisplayOptions.CollapsedFoldout)] 
+		public TileMapDictionary TileMapDictionary { get; private set; }
 
-		[field: SerializeField, DictionaryDrawerSettings(DisplayMode = DictionaryDisplayOptions.CollapsedFoldout)]
+		[field: SerializeField, DictionaryDrawerSettings(DisplayMode = DictionaryDisplayOptions.CollapsedFoldout), FoldoutGroup("Tilemaps", false)]
 		public TileDictionary TileDictionary { get; private set; } = TileDictionary.GetDefault();
-
-		[Button]
-		void PopulateTileDictionary() {
-			TileDictionary = TileDictionary.GetDefault();
-		}
 
 #endregion
 
 #region PATHFINDING
 
-		[field: SerializeField, EnumToggleButtons, Title("Pathfinding Settings")]
+		[field: SerializeField, EnumToggleButtons, FoldoutGroup("Pathfinding", false)]
 		public ColliderSolverType GeneratedColliderType { get; private set; } = ColliderSolverType.Edge;
 
-		[field: SerializeField, EnumToggleButtons]
+		[field: SerializeField, EnumToggleButtons, FoldoutGroup("Pathfinding", false)]
 		public ColliderType NavGraphCollisionType { get; private set; } = ColliderType.Capsule;
 
-		[field: SerializeField]
+		[field: SerializeField, FoldoutGroup("Pathfinding", false)]
 		[field: Range(0.05f, 5.0f)]
 		public float NavGraphCollisionDetectionDiameter { get; private set; } = 0.1f;
 
-		[field: SerializeField]
+		[field: SerializeField, FoldoutGroup("Pathfinding", false)]
 		[field: Range(0.5f, 100.0f)]
 		[field: ShowIf("@NavGraphCollisionType == ColliderType.Capsule")]
 		public float NavGraphCollisionDetectionHeight { get; private set; } = 1.0f;
 
-		[field: SerializeField, Range(.1f, 8), ShowIf("@ErodePathfindingGrid")]
+		[field: SerializeField, Range(.1f, 8), ShowIf("@ErodePathfindingGrid"), FoldoutGroup("Pathfinding", false)]
 		public float NavGraphNodeSize { get; private set; } = 0.5f;
-
-		[field: SerializeField] public LayerMask NavGraphHeightTestLayerMask { get; private set; } = 0;
-
+		
 #endregion
 
 #region PATHFINDING_EROSION	
 
-		[field: SerializeField, Title("Erosion Settings")]
+		[field: SerializeField, FoldoutGroup("Erosion", false)]
 		public bool ErodePathfindingGrid { get; private set; } = true;
 
-		[field: SerializeField, Range(.1f, 8), ShowIf("@ErodePathfindingGrid")]
+		[field: SerializeField, Range(.1f, 8), ShowIf("@ErodePathfindingGrid"), FoldoutGroup("Erosion", false)]
 		public float ErosionCollisionDiameter { get; private set; } = 1.75f;
 
 		//TODO: is this needed for anything after refactor?
 		// [field: SerializeField, ShowIf("@ErodePathfindingGrid")]
 		// public LayerMask ErosionObstacleLayerMasks { get; private set; }
 
-		[field: SerializeField, Range(0, 10), ShowIf("@ErodePathfindingGrid"), InfoBox(EROSION_TAG_INFO)]
+		[field: SerializeField, Range(0, 10), ShowIf("@ErodePathfindingGrid"), InfoBox(EROSION_TAG_INFO), FoldoutGroup("Erosion", false)]
 		public int NodesToErodeAtBoundaries { get; private set; } = 3;
 
-		[field: SerializeField, Range(0, 18), ShowIf("@ErodePathfindingGrid")]
+		[field: SerializeField, Range(0, 18), ShowIf("@ErodePathfindingGrid"), FoldoutGroup("Erosion", false)]
 		public int StartingNodeIndexToErode { get; private set; } = 1;
 
 		[Title("Erosion Debugging", horizontalLine: false)]
-		[field: SerializeField, ShowIf("@ErodePathfindingGrid")]
+		[field: SerializeField, ShowIf("@ErodePathfindingGrid"), FoldoutGroup("Erosion", false)]
 		public bool DrawNodePositionGizmos { get; private set; }
 
-		[field: SerializeField, ShowIf("@ErodePathfindingGrid")]
+		[field: SerializeField, ShowIf("@ErodePathfindingGrid"), FoldoutGroup("Erosion", false)]
 		public bool DrawTilePositionGizmos { get; private set; }
 
-		[field: SerializeField, ShowIf("@ErodePathfindingGrid")]
+		[field: SerializeField, ShowIf("@ErodePathfindingGrid"), FoldoutGroup("Erosion", false)]
 		public bool DrawTilePositionShiftedGizmos { get; private set; }
 
 #endregion
 
 #region MAP_COLLIDERS
 
-		[Title("Map Collider Settings")]
-		[field: SerializeField, EnumToggleButtons]
+		[field: SerializeField, EnumToggleButtons, FoldoutGroup("Collisions", false)]
 		public ColliderSolverType SolverType { get; private set; } = ColliderSolverType.Edge;
 
 #region BOX_COLLIDER_SETTINGS
 
-		[field: SerializeField, ShowIf("@IsBox"), Required]
+		[field: SerializeField, ShowIf("@IsBox"), Required, FoldoutGroup("Collisions", false)]
 		public AssetReference BoxColliderPrefab { get; private set; }
 
-		[field: SerializeField, ShowIf("@IsBox"), Range(0.1f, 1.5f)]
+		[field: SerializeField, ShowIf("@IsBox"), Range(0.1f, 1.5f), FoldoutGroup("Collisions", false)]
 		public float BoxColliderSkinWidth { get; private set; } = 0.1f;
 
 #endregion
 
 #region EDGE_COLLIDER_SETTINGS
 
-		[field: SerializeField, ShowIf("@IsEdge"), Range(0.1f, 1f)]
+		[field: SerializeField, ShowIf("@IsEdge"), Range(0.1f, 1f), FoldoutGroup("Collisions", false)]
 		public float EdgeColliderRadius { get; private set; } = 0.5f;
 
-		[field: SerializeField, ShowIf("@IsEdge")]
+		[field: SerializeField, ShowIf("@IsEdge"), FoldoutGroup("Collisions", false)]
 		public Vector2 EdgeColliderOffset { get; private set; } = new(0.5f, -0.5f);
 
 #endregion
 
 #region PRIMITIVE_COLLIDER_SETTINGS
 
-		[field: SerializeField, ShowIf("@IsPrimitive"), Range(0.1f, 1f)]
+		[field: SerializeField, ShowIf("@IsPrimitive"), Range(0.1f, 1f), FoldoutGroup("Collisions", false)]
 		public float PrimitiveColliderRadius { get; private set; } = 0.1f;
 
-		[field: SerializeField, Range(0.1f, 1f), ShowIf("@IsPrimitive")]
+		[field: SerializeField, Range(0.1f, 1f), ShowIf("@IsPrimitive"), FoldoutGroup("Collisions", false)]
 		public float PrimitiveColliderSkinWidth { get; private set; } = 0.5f;
 
 #endregion
+		
+		[field: SerializeField, FoldoutGroup("Collisions", false)] 
+		public List<GraphColliderCutter> ColliderCutters { get; private set; } = new();
 
 		bool IsBox       => SolverType == ColliderSolverType.Box;
 		bool IsEdge      => SolverType == ColliderSolverType.Edge;
@@ -268,7 +253,7 @@ namespace Engine.Procedural.Runtime {
 
 #region EVENTS
 
-		[field: SerializeField, BoxGroup("0", false), DictionaryDrawerSettings(IsReadOnly = true), Title("Events")]
+		[field: SerializeField, DictionaryDrawerSettings(IsReadOnly = true), FoldoutGroup("Events", false)]
 		public EventDictionary SerializedEvents { get; private set; } = new() {
 			{ ProcessStep.Cleaning, default },
 			{ ProcessStep.Initializing, default },
@@ -282,7 +267,7 @@ namespace Engine.Procedural.Runtime {
 
 #region DEBUGGING
 
-		[field: SerializeField, EnumToggleButtons, Title("Debugging")]
+		[field: SerializeField, EnumToggleButtons, FoldoutGroup("Debugging", false)]
 		public bool DrawDebugGizmos { get; private set; }
 
 #endregion
@@ -292,6 +277,20 @@ namespace Engine.Procedural.Runtime {
 		const string EROSION_TAG_INFO =
 			"Be aware: make sure to adjust the traversable tags in your AI's 'Seeker' component. " +
 			"Typically, the tag you want to make 'untraversable' is = Erosion Iterations - 1";
+
+#endregion
+
+#region HELPERS
+		
+		internal void PopulateTileDictionary() {
+			TileDictionary = TileDictionary.GetDefault();
+		}
+		
+		internal void FindGraphColliderCuttersInScene() =>
+			ColliderCutters = new ObjectFinder().FindGraphColliderCuttersInScene(ColliderCutters);
+
+		internal void FindPathfinderInScene() =>
+			Pathfinder = new ObjectFinder().FindPathfinderInScene(Pathfinder);
 
 #endregion
 	}

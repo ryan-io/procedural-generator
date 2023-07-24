@@ -9,7 +9,6 @@ using Sirenix.OdinInspector;
 using StateMachine;
 using UnityBCL;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Engine.Procedural.Runtime {
 	/// <summary>
@@ -22,9 +21,9 @@ namespace Engine.Procedural.Runtime {
 	/// this is clearly opposite of what I thought
 	/// https://stackoverflow.com/questions/4260207/how-do-you-get-the-width-and-height-of-a-multi-dimensional-array
 	/// </summary>
-	[RequireComponent(typeof(MeshFilter))]
+	[RequireComponent(typeof(MeshFilter)), HideMonoScript]
 	public class ProceduralGenerator : Singleton<ProceduralGenerator, ProceduralGenerator>, ISeedInfo {
-		[field: SerializeField] [field: Required]
+		[field: SerializeField, Required, BoxGroup("Configuration"), HideLabel]
 		ProceduralConfig _config = null!;
 
 		[SerializeField, HideInInspector] MapData _data;
@@ -58,15 +57,13 @@ namespace Engine.Procedural.Runtime {
 		CancellationToken         CancellationToken     { get; set; }
 		bool                      IsDataSet             { get; set; }
 
-		string GetAstarSerializationName {
+		string CurrentSerializableName {
 			get {
 				var seedInfo = GetSeedInfo();
-
-				return Constants.SAVE_ASTAR_PREFIX +
-				       _config.Name                +
-				       Constants.UNDERSCORE        +
-				       seedInfo.CurrentSeed        +
-				       Constants.UID               +
+				return _config.Name         +
+				       Constants.UNDERSCORE +
+				       seedInfo.CurrentSeed +
+				       Constants.UID        +
 				       seedInfo.LastIteration;
 			}
 		}
@@ -117,20 +114,24 @@ namespace Engine.Procedural.Runtime {
 
 #region RUN
 
+				
+				
 				StateMachine.ChangeState(ProcessStep.Running);
 				Observables[StateObservableId.ON_RUN].Signal();
 
 				FillMapSolver.Fill(mapSpan);
 				SmoothMapSolver.Smooth(mapSpan);
 				RegionRemoverSolver.Remove(mapSpan);
-				var mapBorder = BorderBoundsSolver.DetermineBorderMap(mapSpan);
+				
+				//TODO: is this required?
+				//var mapBorder = BorderBoundsSolver.DetermineBorderMap(mapSpan);
 
 				TileTypeSolver.SetTiles(mapSpan);
 
 				new TileMapCompressor(_config.TilemapContainer).Compress();
-
+				
 				//TODO: The reset of the  generation will utilize the previous array code instead of span
-				var meshSolverData = MeshSolver.SolveAndCreate(mapBorder);
+				var meshSolverData = MeshSolver.SolveAndCreate(mapSpan.ToArray());
 
 				_data = new MapData(TileHashset, meshSolverData);
 
@@ -209,11 +210,10 @@ namespace Engine.Procedural.Runtime {
 
 				if (_config.ShouldSerializePathfinding)
 					ProceduralSerializer.SerializeCurrentAstarGraph(
-						_config.PathfindingSerializer,
-						GetAstarSerializationName);
+						Constants.SAVE_ASTAR_PREFIX + CurrentSerializableName);
 
 				if (_config.ShouldSerializeMapPrefab)
-					ProceduralSerializer.SerializeMapGameObject(_config);
+					ProceduralSerializer.SerializeMapGameObject(CurrentSerializableName, _config);
 
 #region COMPLETE
 
@@ -276,13 +276,19 @@ namespace Engine.Procedural.Runtime {
 			Observables[StateObservableId.ON_ERROR].Signal();
 		}
 
-		[Button]
+		void HandleGeneratorDidNotRun() {
+			ProceduralSerializer.DeserializeAstarGraph(_config.NameSeedIteration, _config);
+		}
+
+		[BoxGroup("Actions", centerLabel: true),
+		 HorizontalGroup("Actions/Buttons2"),
+		 ButtonGroup("Actions/Buttons2/Methods", Stretch = false, IconAlignment = IconAlignment.RightEdge)]
 		void CleanGenerator() {
 			try {
 #if UNITY_EDITOR
 				var assembly = Assembly.GetAssembly(typeof(UnityEditor.Editor));
-				var type = assembly.GetType("UnityEditor.LogEntries");
-				var method = type.GetMethod("Clear");
+				var type     = assembly.GetType("UnityEditor.LogEntries");
+				var method   = type.GetMethod("Clear");
 				method?.Invoke(new object(), null);
 #endif
 				IsDataSet = false;
@@ -303,23 +309,12 @@ namespace Engine.Procedural.Runtime {
 			}
 		}
 
-		void HandleGeneratorDidNotRun() {
-			// deserialize Astar data and try to parse serialized data to a pathfinding gridGraph
-			ProceduralSerializer.DeserializeAstarGraph(_config);
-
-			//await NodeSerializationSolver.FireTask(CancellationToken);
-		}
-
-		public readonly struct TilemapSetup {
-			public void Setup(ProceduralConfig config) {
-			}
-		}
-
-		[Button]
+		[BoxGroup("Actions", centerLabel: true),
+		 HorizontalGroup("Actions/Buttons2"),
+		 ButtonGroup("Actions/Buttons2/Methods", Stretch = false, IconAlignment = IconAlignment.RightEdge)]
 		void InitializeGenerator() {
 			IsDataSet = false;
 			new SeedValidator(_config).Validate();
-			new TilemapSetup().Setup(_config);
 			new GetActiveAstarData().Retrieve();
 
 			StateMachine            = new StateMachine<ProcessStep>(gameObject, true);
@@ -375,14 +370,40 @@ namespace Engine.Procedural.Runtime {
 			//DataProcessor.DrawTilePositionsShifted();
 		}
 
-		[Button(ButtonStyle.CompactBox)]
-		void Generate() {
-			StartGeneration(true);
+		[BoxGroup("Actions"),
+		 HorizontalGroup("Actions/Buttons1"),
+		 ButtonGroup("Actions/Buttons1/Methods", Stretch = false, IconAlignment = IconAlignment.RightEdge),
+		ShowIf("@IsTileDictNullOrEmpty")]
+		void PopulateTileDictionary() {
+			if (_config.TileDictionary.Count < 1)
+				_config.PopulateTileDictionary();
 		}
 
-		[Button(ButtonStyle.CompactBox)]
+		bool IsTileDictNullOrEmpty => _config.TileDictionary.IsEmptyOrNull();
+
+		[BoxGroup("Actions"),
+		 HorizontalGroup("Actions/Buttons1"),
+		 ButtonGroup("Actions/Buttons1/Methods", Stretch = false, IconAlignment = IconAlignment.RightEdge)]
+		void FindGraphCutters() => _config.FindGraphColliderCuttersInScene();
+
+		[BoxGroup("Actions"),
+		 HorizontalGroup("Actions/Buttons1"),
+		 ButtonGroup("Actions/Buttons1/Methods", Stretch = false, IconAlignment = IconAlignment.RightEdge)]
+		void FindPathfinder() => _config.FindPathfinderInScene();
+
+		[BoxGroup("Actions"),
+		 HorizontalGroup("Actions/Buttons2"),
+		 ButtonGroup("Actions/Buttons2/Methods", Stretch = false, IconAlignment = IconAlignment.RightEdge)]
 		void DeserializeAstar() {
-			ProceduralSerializer.DeserializeAstarGraph(_config);
+			ProceduralSerializer.DeserializeAstarGraph(CurrentSerializableName, _config);
+		}
+
+		[BoxGroup("Actions"),
+		 HorizontalGroup("Actions/Buttons3"),
+		 ButtonGroup("Actions/Buttons3/Methods", Stretch = false, IconAlignment = IconAlignment.RightEdge),
+		 PropertySpace(75f, 75f)]
+		void Generate() {
+			StartGeneration(true);
 		}
 	}
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -36,18 +37,24 @@ namespace Engine.Procedural.Runtime {
 			new SerializeSeedInfo().Serialize(info, SeedSetup, config.Name, StopWatch);
 		}
 
-		public void SerializeMapGameObject(ProceduralConfig config) {
-//#if UNITY_EDITOR
+		public void SerializeMapGameObject(string name, ProceduralConfig config) {
+#if UNITY_EDITOR || UNITY_STANDALONE
+			// if (new ValidationSerializedName().Validate(name, SeedSetup)) {
+			// 	throw new Exception(Message.NO_NAME_FOUND + config.NameSeedIteration);
+			// }
 
-			var name      = config.NameSeedIteration;
 			var container = config.TilemapContainer;
+			var allocation = MapSetup.SaveLocation;
 			var location = Constants.ASSETS_FOLDER    +
 			               MapSetup.SaveRootNameRaw   +
 			               Constants.BACKSLASH        +
 			               MapSetup.SaveFolderNameRaw +
 			               Constants.BACKSLASH;
-			var allocateLocation = MapSetup.SaveLocation;
+
+			
+			Debug.Log(location);
 			var path             = location + name + MapSetup.FileFormat;
+			Debug.Log(path);
 			path = AssetDatabase.GenerateUniqueAssetPath(path);
 
 			PrefabUtility.SaveAsPrefabAsset(container.gameObject, path, out var creationSuccess);
@@ -62,22 +69,24 @@ namespace Engine.Procedural.Runtime {
 					"Serialized map at: " + path,
 					"SerializeMap");
 			}
-//#endif
+#endif
 		}
 
 		/// <summary>
 		///     Please ensure that your active graph data has been scanned.
 		/// </summary>
-		public void SerializeCurrentAstarGraph(SerializerSetup setup, string name) {
-			if (string.IsNullOrWhiteSpace(name)) name = "DefaultAstar";
-
+		public void SerializeCurrentAstarGraph(string name) {
+			if (new ValidationSerializedName().Validate(name, SeedSetup)) {
+				throw new Exception(Message.NO_NAME_FOUND + name);
+			}
+			
 			var settings = new SerializeSettings {
 				nodes          = true,
 				editorSettings = true
 			};
 
 			var bytes            = AstarPath.active.data.SerializeGraphs(settings);
-			var serializationJob = new Serializer.TxtJob(setup, name, bytes, setup.FileFormat);
+			var serializationJob = new Serializer.TxtJob(AstarSetup, name, bytes, AstarSetup.FileFormat);
 			Serializer.SaveBytesData(serializationJob, true);
 		}
 
@@ -85,21 +94,21 @@ namespace Engine.Procedural.Runtime {
 		/// 
 		/// </summary>
 		/// <param name="config">The map name, string, and generation iteration as a string</param>
-		public void DeserializeAstarGraph(ProceduralConfig config) {
-			if (string.IsNullOrWhiteSpace(config.NameSeedIteration))
+		public void DeserializeAstarGraph(string name, ProceduralConfig config) {
+			if (string.IsNullOrWhiteSpace(name))
 				return;
 
 			var validationPath =
 				AstarSetup.SaveLocation     +
 				Constants.SAVE_ASTAR_PREFIX +
-				config.NameSeedIteration    +
+				name                        +
 				Constants.TXT_FILE_TYPE;
 
 			var isValid = File.Exists(validationPath);
 
 			if (!isValid) {
 				GenLogging.Instance.Log(
-					"The provided id: " + config.NameSeedIteration + ", could not be found",
+					"The provided id: " + name + ", could not be found",
 					"DeserializeAstarData",
 					LogLevel.Error);
 				return;
