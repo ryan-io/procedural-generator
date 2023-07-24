@@ -113,14 +113,15 @@ namespace Engine.Procedural.Runtime {
 #endregion
 
 #region RUN
-
-				
 				
 				StateMachine.ChangeState(ProcessStep.Running);
 				Observables[StateObservableId.ON_RUN].Signal();
-
 				FillMapSolver.Fill(mapSpan);
-				SmoothMapSolver.Smooth(mapSpan);
+
+				var array = mapSpan.ToArray();
+				SmoothMapSolver.Smooth(array);
+				mapSpan = new Span2D<int>(array);
+				
 				RegionRemoverSolver.Remove(mapSpan);
 				
 				//TODO: is this required?
@@ -258,7 +259,7 @@ namespace Engine.Procedural.Runtime {
 #endregion
 			}
 			catch (Exception e) {
-#region EXCEPTIONS
+#region EXCEPTIONSe = {IndexOutOfRangeException} System.IndexOutOfRangeException: Index was outside the bounds of the array.\r\n  at CommunityToolkit.HighPerformance.Memory.Internals.ThrowHelper.ThrowIndexOutOfRangeException () [0x00000] in <575bcf19cd36483ba4add6efb9b7a20e>:0 \r\n  at CommunityToolkit.High… View
 
 				GenLogging.Instance.LogWithTimeStamp(
 					LogLevel.Error,

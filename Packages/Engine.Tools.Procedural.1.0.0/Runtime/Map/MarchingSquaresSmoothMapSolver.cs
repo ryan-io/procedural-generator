@@ -1,5 +1,6 @@
 using BCL;
 using CommunityToolkit.HighPerformance;
+using UnityEngine;
 
 namespace Engine.Procedural.Runtime {
 	public class MarchingSquaresSmoothMapSolver : SmoothMapSolver {
@@ -11,9 +12,6 @@ namespace Engine.Procedural.Runtime {
 		int              NumberOfCols        { get; set; }
 
 		/// <summary>
-		/// ** Research on optimizing O(n^2) to O(n) should be researched (hashtable)
-		/// ** I'm not sure constructing a hash table will be of any benefit when working with Spans on the stack **
-		///
 		/// Will take the primary map span, make a copy, performed calculations over the entire mapSpanCopy
 		/// The number of times to perform all calculations = SmoothingIterations
 		/// Once each iteration is complete, it will copy all items in mapSpanCopy to mapSpan and repeat
@@ -22,16 +20,32 @@ namespace Engine.Procedural.Runtime {
 		public override unsafe void Smooth(Span2D<int> mapSpan) {
 			NumberOfRows = mapSpan.Height;
 			NumberOfCols = mapSpan.Width;
+			
+			Debug.Log("NumRows: " + NumberOfRows);
+			Debug.Log("NumCols: " + NumberOfCols);
 			int* copyToAllocationPointer = stackalloc int[3 * NumberOfRows * NumberOfCols];
 			var  mapSpanCopy             = new Span2D<int>(copyToAllocationPointer, NumberOfRows, NumberOfCols, 0);
-
+debug
+			// for (var i = 0; i < NumberOfRows * NumberOfCols; i++) {
+			// 	var row   = i / NumberOfCols;
+			// 	var colum = i % NumberOfCols;
+			//
+			// 	mapSpanCopy[row, colum] = mapSpan[row, colum];
+			// }
 			mapSpan.CopyTo(mapSpanCopy);
-			
 			// SmoothingIterations is relatively small in all scenarios
 			for (var i = 0; i < SmoothingIterations; i++) {
+				//	mapSpan.CopyTo(mapSpanCopy);
 				//var hashTable = GetNewHashTable(mapSpanCopy, hash);
+				
 				GetSmoothedMap(mapSpan, mapSpan);
-				//mapSpanCopy.CopyTo(mapSpan);
+				
+				for (var j = 0; i < NumberOfRows * NumberOfCols; j++) {
+					var row   = j / NumberOfCols;
+					var colum = j % NumberOfCols;
+
+					mapSpan[row, colum] = mapSpanCopy[row, colum];
+				}
 			}
 		}
 
@@ -39,11 +53,11 @@ namespace Engine.Procedural.Runtime {
 			for (var i = 0; i < NumberOfRows * NumberOfCols; i++) {
 				var row   = i / NumberOfCols;
 				var colum = i % NumberOfCols;
-				
+
 				DetermineNeighborLimits(row, colum, mapSpanCopy, mapSpanOriginal);
 			}
-			
-			
+
+
 			//
 			// for (var x = 0; x < NumberOfRows; x++) {
 			// 	for (var y = 0; y < NumberOfCols; y++) {
@@ -64,7 +78,7 @@ namespace Engine.Procedural.Runtime {
 
 		int GetAdjacentWallsCount(int x, int y, Span2D<int> mapSpanOriginal) {
 			var count = 0;
-			
+
 			for (var neighborX = x - 1; neighborX <= x + 1; neighborX++) {
 				for (var neighborY = y - 1; neighborY <= y + 1; neighborY++)
 					count = DetermineCount(x, y, neighborX, neighborY, count, mapSpanOriginal);
