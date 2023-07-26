@@ -16,7 +16,7 @@ namespace Engine.Procedural.Runtime {
 			if (vectors.IsEmptyOrNull())
 				return;
 
-			var obj = new GameObject("Boundary") {
+			var obj = new GameObject("boundary") {
 				isStatic  = true,
 				transform = { parent = parent.transform }
 			};

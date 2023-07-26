@@ -13,7 +13,8 @@ namespace Engine.Procedural.Runtime {
 
 		protected override Tilemap BoundaryTilemap { get; }
 
-		public override void CreateCollider(CollisionSolverDto dto, [CallerMemberName] string caller = "") {
+		public override void CreateCollider(CollisionSolverDto dto, List<Vector3> cache, 
+			[CallerMemberName] string caller = "") {
 			var data = dto.MapData;
 			
 			CreateRotateColliderObject(ZERO_ANGLE,            0f);
@@ -43,6 +44,7 @@ namespace Engine.Procedural.Runtime {
 
 					col.center = center;
 					col.size   = new Vector3(distance, SkinWidth, 0f);
+					cache.Add(center);
 				}
 			}
 

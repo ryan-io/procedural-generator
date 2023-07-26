@@ -44,7 +44,9 @@ namespace Engine.Procedural.Runtime {
 			// }
 
 			var container = config.TilemapContainer;
-			var allocation = MapSetup.SaveLocation;
+			
+			// this invokes MapSetup.SaveLocation { get; } and ensures directory exists
+			_ = MapSetup.SaveLocation;
 			var location = Constants.ASSETS_FOLDER    +
 			               MapSetup.SaveRootNameRaw   +
 			               Constants.BACKSLASH        +

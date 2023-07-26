@@ -7,7 +7,7 @@ namespace Engine.Procedural.Runtime {
 		HashSet<int>                    CheckedVertices { get; }
 		SquareGrid                      SquareGrid      { get; }
 		Dictionary<int, List<Triangle>> TriangleTracker { get; }
-		MeshFilter                      MeshFilter      { get; }
+		ISeedInfo                       Info            { get; }
 
 		public override Tuple<List<int>, List<Vector3>> Triangulate(int[,] mapBorder) {
 			SquareGrid.SetSquares(mapBorder);
@@ -51,10 +51,9 @@ namespace Engine.Procedural.Runtime {
 		}
 
 		void SolveMesh(int[,] mapBorder) {
-			var mesh = new Mesh { name = Constants.MESH_LABEL };
-			MeshFilter.mesh = mesh;
-
+			var mesh     = new Mesh { name = Constants.SAVE_MESH_PREFIX + Info.CurrentSerializableName };
 			var vertices = _triangulationAlgorithm.GetWalkableVertices;
+			
 			mesh.vertices  = vertices.ToArray();
 			mesh.triangles = _triangulationAlgorithm.GetWalkableTriangles.ToArray();
 			mesh.uv        = _uvSolver.CalculateUVs(mapBorder, vertices, Constants.CELL_SIZE);
@@ -64,14 +63,14 @@ namespace Engine.Procedural.Runtime {
 		}
 
 
-		public MarchingSquaresMeshTriangulationSolver(ProceduralConfig config) {
+		public MarchingSquaresMeshTriangulationSolver(ISeedInfo info) {
+			Info                    = info;
 			_uvSolver               = new ProceduralMeshUVSolver();
 			_triangulationAlgorithm = new TriangulationAlgorithm();
 			Outlines                = new List<List<int>>();
 			SquareGrid              = new SquareGrid();
 			CheckedVertices         = new HashSet<int>();
 			TriangleTracker         = new Dictionary<int, List<Triangle>>();
-			MeshFilter              = config.MeshFilter;
 		}
 
 		readonly TriangulationAlgorithm _triangulationAlgorithm;

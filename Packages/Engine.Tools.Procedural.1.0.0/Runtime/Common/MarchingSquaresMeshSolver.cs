@@ -18,8 +18,8 @@ namespace Engine.Procedural.Runtime {
 			);
 		}
 
-		public MarchingSquaresMeshSolver(ProceduralConfig config) {
-			_meshTriangulationSolver = new MarchingSquaresMeshTriangulationSolver(config);
+		public MarchingSquaresMeshSolver(ISeedInfo info) {
+			_meshTriangulationSolver = new MarchingSquaresMeshTriangulationSolver(info);
 		}
 
 		readonly MeshTriangulationSolver _meshTriangulationSolver;

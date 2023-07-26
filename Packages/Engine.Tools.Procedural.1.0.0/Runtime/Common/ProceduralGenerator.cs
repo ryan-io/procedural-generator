@@ -21,10 +21,13 @@ namespace Engine.Procedural.Runtime {
 	/// this is clearly opposite of what I thought
 	/// https://stackoverflow.com/questions/4260207/how-do-you-get-the-width-and-height-of-a-multi-dimensional-array
 	/// </summary>
-	[RequireComponent(typeof(MeshFilter)), HideMonoScript]
+	[HideMonoScript]
 	public class ProceduralGenerator : Singleton<ProceduralGenerator, ProceduralGenerator>, ISeedInfo {
 		[field: SerializeField, Required, BoxGroup("Configuration"), HideLabel]
 		ProceduralConfig _config = null!;
+
+		[field: SerializeField, Required, BoxGroup("Configuration"), HideLabel]
+		SpriteShapeConfig _spriteShapeConfig = null!;
 
 		[SerializeField, HideInInspector] MapData _data;
 
@@ -48,16 +51,16 @@ namespace Engine.Procedural.Runtime {
 		GraphScanner         GraphScanner         { get; set; }
 		ProceduralSerializer ProceduralSerializer { get; set; }
 		DataProcessor        DataProcessor        { get; set; }
+		MeshRendering        Rendering            { get; set; }
 
 		GameObject                GeneratedCollidersObj { get; set; }
-		GameObject                PathfindingMeshObj    { get; set; }
 		GeneratorTools            Tools                 { get; set; }
 		StateMachine<ProcessStep> StateMachine          { get; set; }
 		StopWatchWrapper          StopWatch             { get; set; }
 		CancellationToken         CancellationToken     { get; set; }
 		bool                      IsDataSet             { get; set; }
 
-		string CurrentSerializableName {
+		public string CurrentSerializableName {
 			get {
 				var seedInfo = GetSeedInfo();
 				return _config.Name         +
@@ -113,7 +116,7 @@ namespace Engine.Procedural.Runtime {
 #endregion
 
 #region RUN
-				
+
 				StateMachine.ChangeState(ProcessStep.Running);
 				Observables[StateObservableId.ON_RUN].Signal();
 				FillMapSolver.Fill(mapSpan);
@@ -121,77 +124,27 @@ namespace Engine.Procedural.Runtime {
 				var array = mapSpan.ToArray();
 				SmoothMapSolver.Smooth(array);
 				mapSpan = new Span2D<int>(array);
-				
+
 				RegionRemoverSolver.Remove(mapSpan);
-				
+
 				//TODO: is this required?
 				//var mapBorder = BorderBoundsSolver.DetermineBorderMap(mapSpan);
 
 				TileTypeSolver.SetTiles(mapSpan);
 
 				new TileMapCompressor(_config.TilemapContainer).Compress();
-				
-				//TODO: The reset of the  generation will utilize the previous array code instead of span
+
 				var meshSolverData = MeshSolver.SolveAndCreate(mapSpan.ToArray());
+				Rendering.Render(meshSolverData, Constants.SAVE_MESH_PREFIX + CurrentSerializableName);
 
 				_data = new MapData(TileHashset, meshSolverData);
 
-				new PrepPathfindingMesh(gameObject).Prep(PathfindingMeshObj, meshSolverData);
 				var gridGraph = GridGraphBuilder.Build();
 
 				NavGraphRulesSolver.ResetGridGraphRules(gridGraph);
 				NavGraphRulesSolver.SetGridGraphRules(gridGraph);
 
 				DataProcessor = new DataProcessor(_config, _data, RegionRemoverSolver.Rooms);
-
-// 				var scannerArgs = new GraphScanner.Args(
-// 					gridGraph, 
-// 					() => {
-// 						//var erosionData = ErosionSolver.Erode(gridGraph);
-// 						ColliderSolver.Solve(_data);
-// 					
-// 						GenLogging.Instance.Log("Setting shifted tile positions in map data", "MapData");
-// 					
-// 						//_data.TilePositionsShifted = erosionData.TilePositionsShifted;
-// 					
-// 						new CutGraphColliders().Cut(_config.ColliderCutters);
-// 						new SerializeSeedInfo().Serialize(GetSeedInfo(), _config.SeedInfoSerializer, _config.Name, StopWatch);
-// 						new CreateBoundaryColliders(_config, DataProcessor).Create(GeneratedCollidersObj);
-// 					
-// 						//DataProcessor.IsReady = true;
-// 					
-// 						AstarSerializer.SerializeCurrentAstarGraph(
-// 							_config.PathfindingSerializer,
-// 							GetAstarSerializationName);
-// 						
-// #region COMPLETE
-//
-// 						new SetAllEdgeColliderRadius(_config.EdgeColliderRadius).Set(gameObject);
-// 						StopWatch.Stop();
-// 						StateMachine.ChangeState(ProcessStep.Completing);
-// 						Observables[StateObservableId.ON_COMPLETE].Signal();
-//
-// #endregion
-//
-// #region DISPOSE
-//
-// 						// cleanup
-//
-// 						StateMachine.ChangeState(ProcessStep.Disposing);
-// 						Observables[StateObservableId.ON_DISPOSE].Signal();
-// 						StateMachine.DeleteSubscribers();
-//
-// 						GenLogging.Instance.LogWithTimeStamp(
-// 							LogLevel.Normal,
-// 							StopWatch.TimeElapsed,
-// 							"Generation complete.",
-// 							"Completion");
-//
-// #endregion
-// 					},
-// 					true);
-// 				
-				//GraphScanner.FireForget(scannerArgs, CancellationToken);
 
 				var erosionData = ErosionSolver.Erode(gridGraph);
 				GraphScanner.ScanGraph(gridGraph);
@@ -200,6 +153,9 @@ namespace Engine.Procedural.Runtime {
 				GenLogging.Instance.Log("Setting shifted tile positions in map data", "MapData");
 
 				//_data.TilePositionsShifted = erosionData.TilePositionsShifted;
+
+				// var borderSolver = new SpriteShapeBorderSolver(_spriteShapeConfig, CurrentSerializableName);
+				// borderSolver.GenerateProceduralBorder(_data, gameObject);
 
 				new CutGraphColliders().Cut(_config.ColliderCutters);
 				new CreateBoundaryColliders(_config, DataProcessor).Create(GeneratedCollidersObj);
@@ -259,14 +215,14 @@ namespace Engine.Procedural.Runtime {
 #endregion
 			}
 			catch (Exception e) {
-#region EXCEPTIONSe = {IndexOutOfRangeException} System.IndexOutOfRangeException: Index was outside the bounds of the array.\r\n  at CommunityToolkit.HighPerformance.Memory.Internals.ThrowHelper.ThrowIndexOutOfRangeException () [0x00000] in <575bcf19cd36483ba4add6efb9b7a20e>:0 \r\n  at CommunityToolkit.High… View
+#region EXCEPTION
 
 				GenLogging.Instance.LogWithTimeStamp(
 					LogLevel.Error,
 					StopWatch.TimeElapsed,
 					e.Message + Constants.UNDERSCORE + e.Source,
 					Message.CTX_ERROR + Constants.SPACE + e.TargetSite.Name + Constants.UNDERSCORE +
-					e.GetMethodThatThrew(out _));
+					e.GetMethodThatThrew(out var methodBase));
 
 #endregion
 			}
@@ -288,8 +244,8 @@ namespace Engine.Procedural.Runtime {
 			try {
 #if UNITY_EDITOR
 				var assembly = Assembly.GetAssembly(typeof(UnityEditor.Editor));
-				var type     = assembly.GetType("UnityEditor.LogEntries");
-				var method   = type.GetMethod("Clear");
+				var type = assembly.GetType("UnityEditor.LogEntries");
+				var method = type.GetMethod("Clear");
 				method?.Invoke(new object(), null);
 #endif
 				IsDataSet = false;
@@ -297,10 +253,11 @@ namespace Engine.Procedural.Runtime {
 
 				new ConfigCleaner().Clean(_config);
 				new TilemapCleaner().Clean(_config);
-				new ColliderGameObjectCleaner().Clean(gameObject);
+				new ColliderGameObjectCleaner().Clean(gameObject, true);
 				new MeshCleaner().Clean(gameObject);
 				new GridCleaner().Clean(_config);
 				new GraphCleaner().Clean();
+				new RenderCleaner().Clean(gameObject);
 				new EnsureMapFitsOnStack().Ensure(_config);
 				new DeallocateRoomMemory().Deallocate(RegionRemoverSolver);
 			}
@@ -329,13 +286,14 @@ namespace Engine.Procedural.Runtime {
 			NodeSerializationSolver = new NodeSerializationSolver(_config, this, StopWatch);
 			RegionRemoverSolver     = new FloodRegionRemovalSolver(_config);
 			ErosionSolver           = new ErosionSolver(_config, TileHashset);
-			GeneratedCollidersObj   = new EdgeColliderCreator().Create(this);
-			MeshSolver              = new MarchingSquaresMeshSolver(_config);
+			GeneratedCollidersObj   = new ColliderGameObjectCreator().Create(this, CurrentSerializableName);
+			MeshSolver              = new MarchingSquaresMeshSolver(this);
 			ColliderSolver          = new ColliderSolver(_config, gameObject, GeneratedCollidersObj, StopWatch);
 			GridGraphBuilder        = new GridGraphBuilder(_config);
 			NavGraphRulesSolver     = new NavGraphRulesSolver(_config);
 			GraphScanner            = new GraphScanner(StopWatch);
 			ProceduralSerializer    = new ProceduralSerializer(_config, StopWatch);
+			Rendering               = new MeshRendering(gameObject, default);
 
 			Observables = new ObservableCollection<string> {
 				{
@@ -363,6 +321,13 @@ namespace Engine.Procedural.Runtime {
 		}
 
 		void OnDrawGizmosSelected() {
+			if (ColliderSolver == null || ColliderSolver.ProcessedBorderPositions.IsEmptyOrNull()) return;
+			
+			foreach (var vector in ColliderSolver.ProcessedBorderPositions) {
+				DebugExt.DrawCircle(vector, Color.white, true,  .5f);
+				DebugExt.DrawPoint(vector, Color.magenta,   1f);
+			}
+
 			if (DataProcessor == null || !_config.DrawDebugGizmos || !DataProcessor.IsReady) return;
 
 			//RoomCalculator.DrawRooms();
@@ -374,7 +339,7 @@ namespace Engine.Procedural.Runtime {
 		[BoxGroup("Actions"),
 		 HorizontalGroup("Actions/Buttons1"),
 		 ButtonGroup("Actions/Buttons1/Methods", Stretch = false, IconAlignment = IconAlignment.RightEdge),
-		ShowIf("@IsTileDictNullOrEmpty")]
+		 ShowIf("@IsTileDictNullOrEmpty")]
 		void PopulateTileDictionary() {
 			if (_config.TileDictionary.Count < 1)
 				_config.PopulateTileDictionary();

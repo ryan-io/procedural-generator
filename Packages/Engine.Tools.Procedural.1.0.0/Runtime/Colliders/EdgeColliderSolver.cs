@@ -29,7 +29,8 @@ namespace Engine.Procedural.Runtime {
 		///					*****   THIS IS AN UNSAFE METHOD   *****
 		/// </summary>
 		/// <param name="dto">Relevant data transfer object to create colliders</param>
-		public override void CreateCollider(CollisionSolverDto dto, [CallerMemberName] string caller = "") {
+		public override void CreateCollider(CollisionSolverDto dto, List<Vector3> cache,
+			[CallerMemberName] string caller = "") {
 			try {
 				var data = dto.MapData;
 				LogOutlineCount(data);

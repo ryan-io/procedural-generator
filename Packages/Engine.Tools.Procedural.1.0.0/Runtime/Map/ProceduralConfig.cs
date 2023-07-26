@@ -24,8 +24,6 @@ namespace Engine.Procedural.Runtime {
 		[field: SerializeField,  Required, FoldoutGroup("Required Components", false)]
 		public GameObject Pathfinder { get; private set; }
 
-		[field: SerializeField, Required, FoldoutGroup("Required Components", false)] public MeshFilter MeshFilter { get; private set; }
-		
 		[field: SerializeField, Required, FoldoutGroup("Required Components", false)]public Grid Grid { get; private set; }
 		
 		[field: SerializeField, Required, FoldoutGroup("Required Components", false)]

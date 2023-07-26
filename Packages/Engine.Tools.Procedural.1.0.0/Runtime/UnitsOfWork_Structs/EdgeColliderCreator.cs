@@ -1,8 +1,8 @@
 using UnityEngine;
 
 namespace Engine.Procedural.Runtime {
-	public readonly struct EdgeColliderCreator {
-		public GameObject Create(ProceduralGenerator generator) {
+	public readonly struct ColliderGameObjectCreator {
+		public GameObject Create(ProceduralGenerator generator, string name) {
 			var trs = generator.gameObject.GetComponentsInChildren<Transform>();
 
 			foreach (var tr in trs) {
@@ -15,7 +15,7 @@ namespace Engine.Procedural.Runtime {
 				}
 			}
 
-			var o = new GameObject(Constants.EDGE_COLLIDER_GO_NAME) {
+			var o = new GameObject(Constants.SAVE_COLLIDERS_PREFIX + name) {  
 				transform = {
 					parent = generator.transform
 				},

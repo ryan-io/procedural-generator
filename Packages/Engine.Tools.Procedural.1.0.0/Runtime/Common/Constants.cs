@@ -6,9 +6,19 @@ namespace Engine.Procedural.Runtime {
 			public const string OBSTACLES = "Obstacles";
 		}
 
+		public const string SPRITE_SHAPE_SAVE_PREFIX = "SpriteShape_";
+		
+		public const string SPRITE_BOUNDARY_KEY = "boundary-shape key ";
+
+		public const string SPRITE_BOUNDARY_CTX = "SpriteBoundary";
+		
+		public const string PROCEDURAL_MESH_NAME = "procedural-mesh";
+
 		public const string ASSETS_FOLDER = "Assets/";
 		
 		public const string PREFAB_FILE_TYPE = ".prefab";
+
+		public const string SAVE_COLLIDERS_PREFIX = "Colliders_";
 		
 		public const string BACKSLASH = "/";
 
@@ -19,18 +29,16 @@ namespace Engine.Procedural.Runtime {
 		public const string SAVE_ASTAR_PREFIX = "AstarGraph_";
 
 		public const string SAVE_SEED_PREFIX = "MapSeed_";
+		
+		public const string SAVE_MESH_PREFIX = "Mesh_";
 
 		public const string UID = "_uid-";
 
 		public const string TILE_LABEL = "Tile";
 
-		public const string MESH_LABEL = "Procedural Mesh";
-
 		public const string PATHFINDING_MESH_LABEL = "Pathfinding Mesh";
 
 		public const string ASTAR_GRAPH_NAME = "ProceduralGridGraph";
-
-		public const string EDGE_COLLIDER_GO_NAME = "Procedural Edge Colliders";
 
 		public const string UNDERSCORE = "_";
 

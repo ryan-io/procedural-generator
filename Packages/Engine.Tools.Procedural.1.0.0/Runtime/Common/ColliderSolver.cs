@@ -1,19 +1,21 @@
 // Engine.Procedural
 
 using System;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using BCL;
 using UnityEngine;
 
 namespace Engine.Procedural.Runtime {
 	public class ColliderSolver {
-		ProceduralConfig   Config       { get; }
-		StopWatchWrapper   StopWatch    { get; }
-		GameObject         ProcGenObj   { get; }
-		GameObject         ColliderObj  { get; }
-		ColliderSolverType SolverType   { get; }
-		LayerMask          ObstacleMask { get; }
-		LayerMask          BoundaryMask { get; }
+		public List<Vector3> ProcessedBorderPositions { get; }
+		ProceduralConfig     Config                   { get; }
+		StopWatchWrapper     StopWatch                { get; }
+		GameObject           ProcGenObj               { get; }
+		GameObject           ColliderObj              { get; }
+		ColliderSolverType   SolverType               { get; }
+		LayerMask            ObstacleMask             { get; }
+		LayerMask            BoundaryMask             { get; }
 
 		public void Solve(MapData mapData, [CallerMemberName] string caller = "") {
 			try {
@@ -34,7 +36,7 @@ namespace Engine.Procedural.Runtime {
 				else
 					solver = new PrimitiveCollisionSolver(Config);
 
-				solver.CreateCollider(dto);
+				solver.CreateCollider(dto, ProcessedBorderPositions);
 			}
 			catch (Exception) {
 				GenLogging.Instance.Log("Error thrown " + caller, "ColliderSolver", LogLevel.Error);
@@ -46,13 +48,14 @@ namespace Engine.Procedural.Runtime {
 			GameObject procGenObj,
 			GameObject colliderObj,
 			StopWatchWrapper stopWatch) {
-			Config       = config;
-			ObstacleMask = config.ObstacleLayerMask;
-			BoundaryMask = config.BoundaryLayerMask;
-			SolverType   = config.SolverType;
-			ProcGenObj   = procGenObj;
-			ColliderObj  = colliderObj;
-			StopWatch    = stopWatch;
+			Config                   = config;
+			ObstacleMask             = config.ObstacleLayerMask;
+			BoundaryMask             = config.BoundaryLayerMask;
+			SolverType               = config.SolverType;
+			ProcGenObj               = procGenObj;
+			ColliderObj              = colliderObj;
+			StopWatch                = stopWatch;
+			ProcessedBorderPositions = new List<Vector3>();
 		}
 	}
 }

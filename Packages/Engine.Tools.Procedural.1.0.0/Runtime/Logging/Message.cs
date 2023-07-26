@@ -20,5 +20,10 @@
 		internal const string MAP_WILL_BE_RESIZED = "Max size will be modified if border-size > 1";
 
 		internal const string NO_NAME_FOUND = "Please verify you are serializing the correct map. Could not find name: ";
+
+		internal const string NO_DATA_SPRITE_BOUNDARY =
+			"Characteristics are currently null or empty. Please generate a map and try again.";
+		
+		internal const string START_SHAPE_BOUNDARY_GENERATION = "Beginning procedural border procedure";
 	}
 }
