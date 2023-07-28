@@ -14,18 +14,19 @@ namespace Engine.Procedural.Runtime {
 	public class ProceduralConfig {
 #region NAME
 
-		[field: SerializeField, BoxGroup("Map Name"), HideLabel] public string Name { 
-		get; set; } = "map_" + Guid.NewGuid();
+		[field: SerializeField, BoxGroup("Map Name"), HideLabel]
+		public string Name { get; set; } = "map_" + Guid.NewGuid();
 
 #endregion
 
 #region REQUIRED_MONOBEHAVIORS
 
-		[field: SerializeField,  Required, FoldoutGroup("Required Components", false)]
+		[field: SerializeField, Required, FoldoutGroup("Required Components", false)]
 		public GameObject Pathfinder { get; private set; }
 
-		[field: SerializeField, Required, FoldoutGroup("Required Components", false)]public Grid Grid { get; private set; }
-		
+		[field: SerializeField, Required, FoldoutGroup("Required Components", false)]
+		public Grid Grid { get; private set; }
+
 		[field: SerializeField, Required, FoldoutGroup("Required Components", false)]
 		public GameObject TilemapContainer { get; private set; }
 
@@ -36,28 +37,42 @@ namespace Engine.Procedural.Runtime {
 		[field: SerializeField, FoldoutGroup("Serialization", false)]
 		public bool ShouldSerializeSeed { get; private set; } = true;
 
-		[field: SerializeField, FoldoutGroup("Serialization", false)] public bool ShouldSerializePathfinding { get; private set; } = true;
+		[field: SerializeField, FoldoutGroup("Serialization", false)]
+		public bool ShouldSerializePathfinding { get; private set; } = true;
 
-		[field: SerializeField, FoldoutGroup("Serialization", false)] public bool ShouldSerializeMapPrefab { get; private set; } = true;
-		
-		[field: SerializeField, InlineEditor(InlineEditorObjectFieldModes.Foldout), ShowIf("@ShouldSerializeSeed"), FoldoutGroup("Serialization", false)]
+		[field: SerializeField, FoldoutGroup("Serialization", false)]
+		public bool ShouldSerializeMapPrefab { get; private set; } = true;
+
+		[field: SerializeField, FoldoutGroup("Serialization", false)]
+		public bool ShouldSerializeSpriteShape { get; private set; } = true;
+
+		[field: SerializeField, InlineEditor(InlineEditorObjectFieldModes.Foldout), ShowIf("@ShouldSerializeSeed"),
+		        FoldoutGroup("Serialization", false)]
 		public SerializerSetup SeedInfoSerializer { get; private set; }
 
-		[field: SerializeField, InlineEditor(InlineEditorObjectFieldModes.Foldout), ShowIf("@ShouldSerializePathfinding"), FoldoutGroup("Serialization", false)]
+		[field: SerializeField, InlineEditor(InlineEditorObjectFieldModes.Foldout),
+		        ShowIf("@ShouldSerializePathfinding"), FoldoutGroup("Serialization", false)]
 		public SerializerSetup PathfindingSerializer { get; private set; }
-		
-		[field: SerializeField, InlineEditor(InlineEditorObjectFieldModes.Foldout), ShowIf("@ShouldSerializeMapPrefab"), FoldoutGroup("Serialization", false)]
+
+		[field: SerializeField, InlineEditor(InlineEditorObjectFieldModes.Foldout), ShowIf("@ShouldSerializeMapPrefab"),
+		        FoldoutGroup("Serialization", false)]
 		public SerializerSetup MapSerializer { get; private set; }
-		
+
+		[field: SerializeField, InlineEditor(InlineEditorObjectFieldModes.Foldout),
+		        ShowIf("@ShouldSerializeSpriteShape"), FoldoutGroup("Serialization", false)]
+		public SerializerSetup SpriteShapeSerializer { get; private set; }
+
 #endregion
-		
+
 #region DESERIALIZATION
 
-		[field: SerializeField, FoldoutGroup("Deserialization", false), ValueDropdown(@"GetAllSeedsWrapper")] 
+		[field: SerializeField, FoldoutGroup("Deserialization", false), ValueDropdown(@"GetAllSeedsWrapper")]
 		public string NameSeedIteration { get; private set; }
-		
-		IEnumerable GetAllSeedsWrapper() 
-			=> SeedInfoSerializer == null ? Enumerable.Empty<string>() : ProceduralSerializer.GetAllSeeds(SeedInfoSerializer);
+
+		IEnumerable GetAllSeedsWrapper()
+			=> SeedInfoSerializer == null
+				   ? Enumerable.Empty<string>()
+				   : ProceduralSerializer.GetAllSeeds(SeedInfoSerializer);
 
 #endregion
 
@@ -69,9 +84,11 @@ namespace Engine.Procedural.Runtime {
 		[field: SerializeField, ShowIf("UseRandomSeed"), FoldoutGroup("Seeding", false)]
 		public string Seed { get; internal set; }
 
-		[field: SerializeField, ReadOnly, FoldoutGroup("Seeding", false)] public string LastSeed { get; set; }
+		[field: SerializeField, ReadOnly, FoldoutGroup("Seeding", false)]
+		public string LastSeed { get; set; }
 
-		[field: SerializeField, ReadOnly, FoldoutGroup("Seeding", false)] public int LastIteration { get; set; }
+		[field: SerializeField, ReadOnly, FoldoutGroup("Seeding", false)]
+		public int LastIteration { get; set; }
 
 #endregion
 
@@ -98,14 +115,17 @@ namespace Engine.Procedural.Runtime {
 		}
 
 		[Tooltip(Message.MAP_WILL_BE_RESIZED)]
-		[field: SerializeField, Range(50, Constants.MAP_DIMENSION_LIMIT), OnValueChanged("CheckIfEven"), FoldoutGroup("Generation Settings", false)]
+		[field: SerializeField, Range(50, Constants.MAP_DIMENSION_LIMIT), OnValueChanged("CheckIfEven"),
+		        FoldoutGroup("Generation Settings", false)]
 		public int Columns { get; set; } = 100;
 
 		[Tooltip(Message.MAP_WILL_BE_RESIZED)]
-		[field: SerializeField, Range(50, Constants.MAP_DIMENSION_LIMIT), OnValueChanged("CheckIfEven"), FoldoutGroup("Generation Settings", false)]
+		[field: SerializeField, Range(50, Constants.MAP_DIMENSION_LIMIT), OnValueChanged("CheckIfEven"),
+		        FoldoutGroup("Generation Settings", false)]
 		public int Rows { get; set; } = 100;
 
-		[field: SerializeField, Range(1, 10), FoldoutGroup("Generation Settings", false)] public int BorderSize { get; private set; } = 1;
+		[field: SerializeField, Range(1, 10), FoldoutGroup("Generation Settings", false)]
+		public int BorderSize { get; private set; } = 1;
 
 		[field: SerializeField, Range(1, 125), FoldoutGroup("Generation Settings", false)]
 		public int SmoothingIterations { get; private set; } = 5;
@@ -116,24 +136,31 @@ namespace Engine.Procedural.Runtime {
 		[field: SerializeField, Range(10, 1000), FoldoutGroup("Generation Settings", false)]
 		public int RoomRemovalThreshold { get; private set; } = 50;
 
-		[field: SerializeField, Range(1, 4), FoldoutGroup("Generation Settings", false)] public int LowerNeighborLimit { get; private set; } = 4;
-		[field: SerializeField, Range(4, 8), FoldoutGroup("Generation Settings", false)] public int UpperNeighborLimit { get; private set; } = 4;
+		[field: SerializeField, Range(1, 4), FoldoutGroup("Generation Settings", false)]
+		public int LowerNeighborLimit { get; private set; } = 4;
 
-		[field: SerializeField, PropertyTooltip(Message.PERCENTAGE_WALLS), Range(40, 55), FoldoutGroup("Generation Settings", false)]
+		[field: SerializeField, Range(4, 8), FoldoutGroup("Generation Settings", false)]
+		public int UpperNeighborLimit { get; private set; } = 4;
+
+		[field: SerializeField, PropertyTooltip(Message.PERCENTAGE_WALLS), Range(40, 55),
+		        FoldoutGroup("Generation Settings", false)]
 		public int WallFillPercentage { get; private set; } = 47;
 
 		[field: SerializeField, MinMaxSlider(1, 12), FoldoutGroup("Generation Settings", false)]
 		public Vector2Int CorridorWidth { get; private set; } = new(1, 6);
 
-		
-		[field: SerializeField, FoldoutGroup("Layer Definitions", false)] 
+
+		[field: SerializeField, FoldoutGroup("Layer Definitions", false)]
 		public LayerMask GroundLayerMask { get; private set; }
 
-		[field: SerializeField, FoldoutGroup("Layer Definitions", false)] public LayerMask ObstacleLayerMask { get; private set; }
+		[field: SerializeField, FoldoutGroup("Layer Definitions", false)]
+		public LayerMask ObstacleLayerMask { get; private set; }
 
-		[field: SerializeField, FoldoutGroup("Layer Definitions", false)] public LayerMask BoundaryLayerMask { get; private set; }
-		
-		[field: SerializeField, FoldoutGroup("Layer Definitions", false)] public LayerMask NavGraphHeightTestLayerMask { get; private set; } = 0;
+		[field: SerializeField, FoldoutGroup("Layer Definitions", false)]
+		public LayerMask BoundaryLayerMask { get; private set; }
+
+		[field: SerializeField, FoldoutGroup("Layer Definitions", false)]
+		public LayerMask NavGraphHeightTestLayerMask { get; private set; } = 0;
 
 #endregion
 
@@ -143,12 +170,15 @@ namespace Engine.Procedural.Runtime {
 
 		public bool ShouldCreateTileLabels { get; private set; }
 
-		[field: SerializeField, FoldoutGroup("Tilemaps", false)] public bool ShouldGenerateAngles { get; private set; }
-		
-		[field: SerializeField, FoldoutGroup("Tilemaps", false), DictionaryDrawerSettings(DisplayMode = DictionaryDisplayOptions.CollapsedFoldout)] 
+		[field: SerializeField, FoldoutGroup("Tilemaps", false)]
+		public bool ShouldGenerateAngles { get; private set; }
+
+		[field: SerializeField, FoldoutGroup("Tilemaps", false),
+		        DictionaryDrawerSettings(DisplayMode = DictionaryDisplayOptions.CollapsedFoldout)]
 		public TileMapDictionary TileMapDictionary { get; private set; }
 
-		[field: SerializeField, DictionaryDrawerSettings(DisplayMode = DictionaryDisplayOptions.CollapsedFoldout), FoldoutGroup("Tilemaps", false)]
+		[field: SerializeField, DictionaryDrawerSettings(DisplayMode = DictionaryDisplayOptions.CollapsedFoldout),
+		        FoldoutGroup("Tilemaps", false)]
 		public TileDictionary TileDictionary { get; private set; } = TileDictionary.GetDefault();
 
 #endregion
@@ -172,10 +202,10 @@ namespace Engine.Procedural.Runtime {
 
 		[field: SerializeField, Range(.1f, 8), ShowIf("@ErodePathfindingGrid"), FoldoutGroup("Pathfinding", false)]
 		public float NavGraphNodeSize { get; private set; } = 0.5f;
-		
+
 #endregion
 
-#region PATHFINDING_EROSION	
+#region PATHFINDING_EROSION
 
 		[field: SerializeField, FoldoutGroup("Erosion", false)]
 		public bool ErodePathfindingGrid { get; private set; } = true;
@@ -187,7 +217,8 @@ namespace Engine.Procedural.Runtime {
 		// [field: SerializeField, ShowIf("@ErodePathfindingGrid")]
 		// public LayerMask ErosionObstacleLayerMasks { get; private set; }
 
-		[field: SerializeField, Range(0, 10), ShowIf("@ErodePathfindingGrid"), InfoBox(EROSION_TAG_INFO), FoldoutGroup("Erosion", false)]
+		[field: SerializeField, Range(0, 10), ShowIf("@ErodePathfindingGrid"), InfoBox(EROSION_TAG_INFO),
+		        FoldoutGroup("Erosion", false)]
 		public int NodesToErodeAtBoundaries { get; private set; } = 3;
 
 		[field: SerializeField, Range(0, 18), ShowIf("@ErodePathfindingGrid"), FoldoutGroup("Erosion", false)]
@@ -239,8 +270,8 @@ namespace Engine.Procedural.Runtime {
 		public float PrimitiveColliderSkinWidth { get; private set; } = 0.5f;
 
 #endregion
-		
-		[field: SerializeField, FoldoutGroup("Collisions", false)] 
+
+		[field: SerializeField, FoldoutGroup("Collisions", false)]
 		public List<GraphColliderCutter> ColliderCutters { get; private set; } = new();
 
 		bool IsBox       => SolverType == ColliderSolverType.Box;
@@ -279,11 +310,11 @@ namespace Engine.Procedural.Runtime {
 #endregion
 
 #region HELPERS
-		
+
 		internal void PopulateTileDictionary() {
 			TileDictionary = TileDictionary.GetDefault();
 		}
-		
+
 		internal void FindGraphColliderCuttersInScene() =>
 			ColliderCutters = new ObjectFinder().FindGraphColliderCuttersInScene(ColliderCutters);
 

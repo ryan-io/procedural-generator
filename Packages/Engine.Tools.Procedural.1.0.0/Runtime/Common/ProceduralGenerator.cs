@@ -235,6 +235,7 @@ namespace Engine.Procedural.Runtime {
 		}
 
 		void HandleGeneratorDidNotRun() {
+			
 			ProceduralSerializer.DeserializeAstarGraph(_config.NameSeedIteration, _config);
 		}
 

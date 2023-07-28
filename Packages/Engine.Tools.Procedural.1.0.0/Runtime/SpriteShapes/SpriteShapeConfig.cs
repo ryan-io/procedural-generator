@@ -11,10 +11,6 @@ namespace Engine.Procedural {
 	[Serializable]
 	public class SpriteShapeConfig {
 		[field: SerializeField, Required, FoldoutGroup("Sprite Shape Boundary", false)]
-		[ReadOnly, ShowInInspector]
-		public BorderShapeData SerializedData { get; set; }
-
-		[field: SerializeField, Required, FoldoutGroup("Sprite Shape Boundary", false)]
 		public GameObject ControllerPrefab { get; set; }
 
 		[field: SerializeField, FoldoutGroup("Sprite Shape Boundary", false)]

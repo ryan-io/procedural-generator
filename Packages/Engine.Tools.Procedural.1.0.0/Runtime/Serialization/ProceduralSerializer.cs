@@ -10,9 +10,11 @@ using UnityEngine;
 
 namespace Engine.Procedural.Runtime {
 	public class ProceduralSerializer {
-		SerializerSetup SeedSetup  { get; }
-		SerializerSetup AstarSetup { get; }
-		SerializerSetup MapSetup   { get; }
+		SerializerSetup  SeedSetup        { get; }
+		SerializerSetup  AstarSetup       { get; }
+		SerializerSetup  MapSetup         { get; }
+		SerializerSetup  SpriteShapeSetup { get; }
+		StopWatchWrapper StopWatch        { get; }
 
 		public static IEnumerable<string> GetAllSeeds(SerializerSetup seedSetup) {
 			var lines = File.ReadAllLines(
@@ -31,8 +33,6 @@ namespace Engine.Procedural.Runtime {
 			return newLines.AsEnumerable();
 		}
 
-		StopWatchWrapper StopWatch { get; }
-
 		public void SerializeSeed(SeedInfo info, ProceduralConfig config) {
 			new SerializeSeedInfo().Serialize(info, SeedSetup, config.Name, StopWatch);
 		}
@@ -44,7 +44,7 @@ namespace Engine.Procedural.Runtime {
 			// }
 
 			var container = config.TilemapContainer;
-			
+
 			// this invokes MapSetup.SaveLocation { get; } and ensures directory exists
 			_ = MapSetup.SaveLocation;
 			var location = Constants.ASSETS_FOLDER    +
@@ -53,10 +53,7 @@ namespace Engine.Procedural.Runtime {
 			               MapSetup.SaveFolderNameRaw +
 			               Constants.BACKSLASH;
 
-			
-			Debug.Log(location);
-			var path             = location + name + MapSetup.FileFormat;
-			Debug.Log(path);
+			var path = location + name + MapSetup.FileFormat;
 			path = AssetDatabase.GenerateUniqueAssetPath(path);
 
 			PrefabUtility.SaveAsPrefabAsset(container.gameObject, path, out var creationSuccess);
@@ -81,7 +78,7 @@ namespace Engine.Procedural.Runtime {
 			if (new ValidationSerializedName().Validate(name, SeedSetup)) {
 				throw new Exception(Message.NO_NAME_FOUND + name);
 			}
-			
+
 			var settings = new SerializeSettings {
 				nodes          = true,
 				editorSettings = true
@@ -143,11 +140,39 @@ namespace Engine.Procedural.Runtime {
 			}
 		}
 
+		public void DeserializeSpriteShape(string name, SpriteShapeConfig config) {
+			if (string.IsNullOrWhiteSpace(name))
+				return;
+
+			var validationPath =
+				AstarSetup.SaveLocation     +
+				Constants.SAVE_ASTAR_PREFIX +
+				name                        +
+				Constants.TXT_FILE_TYPE;
+
+			var isValid = File.Exists(validationPath);
+
+			if (!isValid) {
+				GenLogging.Instance.Log(
+					"The provided id: " + name + ", could not be found",
+					"DeserializeAstarData",
+					LogLevel.Error);
+				return;
+			}
+
+			var hasData = Serializer.TryLoadBytesData(validationPath, out var data);
+
+			var testData = new Vector3(3, 4, 1);
+			var test = JsonUtility.ToJson(testData);
+			Serializer.SaveJson(new Serializer.JsonJob(SpriteShapeSetup, "TestData", test));
+		}
+
 		public ProceduralSerializer(ProceduralConfig config, StopWatchWrapper stopWatch) {
-			SeedSetup  = config.SeedInfoSerializer;
-			AstarSetup = config.PathfindingSerializer;
-			MapSetup   = config.MapSerializer;
-			StopWatch  = stopWatch;
+			SeedSetup        = config.SeedInfoSerializer;
+			AstarSetup       = config.PathfindingSerializer;
+			MapSetup         = config.MapSerializer;
+			SpriteShapeSetup = config.SpriteShapeSerializer;
+			StopWatch        = stopWatch;
 		}
 	}
 }

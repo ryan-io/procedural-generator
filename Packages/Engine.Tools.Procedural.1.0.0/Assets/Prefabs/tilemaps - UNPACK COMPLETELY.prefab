@@ -438,7 +438,7 @@ GameObject:
   - component: {fileID: 1175674498853755578}
   - component: {fileID: 1008485247270216100}
   - component: {fileID: 7743945612200614810}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Boundary
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -800,7 +800,7 @@ GameObject:
   - component: {fileID: 5512426747352248692}
   - component: {fileID: 6060830539082213897}
   - component: {fileID: 385722333585124037}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Obstacles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1872,7 +1872,7 @@ GameObject:
   - component: {fileID: 8982398280582910139}
   - component: {fileID: 8982398280582910133}
   - component: {fileID: 8982398280582910132}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Foreground - 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3908,7 +3908,7 @@ GameObject:
   - component: {fileID: 8982398280917318143}
   - component: {fileID: 8982398280917318132}
   - component: {fileID: 8982398280917318139}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Platforms - No Effectors
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4028,7 +4028,7 @@ GameObject:
   - component: {fileID: 8982398281097354813}
   - component: {fileID: 8982398281097354810}
   - component: {fileID: 8982398281097354809}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4172,7 +4172,7 @@ GameObject:
   - component: {fileID: 8982398281527057483}
   - component: {fileID: 8982398281527057477}
   - component: {fileID: 8982398281527057476}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: 'Foreground - 2 '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5190,7 +5190,7 @@ GameObject:
   - component: {fileID: 8982398281753186344}
   - component: {fileID: 8982398281753186346}
   - component: {fileID: 8982398281753186345}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Platforms - Effector 1-way
   m_TagString: Untagged
   m_Icon: {fileID: 0}
