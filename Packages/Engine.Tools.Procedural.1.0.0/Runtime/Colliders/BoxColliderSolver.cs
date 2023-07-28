@@ -13,9 +13,10 @@ namespace Engine.Procedural.Runtime {
 
 		protected override Tilemap BoundaryTilemap { get; }
 
-		public override void CreateCollider(CollisionSolverDto dto, List<Vector3> cache, 
+		public override Dictionary<int, List<Vector3>> CreateCollider(CollisionSolverDto dto, 
 			[CallerMemberName] string caller = "") {
 			var data = dto.MapData;
+			var dict = new Dictionary<int, List<Vector3>>();
 			
 			CreateRotateColliderObject(ZERO_ANGLE,            0f);
 			CreateRotateColliderObject(FORTY_FIVE_ANGLE,      45f);
@@ -25,7 +26,10 @@ namespace Engine.Procedural.Runtime {
 			roomObject.MakeStatic(true);
 
 			for (var i = 0; i < data.RoomOutlines.Count; i++) {
-				var outline = data.RoomOutlines[i];
+				var outline     = data.RoomOutlines[i];
+				var outlineList = new List<Vector3>();
+				dict.Add(i, outlineList);
+				
 				for (var j = 0; j < outline.Count; j++) {
 					if (j + 1 >= outline.Count)
 						continue;
@@ -44,11 +48,12 @@ namespace Engine.Procedural.Runtime {
 
 					col.center = center;
 					col.size   = new Vector3(distance, SkinWidth, 0f);
-					cache.Add(center);
+					outlineList.Add(center);
 				}
 			}
 
 			roomObject.SetLayer(dto.ObstacleLayer);
+			return dict;
 		}
 
 		void CreateRotateColliderObject(string id, float angle) {

@@ -7,10 +7,10 @@ using UnityEngine.Tilemaps;
 
 namespace Engine.Procedural.Runtime {
 	public abstract class CollisionSolver {
-		protected abstract Tilemap       BoundaryTilemap      { get; }
-		
-		public abstract void CreateCollider(CollisionSolverDto dto, List<Vector3> cache, 
-			[CallerMemberName] string caller = "");
+		protected abstract Tilemap BoundaryTilemap { get; }
+
+		public abstract Dictionary<int, List<Vector3>> CreateCollider(
+			CollisionSolverDto dto, [CallerMemberName] string caller = "");
 
 		protected GameObject AddRoom(GameObject parent, string identifier = "", params Type[] componentsToAdd) {
 			var newObj = new GameObject($"room {identifier} - colliders") {

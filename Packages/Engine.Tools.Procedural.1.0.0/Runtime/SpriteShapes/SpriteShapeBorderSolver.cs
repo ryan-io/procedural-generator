@@ -2,15 +2,16 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using BCL;
 using Engine.Procedural.Runtime;
+using Unity.VisualScripting.YamlDotNet.Core;
+using UnityBCL;
 using UnityEngine;
 using UnityEngine.U2D;
 using Object = UnityEngine.Object;
 
 namespace Engine.Procedural {
 	public class SpriteShapeBorderSolver {
+		Transform                   Owner                    { get; }
 		GameObject                  Go                       { get; set; }
-		SerializedBoundaryShape     Shape                    { get; set; }
-		SerializedBoundaryPositions ShapePositions           { get; set; }
 		SerializedBoundaryPositions SplinePositions          { get; set; }
 		float                       LastSlope                { get; set; }
 		bool                        IsFirstIterationComplete { get; set; }
@@ -18,71 +19,76 @@ namespace Engine.Procedural {
 
 		bool TangentModeIsLinear => _config.SplineTangentMode == ShapeTangentMode.Linear;
 
-		public void GenerateProceduralBorder(MapData data, GameObject owner, [CallerMemberName] string name = "") {
-			SetupGameObject(owner, name);
+		public void GenerateProceduralBorder(MapData data, string serializedName,
+			[CallerMemberName] string name = "") {
+			SetupGameObject(serializedName);
+			var dict = data.BoundaryCorners;
 
-			var outlinesIndex = 0;
-
-			foreach (var outline in data.RoomOutlines) {
-				Shape.Add(outlinesIndex, outline);
-				outlinesIndex++;
-			}
-
-			RunProcedure(data.MeshVertices, true);
+			RunProcedure(dict);
 			SerializeData();
 		}
 
-		void RunProcedure(IReadOnlyList<Vector3> boundaryPositions, bool shouldAddToCollections) {
+		void RunProcedure(Dictionary<int, List<Vector3>> boundaryPositions) {
 			GenLogging.Instance.Log(Message.START_SHAPE_BOUNDARY_GENERATION, Constants.SPRITE_BOUNDARY_CTX);
 			ClearBorderGameObjects();
 
 			var currentRoomIndex = 0;
 
-			foreach (var outline in Shape) {
-				CreateSpriteShapeBorderAndPopulate(
-					outline.Value,
-					boundaryPositions,
-					currentRoomIndex,
-					shouldAddToCollections);
+			foreach (var outline in boundaryPositions) {
+				CreateSpriteShapeBorderAndPopulate(outline.Value, currentRoomIndex);
 
 				currentRoomIndex++;
 			}
 		}
 
-		void CreateSpriteShapeBorderAndPopulate(
-			IReadOnlyList<int> outline, IReadOnlyList<Vector3> boundaryPositions,
-			int currentRoomIndex, bool shouldAddToCollections) {
-			var currentIndexBoundaryPos = new List<Vector3>();
-
-			CheckIfShouldCacheBoundaryPositions(currentRoomIndex, shouldAddToCollections, currentIndexBoundaryPos);
-
-			// NEED TO CREATE PREFAB TO INSTANTIATIE -> CANNOT BE NULL
+		void CreateSpriteShapeBorderAndPopulate(IReadOnlyList<Vector3> boundaryPositions, int currentRoomIndex) {
 			var obj = InstantiateSpriteControllerPrefab();
-
 			obj.name = Constants.SPRITE_BOUNDARY_KEY + currentRoomIndex;
 
 			var controller = obj.GetComponent<SpriteShapeController>();
-			controller.worldSpaceUVs = _config.IsSplineAdaptive;
+			controller.worldSpaceUVs      = _config.IsSplineAdaptive;
+			controller.fillPixelsPerUnit  = 16;
 			var spline = controller.spline;
+			controller.fillPixelsPerUnit = (float)_config.Ppu;
 			spline.Clear();
+			controller.spline.isOpenEnded = true;
 
-			var indexTracker = 0;
-			var solver       = InstantiateTangentSolver();
+			var indexTracker   = 0;
+			var solver         = InstantiateTangentSolver();
+			var iterationCount = 2;
 
-			for (var i = 1; i < outline.Count; i++)
-				indexTracker = CreateAndSetSplineSegment(
-					outline, boundaryPositions, i, currentIndexBoundaryPos, spline, indexTracker, solver);
+			int maxNodes = 250;
+			var limit    = boundaryPositions.Count;
 
-			CacheSplineSegmentPositions(spline, currentRoomIndex, shouldAddToCollections);
-			controller.spline.isOpenEnded = false;
+			for (var i = 0; i < limit; i++) {
+				if (spline.GetPointCount() > maxNodes) {
+					var newObjName = i + Constants.SPACE + iterationCount;
+					obj      = InstantiateSpriteControllerPrefab();
+					obj.name = newObjName;
+
+					controller                    = obj.GetComponent<SpriteShapeController>();
+					controller.worldSpaceUVs      = _config.IsSplineAdaptive;
+					spline                        = controller.spline;
+					spline.Clear();
+					iterationCount++;
+					indexTracker = 0;
+					controller.spline.isOpenEnded = true;
+					controller.fillPixelsPerUnit  = (float)_config.Ppu;
+					controller.RefreshSpriteShape();
+				}
+				indexTracker = CreateAndSetSplineSegment(boundaryPositions[i], spline, indexTracker, solver);
+
+			}
+
+			//CacheSplineSegmentPositions(spline, currentRoomIndex);
 			controller.RefreshSpriteShape();
 		}
 
-		void CheckIfShouldCacheBoundaryPositions(int currentRoomIndex, bool shouldAddToCollections,
-			List<Vector3> currentIndexBoundaryPos) {
-			if (shouldAddToCollections)
-				ShapePositions.Add(currentRoomIndex, currentIndexBoundaryPos);
-		}
+		// void CheckIfShouldCacheBoundaryPositions(int currentRoomIndex, bool shouldAddToCollections,
+		// 	List<Vector3> currentIndexBoundaryPos) {
+		// 	if (shouldAddToCollections)
+		// 		ShapePositions.Add(currentRoomIndex, currentIndexBoundaryPos);
+		// }
 
 		ISplineSegmentSolver InstantiateTangentSolver() {
 			ISplineSegmentSolver solver;
@@ -102,10 +108,8 @@ namespace Engine.Procedural {
 			return solver;
 		}
 
-		int CreateAndSetSplineSegment(IReadOnlyList<int> outline, IReadOnlyList<Vector3> boundaryPositions, int i,
-			List<Vector3> currentIndexBoundaryPos, Spline spline, int indexTracker, ISplineSegmentSolver solver) {
-			var position = GetNextPosition(outline, boundaryPositions, i) * GetScaleMod();
-			currentIndexBoundaryPos.Add(position);
+		int CreateAndSetSplineSegment(Vector3 position, Spline spline, int indexTracker, ISplineSegmentSolver solver) {
+			//currentIndexBoundaryPos.Add(position);
 
 			if (solver.DetermineNextSegment(spline, position, indexTracker))
 				indexTracker++;
@@ -136,33 +140,9 @@ namespace Engine.Procedural {
 			for (var i = 0; i < spline.GetPointCount(); i++) splineSegmentList.Add(spline.GetPosition(i));
 		}
 
-		// void DrawTangentCoords(Vector3 position, Spline spline, int indexTracker) {
-		// 	if (_config.s) {
-		// 		var o = Instantiate(TextMeshPrefab, gameObject.transform);
-		// 		o.transform.position = position;
-		// 		var textMesh = o.GetComponent<TextMeshPro>();
-		// 		textMesh.text = GetCoordString(spline, indexTracker);
-		// 	}
-		// }
-
-		// string GetCoordString(Spline spline, int index) {
-		// 	var lT = spline.GetLeftTangent(index);
-		// 	var rT = spline.GetRightTangent(index);
-		//
-		// 	var output = "Left(" + lT.x + ", " + lT.y + ") Right(" + rT.x + ", " + rT.y + ")";
-		// 	return output;
-		// }
-
-		float GetScaleMod() => 1 / _config.ScaleModifier;
-
-		static Vector3 GetNextPosition(IReadOnlyList<int> outline, IReadOnlyList<Vector3> boundaryPositions, int i) {
-			var position = new Vector3(boundaryPositions[outline[i]].x, boundaryPositions[outline[i]].y, 0);
-			return position;
-		}
-
-		void SetupGameObject(GameObject owner, string name) {
+		void SetupGameObject(string name) {
 			Go = new GameObject(Constants.SPRITE_SHAPE_SAVE_PREFIX + name) {
-				transform = { parent = owner.transform.parent }
+				transform = { parent = Owner }
 			};
 		}
 
@@ -175,16 +155,12 @@ namespace Engine.Procedural {
 
 		void SerializeData() {
 			_config.SerializedData = new BorderShapeData(
-				Shape,
-				ShapePositions,
 				SplinePositions);
 		}
 
-		public SpriteShapeBorderSolver(SpriteShapeConfig config, string name) {
-			_config = config;
-
-			Shape           = new SerializedBoundaryShape();
-			ShapePositions  = new SerializedBoundaryPositions();
+		public SpriteShapeBorderSolver(SpriteShapeConfig config, GameObject owner) {
+			_config         = config;
+			Owner           = owner.transform;
 			SplinePositions = new SerializedBoundaryPositions();
 		}
 

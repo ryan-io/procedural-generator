@@ -8,16 +8,15 @@ using UnityEngine;
 
 namespace Engine.Procedural.Runtime {
 	public class ColliderSolver {
-		public List<Vector3> ProcessedBorderPositions { get; }
-		ProceduralConfig     Config                   { get; }
-		StopWatchWrapper     StopWatch                { get; }
-		GameObject           ProcGenObj               { get; }
-		GameObject           ColliderObj              { get; }
-		ColliderSolverType   SolverType               { get; }
-		LayerMask            ObstacleMask             { get; }
-		LayerMask            BoundaryMask             { get; }
+		ProceduralConfig   Config                   { get; }
+		StopWatchWrapper   StopWatch                { get; }
+		GameObject         ProcGenObj               { get; }
+		GameObject         ColliderObj              { get; }
+		ColliderSolverType SolverType               { get; }
+		LayerMask          ObstacleMask             { get; }
+		LayerMask          BoundaryMask             { get; }
 
-		public void Solve(MapData mapData, [CallerMemberName] string caller = "") {
+		public Dictionary<int, List<Vector3>> Solve(MapData mapData, [CallerMemberName] string caller = "") {
 			try {
 				CollisionSolver solver;
 
@@ -36,10 +35,11 @@ namespace Engine.Procedural.Runtime {
 				else
 					solver = new PrimitiveCollisionSolver(Config);
 
-				solver.CreateCollider(dto, ProcessedBorderPositions);
+				return solver.CreateCollider(dto);
 			}
 			catch (Exception) {
 				GenLogging.Instance.Log("Error thrown " + caller, "ColliderSolver", LogLevel.Error);
+				throw;
 			}
 		}
 
@@ -55,7 +55,6 @@ namespace Engine.Procedural.Runtime {
 			ProcGenObj               = procGenObj;
 			ColliderObj              = colliderObj;
 			StopWatch                = stopWatch;
-			ProcessedBorderPositions = new List<Vector3>();
 		}
 	}
 }

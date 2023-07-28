@@ -14,7 +14,8 @@ namespace Engine.Procedural {
 				return true;
 			}
 
-			var (next, last) = _positionSolver.GetComparisonPositions(spline, indexTracker, indexTracker - 1);
+			var (next, last) = _positionSolver.GetComparisonPositions(
+				spline, indexTracker, indexTracker - 1);
 
 			if (_directionSolver.IsMovingEast(next, last))
 				_tangentSetter.SetTangentsQuad14(spline, indexTracker);

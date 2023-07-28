@@ -148,14 +148,15 @@ namespace Engine.Procedural.Runtime {
 
 				var erosionData = ErosionSolver.Erode(gridGraph);
 				GraphScanner.ScanGraph(gridGraph);
-				ColliderSolver.Solve(_data);
+				var boundaryCorners = ColliderSolver.Solve(_data);
 
 				GenLogging.Instance.Log("Setting shifted tile positions in map data", "MapData");
 
 				//_data.TilePositionsShifted = erosionData.TilePositionsShifted;
+				_data.BoundaryCorners = boundaryCorners;
 
-				// var borderSolver = new SpriteShapeBorderSolver(_spriteShapeConfig, CurrentSerializableName);
-				// borderSolver.GenerateProceduralBorder(_data, gameObject);
+				var borderSolver = new SpriteShapeBorderSolver(_spriteShapeConfig, gameObject);
+				borderSolver.GenerateProceduralBorder(_data,  CurrentSerializableName);
 
 				new CutGraphColliders().Cut(_config.ColliderCutters);
 				new CreateBoundaryColliders(_config, DataProcessor).Create(GeneratedCollidersObj);
@@ -321,14 +322,27 @@ namespace Engine.Procedural.Runtime {
 		}
 
 		void OnDrawGizmosSelected() {
-			if (ColliderSolver == null || ColliderSolver.ProcessedBorderPositions.IsEmptyOrNull()) return;
-			
-			foreach (var vector in ColliderSolver.ProcessedBorderPositions) {
-				DebugExt.DrawCircle(vector, Color.white, true,  .5f);
-				DebugExt.DrawPoint(vector, Color.magenta,   1f);
+			//if (ColliderSolver == null || ColliderSolver.ProcessedBorderPositions.IsEmptyOrNull()) return;
+
+			if (_data == null || _data.BoundaryCorners.IsEmptyOrNull()) return;
+			foreach (var vector in _data.BoundaryCorners.Values) {
+				for (var i = 0; i < vector.Count; i++) {
+					DebugExt.DrawCircle(vector[i], Color.white, true, .5f);
+					DebugExt.DrawPoint(vector[i], Color.magenta, 1f);
+					
+				}
 			}
 
+			// if (_data != null && !_data.MeshVertices.IsEmptyOrNull()) {
+			// 	var vertices = _data.MeshVertices;
+			//
+			// 	for (var i = 0; i < vertices.Count; i++) {
+			// 		DebugExt.DrawPoint(vertices[i], Color.yellow, .5f);
+			// 	}
+			// }
+
 			if (DataProcessor == null || !_config.DrawDebugGizmos || !DataProcessor.IsReady) return;
+
 
 			//RoomCalculator.DrawRooms();
 			// DataProcessor.DrawMapBoundary();

@@ -29,10 +29,11 @@ namespace Engine.Procedural.Runtime {
 		///					*****   THIS IS AN UNSAFE METHOD   *****
 		/// </summary>
 		/// <param name="dto">Relevant data transfer object to create colliders</param>
-		public override void CreateCollider(CollisionSolverDto dto, List<Vector3> cache,
-			[CallerMemberName] string caller = "") {
+		public override Dictionary<int, List<Vector3>> CreateCollider(CollisionSolverDto dto, [CallerMemberName] string caller = "") {
 			try {
 				var data = dto.MapData;
+				var dict = new Dictionary<int, List<Vector3>>();
+				
 				LogOutlineCount(data);
 				var outlineCounter = 0;
 				LogRoomOutlineCount(data);
@@ -57,12 +58,16 @@ namespace Engine.Procedural.Runtime {
 
 					outlineCounter = ProcessOutline(dto, edgePoints, outlineCounter, outline, data);
 				}
+
+				return dict;
 			}
 
 			catch (Exception) {
 				GenLogging.Instance.Log(
 					"Error thrown from " + caller,
 					"EdgeColliderSolver", LogLevel.Error);
+
+				throw;
 			}
 		}
 
