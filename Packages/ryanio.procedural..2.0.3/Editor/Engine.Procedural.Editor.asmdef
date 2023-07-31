@@ -1,0 +1,26 @@
+{
+  "name": "Engine.Procedural.Editor",
+  "rootNamespace": "Engine.Procedural.Editor",
+  "references": [
+    "Engine.Procedural",
+    "Engine.Tools.Logging",
+    "Engine.Tools.Utility",
+    "UniTask",
+    "AstarPathfindingProject",
+    "AstarPathfindingProjectEditor",
+    "UnityEditor.TestRunner",
+    "UnityEngine.TestRunner",
+    "ProceduralGeneration"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

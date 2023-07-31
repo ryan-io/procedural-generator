@@ -35,7 +35,7 @@
       "dependencies": {}
     },
     "com.omniengine.procedural": {
-      "version": "file:Engine.Tools.Procedural.1.0.0",
+      "version": "file:ryanio.procedural..2.0.3",
       "depth": 0,
       "source": "embedded",
       "dependencies": {
@@ -48,13 +48,6 @@
         "com.unity.render-pipelines.universal": "12.1.6",
         "com.unity.addressables": "1.19.19"
       }
-    },
-    "com.omniengine.tools.serialization": {
-      "version": "https://github.com/ryanunitydeveloper/enginetools-serialization.git",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "236e592f8e0210fb37384441c05b7d25b79796dc"
     },
     "com.singularitygroup.hotreload": {
       "version": "file:com.singularitygroup.hotreload",

@@ -11,7 +11,6 @@
   "dependencies": {
     "com.arongranberg.astar": "4.3.60",
     "com.cysharp.unitask": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask",
-    "com.omniengine.tools.serialization": "https://github.com/ryanunitydeveloper/enginetools-serialization.git",
     "com.unity.adaptiveperformance": "4.0.1",
     "com.unity.addressables": "1.21.14",
     "com.unity.collab-proxy": "2.0.5",
