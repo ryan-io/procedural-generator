@@ -74,9 +74,9 @@ namespace Engine.Procedural {
 				}
 				
 				indexTracker = CreateAndSetSplineSegment(boundaryPositions[i], spline, indexTracker, solver);
+				controller.RefreshSpriteShape();
 			}
 
-			controller.RefreshSpriteShape();
 		}
 		ISplineSegmentSolver InstantiateTangentSolver() {
 			ISplineSegmentSolver solver;

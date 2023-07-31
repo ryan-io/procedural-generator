@@ -338,10 +338,10 @@ namespace Engine.Procedural.Runtime {
 		[BoxGroup("Actions", centerLabel: true),
 		 HorizontalGroup("Actions/Buttons2"),
 		 ButtonGroup("Actions/Buttons2/Methods", Stretch = false, IconAlignment = IconAlignment.RightEdge)]
-		void InitializeGenerator() {
+		void InitializeGenerator(bool isForced = false) {
 			IsDataSet = false;
 
-			if (_config.ShouldGenerate)
+			if (_config.ShouldGenerate && !isForced)
 				new SeedValidator(_config).Validate(this);
 
 			new GetActiveAstarData().Retrieve();
