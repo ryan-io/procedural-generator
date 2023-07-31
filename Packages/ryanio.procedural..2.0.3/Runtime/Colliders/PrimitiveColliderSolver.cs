@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using ProceduralAuxiliary;
@@ -14,8 +13,6 @@ namespace Engine.Procedural.Runtime {
 		Vector3                    Char2           { get; set; }
 		float                      Slope1          { get; set; }
 		float                      Slope2          { get; set; }
-		bool                       Slope1WasSame   { get; set; }
-		bool                       Slope2WasSame   { get; set; }
 		float                      SkinWidth       { get; }
 		float                      Radius          { get; }
 		float                      FortyFour       { get; }
@@ -79,29 +76,20 @@ namespace Engine.Procedural.Runtime {
 						Slope1 = VectorF.GetSlope(Char1, Char2);
 						Slope2 = VectorF.GetSlope(Char2, newPoint);
 
-						//Slope1WasSame = Math.Abs(Slope1 - Slope2) > Constants.FLOATING_POINT_ERROR;
-
-						var hasSlopedChanged = Slope2 - Slope1 <= Constants.FLOATING_POINT_ERROR;
+						var hasSlopedChanged = Slope2 - Slope1 == 0;
 
 						if (hasSlopedChanged) {
 							if (outLineList.Contains(Char2))
 								outLineList.Remove(Char2);
-							Slope1WasSame = true;
 						}
 						else {
 							if (!outLineList.Contains(Char2))
 								outLineList.Add(Char2);
-							if (Slope2WasSame && Slope1WasSame) {
-								if (!outLineList.Contains(Char1))
-									outLineList.Add(Char1);
-							}
-							Slope1WasSame = false;
 						}
 					}
 
-					Char1         = Char2;
-					Char2         = newPoint;
-					Slope2WasSame = Slope1WasSame;
+					Char1 = Char2;
+					Char2 = newPoint;
 				}
 
 				foreach (var obj in objList) {
