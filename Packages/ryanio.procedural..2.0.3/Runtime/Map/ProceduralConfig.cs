@@ -82,10 +82,10 @@ namespace Engine.Procedural.Runtime {
 		[field: SerializeField, EnumToggleButtons, FoldoutGroup("State", false)]
 		public bool ShouldGenerate { get; set; } = true;
 
-		[field: SerializeField, ShowIf("@ShouldShowDeserialize"), EnumToggleButtons, FoldoutGroup("State", false)]
+		[field: SerializeField, ShowIf("@!ShouldGenerate"), EnumToggleButtons, FoldoutGroup("State", false)]
 		public bool ShouldDeserialize { get; set; } = true;
 
-		[field: SerializeField, ShowIf("@ShouldShowDeserialize"), FoldoutGroup("State", false),
+		[field: SerializeField, ShowIf("@ShouldDeserialize && !ShouldGenerate"), FoldoutGroup("State", false),
 		        ValueDropdown(@"GetAllSeedsWrapper")]
 		public string NameSeedIteration { get; set; }
 
@@ -138,7 +138,6 @@ namespace Engine.Procedural.Runtime {
 		[field: SerializeField, MinMaxSlider(1, 12), FoldoutGroup("Generation Settings", false)]
 		public Vector2Int CorridorWidth { get; private set; } = new(1, 6);
 
-
 		[field: SerializeField, FoldoutGroup("Layer Definitions", false)]
 		public LayerMask GroundLayerMask { get; private set; }
 
@@ -175,7 +174,7 @@ namespace Engine.Procedural.Runtime {
 
 		[field: SerializeField, EnumToggleButtons, FoldoutGroup("Pathfinding", false)]
 		public ColliderType NavGraphCollisionType { get; private set; } = ColliderType.Capsule;
-
+		
 		[field: SerializeField, FoldoutGroup("Pathfinding", false)]
 		[field: Range(0.05f, 5.0f)]
 		public float NavGraphCollisionDetectionDiameter { get; private set; } = 0.1f;
@@ -253,6 +252,10 @@ namespace Engine.Procedural.Runtime {
 
 		[field: SerializeField, Range(0.1f, 1f), ShowIf("@IsPrimitive"), FoldoutGroup("Collisions", false)]
 		public float PrimitiveColliderSkinWidth { get; private set; } = 0.5f;
+		
+		[field: SerializeField, FoldoutGroup("Collisions", false), ShowIf("@IsPrimitive")]
+		[field: Range(0.1f, 5.0f)]
+		public float NodeCullDistance { get; private set; } = .5f;
 
 #endregion
 

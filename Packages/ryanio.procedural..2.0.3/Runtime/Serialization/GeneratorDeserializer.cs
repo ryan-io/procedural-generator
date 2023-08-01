@@ -6,36 +6,37 @@ using System.IO;
 using System.Linq;
 using BCL;
 using BCL.Serialization;
-using Cysharp.Threading.Tasks.Triggers;
 using JetBrains.Annotations;
+using Sirenix.OdinInspector;
 using UnityBCL;
 using UnityBCL.Serialization;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
-using Object = System.Object;
 
 namespace Engine.Procedural.Runtime {
 	public class GeneratorDeserializer {
 		ProceduralConfig Config     { get; }
 		StopWatchWrapper StopWatch  { get; }
 		Serializer       Serializer { get; set; }
-
+		
 		/// <summary>
 		/// Takes the current map name, reads serialized data if found, and builds and scans a new A* graph
 		/// </summary>
 		/// <param name="currentSerializableName">Passed from an instance of ProceduralGenerator</param>
 		/// <param name="setup">SerializerSetup used for Astar</param>
 		public void DeserializeAstar(string currentSerializableName, SerializerSetup setup) {
-			if (string.IsNullOrWhiteSpace(currentSerializableName))
+			if (string.IsNullOrWhiteSpace(currentSerializableName)) {
+				GenLogging.Instance.Log("Serializable name was null or empty.", "DeserializeAstar", LogLevel.Warning);
 				return;
-			Serializer ??= new Serializer();
-Debug.LogError("Deserializing astar");
+			}
+
+			Serializer = new Serializer();
+
 			var validationPath =
 				setup.SaveLocation          +
 				Constants.SAVE_ASTAR_PREFIX +
 				currentSerializableName     +
-				Constants.TXT_FILE_TYPE;
+				Constants.JSON_FILE_TYPE;
 
 			var isValid = File.Exists(validationPath);
 
@@ -47,23 +48,18 @@ Debug.LogError("Deserializing astar");
 				return;
 			}
 
-			var hasData = Serializer.TryLoadBytesData(validationPath, out var data);
+			var data = Serializer.DeserializeJson<byte[]>(validationPath);
 
-			if (hasData) {
+			if (!data.IsEmptyOrNull()) {
 				new GetActiveAstarData().Retrieve();
-				// var scanner = new GraphScanner(StopWatch);
-				// var builder = new GridGraphBuilder(Config);
-				// var rule    = new NavGraphRulesSolver(Config);
+				AstarPath.active.data.DeserializeGraphs(data);
 
-				// var gridGraph = AstarPath.active.data.gridGraph;
-				//AstarPath.active.data.DeserializeGraphs(data);
 				
-				//
-				// builder.SetGraph(gridGraph);
-				// rule.ResetGridGraphRules(gridGraph);
-				// rule.SetGridGraphRules(gridGraph);
-				//
-				// scanner.ScanGraph(gridGraph);
+				// scanning graph after deserializing it has been causing issues due to WalkabilityRule that is 
+				// present
+				
+				//var scanner = new GraphScanner(StopWatch);
+				//scanner.ScanGraph(AstarPath.active.data.gridGraph);
 			}
 			else {
 				GenLogging.Instance.LogWithTimeStamp(
@@ -142,8 +138,8 @@ Debug.LogError("Deserializing astar");
 						$"File name was not valid. Could not validate if file '{currentSerializableName}' exists");
 				}
 
-				var obj =  AssetDatabase.LoadAssetAtPath<GameObject>(uniquePath);
-				if (obj) 
+				var obj = AssetDatabase.LoadAssetAtPath<GameObject>(uniquePath);
+				if (obj)
 					GenLogging.Instance.Log($"Deserialize map prefab: {obj.name}", "DeserializeMap");
 				return obj;
 			}

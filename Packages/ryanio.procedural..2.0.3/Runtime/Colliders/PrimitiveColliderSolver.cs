@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using ProceduralAuxiliary;
 using UnityBCL;
@@ -8,17 +9,17 @@ using Object = UnityEngine.Object;
 
 namespace Engine.Procedural.Runtime {
 	public class PrimitiveCollisionSolver : CollisionSolver {
-		protected override Tilemap BoundaryTilemap { get; }
-		Vector3                    Char1           { get; set; }
-		Vector3                    Char2           { get; set; }
-		float                      Slope1          { get; set; }
-		float                      Slope2          { get; set; }
-		float                      SkinWidth       { get; }
-		float                      Radius          { get; }
-		float                      FortyFour       { get; }
-		float                      FortySix        { get; }
-		float                      OneThirtyFour   { get; }
-		float                      OneThirtySix    { get; }
+		protected override Tilemap BoundaryTilemap   { get; }
+		Vector3                    Char1             { get; set; }
+		Vector3                    Char2             { get; set; }
+		bool                       CurrentIsColinear { get; set; }
+		bool                       LastWasColinear   { get; set; }
+		float                      SkinWidth         { get; }
+		float                      Radius            { get; }
+		float                      FortyFour         { get; }
+		float                      FortySix          { get; }
+		float                      OneThirtyFour     { get; }
+		float                      OneThirtySix      { get; }
 
 		/// <summary>
 		/// 3 points (x1,y1), (x2,y2), and (x3,y3) are colinear (in a line) if:
@@ -73,23 +74,46 @@ namespace Engine.Procedural.Runtime {
 							outLineList.Add(newPoint);
 					}
 					else {
-						Slope1 = VectorF.GetSlope(Char1, Char2);
-						Slope2 = VectorF.GetSlope(Char2, newPoint);
-
-						var hasSlopedChanged = Slope2 - Slope1 == 0;
-
-						if (hasSlopedChanged) {
+						CurrentIsColinear = VectorF.IsColinear(Char1, Char2, newPoint);
+						if (CurrentIsColinear) {
 							if (outLineList.Contains(Char2))
 								outLineList.Remove(Char2);
 						}
 						else {
-							if (!outLineList.Contains(Char2))
-								outLineList.Add(Char2);
+							if (LastWasColinear) {
+								if (!outLineList.Contains(Char1)) {
+									//var last = outLineList.Last();
+
+									//if (Vector3.Distance(Char1, last) < CullDistance)
+									outLineList.Add(Char1);
+								}
+							}
+
+							if (!outLineList.Contains(newPoint)) {
+								//var last = outLineList.Last();
+
+								//if (Vector3.Distance(newPoint, last) <CullDistance)
+								outLineList.Add(newPoint);
+							}
 						}
+						// Slope1 = VectorF.GetSlope(Char1, Char2);
+						// Slope2 = VectorF.GetSlope(Char2, newPoint);
+						//
+						// var hasSlopedChanged = Slope2 - Slope1 == 0;
+						//
+						// if (hasSlopedChanged) {
+						// 	if (outLineList.Contains(Char2))
+						// 		outLineList.Remove(Char2);
+						// }
+						// else {
+						// 	if (!outLineList.Contains(Char2))
+						// 		outLineList.Add(Char2);
+						// }
 					}
 
-					Char1 = Char2;
-					Char2 = newPoint;
+					Char1           = Char2;
+					Char2           = newPoint;
+					LastWasColinear = CurrentIsColinear;
 				}
 
 				foreach (var obj in objList) {

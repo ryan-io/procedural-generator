@@ -120,8 +120,8 @@ namespace Engine.Procedural.Runtime {
 			map.SetTile(position, tile);
 		}
 
-		public void SetGridOrigin() {
-			GridObj.gameObject.transform.position = new(
+		public void SetOriginWrtMap(GameObject go) {
+			go.transform.position = new(
 				Mathf.CeilToInt(-MapWidth   / 2f),
 				Mathf.FloorToInt(-MapHeight / 2f),
 				0);

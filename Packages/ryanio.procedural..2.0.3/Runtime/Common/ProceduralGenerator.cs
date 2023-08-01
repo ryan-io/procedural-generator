@@ -41,7 +41,6 @@ namespace Engine.Procedural.Runtime {
 		Grid                    Grid                    { get; set; }
 		FillMapSolver           FillMapSolver           { get; set; }
 		SmoothMapSolver         SmoothMapSolver         { get; set; }
-		BorderAndBoundsSolver   BorderBoundsSolver      { get; set; }
 		NodeSerializationSolver NodeSerializationSolver { get; set; }
 		RegionRemovalSolver     RegionRemoverSolver     { get; set; }
 		TileTypeSolver          TileTypeSolver          { get; set; }
@@ -96,9 +95,12 @@ namespace Engine.Procedural.Runtime {
 		/// </summary>
 		/// <param name="alsoInitialize">If true, will invoke Initialize().</param>
 		unsafe void StartGeneration(bool alsoInitialize = true) {
-			Observables = new CreateObservables().Create(_config);
-			StateMachine = new StateMachine<ProcessStep>(gameObject, true);
+			if (!_config.ShouldGenerate && !_config.ShouldDeserialize)
+				return;
 			
+			Observables  = new CreateObservables().Create(_config);
+			StateMachine = new StateMachine<ProcessStep>(gameObject, true);
+
 			if (IsRunning) {
 				GenLogging.Instance.Log(Message.ALREADY_RUNNING, "Generation", LogLevel.Warning);
 				return;
@@ -115,16 +117,18 @@ namespace Engine.Procedural.Runtime {
 				GeneratedCollidersObj = new ColliderGameObjectCreator().Create(this, CurrentSerializableName);
 				var output = SetContainer();
 			}
+
 			if (alsoInitialize) {
-				InitializeGenerator();
+				if (_config.ShouldDeserialize)
+					InitializeGenerator(true);
+				else InitializeGenerator();
 			}
 
 			try {
-#region SETUP
+#region CHECK_FOR_DESERIALIZATION
 
-				if (!_config.ShouldGenerate) {
-					if (_config.ShouldDeserialize)
-						Deserialize();
+				if (!_config.ShouldGenerate && _config.ShouldDeserialize) {
+					Deserialize();
 
 					StateMachine.ChangeState(ProcessStep.Disposing);
 					Observables[StateObservableId.ON_DISPOSE].Signal();
@@ -138,8 +142,8 @@ namespace Engine.Procedural.Runtime {
 				StateMachine.ChangeState(ProcessStep.Initializing);
 				Observables[StateObservableId.ON_INIT].Signal();
 
-				var rowsOrHeight = _config.Rows;
-				var colsOrWidth  = _config.Columns;
+				var rowsOrHeight   = _config.Rows;
+				var colsOrWidth    = _config.Columns;
 				var primaryPointer = stackalloc int[rowsOrHeight * colsOrWidth];
 				var mapSpan        = new Span2D<int>(primaryPointer, rowsOrHeight, colsOrWidth, 0);
 
@@ -192,9 +196,9 @@ namespace Engine.Procedural.Runtime {
 				new CreateBoundaryColliders(_config, DataProcessor).Create(GeneratedCollidersObj);
 				new RenameTilemapContainer().Rename(CurrentSerializableName, Grid.gameObject);
 
-				Tools.SetGridOrigin();
+				Tools.SetOriginWrtMap(Grid.gameObject);
 				Tools.SetGridScale(Constants.CELL_SIZE);
-				
+
 				if (_config.ShouldSerializeSeed)
 					GeneratorSerializer.SerializeSeed(GetSeedInfo(), _config);
 
@@ -288,14 +292,18 @@ namespace Engine.Procedural.Runtime {
 #region ASTAR_PATHFINDING
 
 			deserializer.DeserializeAstar(_config.NameSeedIteration, _config.PathfindingSerializer);
+			var grid  = gameObject.GetComponentInChildren<Grid>();
+			grid.gameObject.transform.localPosition = Vector3.zero;
+			var tools = new GeneratorTools(_config, grid, default);
+			tools.SetOriginWrtMap(gameObject);
 
 #endregion
 
-#region SPRITE_SHAPE_BOUNDARY
+#region SPRITE_SHAPE_COLLIDER_BOUNDARY
 
-			// var positions = deserializer.DeserializeSpriteShape(_config.NameSeedIteration);
-			// var solver    = new SpriteShapeBorderSolver(_spriteShapeConfig, gameObject);
-			// solver.GenerateProceduralBorder(positions, _config.NameSeedIteration);
+			var positions = deserializer.DeserializeSpriteShape(_config.NameSeedIteration);
+			var solver    = new SpriteShapeBorderSolver(_spriteShapeConfig, gameObject);
+			solver.GenerateProceduralBorder(positions, _config.NameSeedIteration);
 
 #endregion
 		}
@@ -304,7 +312,7 @@ namespace Engine.Procedural.Runtime {
 			StateMachine.ChangeState(ProcessStep.Error);
 			Observables[StateObservableId.ON_ERROR].Signal();
 		}
-		
+
 		void CleanGenerator(bool cleanRootObject = false) {
 			try {
 				if (cleanRootObject)
@@ -345,13 +353,15 @@ namespace Engine.Procedural.Runtime {
 				new SeedValidator(_config).Validate(this);
 
 			new GetActiveAstarData().Retrieve();
+
+			if (_config.ShouldDeserialize)
+				return;
 			
 			TileHashset        = new TileHashset();
 			StopWatch          = new StopWatchWrapper(true);
 			Tools              = new GeneratorTools(_config, Grid, StopWatch);
 			FillMapSolver      = new CellularAutomataFillMapSolver(_config, StopWatch);
 			SmoothMapSolver    = new MarchingSquaresSmoothMapSolver(_config, StopWatch);
-			BorderBoundsSolver = new IterativeBorderAndBoundsSolver(_config, StopWatch);
 			TileTypeSolver =
 				new SetAllTilesSyncTileTypeSolver(_config, TileHashset, TileMapDictionary, Grid, StopWatch);
 			NodeSerializationSolver = new NodeSerializationSolver(_config, this, TileMapDictionary, StopWatch);
@@ -382,7 +392,7 @@ namespace Engine.Procedural.Runtime {
 		 HorizontalGroup("Actions/Buttons2"),
 		 ButtonGroup("Actions/Buttons2/Methods", Stretch = false, IconAlignment = IconAlignment.RightEdge)]
 		void ForceClean() => CleanGenerator(true);
-		
+
 		[BoxGroup("Actions", centerLabel: true),
 		 HorizontalGroup("Actions/Buttons2"),
 		 ButtonGroup("Actions/Buttons2/Methods", Stretch = false, IconAlignment = IconAlignment.RightEdge)]

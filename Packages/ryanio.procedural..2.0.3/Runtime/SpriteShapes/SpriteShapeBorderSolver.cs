@@ -1,14 +1,16 @@
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Engine.Procedural.Runtime;
+using UnityBCL;
 using UnityEngine;
 using UnityEngine.U2D;
 using Object = UnityEngine.Object;
 
 namespace Engine.Procedural {
 	public class SpriteShapeBorderSolver {
-		Transform                   Owner                    { get; }
-		GameObject                  Go                       { get; set; }
+		Ppu        Ppu   { get; }
+		Transform  Owner { get; }
+		GameObject Go    { get; set; }
 
 		public void GenerateProceduralBorder(Dictionary<int, List<Vector3>> positions, string serializedName,
 			[CallerMemberName] string name = "") {
@@ -34,7 +36,7 @@ namespace Engine.Procedural {
 
 			var controller = obj.GetComponent<SpriteShapeController>();
 			controller.worldSpaceUVs      = _config.IsSplineAdaptive;
-			controller.fillPixelsPerUnit  = 16;
+			controller.fillPixelsPerUnit  = (int)Ppu;
 			var spline = controller.spline;
 			controller.fillPixelsPerUnit = (float)_config.Ppu;
 			spline.Clear();
