@@ -44,21 +44,38 @@ namespace Engine.Procedural.Runtime {
 			return dict;
 		}
 
-		public void CreateColliderFromDict(Dictionary<int, List<Vector3>> dict) {
-			
-		} 
+		// public void CreateColliderFromDict(Dictionary<int, List<Vector3>> dict) {
+		// 	ColliderGo.MakeStatic(true);
+		// 	ColliderGo.ZeroPosition();
+		//
+		// 	int tracker = 0;
+		// 	
+		// 	foreach (var pair in dict) {
+		// 		var outlines = new List<Vector3>();
+		// 		dict.Add(tracker, outlines);
+		// 		
+		// 		InstantiateCollider(outlines, pair.Value, tracker);
+		//
+		// 		tracker++;
+		// 	}
+		// } 
 
-		void InstantiateCollider(ICollection<Vector3> outlines, List<List<int>> roomOutlines, int index) {
+		void InstantiateCollider(ICollection<Vector3> outlines, IReadOnlyList<List<int>> roomOutlines, int index) {
 			var col     = CreateNewPrimitiveCollider( index.ToString());
 			var outline = roomOutlines[index];
 			var objList = new GameObject[3];
 
 			for (var k = 0; k < 3; k++) {
-				CreateOriginColliders(outlines, outline, k, col, objList);
+				var newPoint = GetNewPoint(outline, k);
+				CreateOriginColliders(newPoint, k, col, objList);
+				
+				if (!outlines.Contains(newPoint))
+					outlines.Add(newPoint);
 			}
 
 			for (var j = 0; j < outline.Count; j++) {
-				CreateBodyColliders(outlines, outline, j, col);
+				var newPoint = GetNewPoint(outline, j);
+				CreateBodyColliders(newPoint, j, col, outlines);
 			}
 
 			foreach (var obj in objList) {
@@ -69,31 +86,25 @@ namespace Engine.Procedural.Runtime {
 			}
 		}
 
-		void CreateOriginColliders(ICollection<Vector3> outlines, List<int> outline, int k,
-			ProceduralPrimitiveCollider col, GameObject[] objList) {
-			var newPoint = GetNewPoint(outline, k);
-			
-			col.corners[k].transform.position = newPoint;
+		void CreateOriginColliders(Vector3 point, int k, ProceduralPrimitiveCollider col, IList<GameObject> objList) {
+			col.corners[k].transform.position = point;
 			col.corners[k].gameObject.MakeStatic(true);
 			objList[k] = col.corners[k].gameObject;
-
-			if (!outlines.Contains(newPoint))
-				outlines.Add(newPoint);
 		}
 
-		void CreateBodyColliders(ICollection<Vector3> outlines, List<int> outline, int index, ProceduralPrimitiveCollider col) {
-			var newPoint = DefineAndCreateHandle(outline, index, col);
+		void CreateBodyColliders(Vector3 point, int index, ProceduralPrimitiveCollider col, ICollection<Vector3> outlines) {
+			CreateHandle(col, point, col.corners[^1], col.corners[^1].GetSiblingIndex() + 1);
 
 			// 	outLineList.Add(newPoint);
 
 			if (index == 0) {
-				ValidateAndAddFirst(outlines, newPoint);
+				ValidateAndAddFirst(outlines, point);
 			}
 			else if (index == 1) {
-				ValidateAndAddSecond(outlines, newPoint);
+				ValidateAndAddSecond(outlines, point);
 			}
 			else {
-				ValidateAndAddNew(outlines, newPoint);
+				ValidateAndAddNew(outlines, point);
 				// Slope1 = VectorF.GetSlope(Char1, Char2);
 				// Slope2 = VectorF.GetSlope(Char2, newPoint);
 				//
@@ -110,7 +121,7 @@ namespace Engine.Procedural.Runtime {
 			}
 
 			Char1           = Char2;
-			Char2           = newPoint;
+			Char2           = point;
 			LastWasColinear = CurrentIsColinear;
 		}
 
