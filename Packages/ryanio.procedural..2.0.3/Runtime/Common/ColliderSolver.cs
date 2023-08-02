@@ -34,7 +34,7 @@ namespace Engine.Procedural.Runtime {
 					solver = new EdgeCollisionSolver(Config, dictionary, StopWatch);
 
 				else
-					solver = new PrimitiveCollisionSolver(Config, dictionary);
+					solver = new PrimitiveCollisionSolver(Config, dictionary, ColliderObj);
 
 				return solver.CreateCollider(dto);
 			}

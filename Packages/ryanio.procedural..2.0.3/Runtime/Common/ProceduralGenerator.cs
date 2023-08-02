@@ -33,7 +33,6 @@ namespace Engine.Procedural.Runtime {
 
 		public             ObservableCollection<string> Observables { get; private set; }
 		public             TileHashset                  TileHashset { get; private set; }
-		[CanBeNull] public MapData                      Data        => IsDataSet ? _data : default;
 
 		bool IsRunning { get; set; }
 
@@ -180,17 +179,14 @@ namespace Engine.Procedural.Runtime {
 
 				DataProcessor = new DataProcessor(_config, _data, TileMapDictionary, Grid, RegionRemoverSolver.Rooms);
 
-				var erosionData = ErosionSolver.Erode(gridGraph);
+				//var erosionData = ErosionSolver.Erode(gridGraph);
 				GraphScanner.ScanGraph(gridGraph);
-				var boundaryCorners = ColliderSolver.Solve(_data, TileMapDictionary);
+				_data.BoundaryCorners = ColliderSolver.Solve(_data, TileMapDictionary);
 
 				GenLogging.Instance.Log("Setting shifted tile positions in map data", "MapData");
 
-				//_data.TilePositionsShifted = erosionData.TilePositionsShifted;
-				_data.BoundaryCorners = boundaryCorners;
-
 				var borderSolver = new SpriteShapeBorderSolver(_spriteShapeConfig, gameObject);
-				borderSolver.GenerateProceduralBorder(boundaryCorners, CurrentSerializableName);
+				borderSolver.GenerateProceduralBorder(_data.BoundaryCorners, CurrentSerializableName);
 
 				new CutGraphColliders().Cut(_config.ColliderCutters);
 				new CreateBoundaryColliders(_config, DataProcessor).Create(GeneratedCollidersObj);
@@ -416,31 +412,5 @@ namespace Engine.Procedural.Runtime {
 		void Generate() {
 			StartGeneration(true);
 		}
-
-		[Button]
-		void TestGridBuild() {
-			var containerBuilder = new ContainerBuilder(gameObject);
-			var output           = containerBuilder.Build();
-			TileMapDictionary = output.dictionary;
-		}
-
-		[Button]
-		void LogDict() {
-			if (TileMapDictionary == null)
-				Debug.LogError("Dictionary is null");
-			else {
-				foreach (var pair in TileMapDictionary) {
-					Debug.Log(pair.Value.GetType());
-				}
-			}
-		}
-
-		// void OnValidate() {
-		// 	if (_config.ShouldGenerate) {
-		// 		if (TileMapDictionary.IsEmptyOrNull() || !Grid) {
-		// 			SetContainer();
-		// 		}
-		// 	}
-		// }
 	}
 }
