@@ -16,12 +16,13 @@ using UnityEditor.AddressableAssets;
 
 namespace Engine.Procedural.Runtime {
 	public class GeneratorSerializer {
-		GameObject       Container        { get; }
-		SerializerSetup  SeedSetup        { get; }
-		SerializerSetup  AstarSetup       { get; }
-		SerializerSetup  MapSetup         { get; }
-		SerializerSetup  SpriteShapeSetup { get; }
-		StopWatchWrapper StopWatch        { get; }
+		GameObject       Container           { get; }
+		SerializerSetup  SeedSetup           { get; }
+		SerializerSetup  AstarSetup          { get; }
+		SerializerSetup  MapSetup            { get; }
+		SerializerSetup  SpriteShapeSetup    { get; }
+		SerializerSetup  ColliderCoordsSetup { get; }
+		StopWatchWrapper StopWatch           { get; }
 
 		public static IEnumerable<string> GetAllSeeds(SerializerSetup seedSetup) {
 			var path = seedSetup.SaveLocation           +
@@ -100,7 +101,6 @@ namespace Engine.Procedural.Runtime {
 			var serializer       = new Serializer();
 			var bytes            = AstarPath.active.data.SerializeGraphs(settings);
 			var serializationJob = new SerializeJob.Json(name, AstarSetup.SaveLocation);
-			//(AstarSetup, name, bytes, AstarSetup.FileFormat);
 			serializer.SerializeAndSaveJson(bytes, serializationJob);
 		}
 
@@ -108,20 +108,37 @@ namespace Engine.Procedural.Runtime {
 			if (string.IsNullOrWhiteSpace(name) || coordinates.IsEmptyOrNull())
 				return;
 
-			var saveName   = Constants.SPRITE_SHAPE_SAVE_PREFIX + name;
-			var serializer = new Serializer(new UnityLogging());
-			var job        = new SerializeJob.Json(saveName, SpriteShapeSetup.SaveLocation);
+			var saveName = Constants.SPRITE_SHAPE_SAVE_PREFIX + name;
+			SerializeJson(saveName, SpriteShapeSetup.SaveLocation, coordinates);
+		}
 
-			serializer.SerializeAndSaveJson(coordinates, job);
+		public void SerializeColliderCoords(string name, Dictionary<int, List<SerializableVector3>> coordinates) {
+			if (string.IsNullOrWhiteSpace(name) || coordinates.IsEmptyOrNull())
+				return;
+
+			var saveName = Constants.COLLIDER_COORDS_SAVE_PREFIX + name;
+			SerializeJson(saveName, ColliderCoordsSetup.SaveLocation, coordinates);
+		}
+
+		public void SerializeJson(string name, string path, object obj) {
+			if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(path) || obj == default)
+				return;
+
+			var saveName   = name;
+			var serializer = new Serializer(new UnityLogging());
+			var job        = new SerializeJob.Json(saveName, path);
+
+			serializer.SerializeAndSaveJson(obj, job);
 		}
 
 		public GeneratorSerializer(ProceduralConfig config, GameObject container, StopWatchWrapper stopWatch) {
-			SeedSetup        = config.SeedInfoSerializer;
-			AstarSetup       = config.PathfindingSerializer;
-			MapSetup         = config.MapSerializer;
-			SpriteShapeSetup = config.SpriteShapeSerializer;
-			StopWatch        = stopWatch;
-			Container        = container;
+			SeedSetup           = config.SeedInfoSerializer;
+			AstarSetup          = config.PathfindingSerializer;
+			MapSetup            = config.MapSerializer;
+			SpriteShapeSetup    = config.SpriteShapeSerializer;
+			ColliderCoordsSetup = config.ColliderCoordsSerializer;
+			StopWatch           = stopWatch;
+			Container           = container;
 		}
 	}
 }

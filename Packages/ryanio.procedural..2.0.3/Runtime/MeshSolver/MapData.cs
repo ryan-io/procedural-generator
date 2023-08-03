@@ -7,7 +7,6 @@ using UnityEngine;
 
 namespace Engine.Procedural.Runtime {
 	[Serializable]
-	
 	public class MapData {
 		[field: SerializeField] public TileHashset                    TileHashset          { get; private set; }
 		[field: SerializeField] public Mesh                           Mesh                 { get; private set; }
@@ -22,18 +21,11 @@ namespace Engine.Procedural.Runtime {
 			if (BoundaryCorners.IsEmptyOrNull())
 				return default;
 
-			var dict           = new Dictionary<int, List<SerializableVector3>>();
-
+			var dict = new Dictionary<int, List<SerializableVector3>>();
 			var index = BoundaryCorners.Keys.First();
 
 			foreach (var corner in BoundaryCorners) {
-				var serializedList = new List<SerializableVector3>();
-
-				foreach (var v in corner.Value) {
-					var value = new SerializableVector3(v.x, v.y, v.z);
-					serializedList.Add(value);
-				}
-
+				var serializedList = corner.Value.AsSerialized().ToList();
 				dict.Add(index, serializedList);
 				index++;
 			}

@@ -39,6 +39,9 @@ namespace Engine.Procedural.Runtime {
 
 		[field: SerializeField, FoldoutGroup("Serialization", false)]
 		public bool ShouldSerializeSpriteShape { get; private set; } = true;
+		
+		[field: SerializeField, FoldoutGroup("Serialization", false)]
+		public bool ShouldSerializeColliderCoords { get; private set; } = true;
 
 		[field: SerializeField, InlineEditor(InlineEditorObjectFieldModes.Foldout), ShowIf("@ShouldSerializeSeed"),
 		        FoldoutGroup("Serialization", false)]
@@ -55,6 +58,10 @@ namespace Engine.Procedural.Runtime {
 		[field: SerializeField, InlineEditor(InlineEditorObjectFieldModes.Foldout),
 		        ShowIf("@ShouldSerializeSpriteShape"), FoldoutGroup("Serialization", false)]
 		public SerializerSetup SpriteShapeSerializer { get; private set; }
+		
+		[field: SerializeField, InlineEditor(InlineEditorObjectFieldModes.Foldout),
+		        ShowIf("@ShouldSerializeColliderCoords"), FoldoutGroup("Serialization", false)]
+		public SerializerSetup ColliderCoordsSerializer { get; private set; }
 
 #endregion
 

@@ -7,7 +7,8 @@ using UnityEngine.Tilemaps;
 
 namespace Engine.Procedural.Runtime {
 	public abstract class CollisionSolver {
-		protected abstract Tilemap BoundaryTilemap { get; }
+		public             Dictionary<int, List<Vector3>> AllBoundaryPoints { get; }
+		protected abstract Tilemap                        BoundaryTilemap   { get; }
 
 		public abstract Dictionary<int, List<Vector3>> CreateCollider(
 			CollisionSolverDto dto, [CallerMemberName] string caller = "");
@@ -24,6 +25,10 @@ namespace Engine.Procedural.Runtime {
 					newObj.AddComponent(component);
 
 			return newObj;
+		}
+
+		public CollisionSolver() {
+			AllBoundaryPoints = new Dictionary<int, List<Vector3>>();
 		}
 	}
 }

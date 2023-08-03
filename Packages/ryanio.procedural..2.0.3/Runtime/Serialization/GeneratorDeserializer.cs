@@ -7,7 +7,6 @@ using System.Linq;
 using BCL;
 using BCL.Serialization;
 using JetBrains.Annotations;
-using Sirenix.OdinInspector;
 using UnityBCL;
 using UnityBCL.Serialization;
 using UnityEditor;
@@ -70,6 +69,7 @@ namespace Engine.Procedural.Runtime {
 				);
 			}
 		}
+		
 
 		[CanBeNull]
 		public Dictionary<int, List<Vector3>> DeserializeSpriteShape(
@@ -80,6 +80,49 @@ namespace Engine.Procedural.Runtime {
 				var validationPath =
 					Config.SpriteShapeSerializer.SaveLocation +
 					Constants.SPRITE_SHAPE_SAVE_PREFIX        +
+					currentSerializableName                   +
+					Constants.JSON_FILE_TYPE;
+
+				var isValid = File.Exists(validationPath);
+
+				if (!isValid) {
+					throw new Exception(
+						"File name was not valid. Could not validate if file '" +
+						currentSerializableName                                 + "' exists");
+				}
+
+				var dict = new Dictionary<int, List<Vector3>>();
+				var serializedOutput =
+					Serializer.DeserializeJson<Dictionary<int, List<SerializableVector3>>>(validationPath);
+
+				if (serializedOutput.IsEmptyOrNull())
+					return default;
+
+				foreach (var pair in serializedOutput) {
+					var list = pair.Value.Select(v => (Vector3)v).ToList();
+					dict.Add(pair.Key, list);
+				}
+
+				return dict;
+			}
+
+			catch (Exception e) {
+				GenLogging.Instance.Log(
+					"The provided id: " + currentSerializableName + ", could not be found. Error: " + e.Message,
+					"DeserializeAstarData",
+					LogLevel.Error);
+				throw;
+			}
+		}
+		
+		[CanBeNull]
+		public Dictionary<int, List<Vector3>> DeserializeColliderCoords(string currentSerializableName) {
+			try {
+				Serializer ??= new Serializer();
+
+				var validationPath =
+					Config.ColliderCoordsSerializer.SaveLocation +
+					Constants.COLLIDER_COORDS_SAVE_PREFIX        +
 					currentSerializableName                   +
 					Constants.JSON_FILE_TYPE;
 

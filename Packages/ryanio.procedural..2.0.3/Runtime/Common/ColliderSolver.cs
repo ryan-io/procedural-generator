@@ -16,8 +16,8 @@ namespace Engine.Procedural.Runtime {
 		LayerMask          ObstacleMask { get; }
 		LayerMask          BoundaryMask { get; }
 
-		public Dictionary<int, List<Vector3>> Solve(MapData mapData, TileMapDictionary dictionary,
-			[CallerMemberName] string caller = "") {
+		public (Dictionary<int, List<Vector3>> SpriteBoundaryCoords, Dictionary<int, List<Vector3>> AllBoundaryCoords) 
+			Solve(MapData mapData, TileMapDictionary dictionary, [CallerMemberName] string caller = "") {
 			try {
 				CollisionSolver solver;
 
@@ -35,8 +35,8 @@ namespace Engine.Procedural.Runtime {
 
 				else
 					solver = new PrimitiveCollisionSolver(Config, dictionary, ColliderObj);
-
-				return solver.CreateCollider(dto);
+				
+				return (solver.CreateCollider(dto), solver.AllBoundaryPoints);
 			}
 			catch (Exception) {
 				GenLogging.Instance.Log("Error thrown " + caller, "ColliderSolver", LogLevel.Error);

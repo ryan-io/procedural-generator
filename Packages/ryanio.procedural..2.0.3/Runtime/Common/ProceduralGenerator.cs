@@ -1,10 +1,11 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Threading;
 using BCL;
 using CommunityToolkit.HighPerformance;
 using Cysharp.Threading.Tasks;
-using JetBrains.Annotations;
 using Sirenix.OdinInspector;
 using StateMachine;
 using UnityBCL;
@@ -127,6 +128,7 @@ namespace Engine.Procedural.Runtime {
 #region CHECK_FOR_DESERIALIZATION
 
 				if (!_config.ShouldGenerate && _config.ShouldDeserialize) {
+					GeneratedCollidersObj = new ColliderGameObjectCreator().Create(this, CurrentSerializableName);
 					Deserialize();
 
 					StateMachine.ChangeState(ProcessStep.Disposing);
@@ -181,7 +183,14 @@ namespace Engine.Procedural.Runtime {
 
 				//var erosionData = ErosionSolver.Erode(gridGraph);
 				GraphScanner.ScanGraph(gridGraph);
-				_data.BoundaryCorners = ColliderSolver.Solve(_data, TileMapDictionary);
+				Dictionary<int, List<Vector3>>             dict;
+				Dictionary<int, List<SerializableVector3>> dictSerialized =
+					new Dictionary<int, List<SerializableVector3>>();
+				(_data.BoundaryCorners, dict) = ColliderSolver.Solve(_data, TileMapDictionary);
+
+				for (var i = 0; i < dict.Count; i++) {
+					dictSerialized[i] = dict[i].AsSerialized().ToList();
+				}
 
 				GenLogging.Instance.Log("Setting shifted tile positions in map data", "MapData");
 
@@ -207,6 +216,9 @@ namespace Engine.Procedural.Runtime {
 
 				if (_config.ShouldSerializeSpriteShape)
 					GeneratorSerializer.SerializeSpriteShape(CurrentSerializableName, _data.GetSerializableBoundary());
+				
+				if (_config.ShouldSerializeColliderCoords)
+					GeneratorSerializer.SerializeColliderCoords(CurrentSerializableName, dictSerialized);
 
 #region COMPLETE
 
@@ -300,6 +312,14 @@ namespace Engine.Procedural.Runtime {
 			var positions = deserializer.DeserializeSpriteShape(_config.NameSeedIteration);
 			var solver    = new SpriteShapeBorderSolver(_spriteShapeConfig, gameObject);
 			solver.GenerateProceduralBorder(positions, _config.NameSeedIteration);
+
+#endregion
+			
+#region COLLIDER_BOUNDARY
+
+			var colPos    = deserializer.DeserializeColliderCoords(_config.NameSeedIteration);
+			var colSolver = new SerializedPrimitiveCollisionSolver(_config, GeneratedCollidersObj);
+			colSolver.CreateColliderFromDict(colPos);
 
 #endregion
 		}
@@ -411,6 +431,19 @@ namespace Engine.Procedural.Runtime {
 			IconAlignment = IconAlignment.RightOfText)]
 		void Generate() {
 			StartGeneration(true);
+		}
+
+		[Button]
+		void SetColliderObj() {
+			GeneratedCollidersObj = new ColliderGameObjectCreator().Create(this, _config.NameSeedIteration);
+		}
+		
+		[Button]
+		void TestColDeserialziation() {
+			var deserializer = new GeneratorDeserializer(_config, default);
+			var positions    = deserializer.DeserializeSpriteShape(_config.NameSeedIteration);
+			var solver = new SerializedPrimitiveCollisionSolver(_config, GeneratedCollidersObj);
+			solver.CreateColliderFromDict(positions);
 		}
 	}
 }
