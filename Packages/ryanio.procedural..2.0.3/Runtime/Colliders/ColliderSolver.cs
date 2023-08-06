@@ -19,10 +19,12 @@ namespace Engine.Procedural.Runtime {
 					parent = parent.transform
 				}
 			};
-
-			if (!componentsToAdd.IsEmptyOrNull())
-				foreach (var component in componentsToAdd)
-					newObj.AddComponent(component);
+			
+			if (!componentsToAdd.IsEmptyOrNull()) {
+				
+			}
+			foreach (var component in componentsToAdd)
+				newObj.AddComponent(component);
 
 			return newObj;
 		}

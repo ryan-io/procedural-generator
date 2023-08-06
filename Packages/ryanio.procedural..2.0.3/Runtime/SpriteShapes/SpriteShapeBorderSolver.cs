@@ -12,7 +12,9 @@ namespace Engine.Procedural {
 		Transform  Owner { get; }
 		GameObject Go    { get; set; }
 
-		public void GenerateProceduralBorder(Dictionary<int, List<Vector3>> positions, string serializedName,
+		public void GenerateProceduralBorder(
+			Dictionary<int, List<Vector3>> positions, 
+			string serializedName,
 			[CallerMemberName] string name = "") {
 			SetupGameObject(serializedName);
 			RunProcedure(positions);
@@ -30,6 +32,7 @@ namespace Engine.Procedural {
 			}
 		}
 
+		
 		void CreateSpriteShapeBorderAndPopulate(IReadOnlyList<Vector3> boundaryPositions, int currentRoomIndex) {
 			var obj = InstantiateSpriteControllerPrefab();
 			obj.name = Constants.SPRITE_BOUNDARY_KEY + currentRoomIndex;

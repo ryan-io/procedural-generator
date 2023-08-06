@@ -32,8 +32,8 @@ namespace Engine.Procedural.Runtime {
 
 		[SerializeField, HideInInspector] MapData _data;
 
-		public             ObservableCollection<string> Observables { get; private set; }
-		public             TileHashset                  TileHashset { get; private set; }
+		public ObservableCollection<string> Observables { get; private set; }
+		public TileHashset                  TileHashset { get; private set; }
 
 		bool IsRunning { get; set; }
 
@@ -68,9 +68,9 @@ namespace Engine.Procedural.Runtime {
 				var seedInfo = GetSeedInfo();
 				return _config.Name         +
 				       Constants.UNDERSCORE +
-				       seedInfo.CurrentSeed +
+				       seedInfo.Seed        +
 				       Constants.UID        +
-				       seedInfo.LastIteration;
+				       seedInfo.Iteration;
 			}
 		}
 
@@ -88,7 +88,7 @@ namespace Engine.Procedural.Runtime {
 			return output;
 		}
 
-		public SeedInfo GetSeedInfo() => new(_config.Seed, _config.LastSeed, _config.LastIteration);
+		public SeedInfo GetSeedInfo() => new(_config.Seed, _config.LastIteration);
 
 		/// <summary>
 		///     Starts the generation process. By default, will also invoke Initialize().
@@ -97,7 +97,7 @@ namespace Engine.Procedural.Runtime {
 		unsafe void StartGeneration(bool alsoInitialize = true) {
 			if (!_config.ShouldGenerate && !_config.ShouldDeserialize)
 				return;
-			
+
 			Observables  = new CreateObservables().Create(_config);
 			StateMachine = new StateMachine<ProcessStep>(gameObject, true);
 
@@ -183,7 +183,7 @@ namespace Engine.Procedural.Runtime {
 
 				//var erosionData = ErosionSolver.Erode(gridGraph);
 				GraphScanner.ScanGraph(gridGraph);
-				Dictionary<int, List<Vector3>>             dict;
+				Dictionary<int, List<Vector3>> dict;
 				Dictionary<int, List<SerializableVector3>> dictSerialized =
 					new Dictionary<int, List<SerializableVector3>>();
 				(_data.BoundaryCorners, dict) = ColliderSolver.Solve(_data, TileMapDictionary);
@@ -204,19 +204,18 @@ namespace Engine.Procedural.Runtime {
 				Tools.SetOriginWrtMap(Grid.gameObject);
 				Tools.SetGridScale(Constants.CELL_SIZE);
 
-				if (_config.ShouldSerializeSeed)
-					GeneratorSerializer.SerializeSeed(GetSeedInfo(), _config);
+				GeneratorSerializer.SerializeSeed(GetSeedInfo(), _config);
+				var directory = new DirectoryAction().NewMapDirectory(CurrentSerializableName);
 
 				if (_config.ShouldSerializePathfinding)
-					GeneratorSerializer.SerializeCurrentAstarGraph(
-						Constants.SAVE_ASTAR_PREFIX + CurrentSerializableName);
+					GeneratorSerializer.SerializeCurrentAstarGraph(CurrentSerializableName);
 
 				if (_config.ShouldSerializeMapPrefab)
-					GeneratorSerializer.SerializeMapGameObject(CurrentSerializableName, _config);
+					GeneratorSerializer.SerializeMapGameObject(CurrentSerializableName);
 
 				if (_config.ShouldSerializeSpriteShape)
 					GeneratorSerializer.SerializeSpriteShape(CurrentSerializableName, _data.GetSerializableBoundary());
-				
+
 				if (_config.ShouldSerializeColliderCoords)
 					GeneratorSerializer.SerializeColliderCoords(CurrentSerializableName, dictSerialized);
 
@@ -300,7 +299,7 @@ namespace Engine.Procedural.Runtime {
 #region ASTAR_PATHFINDING
 
 			deserializer.DeserializeAstar(_config.NameSeedIteration, _config.PathfindingSerializer);
-			var grid  = gameObject.GetComponentInChildren<Grid>();
+			var grid = gameObject.GetComponentInChildren<Grid>();
 			grid.gameObject.transform.localPosition = Vector3.zero;
 			var tools = new GeneratorTools(_config, grid, default);
 			tools.SetOriginWrtMap(gameObject);
@@ -314,7 +313,7 @@ namespace Engine.Procedural.Runtime {
 			solver.GenerateProceduralBorder(positions, _config.NameSeedIteration);
 
 #endregion
-			
+
 #region COLLIDER_BOUNDARY
 
 			var colPos    = deserializer.DeserializeColliderCoords(_config.NameSeedIteration);
@@ -336,8 +335,8 @@ namespace Engine.Procedural.Runtime {
 
 #if UNITY_EDITOR
 				var assembly = Assembly.GetAssembly(typeof(UnityEditor.Editor));
-				var type     = assembly.GetType("UnityEditor.LogEntries");
-				var method   = type.GetMethod("Clear");
+				var type = assembly.GetType("UnityEditor.LogEntries");
+				var method = type.GetMethod("Clear");
 				method?.Invoke(new object(), null);
 #endif
 				IsDataSet = false;
@@ -359,9 +358,6 @@ namespace Engine.Procedural.Runtime {
 			}
 		}
 
-		[BoxGroup("Actions", centerLabel: true),
-		 HorizontalGroup("Actions/Buttons2"),
-		 ButtonGroup("Actions/Buttons2/Methods", Stretch = false, IconAlignment = IconAlignment.RightEdge)]
 		void InitializeGenerator(bool isForced = false) {
 			IsDataSet = false;
 
@@ -372,12 +368,12 @@ namespace Engine.Procedural.Runtime {
 
 			if (_config.ShouldDeserialize)
 				return;
-			
-			TileHashset        = new TileHashset();
-			StopWatch          = new StopWatchWrapper(true);
-			Tools              = new GeneratorTools(_config, Grid, StopWatch);
-			FillMapSolver      = new CellularAutomataFillMapSolver(_config, StopWatch);
-			SmoothMapSolver    = new MarchingSquaresSmoothMapSolver(_config, StopWatch);
+
+			TileHashset     = new TileHashset();
+			StopWatch       = new StopWatchWrapper(true);
+			Tools           = new GeneratorTools(_config, Grid, StopWatch);
+			FillMapSolver   = new CellularAutomataFillMapSolver(_config, StopWatch);
+			SmoothMapSolver = new MarchingSquaresSmoothMapSolver(_config, StopWatch);
 			TileTypeSolver =
 				new SetAllTilesSyncTileTypeSolver(_config, TileHashset, TileMapDictionary, Grid, StopWatch);
 			NodeSerializationSolver = new NodeSerializationSolver(_config, this, TileMapDictionary, StopWatch);
@@ -431,19 +427,6 @@ namespace Engine.Procedural.Runtime {
 			IconAlignment = IconAlignment.RightOfText)]
 		void Generate() {
 			StartGeneration(true);
-		}
-
-		[Button]
-		void SetColliderObj() {
-			GeneratedCollidersObj = new ColliderGameObjectCreator().Create(this, _config.NameSeedIteration);
-		}
-		
-		[Button]
-		void TestColDeserialziation() {
-			var deserializer = new GeneratorDeserializer(_config, default);
-			var positions    = deserializer.DeserializeSpriteShape(_config.NameSeedIteration);
-			var solver = new SerializedPrimitiveCollisionSolver(_config, GeneratedCollidersObj);
-			solver.CreateColliderFromDict(positions);
 		}
 	}
 }

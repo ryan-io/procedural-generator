@@ -9,7 +9,7 @@ using UnityBCL;
 using UnityBCL.Serialization;
 using UnityEngine;
 
-#if UNITY_EDITOR || UNITY_STANDALONE
+#if UNITY_EDITOR
 using UnityEditor;
 using UnityEditor.AddressableAssets;
 #endif
@@ -17,19 +17,15 @@ using UnityEditor.AddressableAssets;
 namespace Engine.Procedural.Runtime {
 	public class GeneratorSerializer {
 		GameObject       Container           { get; }
-		SerializerSetup  SeedSetup           { get; }
-		SerializerSetup  AstarSetup          { get; }
 		SerializerSetup  MapSetup            { get; }
 		SerializerSetup  SpriteShapeSetup    { get; }
 		SerializerSetup  ColliderCoordsSetup { get; }
 		StopWatchWrapper StopWatch           { get; }
 
-		public static IEnumerable<string> GetAllSeeds(SerializerSetup seedSetup) {
-			var path = seedSetup.SaveLocation           +
-			           Constants.BACKSLASH              +
-			           Constants.SEED_TRACKER_FILE_NAME +
-			           Constants.TXT_FILE_TYPE;
-			;
+		public static IEnumerable<string> GetAllSeeds() {
+			var location = UnitySaveLocation.GetDefault;
+			var path     = location.GetFilePath(Constants.SEED_TRACKER_FILE_NAME, Constants.TXT_FILE_TYPE);
+
 			var hasFile = File.Exists(path);
 
 			if (!hasFile)
@@ -50,15 +46,17 @@ namespace Engine.Procedural.Runtime {
 			return newLines.AsEnumerable();
 		}
 
+		/// <summary>
+		/// This method should be invoked before invoking CreateMapFolder.
+		/// </summary>
+		/// <param name="info"></param>
+		/// <param name="config"></param>
 		public void SerializeSeed(SeedInfo info, ProceduralConfig config) {
-			new SerializeSeedInfo().Serialize(info, SeedSetup, config.Name, StopWatch);
+			new SerializeSeedInfo().Serialize(info, config.Name);
 		}
 
-		public void SerializeMapGameObject(string name, ProceduralConfig config) {
-#if UNITY_EDITOR || UNITY_STANDALONE
-			// if (new ValidationSerializedName().Validate(name, SeedSetup)) {
-			// 	throw new Exception(Message.NO_NAME_FOUND + config.NameSeedIteration);
-			// }
+		public void SerializeMapGameObject(string name) {
+#if UNITY_EDITOR
 
 			var path       = MapSetup.SaveLocation  + Constants.SAVE_MAP_PREFIX + name + MapSetup.FileFormat;
 			var uniquePath = MapSetup.SaveFolderRaw + Constants.SAVE_MAP_PREFIX + name + MapSetup.FileFormat;
@@ -89,19 +87,14 @@ namespace Engine.Procedural.Runtime {
 		///     Please ensure that your active graph data has been scanned.
 		/// </summary>
 		public void SerializeCurrentAstarGraph(string name) {
-			if (new ValidationSerializedName().Validate(name, SeedSetup)) {
-				throw new Exception(Message.NO_NAME_FOUND + name);
-			}
+			ValidateNameIsSerialized(name);
 
 			var settings = new SerializeSettings {
 				nodes          = true,
 				editorSettings = true
 			};
 
-			var serializer       = new Serializer();
-			var bytes            = AstarPath.active.data.SerializeGraphs(settings);
-			var serializationJob = new SerializeJob.Json(name, AstarSetup.SaveLocation);
-			serializer.SerializeAndSaveJson(bytes, serializationJob);
+			new SerializeAstar().Serialize(settings, name);
 		}
 
 		public void SerializeSpriteShape(string name, Dictionary<int, List<SerializableVector3>> coordinates) {
@@ -132,13 +125,19 @@ namespace Engine.Procedural.Runtime {
 		}
 
 		public GeneratorSerializer(ProceduralConfig config, GameObject container, StopWatchWrapper stopWatch) {
-			SeedSetup           = config.SeedInfoSerializer;
-			AstarSetup          = config.PathfindingSerializer;
 			MapSetup            = config.MapSerializer;
 			SpriteShapeSetup    = config.SpriteShapeSerializer;
 			ColliderCoordsSetup = config.ColliderCoordsSerializer;
 			StopWatch           = stopWatch;
 			Container           = container;
+		}
+
+		static void ValidateNameIsSerialized(string name) {
+			var isSerialized = new ValidationSerializedName().Validate(name);
+
+			if (!isSerialized) {
+				throw new Exception(Message.NO_NAME_FOUND + name);
+			}
 		}
 	}
 }

@@ -33,7 +33,7 @@ namespace Engine.Procedural.Runtime {
 
 			var validationPath =
 				setup.SaveLocation          +
-				Constants.SAVE_ASTAR_PREFIX +
+				Constants.ASTAR_FILE_PREFIX +
 				currentSerializableName     +
 				Constants.JSON_FILE_TYPE;
 

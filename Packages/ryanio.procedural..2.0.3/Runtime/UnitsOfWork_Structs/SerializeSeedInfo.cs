@@ -2,41 +2,43 @@
 
 using System;
 using System.IO;
-using BCL;
 using BCL.Serialization;
 using UnityBCL.Serialization;
 
 namespace Engine.Procedural.Runtime {
 	public readonly struct SerializeSeedInfo {
-		public void Serialize(
-			SeedInfo seedInfo, SerializerSetup setup, string nameToAppend, StopWatchWrapper stopwatch) {
-			if (string.IsNullOrWhiteSpace(nameToAppend)) return;
+		public void Serialize(SeedInfo seedInfo, string name) {
+			if (string.IsNullOrWhiteSpace(name)) return;
 
-			var sanitizedName = Constants.SAVE_SEED_PREFIX +
-			                    nameToAppend               +
-			                    Constants.UNDERSCORE       +
-			                    seedInfo.CurrentSeed       +
-			                    Constants.UID              +
-			                    seedInfo.LastIteration;
+			var content = name                 +
+			              Constants.UNDERSCORE +
+			              seedInfo.Seed        +
+			              Constants.UID        +
+			              seedInfo.Iteration;
+
+			var location = UnitySaveLocation.GetDefault;
 
 			var serializer = new Serializer();
-			
+
 			serializer.EnsureFileExists(
-				setup.SaveLocation,
+				location.SaveLocation,
 				Constants.SEED_TRACKER_FILE_NAME,
-				setup.FileFormat);
+				Constants.TXT_FILE_TYPE);
 
-			var trackerPath =
-				setup.SaveLocation               +
-				Constants.BACKSLASH              +
-				Constants.SEED_TRACKER_FILE_NAME +
-				Constants.TXT_FILE_TYPE;
+			var path = location.GetFilePath(
+				Constants.SEED_TRACKER_FILE_NAME,
+				Constants.TXT_FILE_TYPE);
 
-			File.AppendAllText(trackerPath, sanitizedName + Environment.NewLine);
+			//
+			// var trackerPath =
+			// 	location.SaveLocation            +
+			// 	Constants.BACKSLASH              +
+			// 	Constants.SEED_TRACKER_FILE_NAME +
+			// 	Constants.TXT_FILE_TYPE;
 
-			GenLogging.Instance.LogWithTimeStamp(
-				LogLevel.Normal,
-				stopwatch.TimeElapsed,
+			File.AppendAllText(path, content + Environment.NewLine);
+
+			GenLogging.Instance.Log(
 				Message.UPDATED_SEED_TRACKER,
 				Constants.SERIALIZE_SEED_CTX);
 		}

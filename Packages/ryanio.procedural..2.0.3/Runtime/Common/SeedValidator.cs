@@ -19,9 +19,9 @@ namespace Engine.Procedural.Runtime {
 			_config.NameSeedIteration =
 				_config.Name         +
 				Constants.UNDERSCORE +
-				seedInfo.CurrentSeed +
+				seedInfo.Seed +
 				Constants.UID        +
-				seedInfo.LastIteration;
+				seedInfo.Iteration;
 		}
 
 		public SeedValidator(ProceduralConfig config) {

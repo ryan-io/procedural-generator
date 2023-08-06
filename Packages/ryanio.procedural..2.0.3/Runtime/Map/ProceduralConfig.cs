@@ -29,9 +29,6 @@ namespace Engine.Procedural.Runtime {
 #region SERIALIZATION
 
 		[field: SerializeField, FoldoutGroup("Serialization", false)]
-		public bool ShouldSerializeSeed { get; private set; } = true;
-
-		[field: SerializeField, FoldoutGroup("Serialization", false)]
 		public bool ShouldSerializePathfinding { get; private set; } = true;
 
 		[field: SerializeField, FoldoutGroup("Serialization", false)]
@@ -42,14 +39,6 @@ namespace Engine.Procedural.Runtime {
 		
 		[field: SerializeField, FoldoutGroup("Serialization", false)]
 		public bool ShouldSerializeColliderCoords { get; private set; } = true;
-
-		[field: SerializeField, InlineEditor(InlineEditorObjectFieldModes.Foldout), ShowIf("@ShouldSerializeSeed"),
-		        FoldoutGroup("Serialization", false)]
-		public SerializerSetup SeedInfoSerializer { get; private set; }
-
-		[field: SerializeField, InlineEditor(InlineEditorObjectFieldModes.Foldout),
-		        ShowIf("@ShouldSerializePathfinding"), FoldoutGroup("Serialization", false)]
-		public SerializerSetup PathfindingSerializer { get; private set; }
 
 		[field: SerializeField, InlineEditor(InlineEditorObjectFieldModes.Foldout), ShowIf("@ShouldSerializeMapPrefab"),
 		        FoldoutGroup("Serialization", false)]
@@ -319,12 +308,7 @@ namespace Engine.Procedural.Runtime {
 		bool ShouldShowDeserialize => !ShouldGenerate;
 
 		IEnumerable GetAllSeedsWrapper() {
-			if (SeedInfoSerializer == null) {
-				NameSeedIteration = string.Empty;
-				return Enumerable.Empty<string>();
-			}
-
-			var seeds = GeneratorSerializer.GetAllSeeds(SeedInfoSerializer);
+			var seeds = GeneratorSerializer.GetAllSeeds();
 			var allSeedsWrapper = seeds.ToList();
 			
 			if (allSeedsWrapper.IsEmptyOrNull()) {
