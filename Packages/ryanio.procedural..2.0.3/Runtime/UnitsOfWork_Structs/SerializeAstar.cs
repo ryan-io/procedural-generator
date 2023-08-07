@@ -3,6 +3,7 @@
 using BCL.Serialization;
 using Pathfinding.Serialization;
 using UnityBCL.Serialization;
+using UnityEngine.Animations;
 
 namespace Engine.Procedural.Runtime {
 	public readonly struct SerializeAstar {
@@ -10,6 +11,8 @@ namespace Engine.Procedural.Runtime {
 			// var location = UnitySaveLocation.GetDefault;
 			// var path     = location.GetFilePath(name, Constants.JSON_FILE_TYPE, Constants.ASTAR_FILE_PREFIX);
 
+			name = Constants.ASTAR_SERIALIZE_PREFIX + name;
+			
 			var serializer       = new Serializer();
 			var bytes            = AstarPath.active.data.SerializeGraphs(settings);
 			var serializationJob = new SerializeJob.Json(name, path);

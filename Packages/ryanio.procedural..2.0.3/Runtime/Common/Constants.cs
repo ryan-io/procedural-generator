@@ -44,7 +44,7 @@ namespace Engine.Procedural.Runtime {
 
 		public const string SEED_TRACKER_FILE_NAME = "seedTracker";
 
-		public const string ASTAR_FILE_PREFIX = "AstarGraph";
+		public const string ASTAR_SERIALIZE_PREFIX = "AstarGraph_";
 
 		public const string SAVE_MAP_PREFIX = "Map_";
 

@@ -68,7 +68,7 @@ namespace Engine.Procedural.Runtime {
 						Object.DestroyImmediate(p.gameObject);
 
 #else
-						Object.Destroy(edgeCollider.gameObject);
+						Object.Destroy(p.gameObject);
 #endif
 					}
 				}

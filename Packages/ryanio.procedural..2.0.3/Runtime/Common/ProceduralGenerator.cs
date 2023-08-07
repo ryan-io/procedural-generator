@@ -284,22 +284,26 @@ namespace Engine.Procedural.Runtime {
 
 		void Deserialize() {
 			var deserializer = new GeneratorDeserializer(_config, StopWatch);
+			var directory    = new DirectoryAction().GetMapDirectory(CurrentSerializableName);
 
 #region MAP_GAMEOBJECT
 
-			var obj = deserializer.DeserializeMapPrefab(_config.NameSeedIteration);
-			if (!obj) {
-				GenLogging.Instance.Log("Could not find asset.", "DeserializeMap", LogLevel.Warning);
-			}
-			else {
-				Instantiate(obj, gameObject.transform, true);
-			}
+			// var obj = deserializer.DeserializeMapPrefab(_config.NameSeedIteration);
+			// if (!obj) {
+			// 	GenLogging.Instance.Log("Could not find asset.", "DeserializeMap", LogLevel.Warning);
+			// }
+			// else {
+			// 	Instantiate(obj, gameObject.transform, true);
+			// }
 
 #endregion
 
 #region ASTAR_PATHFINDING
 
-			// deserializer.DeserializeAstar(_config.NameSeedIteration);
+			deserializer.DeserializeAstar(_config.NameSeedIteration, directory);
+			
+			
+			
 			// var grid = gameObject.GetComponentInChildren<Grid>();
 			// grid.gameObject.transform.localPosition = Vector3.zero;
 			// var tools = new GeneratorTools(_config, grid, default);

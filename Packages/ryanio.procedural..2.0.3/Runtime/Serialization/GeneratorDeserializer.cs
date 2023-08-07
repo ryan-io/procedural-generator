@@ -17,13 +17,14 @@ namespace Engine.Procedural.Runtime {
 		ProceduralConfig Config     { get; }
 		StopWatchWrapper StopWatch  { get; }
 		Serializer       Serializer { get; set; }
-		
+
 		/// <summary>
 		/// Takes the current map name, reads serialized data if found, and builds and scans a new A* graph
 		/// </summary>
 		/// <param name="currentSerializableName">Passed from an instance of ProceduralGenerator</param>
 		/// <param name="setup">SerializerSetup used for Astar</param>
-		public void DeserializeAstar(string currentSerializableName, SerializerSetup setup) {
+		/// <param name="mapDirectory">Directory relative to currentSerializableName</param>
+		public void DeserializeAstar(string currentSerializableName, string mapDirectory) {
 			if (string.IsNullOrWhiteSpace(currentSerializableName)) {
 				GenLogging.Instance.Log("Serializable name was null or empty.", "DeserializeAstar", LogLevel.Warning);
 				return;
@@ -32,9 +33,9 @@ namespace Engine.Procedural.Runtime {
 			Serializer = new Serializer();
 
 			var validationPath =
-				setup.SaveLocation          +
-				Constants.ASTAR_FILE_PREFIX +
-				currentSerializableName     +
+				mapDirectory                     +
+				Constants.ASTAR_SERIALIZE_PREFIX +
+				currentSerializableName          +
 				Constants.JSON_FILE_TYPE;
 
 			var isValid = File.Exists(validationPath);
@@ -69,11 +70,16 @@ namespace Engine.Procedural.Runtime {
 				);
 			}
 		}
-		
 
+		/// <summary>
+		///  Takes the current map name, reads serialized data if found, and generates a new sprite shape
+		///  based on already serialized data
+		/// </summary>
+		/// <param name="currentSerializableName"></param>
+		/// <returns>Dictionary of outlines. Each key contains a list of coordinates that signify a 'room'</returns>
+		/// <exception cref="Exception">Throws if no serialized data is found</exception>
 		[CanBeNull]
-		public Dictionary<int, List<Vector3>> DeserializeSpriteShape(
-			string currentSerializableName) {
+		public Dictionary<int, List<Vector3>> DeserializeSpriteShape(string currentSerializableName) {
 			try {
 				Serializer ??= new Serializer();
 
