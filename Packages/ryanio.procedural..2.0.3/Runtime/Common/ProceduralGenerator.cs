@@ -13,6 +13,7 @@ using UnityEngine;
 
 namespace Engine.Procedural.Runtime {
 	/// <summary>
+	///   This class is responsible for generating the map, mesh, collider, and serializing the data
 	///     Verifies the scene contains the required components in order to run procedural generation logic
 	///     This class will also kickoff the generation process
 	/// 
@@ -208,7 +209,7 @@ namespace Engine.Procedural.Runtime {
 				var directory = new DirectoryAction().NewMapDirectory(CurrentSerializableName);
 
 				if (_config.ShouldSerializePathfinding)
-					GeneratorSerializer.SerializeCurrentAstarGraph(CurrentSerializableName);
+					GeneratorSerializer.SerializeCurrentAstarGraph(CurrentSerializableName, directory);
 
 				if (_config.ShouldSerializeMapPrefab)
 					GeneratorSerializer.SerializeMapGameObject(CurrentSerializableName);
@@ -298,27 +299,27 @@ namespace Engine.Procedural.Runtime {
 
 #region ASTAR_PATHFINDING
 
-			deserializer.DeserializeAstar(_config.NameSeedIteration, _config.PathfindingSerializer);
-			var grid = gameObject.GetComponentInChildren<Grid>();
-			grid.gameObject.transform.localPosition = Vector3.zero;
-			var tools = new GeneratorTools(_config, grid, default);
-			tools.SetOriginWrtMap(gameObject);
+			// deserializer.DeserializeAstar(_config.NameSeedIteration);
+			// var grid = gameObject.GetComponentInChildren<Grid>();
+			// grid.gameObject.transform.localPosition = Vector3.zero;
+			// var tools = new GeneratorTools(_config, grid, default);
+			// tools.SetOriginWrtMap(gameObject);
 
 #endregion
 
 #region SPRITE_SHAPE_COLLIDER_BOUNDARY
 
-			var positions = deserializer.DeserializeSpriteShape(_config.NameSeedIteration);
-			var solver    = new SpriteShapeBorderSolver(_spriteShapeConfig, gameObject);
-			solver.GenerateProceduralBorder(positions, _config.NameSeedIteration);
+			// var positions = deserializer.DeserializeSpriteShape(_config.NameSeedIteration);
+			// var solver    = new SpriteShapeBorderSolver(_spriteShapeConfig, gameObject);
+			// solver.GenerateProceduralBorder(positions, _config.NameSeedIteration);
 
 #endregion
 
 #region COLLIDER_BOUNDARY
 
-			var colPos    = deserializer.DeserializeColliderCoords(_config.NameSeedIteration);
-			var colSolver = new SerializedPrimitiveCollisionSolver(_config, GeneratedCollidersObj);
-			colSolver.CreateColliderFromDict(colPos);
+			// var colPos    = deserializer.DeserializeColliderCoords(_config.NameSeedIteration);
+			// var colSolver = new SerializedPrimitiveCollisionSolver(_config, GeneratedCollidersObj);
+			// colSolver.CreateColliderFromDict(colPos);
 
 #endregion
 		}
