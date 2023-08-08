@@ -40,10 +40,6 @@ namespace Engine.Procedural.Runtime {
 		[field: SerializeField, FoldoutGroup("Serialization", false)]
 		public bool ShouldSerializeColliderCoords { get; private set; } = true;
 
-		[field: SerializeField, InlineEditor(InlineEditorObjectFieldModes.Foldout), ShowIf("@ShouldSerializeMapPrefab"),
-		        FoldoutGroup("Serialization", false)]
-		public SerializerSetup MapSerializer { get; private set; }
-
 		[field: SerializeField, InlineEditor(InlineEditorObjectFieldModes.Foldout),
 		        ShowIf("@ShouldSerializeSpriteShape"), FoldoutGroup("Serialization", false)]
 		public SerializerSetup SpriteShapeSerializer { get; private set; }
@@ -308,7 +304,7 @@ namespace Engine.Procedural.Runtime {
 		bool ShouldShowDeserialize => !ShouldGenerate;
 
 		IEnumerable GetAllSeedsWrapper() {
-			var seeds = GeneratorSerializer.GetAllSeeds();
+			var seeds = Help.GetAllSeeds();
 			var allSeedsWrapper = seeds.ToList();
 			
 			if (allSeedsWrapper.IsEmptyOrNull()) {

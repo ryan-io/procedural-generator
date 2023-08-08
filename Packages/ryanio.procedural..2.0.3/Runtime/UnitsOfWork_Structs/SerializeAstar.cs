@@ -8,9 +8,6 @@ using UnityEngine.Animations;
 namespace Engine.Procedural.Runtime {
 	public readonly struct SerializeAstar {
 		public void Serialize(SerializeSettings settings, string name, string path) {
-			// var location = UnitySaveLocation.GetDefault;
-			// var path     = location.GetFilePath(name, Constants.JSON_FILE_TYPE, Constants.ASTAR_FILE_PREFIX);
-
 			name = Constants.ASTAR_SERIALIZE_PREFIX + name;
 			
 			var serializer       = new Serializer();

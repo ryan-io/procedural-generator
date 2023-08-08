@@ -1,57 +1,18 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using BCL;
 using BCL.Serialization;
 using Pathfinding.Serialization;
 using UnityBCL;
 using UnityBCL.Serialization;
 using UnityEngine;
 
-#if UNITY_EDITOR
-using UnityEditor;
-using UnityEditor.AddressableAssets;
-#endif
-
 namespace Engine.Procedural.Runtime {
 	public class GeneratorSerializer {
 		GameObject       Container           { get; }
-		SerializerSetup  MapSetup            { get; }
 		SerializerSetup  SpriteShapeSetup    { get; }
 		SerializerSetup  ColliderCoordsSetup { get; }
-		StopWatchWrapper StopWatch           { get; }
-
-		/// <summary>
-		///  Gets and reads text from seedTracker.txt file.
-		///  If the file does not exist, an empty collection is returned.
-		///  This is also used in inspectors that need to display all seeds or invoke logic based on the seeds.
-		/// </summary>
-		/// <returns>Enumerable of type string</returns>
-		public static IEnumerable<string> GetAllSeeds() {
-			var location = UnitySaveLocation.GetDefault;
-			var path     = location.GetFilePath(Constants.SEED_TRACKER_FILE_NAME, Constants.TXT_FILE_TYPE);
-
-			var hasFile = File.Exists(path);
-
-			if (!hasFile)
-				return Enumerable.Empty<string>();
-
-			var lines = File.ReadAllLines(path);
-
-			if (lines.IsEmptyOrNull())
-				return Enumerable.Empty<string>();
-
-			var newLines = new string[lines.Length];
-
-			for (var i = 0; i < newLines.Length; i++) {
-				var l = lines[i];
-				newLines[i] = l.Replace(Constants.SAVE_SEED_PREFIX, "");
-			}
-
-			return newLines.AsEnumerable();
-		}
-
+		BCL.StopWatchWrapper StopWatch           { get; }
+        
 		/// <summary>
 		/// This method should be invoked before invoking CreateMapFolder.
 		/// </summary>
@@ -62,44 +23,35 @@ namespace Engine.Procedural.Runtime {
 		}
 
 		/// <summary>
-		///  
+		///  Creates a folder for the map and returns the path to the folder as a string.
 		/// </summary>
 		/// <param name="name"></param>
-		public void SerializeMapGameObject(string name) {
-#if UNITY_EDITOR
+		/// <param name="directories"></param>
+		public void SerializeMapGameObject(string name, (string raw, string full) directories) {
+			var mapDirectory  = new PathConstructor(directories);
+			var path          = mapDirectory.GetUniquePathRawPrefab(Constants.SAVE_MAP_PREFIX + name);
+			var prefabCreator = new PrefabCreator();
 
-			var path       = MapSetup.SaveLocation  + Constants.SAVE_MAP_PREFIX + name + MapSetup.FileFormat;
-			var uniquePath = MapSetup.SaveFolderRaw + Constants.SAVE_MAP_PREFIX + name + MapSetup.FileFormat;
-			uniquePath = AssetDatabase.GenerateUniqueAssetPath(uniquePath);
-			PrefabUtility.SaveAsPrefabAsset(Container.gameObject, path, out var creationSuccess);
-
-			if (!creationSuccess) {
+			if (!prefabCreator.CreateAndSaveAsPrefab(Container, path)) {
 				GenLogging.Instance.Log(
 					"Could not save map prefab. There may be one already serialized.",
 					"SerializeMap",
-					LogLevel.Error);
+					BCL.LogLevel.Error);
 			}
 			else {
-				// var settings = AddressableAssetSettingsDefaultObject.Settings;
-				// var guid     = AssetDatabase.AssetPathToGUID(uniquePath);
-				// settings.CreateAssetReference(guid);
-				// var entry = settings.FindAssetEntry(guid);
-				// entry.address = Constants.SAVE_MAP_PREFIX + name;
-
-				GenLogging.Instance.Log(
+				GenLogging.Instance.Log( 
 					"Serialized map at: " + path,
 					"SerializeMap");
 			}
-#endif
 		}
 
-		// Description: Serializes the current A* graph to a file with the given name
-		// Parameters: name - the name of the file to save the graph to
-		// Returns: void
-		//
-		// Example: https://arongranberg.com/astar/docs/_serialization_example_8cs_source.php
+		/// <summary>
+		///  Serializes the current A* graph to a file with the given name and path (relative to the project folder)
+		/// </summary>
+		/// <param name="name">Serializable map name</param>
+		/// <param name="path"></param>
 		public void SerializeCurrentAstarGraph(string name, string path) {
-			ValidateNameIsSerialized(name);
+			Help.ValidateNameIsSerialized(name);
 
 			var settings = new SerializeSettings {
 				nodes          = true,
@@ -160,25 +112,12 @@ namespace Engine.Procedural.Runtime {
 		/// <param name="config">ProcGen config</param>
 		/// <param name="container">Root GameObject containing ProceduralGenerator component</param>
 		/// <param name="stopWatch">Instance of stopwatch for outputting timeElapsed</param>
-		public GeneratorSerializer(ProceduralConfig config, GameObject container, StopWatchWrapper stopWatch) {
-			MapSetup            = config.MapSerializer;
+		public GeneratorSerializer(ProceduralConfig config, GameObject container, BCL.StopWatchWrapper stopWatch) {
 			SpriteShapeSetup    = config.SpriteShapeSerializer;
 			ColliderCoordsSetup = config.ColliderCoordsSerializer;
 			StopWatch           = stopWatch;
 			Container           = container;
 		}
-
-		/// <summary>
-		///  Helper method for validating that the given name is serialized.
-		/// </summary>
-		/// <param name="name">Name to serialize</param>
-		/// <exception cref="Exception">Throws if name is not serialized</exception>
-		static void ValidateNameIsSerialized(string name) {
-			var isSerialized = new ValidationSerializedName().Validate(name);
-
-			if (!isSerialized) {
-				throw new Exception(Message.NO_NAME_FOUND + name);
-			}
-		}
+        
 	}
 }

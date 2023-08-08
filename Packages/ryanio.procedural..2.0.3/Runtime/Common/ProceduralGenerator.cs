@@ -115,7 +115,7 @@ namespace Engine.Procedural.Runtime {
 			IsRunning = true;
 
 			if (_config.ShouldGenerate) {
-				GeneratedCollidersObj = new ColliderGameObjectCreator().Create(this, CurrentSerializableName);
+				GeneratedCollidersObj = new ColliderGameObjectCreator().Create(this);
 				var output = SetContainer();
 			}
 
@@ -129,7 +129,7 @@ namespace Engine.Procedural.Runtime {
 #region CHECK_FOR_DESERIALIZATION
 
 				if (!_config.ShouldGenerate && _config.ShouldDeserialize) {
-					GeneratedCollidersObj = new ColliderGameObjectCreator().Create(this, CurrentSerializableName);
+					GeneratedCollidersObj = new ColliderGameObjectCreator().Create(this);
 					Deserialize();
 
 					StateMachine.ChangeState(ProcessStep.Disposing);
@@ -206,19 +206,23 @@ namespace Engine.Procedural.Runtime {
 				Tools.SetGridScale(Constants.CELL_SIZE);
 
 				GeneratorSerializer.SerializeSeed(GetSeedInfo(), _config);
-				var directory = new DirectoryAction().NewMapDirectory(CurrentSerializableName);
+				var directory = new DirectoryAction().CreateNewDirectory(CurrentSerializableName);
 
+				new SetColliderObjName().Set(GeneratedCollidersObj, Constants.SAVE_COLLIDERS_PREFIX + CurrentSerializableName);
+				
 				if (_config.ShouldSerializePathfinding)
 					GeneratorSerializer.SerializeCurrentAstarGraph(CurrentSerializableName, directory);
 
 				if (_config.ShouldSerializeMapPrefab)
-					GeneratorSerializer.SerializeMapGameObject(CurrentSerializableName);
+					GeneratorSerializer.SerializeMapGameObject(
+						CurrentSerializableName, 
+						DirectoryAction.GetMapDirectories(CurrentSerializableName));
 
-				if (_config.ShouldSerializeSpriteShape)
-					GeneratorSerializer.SerializeSpriteShape(CurrentSerializableName, _data.GetSerializableBoundary());
-
-				if (_config.ShouldSerializeColliderCoords)
-					GeneratorSerializer.SerializeColliderCoords(CurrentSerializableName, dictSerialized);
+				// if (_config.ShouldSerializeSpriteShape)
+				// 	GeneratorSerializer.SerializeSpriteShape(CurrentSerializableName, _data.GetSerializableBoundary());
+				//
+				// if (_config.ShouldSerializeColliderCoords)
+				// 	GeneratorSerializer.SerializeColliderCoords(CurrentSerializableName, dictSerialized);
 
 #region COMPLETE
 
@@ -284,30 +288,27 @@ namespace Engine.Procedural.Runtime {
 
 		void Deserialize() {
 			var deserializer = new GeneratorDeserializer(_config, StopWatch);
-			var directory    = new DirectoryAction().GetMapDirectory(CurrentSerializableName);
+			var directories  = DirectoryAction.GetMapDirectories(CurrentSerializableName);
 
 #region MAP_GAMEOBJECT
 
-			// var obj = deserializer.DeserializeMapPrefab(_config.NameSeedIteration);
-			// if (!obj) {
-			// 	GenLogging.Instance.Log("Could not find asset.", "DeserializeMap", LogLevel.Warning);
-			// }
-			// else {
-			// 	Instantiate(obj, gameObject.transform, true);
-			// }
+			var obj = deserializer.DeserializeMapPrefab(_config.NameSeedIteration, directories);
+			if (!obj) {
+				GenLogging.Instance.Log("Could not find asset.", "DeserializeMap", LogLevel.Warning);
+			}
+			else {
+				Instantiate(obj, gameObject.transform, true);
+				var grid = gameObject.GetComponentInChildren<Grid>();
+				grid.gameObject.transform.localPosition = Vector3.zero;
+				var tools = new GeneratorTools(_config, grid, default);
+				tools.SetOriginWrtMap(gameObject);
+			}
 
 #endregion
 
 #region ASTAR_PATHFINDING
 
-			deserializer.DeserializeAstar(_config.NameSeedIteration, directory);
-			
-			
-			
-			// var grid = gameObject.GetComponentInChildren<Grid>();
-			// grid.gameObject.transform.localPosition = Vector3.zero;
-			// var tools = new GeneratorTools(_config, grid, default);
-			// tools.SetOriginWrtMap(gameObject);
+			deserializer.DeserializeAstar(_config.NameSeedIteration, directories.full);
 
 #endregion
 

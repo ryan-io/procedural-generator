@@ -11,6 +11,7 @@ using UnityBCL;
 using UnityBCL.Serialization;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Animations;
 
 namespace Engine.Procedural.Runtime {
 	public class GeneratorDeserializer {
@@ -30,34 +31,34 @@ namespace Engine.Procedural.Runtime {
 				return;
 			}
 
-			Serializer = new Serializer();
+			Serializer ??= new Serializer();
 
-			var validationPath =
+			mapDirectory =
 				mapDirectory                     +
 				Constants.ASTAR_SERIALIZE_PREFIX +
 				currentSerializableName          +
 				Constants.JSON_FILE_TYPE;
 
-			var isValid = File.Exists(validationPath);
+			var isValid = File.Exists(mapDirectory);
 
 			if (!isValid) {
 				GenLogging.Instance.Log(
-					"The provided id: " + currentSerializableName + ", could not be found",
+					"The provided id: " + currentSerializableName + ", could not be found. This is likely due to not serializing Astar data (check settings).",
 					"DeserializeAstarData",
 					LogLevel.Error);
 				return;
 			}
 
-			var data = Serializer.DeserializeJson<byte[]>(validationPath);
+			var data = Serializer.DeserializeJson<byte[]>(mapDirectory);
 
 			if (!data.IsEmptyOrNull()) {
 				new GetActiveAstarData().Retrieve();
 				AstarPath.active.data.DeserializeGraphs(data);
 
-				
+
 				// scanning graph after deserializing it has been causing issues due to WalkabilityRule that is 
 				// present
-				
+
 				//var scanner = new GraphScanner(StopWatch);
 				//scanner.ScanGraph(AstarPath.active.data.gridGraph);
 			}
@@ -65,7 +66,7 @@ namespace Engine.Procedural.Runtime {
 				GenLogging.Instance.LogWithTimeStamp(
 					LogLevel.Warning,
 					StopWatch.TimeElapsed,
-					Message.CANNOT_GET_SERIALIZED_ASTAR_DATA + validationPath,
+					Message.CANNOT_GET_SERIALIZED_ASTAR_DATA + mapDirectory,
 					Constants.DESERIALIZE_ASTAR_CTX
 				);
 			}
@@ -120,7 +121,7 @@ namespace Engine.Procedural.Runtime {
 				throw;
 			}
 		}
-		
+
 		[CanBeNull]
 		public Dictionary<int, List<Vector3>> DeserializeColliderCoords(string currentSerializableName) {
 			try {
@@ -129,7 +130,7 @@ namespace Engine.Procedural.Runtime {
 				var validationPath =
 					Config.ColliderCoordsSerializer.SaveLocation +
 					Constants.COLLIDER_COORDS_SAVE_PREFIX        +
-					currentSerializableName                   +
+					currentSerializableName                      +
 					Constants.JSON_FILE_TYPE;
 
 				var isValid = File.Exists(validationPath);
@@ -164,30 +165,24 @@ namespace Engine.Procedural.Runtime {
 			}
 		}
 
-		public GameObject DeserializeMapPrefab(string currentSerializableName) {
+		public GameObject DeserializeMapPrefab(string currentSerializableName, (string raw, string full) directories) {
 			try {
-				var validationPath =
-					Config.MapSerializer.SaveLocation +
-					Constants.SAVE_MAP_PREFIX         +
-					currentSerializableName           +
-					Constants.PREFAB_FILE_TYPE;
+				var pathConstructor = new PathConstructor(directories);
 
-				var uniquePath = Constants.ASSETS_FOLDER            +
-				                 Config.MapSerializer.SaveFolderRaw +
-				                 Constants.BACKSLASH                +
-				                 Constants.SAVE_MAP_PREFIX          +
-				                 currentSerializableName            +
-				                 Config.MapSerializer.FileFormat;
+				var validationPath =
+					pathConstructor.GetUniquePathPrefab(Constants.SAVE_MAP_PREFIX + currentSerializableName);
+
+				var assetPath =
+					pathConstructor.GetUniquePathRawPrefab(Constants.SAVE_MAP_PREFIX + currentSerializableName);
 
 				var isValid = File.Exists(validationPath);
-
 
 				if (!isValid) {
 					throw new Exception(
 						$"File name was not valid. Could not validate if file '{currentSerializableName}' exists");
 				}
 
-				var obj = AssetDatabase.LoadAssetAtPath<GameObject>(uniquePath);
+				var obj = AssetDatabase.LoadAssetAtPath<GameObject>(assetPath);
 				if (obj)
 					GenLogging.Instance.Log($"Deserialize map prefab: {obj.name}", "DeserializeMap");
 				return obj;

@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Engine.Procedural.Runtime {
 	public readonly struct ColliderGameObjectCreator {
-		public GameObject Create(ProceduralGenerator generator, string name) {
+		public GameObject Create(ProceduralGenerator generator) {
 			var trs = generator.gameObject.GetComponentsInChildren<Transform>();
 
 			foreach (var tr in trs) {
@@ -15,7 +15,7 @@ namespace Engine.Procedural.Runtime {
 				}
 			}
 
-			var o = new GameObject(Constants.SAVE_COLLIDERS_PREFIX + name) {  
+			var o = new GameObject {  
 				transform = {
 					parent = generator.transform
 				},
