@@ -40,13 +40,21 @@ namespace Engine.Procedural.Runtime {
 		[field: SerializeField, FoldoutGroup("Serialization", false)]
 		public bool ShouldSerializeColliderCoords { get; private set; } = true;
 
-		[field: SerializeField, InlineEditor(InlineEditorObjectFieldModes.Foldout),
-		        ShowIf("@ShouldSerializeSpriteShape"), FoldoutGroup("Serialization", false)]
-		public SerializerSetup SpriteShapeSerializer { get; private set; }
+#endregion
+
+#region DESERIALIZATION
 		
-		[field: SerializeField, InlineEditor(InlineEditorObjectFieldModes.Foldout),
-		        ShowIf("@ShouldSerializeColliderCoords"), FoldoutGroup("Serialization", false)]
-		public SerializerSetup ColliderCoordsSerializer { get; private set; }
+		[field: SerializeField, FoldoutGroup("Serialization", false)]
+		public bool ShouldDeserializePathfinding { get; private set; } = true;
+
+		[field: SerializeField, FoldoutGroup("Serialization", false)]
+		public bool ShouldDeserializeMapPrefab { get; private set; } = true;
+
+		[field: SerializeField, FoldoutGroup("Serialization", false)]
+		public bool ShouldDeserializeSpriteShape { get; private set; } = true;
+		
+		[field: SerializeField, FoldoutGroup("Serialization", false)]
+		public bool ShouldDeserializeColliderCoords { get; private set; } = true;
 
 #endregion
 

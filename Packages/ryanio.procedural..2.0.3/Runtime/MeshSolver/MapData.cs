@@ -17,7 +17,7 @@ namespace Engine.Procedural.Runtime {
 		[field: SerializeField] public Dictionary<int, List<Vector3>> BoundaryCorners      { get; set; }
 		[field: SerializeField] public RoomMeshDictionary             RoomMeshDictionary   { get; private set; }
 
-		public Dictionary<int, List<SerializableVector3>> GetSerializableBoundary() {
+		public Dictionary<int, List<SerializableVector3>> GetBoundaryCoords() {
 			if (BoundaryCorners.IsEmptyOrNull())
 				return default;
 

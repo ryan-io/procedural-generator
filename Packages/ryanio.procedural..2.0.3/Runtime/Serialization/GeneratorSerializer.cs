@@ -1,18 +1,14 @@
-using System;
 using System.Collections.Generic;
 using BCL.Serialization;
 using Pathfinding.Serialization;
 using UnityBCL;
-using UnityBCL.Serialization;
 using UnityEngine;
 
 namespace Engine.Procedural.Runtime {
 	public class GeneratorSerializer {
-		GameObject       Container           { get; }
-		SerializerSetup  SpriteShapeSetup    { get; }
-		SerializerSetup  ColliderCoordsSetup { get; }
+		GameObject           Container           { get; }
 		BCL.StopWatchWrapper StopWatch           { get; }
-        
+
 		/// <summary>
 		/// This method should be invoked before invoking CreateMapFolder.
 		/// </summary>
@@ -39,7 +35,7 @@ namespace Engine.Procedural.Runtime {
 					BCL.LogLevel.Error);
 			}
 			else {
-				GenLogging.Instance.Log( 
+				GenLogging.Instance.Log(
 					"Serialized map at: " + path,
 					"SerializeMap");
 			}
@@ -66,12 +62,18 @@ namespace Engine.Procedural.Runtime {
 		/// </summary>
 		/// <param name="name">Name of A* graph file</param>
 		/// <param name="coordinates">Collection of SerializableVector3</param>
-		public void SerializeSpriteShape(string name, Dictionary<int, List<SerializableVector3>> coordinates) {
-			if (string.IsNullOrWhiteSpace(name) || coordinates.IsEmptyOrNull())
+		/// <param name="directories">Full and raw paths to SerializedData</param>
+		public void SerializeSpriteShape(
+			string name,
+			Dictionary<int, List<SerializableVector3>> coordinates,
+			(string raw, string full) directories) {
+			Help.ValidateNameIsSerialized(name);
+
+			if (coordinates.IsEmptyOrNull())
 				return;
 
-			var saveName = Constants.SPRITE_SHAPE_SAVE_PREFIX + name;
-			SerializeJson(saveName, SpriteShapeSetup.SaveLocation, coordinates);
+			name = Constants.SPRITE_SHAPE_SAVE_PREFIX + name;
+			SerializeJson(name, directories.full, coordinates);
 		}
 
 		/// <summary>
@@ -79,12 +81,18 @@ namespace Engine.Procedural.Runtime {
 		/// </summary>
 		/// <param name="name">Name of ColliderCoords file</param>
 		/// <param name="coordinates">Collection of SerializableVector3</param>
-		public void SerializeColliderCoords(string name, Dictionary<int, List<SerializableVector3>> coordinates) {
+		/// <param name="directories"></param>
+		public void SerializeColliderCoords(string name, Dictionary<int, List<SerializableVector3>> coordinates,
+			(string raw, string full) directories) {
 			if (string.IsNullOrWhiteSpace(name) || coordinates.IsEmptyOrNull())
 				return;
-
-			var saveName = Constants.COLLIDER_COORDS_SAVE_PREFIX + name;
-			SerializeJson(saveName, ColliderCoordsSetup.SaveLocation, coordinates);
+			Help.ValidateNameIsSerialized(name);
+			
+			if (coordinates.IsEmptyOrNull())
+				return;
+			
+			name = Constants.COLLIDER_COORDS_SAVE_PREFIX + name;
+			SerializeJson(name, directories.full, coordinates);
 		}
 
 		/// <summary>
@@ -113,11 +121,8 @@ namespace Engine.Procedural.Runtime {
 		/// <param name="container">Root GameObject containing ProceduralGenerator component</param>
 		/// <param name="stopWatch">Instance of stopwatch for outputting timeElapsed</param>
 		public GeneratorSerializer(ProceduralConfig config, GameObject container, BCL.StopWatchWrapper stopWatch) {
-			SpriteShapeSetup    = config.SpriteShapeSerializer;
-			ColliderCoordsSetup = config.ColliderCoordsSerializer;
 			StopWatch           = stopWatch;
 			Container           = container;
 		}
-        
 	}
 }

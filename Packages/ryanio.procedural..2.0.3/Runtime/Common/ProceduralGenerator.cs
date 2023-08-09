@@ -130,7 +130,9 @@ namespace Engine.Procedural.Runtime {
 
 				if (!_config.ShouldGenerate && _config.ShouldDeserialize) {
 					GeneratedCollidersObj = new ColliderGameObjectCreator().Create(this);
-					Deserialize();
+					var deserializeRouter =
+						new DeserializationRouter(gameObject, _config, _spriteShapeConfig, StopWatch);
+					deserializeRouter.ValidateAndDeserialize(_config.NameSeedIteration, GeneratedCollidersObj);
 
 					StateMachine.ChangeState(ProcessStep.Disposing);
 					Observables[StateObservableId.ON_DISPOSE].Signal();
@@ -185,12 +187,11 @@ namespace Engine.Procedural.Runtime {
 				//var erosionData = ErosionSolver.Erode(gridGraph);
 				GraphScanner.ScanGraph(gridGraph);
 				Dictionary<int, List<Vector3>> dict;
-				Dictionary<int, List<SerializableVector3>> dictSerialized =
-					new Dictionary<int, List<SerializableVector3>>();
+				var colliderCoords = new Dictionary<int, List<SerializableVector3>>();
 				(_data.BoundaryCorners, dict) = ColliderSolver.Solve(_data, TileMapDictionary);
 
 				for (var i = 0; i < dict.Count; i++) {
-					dictSerialized[i] = dict[i].AsSerialized().ToList();
+					colliderCoords[i] = dict[i].AsSerialized().ToList();
 				}
 
 				GenLogging.Instance.Log("Setting shifted tile positions in map data", "MapData");
@@ -208,25 +209,14 @@ namespace Engine.Procedural.Runtime {
 				GeneratorSerializer.SerializeSeed(GetSeedInfo(), _config);
 				var directory = new DirectoryAction().CreateNewDirectory(CurrentSerializableName);
 
-				new SetColliderObjName().Set(GeneratedCollidersObj, Constants.SAVE_COLLIDERS_PREFIX + CurrentSerializableName);
-				
-				if (_config.ShouldSerializePathfinding)
-					GeneratorSerializer.SerializeCurrentAstarGraph(CurrentSerializableName, directory);
-
-				if (_config.ShouldSerializeMapPrefab)
-					GeneratorSerializer.SerializeMapGameObject(
-						CurrentSerializableName, 
-						DirectoryAction.GetMapDirectories(CurrentSerializableName));
-
-				// if (_config.ShouldSerializeSpriteShape)
-				// 	GeneratorSerializer.SerializeSpriteShape(CurrentSerializableName, _data.GetSerializableBoundary());
-				//
-				// if (_config.ShouldSerializeColliderCoords)
-				// 	GeneratorSerializer.SerializeColliderCoords(CurrentSerializableName, dictSerialized);
+				new SetColliderObjName().Set(GeneratedCollidersObj,
+					Constants.SAVE_COLLIDERS_PREFIX + CurrentSerializableName);
 
 #region COMPLETE
 
 				new SetAllEdgeColliderRadius(_config.EdgeColliderRadius).Set(gameObject);
+				var router = new SerializationRouter(_config, Grid.gameObject, StopWatch);
+				router.ValidateAndSerialize(CurrentSerializableName, directory, _data.GetBoundaryCoords(), colliderCoords);
 				StopWatch.Stop();
 				StateMachine.ChangeState(ProcessStep.Completing);
 				Observables[StateObservableId.ON_COMPLETE].Signal();
@@ -284,49 +274,6 @@ namespace Engine.Procedural.Runtime {
 				Observables[StateObservableId.ON_COMPLETE].Signal();
 				IsRunning = false;
 			}
-		}
-
-		void Deserialize() {
-			var deserializer = new GeneratorDeserializer(_config, StopWatch);
-			var directories  = DirectoryAction.GetMapDirectories(CurrentSerializableName);
-
-#region MAP_GAMEOBJECT
-
-			var obj = deserializer.DeserializeMapPrefab(_config.NameSeedIteration, directories);
-			if (!obj) {
-				GenLogging.Instance.Log("Could not find asset.", "DeserializeMap", LogLevel.Warning);
-			}
-			else {
-				Instantiate(obj, gameObject.transform, true);
-				var grid = gameObject.GetComponentInChildren<Grid>();
-				grid.gameObject.transform.localPosition = Vector3.zero;
-				var tools = new GeneratorTools(_config, grid, default);
-				tools.SetOriginWrtMap(gameObject);
-			}
-
-#endregion
-
-#region ASTAR_PATHFINDING
-
-			deserializer.DeserializeAstar(_config.NameSeedIteration, directories.full);
-
-#endregion
-
-#region SPRITE_SHAPE_COLLIDER_BOUNDARY
-
-			// var positions = deserializer.DeserializeSpriteShape(_config.NameSeedIteration);
-			// var solver    = new SpriteShapeBorderSolver(_spriteShapeConfig, gameObject);
-			// solver.GenerateProceduralBorder(positions, _config.NameSeedIteration);
-
-#endregion
-
-#region COLLIDER_BOUNDARY
-
-			// var colPos    = deserializer.DeserializeColliderCoords(_config.NameSeedIteration);
-			// var colSolver = new SerializedPrimitiveCollisionSolver(_config, GeneratedCollidersObj);
-			// colSolver.CreateColliderFromDict(colPos);
-
-#endregion
 		}
 
 		void HandleErrorState() {
