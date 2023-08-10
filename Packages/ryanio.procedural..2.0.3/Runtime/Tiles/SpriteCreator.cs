@@ -4,11 +4,10 @@ using Sirenix.OdinInspector;
 using UnityEditor;
 using UnityEngine;
 
-namespace Engine.Procedural.Runtime {
+namespace ProceduralGeneration {
 	public class SpriteCreator : MonoBehaviour {
 		public Texture2D texture;
 
-#if UNITY_EDITOR
 		[Button]
 		void CreateSprite() {
 			if (texture == null || Application.isPlaying) return;
@@ -16,6 +15,5 @@ namespace Engine.Procedural.Runtime {
 				Vector2(0.5f, 0.5f), 32f);
 			AssetDatabase.CreateAsset(sprite, @"Assets\Testing");
 		}
-#endif
 	}
 }

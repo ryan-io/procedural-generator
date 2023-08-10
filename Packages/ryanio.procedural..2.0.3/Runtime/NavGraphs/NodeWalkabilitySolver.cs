@@ -8,7 +8,7 @@ using UnityBCL;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-namespace Engine.Procedural.Runtime {
+namespace ProceduralGeneration {
 	public class NodeSerializationSolver : AsyncUnitOfWork {
 		GraphScanner      GraphScanner               { get; }
 		ISeedInfo         SeedInfo                   { get; }

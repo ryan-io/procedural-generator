@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace Engine.Procedural {
+namespace ProceduralGeneration {
 	public static class GrahamScan {
 		public static IList<Vector3> GrahamScanCompute(IList<Vector3> initialPoints) {
 			if (initialPoints.Count < 2)

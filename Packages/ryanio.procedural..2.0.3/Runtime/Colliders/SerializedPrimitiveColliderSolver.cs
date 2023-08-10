@@ -6,7 +6,7 @@ using ProceduralAuxiliary;
 using UnityBCL;
 using UnityEngine;
 
-namespace Engine.Procedural.Runtime {
+namespace ProceduralGeneration {
 	public class SerializedPrimitiveCollisionSolver {
 		GameObject ColliderGo { get; }
 		float      SkinWidth  { get; }

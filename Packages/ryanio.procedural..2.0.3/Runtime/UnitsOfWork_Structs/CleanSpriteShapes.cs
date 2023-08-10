@@ -4,7 +4,7 @@ using UnityBCL;
 using UnityEngine;
 using UnityEngine.U2D;
 
-namespace Engine.Procedural.Runtime {
+namespace ProceduralGeneration {
 	public readonly struct CleanSpriteShapes {
 		public void Clean(GameObject owner) {
 			if (!owner)

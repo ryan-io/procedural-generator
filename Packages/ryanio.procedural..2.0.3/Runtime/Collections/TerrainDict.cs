@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityBCL;
 using UnityEngine;
 
-namespace Engine.Procedural.Runtime {
+namespace ProceduralGeneration {
 	[Serializable]
 	public class TerrainContainer : SerializedDictionary<Terrain, Sprite> {
 		public Sprite GetGrass() => GetTerrain(Terrain.Grass);

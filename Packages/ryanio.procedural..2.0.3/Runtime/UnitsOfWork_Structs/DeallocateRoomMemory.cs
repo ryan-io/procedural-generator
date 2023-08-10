@@ -2,7 +2,7 @@
 
 using JetBrains.Annotations;
 
-namespace Engine.Procedural.Runtime {
+namespace ProceduralGeneration {
 	public readonly struct DeallocateRoomMemory {
 		public void Deallocate([CanBeNull] RegionRemovalSolver solver) {
 			solver?.ResetRooms();

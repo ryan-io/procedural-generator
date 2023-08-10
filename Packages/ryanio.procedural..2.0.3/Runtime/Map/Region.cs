@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Engine.Procedural.Runtime {
+namespace ProceduralGeneration {
 	[Serializable]
 	public class Region : List<Vector2Int> {
 	}

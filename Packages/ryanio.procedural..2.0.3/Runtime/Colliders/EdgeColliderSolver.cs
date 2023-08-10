@@ -9,7 +9,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using Object = UnityEngine.Object;
 
-namespace Engine.Procedural.Runtime {
+namespace ProceduralGeneration {
 	public class EdgeCollisionSolver : CollisionSolver {
 		public EdgeCollider2D[] Colliders                   { get; private set; }
 		Vector2                 LastCalculatedPosition      { get; set; }

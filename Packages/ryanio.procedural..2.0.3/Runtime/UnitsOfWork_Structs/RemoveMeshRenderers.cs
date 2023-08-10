@@ -3,7 +3,7 @@
 using UnityBCL;
 using UnityEngine;
 
-namespace Engine.Procedural.Runtime {
+namespace ProceduralGeneration {
 	public readonly struct RenderCleaner {
 		public void Clean(GameObject owner) {
 			var objs = owner.GetComponentsInChildren<MeshRenderer>();

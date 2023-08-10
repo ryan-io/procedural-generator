@@ -2,7 +2,7 @@
 
 using Pathfinding;
 
-namespace Engine.Procedural.Runtime {
+namespace ProceduralGeneration {
 	public abstract class NavGraphBuilder<T> where T : NavGraph {
 		public abstract T Build();
 	}

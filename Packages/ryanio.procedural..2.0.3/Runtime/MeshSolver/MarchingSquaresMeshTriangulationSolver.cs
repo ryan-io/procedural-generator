@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Engine.Procedural.Runtime {
+namespace ProceduralGeneration {
 	public class MarchingSquaresMeshTriangulationSolver : MeshTriangulationSolver {
 		HashSet<int>                    CheckedVertices { get; }
 		SquareGrid                      SquareGrid      { get; }

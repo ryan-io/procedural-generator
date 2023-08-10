@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Engine.Procedural.Runtime {
+namespace ProceduralGeneration {
 	public class SquareGrid {
 		public Square[,] Squares { get; private set; }
 

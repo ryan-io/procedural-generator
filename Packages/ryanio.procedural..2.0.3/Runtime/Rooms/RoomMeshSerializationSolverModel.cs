@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Engine.Procedural.Runtime {
+namespace ProceduralGeneration {
 	public readonly struct RoomMeshSerializationSolverModel {
 		public List<List<int>> Outlines         { get; }
 		public List<Vector3>   WalkableVertices { get; }

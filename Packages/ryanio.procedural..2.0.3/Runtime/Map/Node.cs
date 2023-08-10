@@ -2,7 +2,7 @@
 
 using UnityEngine;
 
-namespace Engine.Procedural.Runtime {
+namespace ProceduralGeneration {
 	public class Node {
 		public Vector3 Position;
 		public int     VertexIndex = -1;

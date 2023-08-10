@@ -2,7 +2,7 @@
 using UnityBCL;
 using UnityEngine.Events;
 
-namespace Engine.Procedural.Runtime {
+namespace ProceduralGeneration {
 	[Serializable]
 	public class EventDictionary : SerializedDictionary<ProcessStep, UnityEvent> {
 		

@@ -2,7 +2,7 @@ using BCL;
 using CommunityToolkit.HighPerformance;
 using UnityEngine;
 
-namespace Engine.Procedural.Runtime {
+namespace ProceduralGeneration {
 	public class SetAllTilesSyncTileTypeSolver : TileTypeSolver {
 		TileHashset       TileHashset       { get; }
 		TileMapDictionary TileMapDictionary { get; }

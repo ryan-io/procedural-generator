@@ -3,7 +3,7 @@
 using UnityEngine;
 using UnityEngine.U2D;
 
-namespace Engine.Procedural {
+namespace ProceduralGeneration {
 	public class ContinuousSplineSegmentSolver : ISplineSegmentSolver {
 		public bool DetermineNextSegment(Spline spline, Vector3 pointPosition, int indexTracker) {
 			spline.InsertPointAt(indexTracker, pointPosition);

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Engine.Procedural.Runtime {
+namespace ProceduralGeneration {
 	public readonly struct ColliderGameObjectCreator {
 		public GameObject Create(ProceduralGenerator generator) {
 			var trs = generator.gameObject.GetComponentsInChildren<Transform>();

@@ -7,7 +7,7 @@ using UnityBCL;
 using UnityEngine;
 using UnityEngine.U2D;
 
-namespace Engine.Procedural {
+namespace ProceduralGeneration {
 	[Serializable]
 	public class SpriteShapeConfig {
 		[field: SerializeField, Required, FoldoutGroup("Sprite Shape Boundary", false)]

@@ -2,7 +2,7 @@
 using Pathfinding;
 using UnityBCL;
 
-namespace Engine.Procedural.Runtime {
+namespace ProceduralGeneration {
 	public readonly struct GridGraphRuleRemover {
 		public void Remove(GridGraph gridGraph) {
 			var currentRules = new List<GridGraphRule>(gridGraph.rules.GetRules());

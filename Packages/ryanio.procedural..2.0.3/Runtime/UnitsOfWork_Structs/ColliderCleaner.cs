@@ -6,7 +6,7 @@ using UnityBCL;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace Engine.Procedural.Runtime {
+namespace ProceduralGeneration {
 	public readonly struct ColliderGameObjectCleaner {
 		public void Clean(GameObject procGenGo, bool destroyParent) {
 			var edgeColliders      = procGenGo.GetComponentsInChildren(typeof(EdgeCollider2D));

@@ -3,7 +3,7 @@
 using Pathfinding;
 using UnityEngine.Tilemaps;
 
-namespace Engine.Procedural.Runtime {
+namespace ProceduralGeneration {
 	public class NavGraphRulesSolver {
 		Tilemap GroundTilemap   { get; }
 		Tilemap BoundaryTilemap { get; }

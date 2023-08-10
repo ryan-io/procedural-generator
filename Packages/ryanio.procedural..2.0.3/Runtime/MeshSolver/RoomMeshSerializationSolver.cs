@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Engine.Procedural.Runtime {
+namespace ProceduralGeneration {
 	public static class RoomMeshSerializationSolver {
 		public static RoomMeshCollectionData GenerateMeshes(RoomMeshSerializationSolverModel model) {
 			var collection = new RoomMeshCollectionData();

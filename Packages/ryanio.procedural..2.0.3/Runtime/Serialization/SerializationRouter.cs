@@ -5,7 +5,7 @@ using BCL;
 using UnityBCL;
 using UnityEngine;
 
-namespace Engine.Procedural.Runtime {
+namespace ProceduralGeneration {
 	public class SerializationRouter {
 		GeneratorSerializer Serializer                    { get; }
 		bool                ShouldSerializePathfinding    { get; }

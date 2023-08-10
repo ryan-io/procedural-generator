@@ -5,7 +5,7 @@ using System.Linq;
 using UnityBCL;
 using UnityEngine;
 
-namespace Engine.Procedural.Runtime {
+namespace ProceduralGeneration {
 	public readonly struct CreateBoundaryColliders {
 		DataProcessor Processor { get; }
 		float         Radius    { get; }

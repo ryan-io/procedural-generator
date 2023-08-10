@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Engine.Procedural.Runtime {
+namespace ProceduralGeneration {
 	public readonly struct CollisionSolverDto {
 		public MapData    MapData            { get; }
 		public GameObject ColliderGameObject { get; }

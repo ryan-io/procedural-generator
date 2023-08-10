@@ -3,7 +3,7 @@ using System.Text;
 using BCL;
 using UnityBCL;
 
-namespace Engine.Procedural.Runtime {
+namespace ProceduralGeneration {
 	public class GenLogging : Singleton<GenLogging> {
 		// public const string GeneratedMeshBackground = "Generated Mesh Background";
 		// public const string GroundLayerName         = "Ground";

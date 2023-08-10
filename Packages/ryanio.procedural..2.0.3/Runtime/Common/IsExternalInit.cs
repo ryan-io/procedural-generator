@@ -1,4 +1,4 @@
-﻿namespace Engine.Procedural.Runtime {
+﻿namespace ProceduralGeneration {
 	/// <summary>
 	/// This is currently a limitation of Unity when using Span
 	/// Unity throws a compile error stating IsExternalInit is missing

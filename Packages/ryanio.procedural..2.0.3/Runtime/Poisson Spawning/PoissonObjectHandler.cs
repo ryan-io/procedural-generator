@@ -5,7 +5,7 @@ using Sirenix.OdinInspector;
 using UnityBCL;
 using UnityEngine;
 
-namespace Engine.Procedural.Runtime {
+namespace ProceduralGeneration {
 	[HideMonoScript]
 	public class Poisson : Singleton<Poisson, IPoisson>,
 	                                    IPoisson {

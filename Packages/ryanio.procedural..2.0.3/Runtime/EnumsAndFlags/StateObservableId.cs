@@ -1,4 +1,4 @@
-﻿namespace Engine.Procedural.Runtime {
+﻿namespace ProceduralGeneration {
 	public static class StateObservableId {
 		public static readonly string ON_CLEAN = "OnClean";
 

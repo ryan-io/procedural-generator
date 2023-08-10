@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Engine.Procedural.Runtime {
+namespace ProceduralGeneration {
 	[Serializable]
 	public class TileId {
 		public const string GROUND                = "Ground";

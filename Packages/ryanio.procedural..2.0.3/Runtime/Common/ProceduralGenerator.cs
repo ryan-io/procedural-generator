@@ -11,7 +11,7 @@ using StateMachine;
 using UnityBCL;
 using UnityEngine;
 
-namespace Engine.Procedural.Runtime {
+namespace ProceduralGeneration {
 	/// <summary>
 	///   This class is responsible for generating the map, mesh, collider, and serializing the data
 	///     Verifies the scene contains the required components in order to run procedural generation logic
@@ -285,13 +285,11 @@ namespace Engine.Procedural.Runtime {
 			try {
 				if (cleanRootObject)
 					new EnsureCleanRootObject().Check(gameObject);
-
-#if UNITY_EDITOR
+				
 				var assembly = Assembly.GetAssembly(typeof(UnityEditor.Editor));
 				var type = assembly.GetType("UnityEditor.LogEntries");
 				var method = type.GetMethod("Clear");
 				method?.Invoke(new object(), null);
-#endif
 				IsDataSet = false;
 				GenLogging.Instance.ClearConsole();
 
@@ -376,6 +374,11 @@ namespace Engine.Procedural.Runtime {
 		 ButtonGroup("Actions/Buttons1/Methods", Stretch = false, IconAlignment = IconAlignment.RightEdge)]
 		void FindPathfinder() => _config.FindPathfinderInScene();
 
+		[BoxGroup("Actions"),
+		 HorizontalGroup("Actions/Buttons2"),
+		 ButtonGroup("Actions/Buttons2/Methods", Stretch = false, IconAlignment = IconAlignment.RightEdge)]
+		void DeleteSelectedSerialized() => DirectoryAction.DeleteDirectory(_config.NameSeedIteration);
+		
 		[Button(ButtonSizes.Large, ButtonStyle.CompactBox, Icon = SdfIconType.Gear,
 			IconAlignment = IconAlignment.RightOfText)]
 		void Generate() {

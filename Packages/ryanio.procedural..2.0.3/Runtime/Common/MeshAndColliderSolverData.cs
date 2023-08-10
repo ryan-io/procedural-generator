@@ -3,7 +3,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Engine.Procedural.Runtime {
+namespace ProceduralGeneration {
 	public readonly struct MeshSolverData {
 		public Mesh               Mesh               { get; }
 		public List<Vector3>      MeshVertices       { get; }

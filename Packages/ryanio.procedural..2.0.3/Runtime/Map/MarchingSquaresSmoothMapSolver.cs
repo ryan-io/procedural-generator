@@ -1,8 +1,6 @@
 using BCL;
-using CommunityToolkit.HighPerformance;
-using UnityEngine;
 
-namespace Engine.Procedural.Runtime {
+namespace ProceduralGeneration {
 	public class MarchingSquaresSmoothMapSolver : SmoothMapSolver {
 		StopWatchWrapper StopWatch           { get; }
 		int              UpperNeighborLimit  { get; }

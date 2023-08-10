@@ -1,10 +1,9 @@
 // Engine.Procedural
 
 using Sirenix.OdinInspector;
-using UnityBCL;
 using UnityEngine;
 
-namespace Engine.Procedural {
+namespace ProceduralGeneration {
 	public class DrawMeshVertices : MonoBehaviour {
 		[SerializeField] MeshFilter _meshFilter;
 

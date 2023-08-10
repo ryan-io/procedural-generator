@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using Object = UnityEngine.Object;
 
-namespace Engine.Procedural.Runtime {
+namespace ProceduralGeneration {
 	public class PrimitiveCollisionSolver : CollisionSolver {
 		protected override Tilemap BoundaryTilemap   { get; }
 		GameObject                 ColliderGo        { get; }

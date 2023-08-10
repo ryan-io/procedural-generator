@@ -1,6 +1,6 @@
 ﻿// Engine.Procedural
 
-namespace Engine.Procedural.Runtime {
+namespace ProceduralGeneration {
 	public readonly struct GraphCleaner {
 		public void Clean() {
 			AstarPath.FindAstarPath();

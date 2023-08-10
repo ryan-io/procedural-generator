@@ -2,7 +2,7 @@
 using UnityBCL;
 using UnityEngine;
 
-namespace Engine.Procedural.Runtime {
+namespace ProceduralGeneration {
 	[Serializable]
 	public class GameObjectWeightTable : SerializedDictionary<GameObject, double> {
 	}

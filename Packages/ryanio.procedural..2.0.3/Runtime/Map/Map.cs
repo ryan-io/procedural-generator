@@ -1,6 +1,6 @@
 using CommunityToolkit.HighPerformance;
 
-namespace Engine.Procedural.Runtime {
+namespace ProceduralGeneration {
 	public readonly ref struct MapSpans {
 		public Span2D<int> Primary { get; }
 		//public Span2D<int> Border  { get; }

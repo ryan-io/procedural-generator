@@ -2,7 +2,7 @@
 
 using BCL;
 
-namespace Engine.Procedural.Runtime {
+namespace ProceduralGeneration {
 	public readonly struct CreateObservables {
 		public ObservableCollection<string> Create(ProceduralConfig config) {
 			var observables = new ObservableCollection<string> {

@@ -1,7 +1,7 @@
 using BCL;
 using CommunityToolkit.HighPerformance;
 
-namespace Engine.Procedural.Runtime {
+namespace ProceduralGeneration {
 	public class CellularAutomataFillMapSolver : FillMapSolver {
 		StopWatchWrapper StopWatch          { get; }
 		int              SeedHash           { get; }

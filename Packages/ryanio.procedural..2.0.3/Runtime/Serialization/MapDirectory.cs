@@ -1,6 +1,6 @@
 // ProceduralGeneration
 
-namespace Engine.Procedural.Runtime {
+namespace ProceduralGeneration {
 	public class PathConstructor {
 		string Raw  { get; }
 		string Full { get; }

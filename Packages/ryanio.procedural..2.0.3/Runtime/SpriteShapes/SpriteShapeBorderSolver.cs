@@ -1,12 +1,11 @@
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using Engine.Procedural.Runtime;
 using UnityBCL;
 using UnityEngine;
 using UnityEngine.U2D;
 using Object = UnityEngine.Object;
 
-namespace Engine.Procedural {
+namespace ProceduralGeneration {
 	public class SpriteShapeBorderSolver {
 		Ppu        Ppu   { get; }
 		Transform  Owner { get; }

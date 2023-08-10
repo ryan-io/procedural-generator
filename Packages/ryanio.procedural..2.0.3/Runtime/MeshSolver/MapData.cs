@@ -2,10 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityBCL;
-using UnityBCL.Serialization;
 using UnityEngine;
 
-namespace Engine.Procedural.Runtime {
+namespace ProceduralGeneration {
 	[Serializable]
 	public class MapData {
 		[field: SerializeField] public TileHashset                    TileHashset          { get; private set; }

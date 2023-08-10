@@ -1,6 +1,6 @@
 // Engine.Procedural
 
-namespace Engine.Procedural.Runtime {
+namespace ProceduralGeneration {
 	public readonly struct EnsureMapFitsOnStack {
 		public void Ensure(ProceduralConfig config) {
 			var borderSize = config.BorderSize;

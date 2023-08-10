@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace Engine.Procedural.Runtime {
+namespace ProceduralGeneration {
 	public static class PoissonPointGenerator {
 		public static List<Vector2> GeneratePoints(float radius, Vector2 sampleRegionSize,
 			int numSamplesBeforeRejection = 30) {

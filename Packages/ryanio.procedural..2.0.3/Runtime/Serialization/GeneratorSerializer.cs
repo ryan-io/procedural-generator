@@ -4,7 +4,7 @@ using Pathfinding.Serialization;
 using UnityBCL;
 using UnityEngine;
 
-namespace Engine.Procedural.Runtime {
+namespace ProceduralGeneration {
 	public class GeneratorSerializer {
 		GameObject           Container           { get; }
 		BCL.StopWatchWrapper StopWatch           { get; }

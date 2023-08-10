@@ -3,9 +3,8 @@
 using System;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using Object = UnityEngine.Object;
 
-namespace Engine.Procedural.Runtime {
+namespace ProceduralGeneration {
 	public class TilemapBuilder {
 		public TileMapDictionary Build(GameObject container) {
 			var dict = new TileMapDictionary() {

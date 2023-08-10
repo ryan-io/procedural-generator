@@ -1,6 +1,6 @@
 ﻿using Source.Events;
 
-namespace Engine.Procedural.Runtime {
+namespace ProceduralGeneration {
 	internal class InternalEventProxy : IEngineEvent {
 		public void AddListener<TAdd>(IEngineEventListener<TAdd> listener) where TAdd : struct {
 			EngineEvent.AddListener(listener);

@@ -5,7 +5,7 @@ using UnityBCL;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-namespace Engine.Procedural.Runtime {
+namespace ProceduralGeneration {
 	public abstract class CollisionSolver {
 		public             Dictionary<int, List<Vector3>> AllBoundaryPoints { get; }
 		protected abstract Tilemap                        BoundaryTilemap   { get; }

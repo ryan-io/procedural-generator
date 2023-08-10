@@ -1,4 +1,4 @@
-namespace Engine.Procedural.Runtime {
+namespace ProceduralGeneration {
 	public class Square {
 		public int  BitwiseNodesSum;
 		public Node CenterTop, CenterRight, CenterBottom, CenterLeft;

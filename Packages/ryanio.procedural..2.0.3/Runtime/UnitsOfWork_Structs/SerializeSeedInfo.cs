@@ -5,7 +5,7 @@ using System.IO;
 using BCL.Serialization;
 using UnityBCL.Serialization;
 
-namespace Engine.Procedural.Runtime {
+namespace ProceduralGeneration {
 	public readonly struct SerializeSeedInfo {
 		public void Serialize(SeedInfo seedInfo, string name) {
 			if (string.IsNullOrWhiteSpace(name)) return;

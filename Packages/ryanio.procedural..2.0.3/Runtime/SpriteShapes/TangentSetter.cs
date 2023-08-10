@@ -3,7 +3,7 @@
 using UnityEngine;
 using UnityEngine.U2D;
 
-namespace Engine.Procedural {
+namespace ProceduralGeneration {
 	public class TangentSetter {
 		public void SetTangentDefaultZeroVector(Spline spline, int indexTracker) {
 			spline.SetRightTangent(indexTracker, Vector3.zero);

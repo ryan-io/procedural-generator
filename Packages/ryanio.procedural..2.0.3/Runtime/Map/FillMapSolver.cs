@@ -1,6 +1,6 @@
 using CommunityToolkit.HighPerformance;
 
-namespace Engine.Procedural.Runtime {
+namespace ProceduralGeneration {
 	public abstract class FillMapSolver {
 		public abstract void Fill(Span2D<int> primaryMap);
 	}

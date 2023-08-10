@@ -4,7 +4,7 @@ using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-namespace Engine.Procedural.Runtime {
+namespace ProceduralGeneration {
 	public class MeshRendering {
 		GameObject           Parent       { get; }
 		[CanBeNull] Material InitMaterial { get; }

@@ -2,10 +2,8 @@
 
 using BCL.Serialization;
 using Pathfinding.Serialization;
-using UnityBCL.Serialization;
-using UnityEngine.Animations;
 
-namespace Engine.Procedural.Runtime {
+namespace ProceduralGeneration {
 	public readonly struct SerializeAstar {
 		public void Serialize(SerializeSettings settings, string name, string path) {
 			name = Constants.ASTAR_SERIALIZE_PREFIX + name;

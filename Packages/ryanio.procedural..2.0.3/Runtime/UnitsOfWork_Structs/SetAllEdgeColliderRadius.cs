@@ -3,7 +3,7 @@
 using UnityBCL;
 using UnityEngine;
 
-namespace Engine.Procedural.Runtime {
+namespace ProceduralGeneration {
 	public readonly struct SetAllEdgeColliderRadius {
 		float Radius { get; }
 

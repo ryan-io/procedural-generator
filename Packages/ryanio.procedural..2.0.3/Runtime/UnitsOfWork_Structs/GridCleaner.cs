@@ -2,7 +2,7 @@
 
 using UnityEngine;
 
-namespace Engine.Procedural.Runtime {
+namespace ProceduralGeneration {
 	public readonly struct SetGridPosition {
 		public void Clean(ProceduralConfig config, Grid grid) {
 			if (grid == null)

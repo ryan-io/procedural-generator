@@ -2,7 +2,7 @@
 
 using UnityEngine;
 
-namespace Engine.Procedural.Runtime {
+namespace ProceduralGeneration {
 	public readonly struct RenameTilemapContainer {
 		public void Rename(string name, GameObject container) {
 			if (!container || string.IsNullOrWhiteSpace(name))

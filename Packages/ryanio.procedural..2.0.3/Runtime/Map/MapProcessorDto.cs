@@ -1,4 +1,4 @@
-﻿namespace Engine.Procedural.Runtime {
+﻿namespace ProceduralGeneration {
 	public readonly struct MapProcessorDto {
 		public ProceduralConfig Config { get; }
 

@@ -5,7 +5,7 @@ using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
 
-namespace Engine.Procedural.Runtime {
+namespace ProceduralGeneration {
 	[RequireComponent(typeof(Poisson))]
 	[ExecuteInEditMode]
 	public class PoissonSpawner : MonoBehaviour {
@@ -69,7 +69,6 @@ namespace Engine.Procedural.Runtime {
 				else DestroyImmediate(_label.gameObject);
 			}
 		}
-#if UNITY_EDITOR
 		[Button]
 		public void Spawn() {
 			Despawn();
@@ -106,7 +105,8 @@ namespace Engine.Procedural.Runtime {
 				}
 			}
 		}
-
+#if UNITY_EDITOR
+		
 		[Button]
 		// void TestWeightedItemSystem() {
 		// 	var test = new WeightedRandom<GameObject>();

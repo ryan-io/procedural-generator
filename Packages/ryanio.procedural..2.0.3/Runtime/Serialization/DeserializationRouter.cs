@@ -5,7 +5,7 @@ using BCL;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace Engine.Procedural.Runtime {
+namespace ProceduralGeneration {
 	public class DeserializationRouter {
 		GameObject            Owner                           { get; }
 		GeneratorDeserializer Deserializer                    { get; }

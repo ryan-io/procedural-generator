@@ -7,7 +7,7 @@ using Pathfinding;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-namespace Engine.Procedural.Runtime {
+namespace ProceduralGeneration {
 	public class ErosionSolver {
 		List<Vector3> NodePositions        { get; }
 		List<Vector3> TilePositions        { get; }

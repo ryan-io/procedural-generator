@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Engine.Procedural.Runtime {
+namespace ProceduralGeneration {
 	public readonly struct MapSolverModel {
 		public int        MapWidth             { get; }
 		public int        MapHeight            { get; }

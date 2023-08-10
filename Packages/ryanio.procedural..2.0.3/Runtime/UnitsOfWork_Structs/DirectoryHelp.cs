@@ -2,7 +2,7 @@
 
 using System.IO;
 
-namespace Engine.Procedural.Runtime {
+namespace ProceduralGeneration {
 	public readonly struct DirectoryHelp {
 		/// <summary>
 		///    Validates the directory path and creates it if it doesn't exist.

@@ -5,11 +5,10 @@ using System.Linq;
 using Pathfinding;
 using Sirenix.OdinInspector;
 using UnityBCL;
-using UnityBCL.Serialization;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-namespace Engine.Procedural.Runtime {
+namespace ProceduralGeneration {
 	[Serializable]
 	public class ProceduralConfig {
 #region NAME

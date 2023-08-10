@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Engine.Procedural.Runtime {
+namespace ProceduralGeneration {
 	public static class Constants {
 		public static class Layer {
 			public const string OBSTACLES = "Obstacles";

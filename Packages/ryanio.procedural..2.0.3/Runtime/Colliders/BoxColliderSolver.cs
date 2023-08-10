@@ -4,7 +4,7 @@ using UnityBCL;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-namespace Engine.Procedural.Runtime {
+namespace ProceduralGeneration {
 	public class BoxCollisionSolver : CollisionSolver {
 		GameObject                     RootGameObject { get; }
 		Dictionary<string, GameObject> ColliderOwners { get; }

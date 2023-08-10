@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 using JetBrains.Annotations;
 using UnityBCL.Serialization;
 
-namespace Engine.Procedural.Runtime {
+namespace ProceduralGeneration {
 	public class DirectoryAction {
 		/// <summary>
 		///   Returns the directory of the map.
@@ -74,7 +74,7 @@ namespace Engine.Procedural.Runtime {
 				if (!isSerialized)
 					throw new SerializationException($"{serializableMapName} {Message.NAME_NOT_SERIALIZED}");
 
-				var directories     = GetMapDirectories(serializableMapName);
+				var directories = GetMapDirectories(serializableMapName);
 				new DirectoryHelp().ValidateAndCreate(directories.full);
 
 				return directories.full;
@@ -108,5 +108,26 @@ namespace Engine.Procedural.Runtime {
 		/// <returns>string with backslashes added as prefix and suffix</returns>
 		string GetIOFileName(string serializableName)
 			=> Constants.BACKSLASH + serializableName + Constants.BACKSLASH;
+
+		/// <summary>
+		/// Deletes the given serialized map directory.
+		/// </summary>
+		/// <param name="serializedName">Name of map to delete</param>
+		public static void DeleteDirectory(string serializedName) {
+			var directories     = GetMapDirectories(serializedName);
+			var directoryExists = Directory.Exists(directories.full);
+
+			// need to delete the .meta file tooz
+			
+			if (directoryExists) {
+				
+				Directory.Delete(directories.full, true);
+				GenLogging.Instance.Log($"Deleted {serializedName} directory", "DeleteDirectory");
+			}
+			else {
+				GenLogging.Instance.Log($"Could not find a directory to delete for {serializedName}",
+					"DeleteDirectory");
+			}
+		}
 	}
 }

@@ -5,7 +5,7 @@ using Sirenix.OdinInspector;
 using UnityBCL;
 using UnityEngine;
 
-namespace Engine.Procedural.Runtime {
+namespace ProceduralGeneration {
 	public class GraphColliderCutter : MonoBehaviour {
 		public void Cut(bool forceCache = false) {
 			if (_colliders.IsEmptyOrNull() && !forceCache) return;

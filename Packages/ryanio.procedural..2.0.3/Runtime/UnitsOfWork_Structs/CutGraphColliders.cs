@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityBCL;
 
-namespace Engine.Procedural.Runtime {
+namespace ProceduralGeneration {
 	/// <summary>
 	/// Simple struct that take a readonly collection of type GraphColliderCutter and invokes the Cut() method
 	/// Graph collider cutters should contain a collider and a GraphColliderCutter monobehavior

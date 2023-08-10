@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Engine.Procedural.Runtime {
+namespace ProceduralGeneration {
 	public static class Bounds {
 		public static IDictionary<GameObject, float> GetBounds(GameObjectWeightTable objects) {
 			var bounds = new PoissonObjects();

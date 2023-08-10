@@ -3,7 +3,7 @@ using CommunityToolkit.HighPerformance;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-namespace Engine.Procedural.Runtime {
+namespace ProceduralGeneration {
 	public class TileMapper {
 		Grid              GridObj                { get; }
 		GeneratorTools    GeneratorTools         { get; }

@@ -3,7 +3,7 @@
 using BCL;
 using UnityEngine;
 
-namespace Engine.Procedural {
+namespace ProceduralGeneration {
 	public class DirectionSolver {
 		public CardinalDirection CurrentDirection { get; set; }
 		public CardinalDirection LastDirection    { get; set; }

@@ -3,7 +3,7 @@
 using UnityEngine;
 using UnityEngine.U2D;
 
-namespace Engine.Procedural {
+namespace ProceduralGeneration {
 	public class PositionSolver {
 		public (Vector3 nextPosition, Vector3 lastPosition) GetComparisonPositions(
 			Spline spline, int nextIndex, int lastIndex)

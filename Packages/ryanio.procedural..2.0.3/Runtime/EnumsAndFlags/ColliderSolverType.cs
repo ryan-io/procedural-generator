@@ -2,7 +2,7 @@
 
 using System;
 
-namespace Engine.Procedural.Runtime {
+namespace ProceduralGeneration {
 	[Serializable]
 	public enum ColliderSolverType {
 		Edge,

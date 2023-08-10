@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Tilemaps;
 
-namespace Engine.Procedural.Runtime {
+namespace ProceduralGeneration {
 	public static class Utility {
 		public static bool IsBoundary(int mapWidth, int mapHeight, int x, int y) =>
 			x <= 0             ||

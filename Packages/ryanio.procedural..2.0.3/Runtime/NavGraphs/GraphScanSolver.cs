@@ -9,7 +9,7 @@ using Pathfinding;
 using UnityBCL;
 using UnityEngine;
 
-namespace Engine.Procedural.Runtime {
+namespace ProceduralGeneration {
 	/// <summary>
 	/// The TaskLogic arguments specify a NavGraph & flag
 	/// The NavGraph is the Astar generated graph; the flag is whether to run TaskLogic asynchronously

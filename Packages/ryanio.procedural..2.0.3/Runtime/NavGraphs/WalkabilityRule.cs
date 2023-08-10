@@ -18,7 +18,7 @@ using UnityEngine.Tilemaps;
 						
 						// var size    = Physics.OverlapBoxNonAlloc(worldPosGround, extends, _collisions.Value);
  */
-namespace Engine.Procedural.Runtime {
+namespace ProceduralGeneration {
 	[Serializable]
 	public class WalkabilityRule : GridGraphRule {
 		[SerializeField] public Tilemap BoundaryTilemap;

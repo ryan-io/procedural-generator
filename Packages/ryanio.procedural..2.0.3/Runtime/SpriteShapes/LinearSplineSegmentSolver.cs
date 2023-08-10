@@ -2,7 +2,7 @@ using BCL;
 using UnityEngine;
 using UnityEngine.U2D;
 
-namespace Engine.Procedural {
+namespace ProceduralGeneration {
 	public class LinearSplineSegmentSolver : ISplineSegmentSolver {
 		PositionSolver  PositionSolver         { get; set; }
 		DirectionSolver DirectionSolver        { get; set; }

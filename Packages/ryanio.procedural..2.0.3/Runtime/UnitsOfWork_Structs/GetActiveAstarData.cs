@@ -3,7 +3,7 @@
 using Pathfinding;
 using UnityEngine;
 
-namespace Engine.Procedural.Runtime {
+namespace ProceduralGeneration {
 	public readonly struct GetActiveAstarData {
 		public AstarData Retrieve() {
 #if UNITY_EDITOR

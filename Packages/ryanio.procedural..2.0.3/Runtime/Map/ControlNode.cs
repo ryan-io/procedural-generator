@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Engine.Procedural.Runtime {
+namespace ProceduralGeneration {
 	public class ControlNode : Node {
 		public Node Above, Right;
 		public bool IsWall;

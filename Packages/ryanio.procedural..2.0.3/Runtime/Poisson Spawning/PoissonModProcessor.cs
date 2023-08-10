@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace Engine.Procedural.Runtime {
+namespace ProceduralGeneration {
 	public static class PoissonModProcessor {
 		public static void Process(Transform tr, IEnumerable<PoissonMod> mods) {
 			if (tr == null) return;

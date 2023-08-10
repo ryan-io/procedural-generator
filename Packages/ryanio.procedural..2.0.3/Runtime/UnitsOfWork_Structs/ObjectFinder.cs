@@ -5,7 +5,7 @@ using JetBrains.Annotations;
 using UnityBCL;
 using UnityEngine;
 
-namespace Engine.Procedural.Runtime {
+namespace ProceduralGeneration {
 	public readonly struct ObjectFinder {
 		public List<GraphColliderCutter> FindGraphColliderCuttersInScene(List<GraphColliderCutter> colliderCutters) {
 			if (colliderCutters == null)

@@ -8,11 +8,10 @@ using BCL;
 using BCL.Serialization;
 using JetBrains.Annotations;
 using UnityBCL;
-using UnityBCL.Serialization;
 using UnityEditor;
 using UnityEngine;
 
-namespace Engine.Procedural.Runtime {
+namespace ProceduralGeneration {
 	public class GeneratorDeserializer {
 		ProceduralConfig Config     { get; }
 		StopWatchWrapper StopWatch  { get; }

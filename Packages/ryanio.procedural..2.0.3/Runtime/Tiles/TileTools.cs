@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.Profiling;
 using UnityEngine.Tilemaps;
 
-namespace Engine.Procedural.Runtime {
+namespace ProceduralGeneration {
 	public class GeneratorTools {
 		StopWatchWrapper StopWatch { get; }
 		Grid             GridObj   { get; }

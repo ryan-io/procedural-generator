@@ -1,6 +1,6 @@
 using CommunityToolkit.HighPerformance;
 
-namespace Engine.Procedural.Runtime {
+namespace ProceduralGeneration {
 	public abstract class TileTypeSolver {
 		public abstract void        SetTiles(Span2D<int> span);
 	}

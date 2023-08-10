@@ -1,5 +1,3 @@
-
-
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -7,7 +5,7 @@ using System.Linq;
 using UnityBCL;
 using UnityBCL.Serialization;
 
-namespace Engine.Procedural.Runtime {
+namespace ProceduralGeneration {
 	public static class Help {
 		/// <summary>
 		///  Gets and reads text from seedTracker.txt file.

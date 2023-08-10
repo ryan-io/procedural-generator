@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Engine.Procedural.Runtime {
+namespace ProceduralGeneration {
 	public abstract class MeshTriangulationSolver {
 		public          List<List<int>>                 Outlines   { get; protected set; }
 		public          Mesh                            SolvedMesh { get; protected set; }

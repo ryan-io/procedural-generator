@@ -1,6 +1,4 @@
-using CommunityToolkit.HighPerformance;
-
-namespace Engine.Procedural.Runtime {
+namespace ProceduralGeneration {
 	public abstract class SmoothMapSolver {
 		public abstract void Smooth(int[,] original);
 	}
