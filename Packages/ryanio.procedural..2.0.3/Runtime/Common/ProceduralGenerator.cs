@@ -110,7 +110,6 @@ namespace ProceduralGeneration {
 			StateMachine.ChangeState(ProcessStep.Cleaning);
 			Observables[StateObservableId.ON_CLEAN].Signal();
 			CleanGenerator();
-			//new EnsureCleanRootObject().Check(gameObject);
 
 			IsRunning = true;
 
@@ -120,7 +119,7 @@ namespace ProceduralGeneration {
 			}
 
 			if (alsoInitialize) {
-				if (_config.ShouldDeserialize)
+				if (_config.ShouldDeserialize && !_config.ShouldGenerate)
 					InitializeGenerator(true);
 				else InitializeGenerator();
 			}
@@ -187,7 +186,7 @@ namespace ProceduralGeneration {
 				//var erosionData = ErosionSolver.Erode(gridGraph);
 				GraphScanner.ScanGraph(gridGraph);
 				Dictionary<int, List<Vector3>> dict;
-				var colliderCoords = new Dictionary<int, List<SerializableVector3>>();
+				var                            colliderCoords = new Dictionary<int, List<SerializableVector3>>();
 				(_data.BoundaryCorners, dict) = ColliderSolver.Solve(_data, TileMapDictionary);
 
 				for (var i = 0; i < dict.Count; i++) {
@@ -216,7 +215,8 @@ namespace ProceduralGeneration {
 
 				new SetAllEdgeColliderRadius(_config.EdgeColliderRadius).Set(gameObject);
 				var router = new SerializationRouter(_config, Grid.gameObject, StopWatch);
-				router.ValidateAndSerialize(CurrentSerializableName, directory, _data.GetBoundaryCoords(), colliderCoords);
+				router.ValidateAndSerialize(CurrentSerializableName, directory, _data.GetBoundaryCoords(),
+					colliderCoords);
 				StopWatch.Stop();
 				StateMachine.ChangeState(ProcessStep.Completing);
 				Observables[StateObservableId.ON_COMPLETE].Signal();
@@ -285,10 +285,11 @@ namespace ProceduralGeneration {
 			try {
 				if (cleanRootObject)
 					new EnsureCleanRootObject().Check(gameObject);
-				
+
+				Scale.Current(gameObject, 1);
 				var assembly = Assembly.GetAssembly(typeof(UnityEditor.Editor));
-				var type = assembly.GetType("UnityEditor.LogEntries");
-				var method = type.GetMethod("Clear");
+				var type     = assembly.GetType("UnityEditor.LogEntries");
+				var method   = type.GetMethod("Clear");
 				method?.Invoke(new object(), null);
 				IsDataSet = false;
 				GenLogging.Instance.ClearConsole();
@@ -378,7 +379,11 @@ namespace ProceduralGeneration {
 		 HorizontalGroup("Actions/Buttons2"),
 		 ButtonGroup("Actions/Buttons2/Methods", Stretch = false, IconAlignment = IconAlignment.RightEdge)]
 		void DeleteSelectedSerialized() => DirectoryAction.DeleteDirectory(_config.NameSeedIteration);
-		
+
+		[Button(ButtonSizes.Medium, ButtonStyle.CompactBox, Icon = SdfIconType.Signal,
+			IconAlignment = IconAlignment.RightOfText)]
+		void ScaleMap(float scale) => Scale.Current(gameObject, scale);
+
 		[Button(ButtonSizes.Large, ButtonStyle.CompactBox, Icon = SdfIconType.Gear,
 			IconAlignment = IconAlignment.RightOfText)]
 		void Generate() {

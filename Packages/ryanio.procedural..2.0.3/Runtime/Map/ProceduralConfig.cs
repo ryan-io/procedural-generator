@@ -78,7 +78,7 @@ namespace ProceduralGeneration {
 		[field: SerializeField, EnumToggleButtons, FoldoutGroup("State", false)]
 		public bool IsBuild { get; private set; }
 
-		[field: SerializeField, EnumToggleButtons, FoldoutGroup("State", false)]
+		[field: SerializeField, EnumToggleButtons, FoldoutGroup("State", false), OnValueChanged("ResetShouldDeserialize")]
 		public bool ShouldGenerate { get; set; } = true;
 
 		[field: SerializeField, ShowIf("@!ShouldGenerate"), EnumToggleButtons, FoldoutGroup("State", false)]
@@ -322,6 +322,10 @@ namespace ProceduralGeneration {
 			return allSeedsWrapper;
 		}
 
+		void ResetShouldDeserialize() {
+			ShouldDeserialize = false;
+		}
+		
 #endregion
 	}
 }

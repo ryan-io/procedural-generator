@@ -3,6 +3,7 @@ using System.IO;
 using System.Runtime.Serialization;
 using JetBrains.Annotations;
 using UnityBCL.Serialization;
+using UnityEditor;
 
 namespace ProceduralGeneration {
 	public class DirectoryAction {
@@ -101,6 +102,15 @@ namespace ProceduralGeneration {
 		}
 
 		/// <summary>
+		///  Returns the serialized data directories. This is the default location where all serialized data is stored.
+		/// </summary>
+		/// <returns>Tuple containing the full directory & raw directory paths for SerializedData</returns>
+		public static (string raw, string full) GetSerializedDataDirectories() {
+			var location     = UnitySaveLocation.GetDefault;
+			return (location.SaveLocationRaw, location.SaveLocation);
+		}
+
+		/// <summary>
 		///  Returns a new string based on serializableName that can be used to save/load
 		///  files with appended backslashes.
 		/// </summary>
@@ -116,12 +126,12 @@ namespace ProceduralGeneration {
 		public static void DeleteDirectory(string serializedName) {
 			var directories     = GetMapDirectories(serializedName);
 			var directoryExists = Directory.Exists(directories.full);
-
-			// need to delete the .meta file tooz
 			
 			if (directoryExists) {
-				
+				MetaData.Delete(serializedName);
 				Directory.Delete(directories.full, true);
+				SeedCleaner.Delete(serializedName);
+				AssetDatabase.Refresh();
 				GenLogging.Instance.Log($"Deleted {serializedName} directory", "DeleteDirectory");
 			}
 			else {

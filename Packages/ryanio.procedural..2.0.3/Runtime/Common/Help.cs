@@ -22,7 +22,7 @@ namespace ProceduralGeneration {
 			if (!hasFile)
 				return Enumerable.Empty<string>();
 
-			var lines = File.ReadAllLines(path);
+			var lines = File.ReadAllLines(path).Where(line => !string.IsNullOrWhiteSpace(line)).ToArray();
 
 			if (lines.IsEmptyOrNull())
 				return Enumerable.Empty<string>();
@@ -35,17 +35,30 @@ namespace ProceduralGeneration {
 			}
 
 			return newLines.AsEnumerable();
-		}		
-		
+		}
+
 		/// <summary>
-		///  Helper method for validating that the given name is serialized.
+		///  Gets all seeds and the path to the seedTracker.txt file.
+		/// </summary>
+		/// <param name="trackerPath">Preallocated string to return path of the tracker file</param>
+		/// <returns></returns>
+		public static IEnumerable<string> GetAllSeedsWithFile(out string trackerPath) {
+			var seeds = GetAllSeeds();
+
+			var location = UnitySaveLocation.GetDefault;
+			trackerPath = location.GetFilePath(Constants.SEED_TRACKER_FILE_NAME, Constants.TXT_FILE_TYPE);
+			return seeds;
+		}
+
+		/// <summary>
+		///  Helper method for validating that the given name is serialized. This needs to be captured in a try/catch block.
 		/// </summary>
 		/// <param name="name">Name to serialize</param>
 		/// <exception cref="Exception">Throws if name is not serialized</exception>
 		public static void ValidateNameIsSerialized(string name) {
 			if (string.IsNullOrWhiteSpace(name))
 				throw new NullReferenceException("Name was null or empty. Please pass a valid map name.");
-				
+
 			var isSerialized = new ValidationSerializedName().Validate(name);
 
 			if (!isSerialized) {
