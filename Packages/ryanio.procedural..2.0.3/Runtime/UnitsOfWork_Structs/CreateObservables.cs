@@ -1,10 +1,11 @@
 // ProceduralGeneration
 
 using BCL;
+using StateMachine;
 
 namespace ProceduralGeneration {
-	public readonly struct CreateObservables {
-		public ObservableCollection<string> Create(ProceduralConfig config) {
+	public static class Create {
+		public static ObservableCollection<string> Observables(ProceduralConfig config) {
 			var observables = new ObservableCollection<string> {
 				{
 					StateObservableId.ON_CLEAN, new Observable(
@@ -28,6 +29,10 @@ namespace ProceduralGeneration {
 			};
 
 			return observables;
+		}
+
+		public static StateMachine<ProcessStep> StateMachine(IOwner owner) {
+			return new StateMachine<ProcessStep>(owner.Owner, true);
 		}
 	}
 }

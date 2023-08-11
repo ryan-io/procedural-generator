@@ -7,7 +7,7 @@ namespace ProceduralGeneration {
 		HashSet<int>                    CheckedVertices { get; }
 		SquareGrid                      SquareGrid      { get; }
 		Dictionary<int, List<Triangle>> TriangleTracker { get; }
-		ISeedInfo                       Info            { get; }
+		ISeed                       Info            { get; }
 
 		public override Tuple<List<int>, List<Vector3>> Triangulate(int[,] mapBorder) {
 			SquareGrid.SetSquares(mapBorder);
@@ -63,7 +63,7 @@ namespace ProceduralGeneration {
 		}
 
 
-		public MarchingSquaresMeshTriangulationSolver(ISeedInfo info) {
+		public MarchingSquaresMeshTriangulationSolver(ISeed info) {
 			Info                    = info;
 			_uvSolver               = new ProceduralMeshUVSolver();
 			_triangulationAlgorithm = new TriangulationAlgorithm();

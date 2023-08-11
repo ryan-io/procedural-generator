@@ -4,7 +4,7 @@ using UnityBCL;
 
 namespace ProceduralGeneration {
 	public class SeedValidator {
-		public void Validate(ISeedInfo info) {
+		public void Validate(ISeed info) {
 			if (_config.UseRandomSeed)
 				_config.Seed = NumberSeeding.CreateRandomSeed();
 

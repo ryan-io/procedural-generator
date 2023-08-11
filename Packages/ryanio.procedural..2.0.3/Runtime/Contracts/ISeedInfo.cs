@@ -1,7 +1,7 @@
 ﻿// Engine.Procedural
 
 namespace ProceduralGeneration {
-	public interface ISeedInfo {
+	public interface ISeed {
 		string   CurrentSerializableName { get; }
 		SeedInfo GetSeedInfo();
 	}

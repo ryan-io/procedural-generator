@@ -24,12 +24,12 @@ namespace ProceduralGeneration {
 	/// https://stackoverflow.com/questions/4260207/how-do-you-get-the-width-and-height-of-a-multi-dimensional-array
 	/// </summary>
 	[HideMonoScript]
-	public class ProceduralGenerator : Singleton<ProceduralGenerator, ProceduralGenerator>, ISeedInfo {
-		
-	public string CurrentSerializableName {
+	public class ProceduralGenerator : Singleton<ProceduralGenerator, ProceduralGenerator>, 
+	                                   ISeed, IOwner {
+		public string CurrentSerializableName {
 			get {
 				var seedInfo = GetSeedInfo();
-				
+
 				return _config.Name         +
 				       Constants.UNDERSCORE +
 				       seedInfo.Seed        +
@@ -38,13 +38,13 @@ namespace ProceduralGeneration {
 			}
 		}
 
+		public GameObject Owner => gameObject;
+
 		public ObservableCollection<string> Observables { get; private set; }
 		public TileHashset                  TileHashset { get; private set; }
 
 		bool IsRunning { get; set; }
 
-		
-		
 		TileMapDictionary       TileMapDictionary       { get; set; }
 		Grid                    Grid                    { get; set; }
 		FillMapSolver           FillMapSolver           { get; set; }
@@ -87,16 +87,23 @@ namespace ProceduralGeneration {
 
 		public SeedInfo GetSeedInfo() => new(_config.Seed, _config.LastIteration);
 
+		/// <summary>
+		///  Loads the generator. This is the entry point for the generator.
+		///  Specify whether to generate or deserialize.
+		///  If 'ShouldGenerate', will create a RunGenerator instance and invoke Run().
+		///  else if 'ShouldDeserialize', will create a DeserializeGenerator instance and invoke Run().
+		///  Otherwise, will do nothing.
+		/// </summary>
 		void Load() {
 			if (_config.ShouldGenerate) {
-					
+				new GenerateService(_config, _spriteShapeConfig).Run();
 			}
-			
+
 			else if (_config.ShouldDeserialize) {
-				
+				new DeserializationService(_config, _spriteShapeConfig).Run();
 			}
 		}
-		
+
 		/// <summary>
 		///     Starts the generation process. By default, will also invoke Initialize().
 		/// </summary>
@@ -105,19 +112,14 @@ namespace ProceduralGeneration {
 			if (!_config.ShouldGenerate && !_config.ShouldDeserialize)
 				return;
 
-			Observables  = new CreateObservables().Create(_config);
-			StateMachine = new StateMachine<ProcessStep>(gameObject, true);
-
-			if (IsRunning) {
-				GenLogging.Instance.Log(Message.ALREADY_RUNNING, "Generation", LogLevel.Warning);
-				return;
-			}
+			// **
+			Observables  = Create.Observables(_config);// moved to Create.Observables
+			StateMachine = Create.StateMachine(this); // moved to Create.StateMachine
 
 			StateMachine.ChangeState(ProcessStep.Cleaning);
 			Observables[StateObservableId.ON_CLEAN].Signal();
 			CleanGenerator();
 
-			IsRunning = true;
 
 			if (_config.ShouldGenerate) {
 				GeneratedCollidersObj = new ColliderGameObjectCreator().Create(this);
@@ -395,12 +397,13 @@ namespace ProceduralGeneration {
 		void Generate() {
 			StartGeneration(true);
 		}
-		
+
 		[field: SerializeField, Required, BoxGroup("Configuration"), HideLabel]
 		ProceduralConfig _config = null!;
 
 		[field: SerializeField, Required, BoxGroup("Configuration"), HideLabel]
-		SpriteShapeConfig _spriteShapeConfig = null!;	
-		[SerializeField, HideInInspector] MapData _data;
+		SpriteShapeConfig _spriteShapeConfig = null!;
+
+		[SerializeField, HideInInspector] MapData    _data;
 	}
 }

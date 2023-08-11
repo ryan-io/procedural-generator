@@ -18,7 +18,7 @@ namespace ProceduralGeneration {
 			);
 		}
 
-		public MarchingSquaresMeshSolver(ISeedInfo info) {
+		public MarchingSquaresMeshSolver(ISeed info) {
 			_meshTriangulationSolver = new MarchingSquaresMeshTriangulationSolver(info);
 		}
 

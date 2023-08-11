@@ -11,7 +11,7 @@ using UnityEngine.Tilemaps;
 namespace ProceduralGeneration {
 	public class NodeSerializationSolver : AsyncUnitOfWork {
 		GraphScanner      GraphScanner               { get; }
-		ISeedInfo         SeedInfo                   { get; }
+		ISeed         Seed                   { get; }
 		StopWatchWrapper  StopWatch                  { get; }
 		WalkabilityRule   WalkabilityRule            { get; }
 		TileMapDictionary TileMapDictionary          { get; }
@@ -60,7 +60,7 @@ namespace ProceduralGeneration {
 		}
 
 		void DeserializeAstarNodeData() {
-			var info = SeedInfo.GetSeedInfo();
+			var info = Seed.GetSeedInfo();
 			// var job = new ProceduralSerializer.Job(
 			// 	SerializedDataSaveLocation, info.LastSeed, info.LastIteration, Name);
 			//
@@ -78,7 +78,7 @@ namespace ProceduralGeneration {
 			return (groundTilemapStatus, boundaryTilemapStatus);
 		}
 
-		public NodeSerializationSolver(ProceduralConfig config, ISeedInfo seedInfo, TileMapDictionary dictionary, 
+		public NodeSerializationSolver(ProceduralConfig config, ISeed seed, TileMapDictionary dictionary, 
 		StopWatchWrapper stopWatch) {
 			GraphScanner = new GraphScanner(stopWatch);
 			WalkabilityRule = new WalkabilityRule(
@@ -86,7 +86,7 @@ namespace ProceduralGeneration {
 				dictionary[TileMapType.Ground],
 				Constants.CELL_SIZE);
 
-			SeedInfo                   = seedInfo;
+			Seed                   = seed;
 			TileMapDictionary          = dictionary;
 			Name                       = config.Name;
 			CollisionType              = config.NavGraphCollisionType;
