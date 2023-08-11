@@ -2,10 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Threading;
 using BCL;
 using CommunityToolkit.HighPerformance;
-using Cysharp.Threading.Tasks;
 using Sirenix.OdinInspector;
 using StateMachine;
 using UnityBCL;
@@ -24,7 +22,7 @@ namespace ProceduralGeneration {
 	/// https://stackoverflow.com/questions/4260207/how-do-you-get-the-width-and-height-of-a-multi-dimensional-array
 	/// </summary>
 	[HideMonoScript]
-	public class ProceduralGenerator : Singleton<ProceduralGenerator, ProceduralGenerator>, 
+	public class ProceduralGenerator : Singleton<ProceduralGenerator, ProceduralGenerator>,
 	                                   ISeed, IOwner {
 		public string CurrentSerializableName {
 			get {
@@ -38,7 +36,7 @@ namespace ProceduralGeneration {
 			}
 		}
 
-		public GameObject Owner => gameObject;
+		public GameObject Go => gameObject;
 
 		public ObservableCollection<string> Observables { get; private set; }
 		public TileHashset                  TileHashset { get; private set; }
@@ -68,8 +66,6 @@ namespace ProceduralGeneration {
 		GeneratorTools            Tools                 { get; set; }
 		StateMachine<ProcessStep> StateMachine          { get; set; }
 		StopWatchWrapper          StopWatch             { get; set; }
-		CancellationToken         CancellationToken     { get; set; }
-		bool                      IsDataSet             { get; set; }
 
 		void Awake() {
 			StartGeneration();
@@ -96,7 +92,7 @@ namespace ProceduralGeneration {
 		/// </summary>
 		void Load() {
 			if (_config.ShouldGenerate) {
-				new GenerateService(_config, _spriteShapeConfig).Run();
+				new GenerateService(this, _config, _spriteShapeConfig).Run();
 			}
 
 			else if (_config.ShouldDeserialize) {
@@ -109,15 +105,7 @@ namespace ProceduralGeneration {
 		/// </summary>
 		/// <param name="alsoInitialize">If true, will invoke Initialize().</param>
 		unsafe void StartGeneration(bool alsoInitialize = true) {
-			if (!_config.ShouldGenerate && !_config.ShouldDeserialize)
-				return;
-
-			// **
-			Observables  = Create.Observables(_config);// moved to Create.Observables
-			StateMachine = Create.StateMachine(this); // moved to Create.StateMachine
-
-			StateMachine.ChangeState(ProcessStep.Cleaning);
-			Observables[StateObservableId.ON_CLEAN].Signal();
+			
 			CleanGenerator();
 
 
@@ -299,7 +287,6 @@ namespace ProceduralGeneration {
 				var type     = assembly.GetType("UnityEditor.LogEntries");
 				var method   = type.GetMethod("Clear");
 				method?.Invoke(new object(), null);
-				IsDataSet = false;
 				GenLogging.Instance.ClearConsole();
 
 				new ConfigCleaner().Clean(_config);
@@ -319,8 +306,6 @@ namespace ProceduralGeneration {
 		}
 
 		void InitializeGenerator(bool isForced = false) {
-			IsDataSet = false;
-
 			if (_config.ShouldGenerate && !isForced)
 				new SeedValidator(_config).Validate(this);
 
@@ -346,7 +331,6 @@ namespace ProceduralGeneration {
 			GraphScanner            = new GraphScanner(StopWatch);
 			GeneratorSerializer     = new GeneratorSerializer(_config, Grid.gameObject, StopWatch);
 			Rendering               = new MeshRendering(gameObject, default);
-			CancellationToken       = this.GetCancellationTokenOnDestroy();
 		}
 
 		[BoxGroup("Actions"),
@@ -404,6 +388,6 @@ namespace ProceduralGeneration {
 		[field: SerializeField, Required, BoxGroup("Configuration"), HideLabel]
 		SpriteShapeConfig _spriteShapeConfig = null!;
 
-		[SerializeField, HideInInspector] MapData    _data;
+		[SerializeField, HideInInspector] MapData _data;
 	}
 }

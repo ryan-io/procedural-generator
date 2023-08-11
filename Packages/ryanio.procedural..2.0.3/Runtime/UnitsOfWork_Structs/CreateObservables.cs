@@ -32,7 +32,7 @@ namespace ProceduralGeneration {
 		}
 
 		public static StateMachine<ProcessStep> StateMachine(IOwner owner) {
-			return new StateMachine<ProcessStep>(owner.Owner, true);
+			return new StateMachine<ProcessStep>(owner.Go, true);
 		}
 	}
 }

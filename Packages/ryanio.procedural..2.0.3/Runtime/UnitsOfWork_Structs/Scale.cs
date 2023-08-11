@@ -13,6 +13,11 @@ namespace ProceduralGeneration {
 			owner.transform.localScale = new Vector3(size, size, size);
 		}
 
+		public static void Reset(GameObject owner) {
+			const int scale = 1;
+			owner.transform.localScale = new Vector3(scale, scale, scale);
+		}
+
 		/// <summary>
 		///   Scales the owner and all of its children to the given size.
 		/// </summary>

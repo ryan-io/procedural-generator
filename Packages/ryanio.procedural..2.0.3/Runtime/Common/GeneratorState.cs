@@ -9,8 +9,8 @@ namespace ProceduralGeneration {
 		internal void ChangeState(ProcessStep state) {
 			StateMachine.ChangeState(state);
 		}
-		
-		internal GeneratorState(IOwner owner) {
+
+		internal GeneratorState(IOwner owner, GeneratorEvents events) {
 			StateMachine = Create.StateMachine(owner);
 		}
 	}
