@@ -25,19 +25,26 @@ namespace ProceduralGeneration {
 	/// </summary>
 	[HideMonoScript]
 	public class ProceduralGenerator : Singleton<ProceduralGenerator, ProceduralGenerator>, ISeedInfo {
-		[field: SerializeField, Required, BoxGroup("Configuration"), HideLabel]
-		ProceduralConfig _config = null!;
-
-		[field: SerializeField, Required, BoxGroup("Configuration"), HideLabel]
-		SpriteShapeConfig _spriteShapeConfig = null!;
-
-		[SerializeField, HideInInspector] MapData _data;
+		
+	public string CurrentSerializableName {
+			get {
+				var seedInfo = GetSeedInfo();
+				
+				return _config.Name         +
+				       Constants.UNDERSCORE +
+				       seedInfo.Seed        +
+				       Constants.UID        +
+				       seedInfo.Iteration;
+			}
+		}
 
 		public ObservableCollection<string> Observables { get; private set; }
 		public TileHashset                  TileHashset { get; private set; }
 
 		bool IsRunning { get; set; }
 
+		
+		
 		TileMapDictionary       TileMapDictionary       { get; set; }
 		Grid                    Grid                    { get; set; }
 		FillMapSolver           FillMapSolver           { get; set; }
@@ -64,17 +71,6 @@ namespace ProceduralGeneration {
 		CancellationToken         CancellationToken     { get; set; }
 		bool                      IsDataSet             { get; set; }
 
-		public string CurrentSerializableName {
-			get {
-				var seedInfo = GetSeedInfo();
-				return _config.Name         +
-				       Constants.UNDERSCORE +
-				       seedInfo.Seed        +
-				       Constants.UID        +
-				       seedInfo.Iteration;
-			}
-		}
-
 		void Awake() {
 			StartGeneration();
 		}
@@ -91,6 +87,16 @@ namespace ProceduralGeneration {
 
 		public SeedInfo GetSeedInfo() => new(_config.Seed, _config.LastIteration);
 
+		void Load() {
+			if (_config.ShouldGenerate) {
+					
+			}
+			
+			else if (_config.ShouldDeserialize) {
+				
+			}
+		}
+		
 		/// <summary>
 		///     Starts the generation process. By default, will also invoke Initialize().
 		/// </summary>
@@ -389,5 +395,12 @@ namespace ProceduralGeneration {
 		void Generate() {
 			StartGeneration(true);
 		}
+		
+		[field: SerializeField, Required, BoxGroup("Configuration"), HideLabel]
+		ProceduralConfig _config = null!;
+
+		[field: SerializeField, Required, BoxGroup("Configuration"), HideLabel]
+		SpriteShapeConfig _spriteShapeConfig = null!;	
+		[SerializeField, HideInInspector] MapData _data;
 	}
 }
