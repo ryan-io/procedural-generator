@@ -3,14 +3,14 @@ using CommunityToolkit.HighPerformance;
 using Sirenix.Utilities;
 
 namespace ProceduralGeneration {
-	public abstract class RegionRemovalSolver {
-		public abstract List<Room> Rooms { get; protected set; }
-		public abstract void       Remove(Span2D<int> primarySpan);
+	internal abstract class RegionRemovalSolver {
+		internal abstract List<Room> Rooms { get; set; }
+		internal abstract void       Remove(Span2D<int> primarySpan);
 
-		public void ResetRooms() {
+		internal void ResetRooms() {
 			if (Rooms.IsNullOrEmpty())
 				return;
-			
+
 			Rooms.Clear();
 		}
 	}

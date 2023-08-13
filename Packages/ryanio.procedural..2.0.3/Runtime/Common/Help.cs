@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using UnityBCL;
 using UnityBCL.Serialization;
 
@@ -40,7 +41,7 @@ namespace ProceduralGeneration {
 		/// <summary>
 		///  Gets all seeds and the path to the seedTracker.txt file.
 		/// </summary>
-		/// <param name="trackerPath">Preallocated string to return path of the tracker file</param>
+		/// <param name="trackerPath">Pre-allocated string to return path of the tracker file</param>
 		/// <returns></returns>
 		public static IEnumerable<string> GetAllSeedsWithFile(out string trackerPath) {
 			var seeds = GetAllSeeds();
@@ -64,6 +65,16 @@ namespace ProceduralGeneration {
 			if (!isSerialized) {
 				throw new Exception(Message.NO_NAME_FOUND + name);
 			}
+		}
+
+		/// <summary>
+		/// Clears the Unity console window.
+		/// </summary>
+		public static void ClearConsole() {
+			var assembly = Assembly.GetAssembly(typeof(UnityEditor.Editor));
+			var type     = assembly.GetType("UnityEditor.LogEntries");
+			var method   = type.GetMethod("Clear");
+			method?.Invoke(new object(), null);
 		}
 	}
 }

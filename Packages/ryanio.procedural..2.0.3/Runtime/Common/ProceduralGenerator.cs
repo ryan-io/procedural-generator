@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using BCL;
 using CommunityToolkit.HighPerformance;
 using Sirenix.OdinInspector;
 using StateMachine;
+using TMPro;
 using UnityBCL;
 using UnityEngine;
 
@@ -24,17 +24,17 @@ namespace ProceduralGeneration {
 	[HideMonoScript]
 	public class ProceduralGenerator : Singleton<ProceduralGenerator, ProceduralGenerator>,
 	                                   ISeed, IOwner {
-		public string CurrentSerializableName {
-			get {
-				var seedInfo = GetSeedInfo();
-
-				return _config.Name         +
-				       Constants.UNDERSCORE +
-				       seedInfo.Seed        +
-				       Constants.UID        +
-				       seedInfo.Iteration;
-			}
-		}
+		// public string CurrentSerializableName {
+		// 	get {
+		// 		var seedInfo = GetSeedInfo();
+		//
+		// 		return _config.Name         +
+		// 		       Constants.UNDERSCORE +
+		// 		       seedInfo.Seed        +
+		// 		       Constants.UID        +
+		// 		       seedInfo.Iteration;
+		// 	}
+		// }
 
 		public GameObject Go => gameObject;
 
@@ -71,17 +71,17 @@ namespace ProceduralGeneration {
 			StartGeneration();
 		}
 
-		(TileMapDictionary dictionary, Grid grid) SetContainer() {
-			var containerBuilder = new ContainerBuilder(gameObject);
-			var output           = containerBuilder.Build();
-			TileMapDictionary = output.dictionary;
-			Grid              = output.grid;
-			new SetGridPosition().Clean(_config, Grid);
+		// (TileMapDictionary dictionary, Grid grid) SetContainer() {
+		// 	var containerBuilder = new ContainerBuilder(gameObject);
+		// 	var output           = containerBuilder.Build();
+		// 	TileMapDictionary = output.dictionary;
+		// 	Grid              = output.grid;
+		// 	new SetGridPosition().Clean(_config, Grid);
+		//
+		// 	return output;
+		// }
 
-			return output;
-		}
-
-		public SeedInfo GetSeedInfo() => new(_config.Seed, _config.LastIteration);
+		//public SeedInfo GetSeedInfo() => new(_config.Seed, _config.LastIteration);
 
 		/// <summary>
 		///  Loads the generator. This is the entry point for the generator.
@@ -91,12 +91,45 @@ namespace ProceduralGeneration {
 		///  Otherwise, will do nothing.
 		/// </summary>
 		void Load() {
-			if (_config.ShouldGenerate) {
-				new GenerateService(this, _config, _spriteShapeConfig).Run();
-			}
+			var actions = new GenerationActions(this)
+				{ ProceduralConfig = _config, SpriteShapeConfig = _spriteShapeConfig };
 
-			else if (_config.ShouldDeserialize) {
-				new DeserializationService(_config, _spriteShapeConfig).Run();
+			try {
+				var onCompleteLog = string.Empty;
+
+				if (!_config.ShouldGenerate && !_config.ShouldDeserialize) {
+					actions.LogWarning(Message.NOT_SET_TO_RUN, nameof(Load));
+					return;
+				}
+
+				var machine = GenerationMachine.Create(actions).Run();
+				new InitializationService(actions).Run(machine);
+				var run = new Run(actions);
+
+				if (_config.ShouldGenerate) {
+					new SeedValidator(_config).Validate(actions.GetSeed());
+					new GeneratorSetupService().Run();
+					new GeneratorSceneSetupService(actions).Run();
+					run.Generation(machine);
+
+					onCompleteLog = Message.GENERATION_COMPLETE;
+				}
+
+				else if (_config.ShouldDeserialize) {
+					new DeserializationService(actions).Run(actions);
+					run.Deserialization(machine);
+
+					onCompleteLog = Message.DESERIALIZATION_COMPLETE;
+				}
+                
+				// dispose
+				
+				// complete
+                
+				actions.Log(onCompleteLog, nameof(Load));
+			}
+			catch (Exception e) {
+				actions.LogError(Message.GENERATION_ERROR + e.Message, nameof(Load));
 			}
 		}
 
@@ -105,63 +138,53 @@ namespace ProceduralGeneration {
 		/// </summary>
 		/// <param name="alsoInitialize">If true, will invoke Initialize().</param>
 		unsafe void StartGeneration(bool alsoInitialize = true) {
-			
-			CleanGenerator();
+			//CleanGenerator(); //DONE
 
+			// if (_config.ShouldGenerate) {
+			// 	//GeneratedCollidersObj = new ColliderGameObjectCreator().Create(this);
+			// 	//var output = SetContainer();
+			// }
 
-			if (_config.ShouldGenerate) {
-				GeneratedCollidersObj = new ColliderGameObjectCreator().Create(this);
-				var output = SetContainer();
-			}
-
-			if (alsoInitialize) {
-				if (_config.ShouldDeserialize && !_config.ShouldGenerate)
-					InitializeGenerator(true);
-				else InitializeGenerator();
-			}
+			// if (alsoInitialize) {
+			// 	if (_config.ShouldDeserialize && !_config.ShouldGenerate)
+			// 		InitializeGenerator(true);
+			// 	else InitializeGenerator();
+			// }
 
 			try {
-#region CHECK_FOR_DESERIALIZATION
+				// if (!_config.ShouldGenerate && _config.ShouldDeserialize) {
+				// 	//GeneratedCollidersObj = new ColliderGameObjectCreator().Create(this);
+				// 	var deserializeRouter =
+				// 		new DeserializationRouter(gameObject, _config, _spriteShapeConfig, StopWatch);
+				// 	deserializeRouter.ValidateAndDeserialize(_config.NameSeedIteration, GeneratedCollidersObj);
+				//
+				// 	StateMachine.ChangeState(ProcessStep.Disposing);
+				// 	Observables[StateObservableId.ON_DISPOSE].Signal();
+				// 	return;
+				// }
 
-				if (!_config.ShouldGenerate && _config.ShouldDeserialize) {
-					GeneratedCollidersObj = new ColliderGameObjectCreator().Create(this);
-					var deserializeRouter =
-						new DeserializationRouter(gameObject, _config, _spriteShapeConfig, StopWatch);
-					deserializeRouter.ValidateAndDeserialize(_config.NameSeedIteration, GeneratedCollidersObj);
 
-					StateMachine.ChangeState(ProcessStep.Disposing);
-					Observables[StateObservableId.ON_DISPOSE].Signal();
-					return;
-				}
+				//
+				// StateMachine.ChangeState(ProcessStep.Initializing);
+				// Observables[StateObservableId.ON_INIT].Signal();
+				//
+				// var rowsOrHeight   = _config.Rows;
+				// var colsOrWidth    = _config.Columns;
+				// var primaryPointer = stackalloc int[rowsOrHeight * colsOrWidth];
+				// var mapSpan        = new Span2D<int>(primaryPointer, rowsOrHeight, colsOrWidth, 0);
 
-#endregion
-
-#region INITIALIZE
-
-				StateMachine.ChangeState(ProcessStep.Initializing);
-				Observables[StateObservableId.ON_INIT].Signal();
-
-				var rowsOrHeight   = _config.Rows;
-				var colsOrWidth    = _config.Columns;
-				var primaryPointer = stackalloc int[rowsOrHeight * colsOrWidth];
-				var mapSpan        = new Span2D<int>(primaryPointer, rowsOrHeight, colsOrWidth, 0);
-
-#endregion
 
 #region RUN
 
-				StateMachine.ChangeState(ProcessStep.Running);
-				Observables[StateObservableId.ON_RUN].Signal();
-				FillMapSolver.Fill(mapSpan);
+				// StateMachine.ChangeState(ProcessStep.Running);
+				// Observables[StateObservableId.ON_RUN].Signal();
+				//FillMapSolver.Fill(mapSpan);
 
-				var array = mapSpan.ToArray();
-				SmoothMapSolver.Smooth(array);
-				mapSpan = new Span2D<int>(array);
+				// var array = mapSpan.ToArray();
+				// SmoothMapSolver.Smooth(array);
+				// mapSpan = new Span2D<int>(array);
 
-				RegionRemoverSolver.Remove(mapSpan);
-
-				//TODO: is this required?
-				//var mapBorder = BorderBoundsSolver.DetermineBorderMap(mapSpan);
+				//RegionRemoverSolver.Remove(mapSpan);
 
 				TileTypeSolver.SetTiles(mapSpan);
 
@@ -189,7 +212,7 @@ namespace ProceduralGeneration {
 					colliderCoords[i] = dict[i].AsSerialized().ToList();
 				}
 
-				GenLogging.Instance.Log("Setting shifted tile positions in map data", "MapData");
+				//GenLogging.Instance.Log("Setting shifted tile positions in map data", "MapData");
 
 				var borderSolver = new SpriteShapeBorderSolver(_spriteShapeConfig, gameObject);
 				borderSolver.GenerateProceduralBorder(_data.BoundaryCorners, CurrentSerializableName);
@@ -227,11 +250,11 @@ namespace ProceduralGeneration {
 				Observables[StateObservableId.ON_DISPOSE].Signal();
 				StateMachine.DeleteSubscribers();
 
-				GenLogging.Instance.LogWithTimeStamp(
-					LogLevel.Normal,
-					StopWatch.TimeElapsed,
-					"Generation complete.",
-					"Completion");
+				// GenLogging.Instance.LogWithTimeStamp(
+				// 	LogLevel.Normal,
+				// 	StopWatch.TimeElapsed,
+				// 	"Generation complete.",
+				// 	"Completion");
 
 #endregion
 
@@ -242,11 +265,11 @@ namespace ProceduralGeneration {
 			catch (StackOverflowException e) {
 #region STACKOVERFLOW
 
-				GenLogging.Instance.LogWithTimeStamp(
-					LogLevel.Error,
-					StopWatch.TimeElapsed,
-					e.Message,
-					Message.STACK_OVERFLOW_ERROR);
+				// GenLogging.Instance.LogWithTimeStamp(
+				// 	LogLevel.Error,
+				// 	StopWatch.TimeElapsed,
+				// 	e.Message,
+				// 	Message.STACK_OVERFLOW_ERROR);
 
 				HandleErrorState();
 
@@ -255,12 +278,12 @@ namespace ProceduralGeneration {
 			catch (Exception e) {
 #region EXCEPTION
 
-				GenLogging.Instance.LogWithTimeStamp(
-					LogLevel.Error,
-					StopWatch.TimeElapsed,
-					e.Message + Constants.UNDERSCORE + e.Source,
-					Message.CTX_ERROR + Constants.SPACE + e.TargetSite.Name + Constants.UNDERSCORE +
-					e.GetMethodThatThrew(out var methodBase));
+				// GenLogging.Instance.LogWithTimeStamp(
+				// 	LogLevel.Error,
+				// 	StopWatch.TimeElapsed,
+				// 	e.Message + Constants.UNDERSCORE + e.Source,
+				// 	Message.CTX_ERROR + Constants.SPACE + e.TargetSite.Name + Constants.UNDERSCORE +
+				// 	e.GetMethodThatThrew(out var methodBase));
 
 #endregion
 			}
@@ -277,60 +300,44 @@ namespace ProceduralGeneration {
 			Observables[StateObservableId.ON_ERROR].Signal();
 		}
 
-		void CleanGenerator(bool cleanRootObject = false) {
-			try {
-				if (cleanRootObject)
-					new EnsureCleanRootObject().Check(gameObject);
-
-				Scale.Current(gameObject, 1);
-				var assembly = Assembly.GetAssembly(typeof(UnityEditor.Editor));
-				var type     = assembly.GetType("UnityEditor.LogEntries");
-				var method   = type.GetMethod("Clear");
-				method?.Invoke(new object(), null);
-				GenLogging.Instance.ClearConsole();
-
-				new ConfigCleaner().Clean(_config);
-				new CleanSpriteShapes().Clean(gameObject);
-				new ColliderGameObjectCleaner().Clean(gameObject, true);
-				new MeshCleaner().Clean(gameObject);
-				new GraphCleaner().Clean();
-				new RenderCleaner().Clean(gameObject);
-				new EnsureMapFitsOnStack().Ensure(_config);
-				new DeallocateRoomMemory().Deallocate(RegionRemoverSolver);
-				new CleanSpriteShapes().Clean(gameObject);
-			}
-			catch (Exception e) {
-				GenLogging.Instance.LogWithTimeStamp(LogLevel.Error, 0f, e.Message, "CleanGenerator");
-				throw;
-			}
-		}
+		// void CleanGenerator(bool cleanRootObject = false) {
+		// 		// new ConfigCleaner().Clean(_config);
+		// 		// new CleanSpriteShapes().Clean(gameObject);
+		// 		// new ColliderGameObjectCleaner().Clean(gameObject, true);
+		// 		// new MeshCleaner().Clean(gameObject);
+		// 		// new GraphCleaner().Clean();
+		// 		// new RenderCleaner().Clean(gameObject);
+		// 		// new EnsureMapFitsOnStack().Ensure(_config);
+		// 		// new DeallocateRoomMemory().Deallocate(RegionRemoverSolver);
+		// 		// new CleanSpriteShapes().Clean(gameObject);
+		// }
 
 		void InitializeGenerator(bool isForced = false) {
-			if (_config.ShouldGenerate && !isForced)
-				new SeedValidator(_config).Validate(this);
+			// if (_config.ShouldGenerate && !isForced)
+			// 	new SeedValidator(_config).Validate(this);
 
-			new GetActiveAstarData().Retrieve();
+			//new ActiveAstarData().Retrieve();
 
 			if (_config.ShouldDeserialize)
 				return;
 
-			TileHashset     = new TileHashset();
-			StopWatch       = new StopWatchWrapper(true);
-			Tools           = new GeneratorTools(_config, Grid, StopWatch);
-			FillMapSolver   = new CellularAutomataFillMapSolver(_config, StopWatch);
-			SmoothMapSolver = new MarchingSquaresSmoothMapSolver(_config, StopWatch);
-			TileTypeSolver =
-				new SetAllTilesSyncTileTypeSolver(_config, TileHashset, TileMapDictionary, Grid, StopWatch);
-			NodeSerializationSolver = new NodeSerializationSolver(_config, this, TileMapDictionary, StopWatch);
-			RegionRemoverSolver     = new FloodRegionRemovalSolver(_config);
-			ErosionSolver           = new ErosionSolver(_config, TileHashset, TileMapDictionary);
-			MeshSolver              = new MarchingSquaresMeshSolver(this);
-			ColliderSolver          = new ColliderSolver(_config, gameObject, GeneratedCollidersObj, StopWatch);
-			GridGraphBuilder        = new GridGraphBuilder(_config);
-			NavGraphRulesSolver     = new NavGraphRulesSolver(TileMapDictionary);
-			GraphScanner            = new GraphScanner(StopWatch);
-			GeneratorSerializer     = new GeneratorSerializer(_config, Grid.gameObject, StopWatch);
-			Rendering               = new MeshRendering(gameObject, default);
+			// TileHashset     = new TileHashset();
+			// StopWatch       = new StopWatchWrapper(true);
+			// Tools           = new GeneratorTools(_config, Grid, StopWatch);
+			// FillMapSolver   = new CellularAutomataFillMapSolver(_config, StopWatch);
+			// SmoothMapSolver = new MarchingSquaresSmoothMapSolver(_config, StopWatch);
+			// TileTypeSolver =
+			// 	new SetAllTilesSyncTileTypeSolver(_config, TileHashset, TileMapDictionary, Grid, StopWatch);
+			// NodeSerializationSolver = new NodeSerializationSolver(_config, this, TileMapDictionary, StopWatch);
+			// RegionRemoverSolver     = new FloodRegionRemovalSolver(_config);
+			// ErosionSolver           = new ErosionSolver(_config, TileHashset, TileMapDictionary);
+			// MeshSolver              = new MarchingSquaresMeshSolver(this);
+			// ColliderSolver          = new ColliderSolver(_config, gameObject, GeneratedCollidersObj, StopWatch);
+			// GridGraphBuilder        = new GridGraphBuilder(_config);
+			// NavGraphRulesSolver     = new NavGraphRulesSolver(TileMapDictionary);
+			// GraphScanner            = new GraphScanner(StopWatch);
+			// GeneratorSerializer     = new GeneratorSerializer(_config, Grid.gameObject, StopWatch);
+			// Rendering               = new MeshRendering(gameObject, default);
 		}
 
 		[BoxGroup("Actions"),
@@ -347,7 +354,7 @@ namespace ProceduralGeneration {
 		[BoxGroup("Actions", centerLabel: true),
 		 HorizontalGroup("Actions/Buttons2"),
 		 ButtonGroup("Actions/Buttons2/Methods", Stretch = false, IconAlignment = IconAlignment.RightEdge)]
-		void ForceClean() => CleanGenerator(true);
+		void ForceClean() => new GeneratorCleaner(new GenerationActions(this)).Clean();
 
 		[BoxGroup("Actions", centerLabel: true),
 		 HorizontalGroup("Actions/Buttons2"),

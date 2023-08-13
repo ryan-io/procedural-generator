@@ -2,6 +2,7 @@
 
 using BCL;
 using StateMachine;
+using UnityEngine;
 
 namespace ProceduralGeneration {
 	public static class Create {
@@ -31,8 +32,8 @@ namespace ProceduralGeneration {
 			return observables;
 		}
 
-		public static StateMachine<ProcessStep> StateMachine(IOwner owner) {
-			return new StateMachine<ProcessStep>(owner.Go, true);
+		public static StateMachine<ProcessStep> StateMachine(GameObject owner) {
+			return new StateMachine<ProcessStep>(owner, true);
 		}
 	}
 }

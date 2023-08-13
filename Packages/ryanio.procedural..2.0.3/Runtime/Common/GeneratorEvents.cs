@@ -2,6 +2,7 @@
 
 using System;
 using BCL;
+using JetBrains.Annotations;
 
 namespace ProceduralGeneration {
 	internal class GeneratorEvents {
@@ -12,15 +13,16 @@ namespace ProceduralGeneration {
 				return;
 		}
 		
-		internal void RegisterEvent(string eventIdentifier, Action action) {
+		internal void RegisterEvent(string eventIdentifier, [CanBeNull] Action action) {
 			if (string.IsNullOrWhiteSpace(eventIdentifier))
 				return;
 			
-			Observables[eventIdentifier].Register(action);
+			if (action != null)
+				Observables[eventIdentifier].Register(action);
 		}
 
-		public GeneratorEvents(ProceduralConfig proceduralConfig) {
-			Observables = Create.Observables(proceduralConfig);
+		public GeneratorEvents(IActions actions) {
+			Observables = Create.Observables(actions.GetProceduralConfig());
 		}
 	}
 }

@@ -4,20 +4,20 @@ using CommunityToolkit.HighPerformance;
 using UnityEngine;
 
 namespace ProceduralGeneration {
-	public class FloodRegionRemovalSolver : RegionRemovalSolver {
-		public override List<Room> Rooms                { get; protected set; }
-		int                        WallRemovalThreshold { get; }
-		int                        RoomRemovalThreshold { get; }
-		int                        NumberOfRows         { get; set; }
-		int                        NumberOfCols         { get; set; }
+	internal class FloodRegionRemovalSolver : RegionRemovalSolver {
+		internal override List<Room> Rooms                { get; set; }
+		int                          WallRemovalThreshold { get; }
+		int                          RoomRemovalThreshold { get; }
+		int                          NumberOfRows         { get; set; }
+		int                          NumberOfCols         { get; set; }
 
-		public FloodRegionRemovalSolver(ProceduralConfig config) {
-			_mapConnectionSolver = new MapConnectionSolver(config);
-			WallRemovalThreshold = config.WallRemovalThreshold;
-			RoomRemovalThreshold = config.RoomRemovalThreshold;
+		internal FloodRegionRemovalSolver(RemoveRegionsSolverCtx ctx) {
+			_mapConnectionSolver = new MapConnectionSolver(ctx);
+			WallRemovalThreshold = ctx.WallRemoveThreshold;
+			RoomRemovalThreshold = ctx.RoomRemoveThreshold;
 		}
 
-		public override void Remove(Span2D<int> primarySpan) {
+		internal override void Remove(Span2D<int> primarySpan) {
 			NumberOfRows = primarySpan.Height;
 			NumberOfCols = primarySpan.Width;
 

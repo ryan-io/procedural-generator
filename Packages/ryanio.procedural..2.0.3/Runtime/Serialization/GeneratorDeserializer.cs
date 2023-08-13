@@ -50,7 +50,7 @@ namespace ProceduralGeneration {
 			var data = Serializer.DeserializeJson<byte[]>(mapDirectory);
 
 			if (!data.IsEmptyOrNull()) {
-				new GetActiveAstarData().Retrieve();
+				new ActiveAstarData().Retrieve();
 				AstarPath.active.data.DeserializeGraphs(data);
 
 
@@ -178,10 +178,9 @@ namespace ProceduralGeneration {
 			return obj;
 		}
 
-		public GeneratorDeserializer(ProceduralConfig config, StopWatchWrapper stopWatch) {
+		public GeneratorDeserializer(ProceduralConfig config) {
 			Serializer = new Serializer(new UnityLogging());
 			Config     = config;
-			StopWatch  = stopWatch;
 		}
 	}
 }

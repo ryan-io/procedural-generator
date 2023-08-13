@@ -1,5 +1,7 @@
+using CommunityToolkit.HighPerformance;
+
 namespace ProceduralGeneration {
-	public abstract class SmoothMapSolver {
-		public abstract void Smooth(int[,] original);
+	internal abstract class SmoothMapSolver {
+		internal abstract void Smooth(Span2D<int> map);
 	}
 }

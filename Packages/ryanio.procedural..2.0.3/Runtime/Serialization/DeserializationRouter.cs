@@ -1,95 +1,78 @@
 // ProceduralGeneration
 
 using System;
-using BCL;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
 namespace ProceduralGeneration {
 	public class DeserializationRouter {
-		GameObject            Owner                           { get; }
-		GeneratorDeserializer Deserializer                    { get; }
-		StopWatchWrapper      StopWatch                       { get; }
-		bool                  ShouldDeserializePathfinding    { get; }
-		bool                  ShouldDeserializeMapPrefab      { get; }
-		bool                  ShouldDeserializeSpriteShape    { get; }
-		bool                  ShouldDeserializeColliderCoords { get; }
+		IActions              Actions      { get; }
+		GeneratorDeserializer Deserializer { get; }
 
 		public void ValidateAndDeserialize(string nameSeedIteration, GameObject generatedColliderObject) {
 			try {
 				Help.ValidateNameIsSerialized(nameSeedIteration);
 				var directories = DirectoryAction.GetMapDirectories(nameSeedIteration);
+				var config      = Actions.GetProceduralConfig();
 
-				if (ShouldDeserializeMapPrefab)
+				if (config.ShouldDeserializeMapPrefab)
 					DeserializeMap(nameSeedIteration, directories);
 
-				if (ShouldDeserializePathfinding)
+				if (config.ShouldDeserializePathfinding)
 					DeserializeAstar(directories);
 
-				if (ShouldDeserializeSpriteShape)
+				if (config.ShouldDeserializeSpriteShape)
 					DeserializeSpriteShape(nameSeedIteration, directories);
 
-				if (ShouldDeserializeColliderCoords)
+				if (config.ShouldDeserializeColliderCoords)
 					DeserializeColliderCoords(nameSeedIteration, directories, generatedColliderObject);
 			}
 			catch (Exception e) {
-				GenLogging.Instance.LogWithTimeStamp(
-					LogLevel.Error,
-					StopWatch.TimeElapsed,
-					$"Error deserializing map: {nameSeedIteration}: {e.Message}",
-					"DeserializationRouter.ValidateAndDeserialize");
+				Actions.LogError(
+					nameSeedIteration             +
+					Constants.SPACE               +
+					Message.DESERIALIZATION_ERROR +
+					e.Message,
+					nameof(ValidateAndDeserialize));
 			}
 		}
 
 		void DeserializeMap(string nameSeedIteration, (string raw, string full) directories) {
-			var obj = Deserializer.DeserializeMapPrefab(nameSeedIteration, directories);
+			var obj    = Deserializer.DeserializeMapPrefab(nameSeedIteration, directories);
+			var owner  = Actions.GetOwner();
 
 			if (obj) {
-				Object.Instantiate(obj, Owner.transform, true);
-				var grid = Owner.GetComponentInChildren<Grid>();
+				Object.Instantiate(obj, owner.transform, true);
+				var grid = owner.GetComponentInChildren<Grid>();
 				grid.gameObject.transform.localPosition = Vector3.zero;
-				var tools = new GeneratorTools(_config, grid, default);
-				tools.SetOriginWrtMap(Owner);
+				var tools = new GeneratorTools(Actions.GetProceduralConfig(), grid, default);
+				tools.SetOriginWrtMap(owner);
 			}
 		}
 
 		void DeserializeAstar((string raw, string full) directories) {
-			Deserializer.DeserializeAstar(_config.NameSeedIteration, directories.full);
+			Deserializer.DeserializeAstar(Actions.GetDeserializationName(), directories.full);
 		}
 
 		void DeserializeSpriteShape(string nameSeedIteration, (string raw, string full) directories) {
 			var positions = Deserializer.DeserializeVector3(
 				nameSeedIteration, Constants.SPRITE_SHAPE_SAVE_PREFIX, directories);
 
-			var solver = new SpriteShapeBorderSolver(_spriteShapeConfig, Owner);
-			solver.GenerateProceduralBorder(positions, _config.NameSeedIteration);
+			var solver = new SpriteShapeBorderSolver(Actions.GetSpriteShapeConfig(), Actions.GetOwner());
+			solver.GenerateProceduralBorder(positions, Actions.GetDeserializationName());
 		}
 
 		void DeserializeColliderCoords(string nameSeedIteration, (string raw, string full) directories, GameObject go) {
 			var colPos = Deserializer.DeserializeVector3(
 				nameSeedIteration, Constants.COLLIDER_COORDS_SAVE_PREFIX, directories);
 
-			var colSolver = new SerializedPrimitiveCollisionSolver(_config, go);
+			var colSolver = new SerializedPrimitiveCollisionSolver(Actions.GetProceduralConfig(), go);
 			colSolver.CreateColliderFromDict(colPos);
 		}
 
-		public DeserializationRouter(
-			GameObject procGenOwner,
-			ProceduralConfig config,
-			SpriteShapeConfig spriteShapeConfig,
-			StopWatchWrapper stopwatch) {
-			Deserializer                    = new GeneratorDeserializer(config, stopwatch);
-			Owner                           = procGenOwner;
-			ShouldDeserializePathfinding    = config.ShouldDeserializePathfinding;
-			ShouldDeserializeMapPrefab      = config.ShouldDeserializeMapPrefab;
-			ShouldDeserializeSpriteShape    = config.ShouldDeserializeSpriteShape;
-			ShouldDeserializeColliderCoords = config.ShouldDeserializeColliderCoords;
-			StopWatch                       = stopwatch;
-			_config                         = config;
-			_spriteShapeConfig              = spriteShapeConfig;
+		public DeserializationRouter(IActions actions) {
+			Actions      = actions;
+			Deserializer = new GeneratorDeserializer(actions.GetProceduralConfig());
 		}
-
-		readonly ProceduralConfig  _config;
-		readonly SpriteShapeConfig _spriteShapeConfig;
 	}
 }

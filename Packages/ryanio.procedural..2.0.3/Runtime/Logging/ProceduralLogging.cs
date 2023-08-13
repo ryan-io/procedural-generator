@@ -4,24 +4,23 @@ using BCL;
 using UnityBCL;
 
 namespace ProceduralGeneration {
-	public class GenLogging : Singleton<GenLogging> {
-		// public const string GeneratedMeshBackground = "Generated Mesh Background";
-		// public const string GroundLayerName         = "Ground";
-		// public const string ObstaclesLayerName      = "Obstacles";
-		//
-		// public const string NoConfigOrShouldNotGen =
-		// 	"Generation at run time has been disabled. Now invoking OnGenerationComplete logic.";
-		//
-		// public const string LevelGeneratorTag = "LevelGenerator";
-
+	internal class GenLogging : IProceduralLogging {
 		public const string SPACE           = " ";
 		const        string TIMESTAMP_LABEL = ":::: ELAPSED - ";
 		const        string UNIT            = "sec.";
 
-		public void ClearConsole() {
+		StopWatchWrapper StopWatch { get; }
 
-		}
-		
+		void IProceduralLogging.Log(string msg, string ctx) => Log(msg, ctx);
+
+		void IProceduralLogging.LogWarning(string msg, string ctx) => Log(msg, ctx, LogLevel.Warning);
+
+		void IProceduralLogging.LogError(string msg, string ctx) => Log(msg, ctx, LogLevel.Error);
+
+		void IProceduralLogging.LogTest(string msg, string ctx) => LogWithTimeStamp(LogLevel.Normal, msg, ctx);
+
+		void IProceduralLogging.LogCritical(string msg, string ctx) => LogWithTimeStamp(LogLevel.Error, msg, ctx);
+
 		public void Log(string msg, string ctx, LogLevel level = LogLevel.Normal) {
 #if UNITY_EDITOR || UNITY_STANDALONE
 			Sb.Clear();
@@ -36,12 +35,12 @@ namespace ProceduralGeneration {
 #endif
 		}
 
-		public void LogWithTimeStamp(LogLevel level, float totalTime, string msg, string ctx) {
+		internal void LogWithTimeStamp(LogLevel level, string msg, string ctx) {
 #if UNITY_EDITOR || UNITY_STANDALONE
 			Sb.Clear();
 			Sb.Append(ctx);
 			Sb.Append(TIMESTAMP_LABEL);
-			Sb.Append(totalTime.ToString(CultureInfo.InvariantCulture));
+			Sb.Append(StopWatch.TimeElapsed.ToString(CultureInfo.InvariantCulture));
 			Sb.Append(SPACE);
 			Sb.Append(UNIT);
 
@@ -54,9 +53,8 @@ namespace ProceduralGeneration {
 #endif
 		}
 
-
-		public GenLogging() {
-			
+		internal GenLogging(StopWatchWrapper stopWatch) {
+			StopWatch = stopWatch;
 		}
 
 		static readonly UnityLogging  Logger = new();

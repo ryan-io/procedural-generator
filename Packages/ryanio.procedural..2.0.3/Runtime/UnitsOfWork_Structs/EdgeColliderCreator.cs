@@ -2,11 +2,11 @@ using UnityEngine;
 
 namespace ProceduralGeneration {
 	public readonly struct ColliderGameObjectCreator {
-		public GameObject Create(ProceduralGenerator generator) {
-			var trs = generator.gameObject.GetComponentsInChildren<Transform>();
+		public GameObject Create(GameObject owner) {
+			var trs = owner.GetComponentsInChildren<Transform>();
 
 			foreach (var tr in trs) {
-				if (tr && tr.gameObject != generator.gameObject) {
+				if (tr && tr.gameObject != owner.gameObject) {
 #if UNITY_EDITOR
 					Object.DestroyImmediate(tr.gameObject);
 #else
@@ -17,9 +17,9 @@ namespace ProceduralGeneration {
 
 			var o = new GameObject {  
 				transform = {
-					parent = generator.transform
+					parent = owner.transform
 				},
-				layer = LayerMask.NameToLayer("Obstacles")
+				layer = LayerMask.NameToLayer(Constants.Layer.OBSTACLES)
 			};
 
 			o.transform.localPosition = o.transform.parent.position;

@@ -4,7 +4,7 @@ using Pathfinding;
 using UnityEngine;
 
 namespace ProceduralGeneration {
-	public readonly struct GetActiveAstarData {
+	public readonly struct ActiveAstarData {
 		public AstarData Retrieve() {
 #if UNITY_EDITOR
 			if (Application.isEditor && !Application.isPlaying)

@@ -32,5 +32,33 @@
 
 		internal const string NAME_NOT_SERIALIZED =
 			" is not serialized. Run the generator to create a seed and serialize it.";
+
+		internal const string NOT_SET_TO_RUN = "Generator is not configured to generate or deserialize. Exiting.";
+
+		internal const string CLEAN_COMPLETE = "Clean complete.";
+
+		internal const string GENERATION_COMPLETE = "Generation complete.";
+
+		internal const string DESERIALIZATION_COMPLETE = "Deserialization complete.";
+
+		internal const string GENERATION_ERROR = "Generation error: ";
+
+		internal const string DESERIALIZATION_ERROR = "Deserialization error: ";
+
+		internal const string COULD_NOT_FIND_DIR = "Could not find a directory to delete for ";
+
+		internal const string TIME_TO_FILL_MAP = "Total time to fill map: ";
+		
+		internal const string STATE_TO_CLEAN = "State changed to cleaning.";
+		
+		internal const string STATE_TO_INIT = "State changed to initializing.";
+		
+		internal const string STATE_TO_RUN = "State changed to running.";
+		
+		internal const string STATE_TO_COMPLETE = "State changed to completing.";
+		
+		internal const string STATE_TO_DISPOSE = "State changed to disposing.";
+		
+		internal const string STATE_TO_ERROR = "State changed to error.";
 	}
 }

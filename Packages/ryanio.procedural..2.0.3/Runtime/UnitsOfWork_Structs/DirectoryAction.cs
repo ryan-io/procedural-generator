@@ -106,7 +106,7 @@ namespace ProceduralGeneration {
 		/// </summary>
 		/// <returns>Tuple containing the full directory & raw directory paths for SerializedData</returns>
 		public static (string raw, string full) GetSerializedDataDirectories() {
-			var location     = UnitySaveLocation.GetDefault;
+			var location = UnitySaveLocation.GetDefault;
 			return (location.SaveLocationRaw, location.SaveLocation);
 		}
 
@@ -123,21 +123,21 @@ namespace ProceduralGeneration {
 		/// Deletes the given serialized map directory.
 		/// </summary>
 		/// <param name="serializedName">Name of map to delete</param>
-		public static void DeleteDirectory(string serializedName) {
+		/// <param name="actions"></param>
+		public static void DeleteDirectory(string serializedName, [CanBeNull] IActions actions) {
 			var directories     = GetMapDirectories(serializedName);
 			var directoryExists = Directory.Exists(directories.full);
-			
+
 			if (directoryExists) {
 				MetaData.Delete(serializedName);
 				Directory.Delete(directories.full, true);
 				SeedCleaner.Delete(serializedName);
 				AssetDatabase.Refresh();
-				GenLogging.Instance.Log($"Deleted {serializedName} directory", "DeleteDirectory");
+
+				actions?.Log($"Deleted {serializedName} directory", nameof(DeleteDirectory));
 			}
-			else {
-				GenLogging.Instance.Log($"Could not find a directory to delete for {serializedName}",
-					"DeleteDirectory");
-			}
+			else
+				actions?.LogError(Message.COULD_NOT_FIND_DIR + serializedName, nameof(DeleteDirectory));
 		}
 	}
 }

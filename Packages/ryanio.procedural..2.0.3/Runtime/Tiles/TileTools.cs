@@ -19,14 +19,6 @@ namespace ProceduralGeneration {
 			SetTile(map.Value, null, position);
 		}
 
-		public void LogHeapMemoryAllocated() {
-			GenLogging.Instance.LogWithTimeStamp(
-				LogLevel.Normal,
-				StopWatch.TimeElapsed,
-				Message.HEAP_ALLOCATION + TotalMemoryAllocated,
-				HEAP_ALLOCATION);
-		}
-
 		public double TotalMemoryAllocated
 			=> Math.Round(Profiler.GetTotalAllocatedMemoryLong() / 1000000000f, 2);
 

@@ -3,8 +3,8 @@
 using UnityEngine;
 
 namespace ProceduralGeneration {
-	public readonly struct SetGridPosition {
-		public void Clean(ProceduralConfig config, Grid grid) {
+	public readonly struct GridPosition {
+		public void Set(ProceduralConfig config, Grid grid) {
 			if (grid == null)
 				return;
 			

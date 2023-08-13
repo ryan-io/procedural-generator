@@ -4,14 +4,14 @@ using StateMachine;
 
 namespace ProceduralGeneration {
 	internal class GeneratorState {
-		StateMachine<ProcessStep> StateMachine { get; }
+		StateMachine<ProcessStep> Machine { get; }
 
 		internal void ChangeState(ProcessStep state) {
-			StateMachine.ChangeState(state);
+			Machine.ChangeState(state);
 		}
 
-		internal GeneratorState(IOwner owner, GeneratorEvents events) {
-			StateMachine = Create.StateMachine(owner);
+		internal GeneratorState(IActions actions) {
+			Machine = Create.StateMachine(actions.GetOwner());
 		}
 	}
 }
