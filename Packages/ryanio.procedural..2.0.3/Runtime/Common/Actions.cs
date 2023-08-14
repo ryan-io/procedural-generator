@@ -1,14 +1,14 @@
 // ProceduralGeneration
 
 using BCL;
+using Pathfinding;
 using UnityEngine;
 
 namespace ProceduralGeneration {
-	internal partial class GenerationActions : IActions {
+	internal partial class Actions : IActions {
 		public ProceduralConfig  ProceduralConfig  { private get; set; }
 		public SpriteShapeConfig SpriteShapeConfig { private get; set; }
-
-		public float GetTimeElapsed() => _stopWatch.TimeElapsed;
+		public float             GetTimeElapsed()  => _stopWatch.TimeElapsed;
 
 		public void SetColliderGameObject(GameObject o)                       => ColliderGameObject = o;
 		public void SetTileMapDictionary(TileMapDictionary tileMapDictionary) => TileMapDictionary = tileMapDictionary;
@@ -21,7 +21,7 @@ namespace ProceduralGeneration {
 		/// <summary>
 		///   Constructor, does not initialize ProceduralConfig or SpriteShapeConfig.
 		/// </summary>
-		internal GenerationActions(IOwner owner) {
+		internal Actions(IOwner owner) {
 			_owner       = owner;
 			_tileHashset = new TileHashset();
 			_stopWatch   = new StopWatchWrapper(true);

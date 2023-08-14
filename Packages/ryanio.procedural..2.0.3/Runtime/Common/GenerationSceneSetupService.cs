@@ -11,7 +11,7 @@ namespace ProceduralGeneration {
 			Actions.SetTileMapDictionary(output.dictionary);
 			Actions.SetGrid(output.grid);
 
-			new GridPosition().Set(Actions.GetProceduralConfig(), Actions.GetGrid());
+			new GridPosition().Set(Actions.GetMapDimensions(), Actions.GetGrid(), Actions.GetBorderSize());
 		}
 		
 		public GeneratorSceneSetupService(IActions actions) {

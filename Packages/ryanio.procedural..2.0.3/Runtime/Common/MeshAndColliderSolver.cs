@@ -1,7 +1,9 @@
 // Engine.Procedural
 
+using CommunityToolkit.HighPerformance;
+
 namespace ProceduralGeneration {
-	public abstract class MeshSolver {
-		public abstract MeshSolverData SolveAndCreate(int[,] mapBorder);
+	internal abstract class MeshSolver {
+		internal abstract MeshSolverData Create(Span2D<int> map);
 	}
 }

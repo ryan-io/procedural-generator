@@ -1,7 +1,7 @@
 // ProceduralGeneration
 
 namespace ProceduralGeneration {
-	internal partial class GenerationActions {
+	internal partial class Actions {
 		public SeedInfo GetSeed() => new(ProceduralConfig.Seed, ProceduralConfig.LastIteration);
 		
 		public string GetSerializationName() {

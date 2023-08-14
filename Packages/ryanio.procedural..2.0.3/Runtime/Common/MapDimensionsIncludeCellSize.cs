@@ -13,9 +13,9 @@ namespace ProceduralGeneration {
 			return new int2(width, height);
 		}
 
-		public MapDimensionsIncludeCellSize(ProceduralConfig config) {
-			MapWidth  = config.Rows;
-			MapHeight = config.Columns;
+		public MapDimensionsIncludeCellSize(Dimensions dimensions) {
+			MapWidth  = dimensions.Rows;
+			MapHeight = dimensions.Columns;
 		}
 	}
 }

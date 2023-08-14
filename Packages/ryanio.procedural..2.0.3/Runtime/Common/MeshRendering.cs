@@ -5,11 +5,11 @@ using UnityEngine;
 using UnityEngine.Rendering;
 
 namespace ProceduralGeneration {
-	public class MeshRendering {
+	internal class MeshRendering {
 		GameObject           Parent       { get; }
 		[CanBeNull] Material InitMaterial { get; }
 
-		public void Render(MeshSolverData data, string name) {
+		internal void Render(MeshSolverData data, string name) {
 			if (string.IsNullOrWhiteSpace(name))
 				name = Constants.PROCEDURAL_MESH_NAME;
 
@@ -30,7 +30,7 @@ namespace ProceduralGeneration {
 				rend.material = InitMaterial;
 		}
 
-		public MeshRendering(GameObject parent, [CanBeNull] Material initMaterial) {
+		internal MeshRendering(GameObject parent, [CanBeNull] Material initMaterial) {
 			Parent       = parent;
 			InitMaterial = initMaterial;
 		}

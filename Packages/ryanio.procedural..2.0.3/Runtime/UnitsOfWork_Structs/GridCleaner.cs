@@ -3,14 +3,14 @@
 using UnityEngine;
 
 namespace ProceduralGeneration {
-	public readonly struct GridPosition {
-		public void Set(ProceduralConfig config, Grid grid) {
+	internal readonly struct GridPosition {
+		internal void Set(Dimensions dimensions, Grid grid, int borderSize) {
 			if (grid == null)
 				return;
 			
 			grid.transform.position = new Vector3(
-				-config.Rows  / 2f + config.BorderSize / 2f,
-				-config.Columns / 2f + config.BorderSize / 2f,
+				-dimensions.Rows    / 2f + borderSize / 2f,
+				-dimensions.Columns / 2f + borderSize / 2f,
 				0f);
 		}
 	}

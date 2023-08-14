@@ -2,17 +2,17 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace ProceduralGeneration {
-	public class TriangulationAlgorithm {
+	internal class TriangulationAlgorithm {
 		public TriangulationAlgorithm() {
 			GetWalkableTriangles = new List<int>();
 			GetWalkableVertices  = new List<Vector3>();
 		}
 
-		public List<int> GetWalkableTriangles { get; }
+		internal List<int> GetWalkableTriangles { get; }
 
-		public List<Vector3> GetWalkableVertices { get; }
+		internal List<Vector3> GetWalkableVertices { get; }
 
-		public void TriangulateSquare(
+		internal void TriangulateSquare(
 			Square square, HashSet<int> checkedVertices, Dictionary<int, List<Triangle>> triangleTracker) {
 			switch (square.BitwiseNodesSum) {
 				case 0: break;

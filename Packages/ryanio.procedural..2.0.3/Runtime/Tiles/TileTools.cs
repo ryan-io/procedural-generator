@@ -8,21 +8,23 @@ using UnityEngine.Profiling;
 using UnityEngine.Tilemaps;
 
 namespace ProceduralGeneration {
-	public class GeneratorTools {
+	internal class GeneratorTools {
 		StopWatchWrapper StopWatch { get; }
 		Grid             GridObj   { get; }
 		int              MapWidth  { get; }
 		int              MapHeight { get; }
 
-		public void SetTileNullAtXY(int x, int y, KeyValuePair<TileMapType, Tilemap> map) {
+		internal void CompressTilemaps() => new TileMapCompressor(GridObj.gameObject).Compress();
+
+		internal void SetTileNullAtXY(int x, int y, KeyValuePair<TileMapType, Tilemap> map) {
 			var position = new Vector3Int(x, y, 0);
 			SetTile(map.Value, null, position);
 		}
 
-		public double TotalMemoryAllocated
+		internal double TotalMemoryAllocated
 			=> Math.Round(Profiler.GetTotalAllocatedMemoryLong() / 1000000000f, 2);
 
-		public void CreateTileLabel(int x, int y, string text) {
+		internal void CreateTileLabel(int x, int y, string text) {
 			return;
 			/*
 			
@@ -45,7 +47,7 @@ namespace ProceduralGeneration {
 			// label.gameObject.tag = TileMapper.Label;
 		}
 
-		public TileMask SolveMask(Span2D<int> span, int x, int y, bool isBoundary) {
+		internal TileMask SolveMask(Span2D<int> span, int x, int y, bool isBoundary) {
 			var bit = TileMask.None;
 
 			if (isBoundary)
@@ -78,15 +80,15 @@ namespace ProceduralGeneration {
 			return bit;
 		}
 
-		public bool IsSouthOutline(TileMask bit) => IsBit(bit, SOUTH_OUTLINE);
+		internal bool IsSouthOutline(TileMask bit) => IsBit(bit, SOUTH_OUTLINE);
 
-		public bool HasNoNeighbors(TileMask bit) => bit == TileMask.None;
+		internal bool HasNoNeighbors(TileMask bit) => bit == TileMask.None;
 
-		public bool HasAllNeighbors(TileMask bit) => bit == ALL_MASK;
+		internal bool HasAllNeighbors(TileMask bit) => bit == ALL_MASK;
 
-		public bool IsWall(TileMask bit) => bit != ALL_MASK;
+		internal bool IsWall(TileMask bit) => bit != ALL_MASK;
 
-		public bool ContainsAnyBits(TileMask comparer, params TileMask[] mask) {
+		internal bool ContainsAnyBits(TileMask comparer, params TileMask[] mask) {
 			var count = mask.Length;
 
 			for (var i = 0; i < count; i++) {
@@ -99,9 +101,9 @@ namespace ProceduralGeneration {
 			return true;
 		}
 
-		public static bool IsFilled(Span2D<int> span, int x, int y) => span[x, y] == 1;
+		internal static bool IsFilled(Span2D<int> span, int x, int y) => span[x, y] == 1;
 
-		public void SetTile(Tilemap map, TileBase tile, Vector3Int position) {
+		internal void SetTile(Tilemap map, TileBase tile, Vector3Int position) {
 			if (map == null) {
 				var log = new UnityLogging();
 				log.Warning("The Tilemap map parameter, 'map', is null. Now returning.");
@@ -112,24 +114,23 @@ namespace ProceduralGeneration {
 			map.SetTile(position, tile);
 		}
 
-		public void SetOriginWrtMap(GameObject go) {
+		internal void SetOriginWrtMap(GameObject go) {
 			go.transform.position = new(
 				Mathf.CeilToInt(-MapWidth   / 2f),
 				Mathf.FloorToInt(-MapHeight / 2f),
 				0);
 		}
 
-		public void SetGridScale(int newScale) {
+		internal void SetGridScale(int newScale) {
 			GridObj.gameObject.transform.localScale = new(newScale, newScale, newScale);
 		}
 
 		bool IsBit(TileMask check, TileMask against) => check == against;
 
-		public GeneratorTools(ProceduralConfig config, Grid grid, StopWatchWrapper stopWatch) {
-			GridObj   = grid;
-			MapWidth  = config.Rows;
-			MapHeight = config.Columns;
-			StopWatch = stopWatch;
+		internal GeneratorTools(GeneratorToolsCtx ctx) {
+			GridObj   = ctx.Grid;
+			MapWidth  = ctx.Dimensions.Rows;
+			MapHeight = ctx.Dimensions.Columns;
 		}
 
 		const TileMask SOUTH_OUTLINE =

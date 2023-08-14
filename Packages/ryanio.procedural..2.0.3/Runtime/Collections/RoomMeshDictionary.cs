@@ -4,8 +4,8 @@ using UnityEngine;
 
 namespace ProceduralGeneration {
 	[Serializable]
-	public class RoomMeshDictionary : Dictionary<int, Mesh> {
-		public RoomMeshDictionary(RoomMeshCollectionData data) {
+	internal class RoomMeshDictionary : Dictionary<int, Mesh> {
+		internal RoomMeshDictionary(RoomMeshCollectionData data) {
 			var counter = 1;
 
 			foreach (var pair in data) {
@@ -20,7 +20,7 @@ namespace ProceduralGeneration {
 			}
 		}
 
-		public RoomMeshDictionary() {
+		internal RoomMeshDictionary() {
 		}
 	}
 }

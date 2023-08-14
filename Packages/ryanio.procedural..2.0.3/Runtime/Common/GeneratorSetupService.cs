@@ -7,7 +7,7 @@ namespace ProceduralGeneration {
 			FillMapSolver   = new CellularAutomataFillMapSolver(_config, StopWatch);
 			SmoothMapSolver = new MarchingSquaresSmoothMapSolver(_config, StopWatch);
 			TileTypeSolver =
-				new SetAllTilesSyncTileTypeSolver(_config, TileHashset, TileMapDictionary, Grid, StopWatch);
+				new StandardTileSetterSolver(_config, TileHashset, TileMapDictionary, Grid, StopWatch);
 			NodeSerializationSolver = new NodeSerializationSolver(_config, this, TileMapDictionary, StopWatch);
 			RegionRemoverSolver     = new FloodRegionRemovalSolver(_config);
 			ErosionSolver           = new ErosionSolver(_config, TileHashset, TileMapDictionary);

@@ -49,7 +49,7 @@ namespace ProceduralGeneration {
 		SmoothMapSolver         SmoothMapSolver         { get; set; }
 		NodeSerializationSolver NodeSerializationSolver { get; set; }
 		RegionRemovalSolver     RegionRemoverSolver     { get; set; }
-		TileTypeSolver          TileTypeSolver          { get; set; }
+		TileTypeSolver          TileSetterSolver          { get; set; }
 		ErosionSolver           ErosionSolver           { get; set; }
 
 		//TODO: this should be refactored to be more granular; it is too deep
@@ -91,7 +91,7 @@ namespace ProceduralGeneration {
 		///  Otherwise, will do nothing.
 		/// </summary>
 		void Load() {
-			var actions = new GenerationActions(this)
+			var actions = new Actions(this)
 				{ ProceduralConfig = _config, SpriteShapeConfig = _spriteShapeConfig };
 
 			try {
@@ -186,19 +186,19 @@ namespace ProceduralGeneration {
 
 				//RegionRemoverSolver.Remove(mapSpan);
 
-				TileTypeSolver.SetTiles(mapSpan);
+				//TileSetterSolver.Set(mapSpan);
 
-				new TileMapCompressor(Grid.gameObject).Compress();
+				//new TileMapCompressor(Grid.gameObject).Compress();
 
-				var meshSolverData = MeshSolver.SolveAndCreate(mapSpan.ToArray());
-				Rendering.Render(meshSolverData, Constants.SAVE_MESH_PREFIX + CurrentSerializableName);
+				//var meshSolverData = MeshSolver.Create(mapSpan.ToArray());
+				//Rendering.Render(meshSolverData, Constants.SAVE_MESH_PREFIX + CurrentSerializableName);
 
-				_data = new MapData(TileHashset, meshSolverData);
+				//_data = new MapData(TileHashset, meshSolverData);
 
-				var gridGraph = GridGraphBuilder.Build();
-
-				NavGraphRulesSolver.ResetGridGraphRules(gridGraph);
-				NavGraphRulesSolver.SetGridGraphRules(gridGraph);
+				// var gridGraph = GridGraphBuilder.Build();
+				//
+				// NavGraphRulesSolver.ResetGridGraphRules(gridGraph);
+				// NavGraphRulesSolver.SetGridGraphRules(gridGraph);
 
 				DataProcessor = new DataProcessor(_config, _data, TileMapDictionary, Grid, RegionRemoverSolver.Rooms);
 
@@ -354,7 +354,7 @@ namespace ProceduralGeneration {
 		[BoxGroup("Actions", centerLabel: true),
 		 HorizontalGroup("Actions/Buttons2"),
 		 ButtonGroup("Actions/Buttons2/Methods", Stretch = false, IconAlignment = IconAlignment.RightEdge)]
-		void ForceClean() => new GeneratorCleaner(new GenerationActions(this)).Clean();
+		void ForceClean() => new GeneratorCleaner(new Actions(this)).Clean();
 
 		[BoxGroup("Actions", centerLabel: true),
 		 HorizontalGroup("Actions/Buttons2"),

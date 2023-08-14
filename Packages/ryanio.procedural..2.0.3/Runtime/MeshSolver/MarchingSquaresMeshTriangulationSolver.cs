@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace ProceduralGeneration {
-	public class MarchingSquaresMeshTriangulationSolver : MeshTriangulationSolver {
-		HashSet<int>                    CheckedVertices { get; }
-		SquareGrid                      SquareGrid      { get; }
-		Dictionary<int, List<Triangle>> TriangleTracker { get; }
-		ISeed                       Info            { get; }
+	internal class MarchingSquaresMeshTriangulationSolver : MeshTriangulationSolver {
+		HashSet<int>                    CheckedVertices  { get; }
+		SquareGrid                      SquareGrid       { get; }
+		Dictionary<int, List<Triangle>> TriangleTracker  { get; }
+		string                          SerializableName { get; }
 
-		public override Tuple<List<int>, List<Vector3>> Triangulate(int[,] mapBorder) {
-			SquareGrid.SetSquares(mapBorder);
+		internal override Tuple<List<int>, List<Vector3>> Triangulate(int[,] map) {
+			SquareGrid.SetSquares(map);
 			SetTriangles();
-			SolveMesh(mapBorder);
+			SolveMesh(map);
 			OutLineConnectionSolver.Solve(
 				_triangulationAlgorithm.GetWalkableVertices, CheckedVertices, Outlines, TriangleTracker);
 
@@ -23,48 +23,35 @@ namespace ProceduralGeneration {
 			return output;
 		}
 
-		void ClearLists() {
-			Outlines.Clear();
-			CheckedVertices.Clear();
-			TriangleTracker.Clear();
-		}
-
 		void SetTriangles() {
 			var xLength = SquareGrid.Squares.GetLength(0);
 			var yLength = SquareGrid.Squares.GetLength(1);
 
-				
+
 			for (var i = 0; i < xLength * yLength; i++) {
 				var row    = i / yLength;
 				var column = i % yLength;
-				
+
 				_triangulationAlgorithm.TriangulateSquare(
 					SquareGrid.Squares[row, column], CheckedVertices, TriangleTracker);
 			}
-
-			
-			// for (var x = 0; x < xLength; x++) {
-			// 	for (var y = 0; y < yLength; y++)
-			// 		_triangulationAlgorithm.TriangulateSquare(
-			// 			SquareGrid.Squares[x, y], CheckedVertices, TriangleTracker);
-			// }
 		}
 
-		void SolveMesh(int[,] mapBorder) {
-			var mesh     = new Mesh { name = Constants.SAVE_MESH_PREFIX + Info.CurrentSerializableName };
+		void SolveMesh(int[,] map) {
+			var mesh     = new Mesh { name = Constants.SAVE_MESH_PREFIX + SerializableName };
 			var vertices = _triangulationAlgorithm.GetWalkableVertices;
-			
+
 			mesh.vertices  = vertices.ToArray();
 			mesh.triangles = _triangulationAlgorithm.GetWalkableTriangles.ToArray();
-			mesh.uv        = _uvSolver.CalculateUVs(mapBorder, vertices, Constants.CELL_SIZE);
+			mesh.uv        = ProceduralMeshUVSolver.CalculateUVs(map, vertices, Constants.CELL_SIZE);
 			mesh.RecalculateNormals();
 
 			SolvedMesh = mesh;
 		}
 
 
-		public MarchingSquaresMeshTriangulationSolver(ISeed info) {
-			Info                    = info;
+		internal MarchingSquaresMeshTriangulationSolver(MeshSolverCtx ctx) {
+			SerializableName        = ctx.SerializableName;
 			_uvSolver               = new ProceduralMeshUVSolver();
 			_triangulationAlgorithm = new TriangulationAlgorithm();
 			Outlines                = new List<List<int>>();

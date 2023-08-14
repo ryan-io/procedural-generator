@@ -1,6 +1,7 @@
 // ProceduralGeneration
 
 using CommunityToolkit.HighPerformance;
+using Pathfinding;
 
 namespace ProceduralGeneration {
 	/// <summary>
@@ -17,6 +18,19 @@ namespace ProceduralGeneration {
 			FillMap(map, ctxCreator.GetNewFillMapCtx());
 			SmoothMap(map, ctxCreator.GetNewSmoothMapCtx());
 			RemoveRegions(map, ctxCreator.GetNewRemoveRegionsCtx());
+			
+			SetTiles(
+				map,
+				ctxCreator.GetNewTileSetterCtx(),
+				ctxCreator.GetNewTileMapperCtx(),
+				ctxCreator.GetNewTileToolsCtx());
+
+			// what to do with the mesh solver data?
+			CreateMesh(map, ctxCreator.GetNewMeshSolverCtx());
+			
+			BuildNavigation(new GridGraphBuilder(
+				ctxCreator.GetNewGridGraphBuilderCtx()), 
+				ctxCreator.GetNewNavigationSolverCtx());
 		}
 
 		static void FillMap(Span2D<int> map, FillMapSolverCtx ctx) {
@@ -34,7 +48,27 @@ namespace ProceduralGeneration {
 			                 .Remove(map);
 		}
 
-		public StandardProcess(IActions actions) : base(actions) {
+		static void SetTiles(
+			Span2D<int> map,
+			TileSolversCtx tileSolverCtx,
+			TileMapperCtx mapperCtx,
+			GeneratorToolsCtx toolsCtx) {
+			ProceduralService.GetTileSetterSolver(() => new StandardTileSetterSolver(
+				                                      tileSolverCtx, mapperCtx, toolsCtx))
+			                 .Set(map);
+		}
+
+		static void CreateMesh(Span2D<int> map, MeshSolverCtx ctx) {
+			ProceduralService.GetMeshSolver(() => new MarchingSquaresMeshSolver(ctx))
+			                 .Create(map);
+		}
+
+		static void BuildNavigation(NavGraphBuilder<GridGraph> builder, NavigationSolverCtx ctx) {
+			ProceduralService.GetNavigationSolver(() => new NavigationSolver(builder, ctx))
+			                 .Build();
+		}
+
+		internal StandardProcess(IActions actions) : base(actions) {
 		}
 	}
 }

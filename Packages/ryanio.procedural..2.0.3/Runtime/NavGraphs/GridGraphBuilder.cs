@@ -1,11 +1,10 @@
 using System;
-using BCL;
 using Pathfinding;
 using Unity.Mathematics;
 using UnityEngine;
 
 namespace ProceduralGeneration {
-	public class GridGraphBuilder : NavGraphBuilder<GridGraph> {
+	internal class GridGraphBuilder : NavGraphBuilder<GridGraph> {
 		int2         RealMapDimensions         { get; }
 		ColliderType ColliderType              { get; }
 		float        NavGraphNodeSize          { get; }
@@ -14,13 +13,12 @@ namespace ProceduralGeneration {
 		LayerMask    ObstacleLayerMask         { get; }
 		LayerMask    HeightLayerMask           { get; }
 
-		public override GridGraph Build() {
+		internal override GridGraph Build() {
 			var astarData = new ActiveAstarData().Retrieve();
 			var graph     = astarData.AddGraph(typeof(GridGraph)) as GridGraph;
 
 			if (graph == null) {
-				var exception = new Exception(Message.CANNOT_CAST_GRAPH_ERROR);
-				GenLogging.Instance.Log(exception.Message, "BuildGridGraph", LogLevel.Error);
+				throw new Exception(Message.CANNOT_CAST_GRAPH_ERROR);
 			}
 
 			graph.name = Constants.ASTAR_GRAPH_NAME;
@@ -63,12 +61,12 @@ namespace ProceduralGeneration {
 			return new int2(sizeX, sizeY);
 		}
 
-		public GridGraphBuilder(ProceduralConfig config) {
-			RealMapDimensions         = new MapDimensionsIncludeCellSize(config).Get();
-			NavGraphNodeSize          = config.NavGraphNodeSize;
-			NavGraphCollisionDiameter = config.NavGraphCollisionDetectionDiameter;
-			ObstacleLayerMask         = config.ObstacleLayerMask;
-			ColliderType              = config.NavGraphCollisionType;
+		internal GridGraphBuilder(GridGraphBuilderCtx ctx) {
+			RealMapDimensions         = new MapDimensionsIncludeCellSize(ctx.Dimensions).Get();
+			NavGraphNodeSize          = ctx.GraphNodeSize;
+			NavGraphCollisionDiameter = ctx.GraphCollideDiameter;
+			ObstacleLayerMask         = ctx.ObstacleMask;
+			ColliderType              = ctx.ColliderType;
 		}
 	}
 }

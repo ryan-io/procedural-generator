@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 
 namespace ProceduralGeneration {
-	public class TileMapper {
+	internal class TileMapper {
 		Grid              GridObj                { get; }
 		GeneratorTools    GeneratorTools         { get; }
 		TileMapDictionary TileMapDictionary      { get; }
@@ -13,7 +13,7 @@ namespace ProceduralGeneration {
 		int               MapHeight              { get; }
 		bool              ShouldCreateTileLabels { get; }
 
-		public void FillGround(int x, int y) {
+		internal void FillGround(int x, int y) {
 			var position = new Vector3Int(x, y, 0);
 
 			if (!TileMapDictionary.ContainsKey(TileMapType.Ground))
@@ -24,7 +24,7 @@ namespace ProceduralGeneration {
 				position);
 		}
 
-		public void FillBoundary(int x, int y) {
+		internal void FillBoundary(int x, int y) {
 			var position = new Vector3Int(x, y, 0);
 
 			if (!TileMapDictionary.ContainsKey(TileMapType.Boundary))
@@ -36,7 +36,7 @@ namespace ProceduralGeneration {
 				position);
 		}
 
-		public void FillAngles(Span2D<int> span, int x, int y) {
+		internal void FillAngles(Span2D<int> span, int x, int y) {
 			if (Utility.IsBoundary(MapWidth, MapHeight, x, y))
 				return;
 
@@ -53,7 +53,7 @@ namespace ProceduralGeneration {
 				CreateSouthEastAngle(x, y);
 		}
 
-		public bool FillPockets(Span2D<int> span, int x, int y) {
+		internal bool FillPockets(Span2D<int> span, int x, int y) {
 			if (Utility.IsBoundary(MapWidth, MapHeight, x, y))
 				return false;
 
@@ -84,7 +84,7 @@ namespace ProceduralGeneration {
 			return false;
 		}
 
-		public void FillOutlines(Tilemap tilemap, TileBase tile, TileMask bit, int x, int y) {
+		internal void FillOutlines(Tilemap tilemap, TileBase tile, TileMask bit, int x, int y) {
 			if (!GeneratorTools.IsSouthOutline(bit))
 				return;
 
@@ -322,14 +322,14 @@ namespace ProceduralGeneration {
 		bool CaseNorthEastEdgeThree(Span2D<int> span, int x, int y) =>
 			GeneratorTools.IsFilled(span, x + 1, y) && GeneratorTools.IsFilled(span, x, y + 1);
 
-		public TileMapper(ProceduralConfig config, TileMapDictionary dictionary, Grid grid, StopWatchWrapper stopWatch) {
-			GeneratorTools         = new GeneratorTools(config, grid, stopWatch);
-			TileDictionary         = config.TileDictionary;
-			ShouldCreateTileLabels = config.ShouldCreateTileLabels;
-			MapWidth               = config.Rows;
-			MapHeight              = config.Columns;
-			GridObj                = grid;
-			TileMapDictionary      = dictionary;
+		internal TileMapper(TileMapperCtx ctx, GeneratorToolsCtx toolsCtx, TileSolversCtx tileSolversCtx) {
+			GeneratorTools         = new GeneratorTools(toolsCtx);
+			TileDictionary         = tileSolversCtx.TileDictionary;
+			ShouldCreateTileLabels = ctx.ShouldCreateTileLabels;
+			MapWidth               = tileSolversCtx.Dimensions.Rows;
+			MapHeight              = tileSolversCtx.Dimensions.Columns;
+			GridObj                = tileSolversCtx.Grid;
+			TileMapDictionary      = tileSolversCtx.TileMapDictionary;
 		}
 	}
 }

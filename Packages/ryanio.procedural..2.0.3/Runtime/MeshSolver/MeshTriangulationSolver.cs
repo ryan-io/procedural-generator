@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace ProceduralGeneration {
-	public abstract class MeshTriangulationSolver {
-		public          List<List<int>>                 Outlines   { get; protected set; }
-		public          Mesh                            SolvedMesh { get; protected set; }
-		public abstract Tuple<List<int>, List<Vector3>> Triangulate(int[,] mapBorder);
+	internal abstract class MeshTriangulationSolver {
+		internal          List<List<int>>                 Outlines   { get; set; }
+		internal          Mesh                            SolvedMesh { get; set; }
+		internal abstract Tuple<List<int>, List<Vector3>> Triangulate(int[,] map);
 	}
 }

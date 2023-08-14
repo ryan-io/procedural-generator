@@ -19,6 +19,28 @@ namespace ProceduralGeneration {
 			Actions.GetWallRemoveThreshold(),
 			Actions.GetRoomRemoveThreshold());
 
+		internal TileSolversCtx GetNewTileSetterCtx() => new(
+			Actions.GetMapDimensions(),
+			Actions.GetTilemapDictionary(),
+			Actions.GetTileDictionary(),
+			Actions.GetTileHashset(),
+			Actions.GetGrid());
+
+		internal GeneratorToolsCtx GetNewTileToolsCtx() => new(Actions.GetMapDimensions(), Actions.GetGrid());
+
+		internal TileMapperCtx GetNewTileMapperCtx() => new(Actions.GetShouldCreateTileLabels());
+
+		internal MeshSolverCtx GetNewMeshSolverCtx() => new(Actions.GetOwner(), Actions.GetSerializationName());
+		
+		internal NavigationSolverCtx GetNewNavigationSolverCtx() => new(Actions.GetTilemapDictionary());
+		
+		internal GridGraphBuilderCtx GetNewGridGraphBuilderCtx() => new(
+			Actions.GetMapDimensions(),
+			Actions.GetColliderType(), 
+			Actions.GetObstacleMask(), 
+			Actions.GetGraphCollideDiameter(), 
+			Actions.GetNodeSize());
+
 		internal ContextCreator(IActions actions) {
 			Actions = actions;
 		}

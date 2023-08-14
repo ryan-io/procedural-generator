@@ -4,14 +4,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace ProceduralGeneration {
-	public readonly struct MeshSolverData {
-		public Mesh               Mesh               { get; }
-		public List<Vector3>      MeshVertices       { get; }
-		public List<int>          MeshTriangles      { get; }
-		public List<List<int>>    RoomOutlines       { get; }
-		public RoomMeshDictionary RoomMeshDictionary { get; }
+	internal readonly struct MeshSolverData {
+		internal Mesh               Mesh               { get; }
+		internal List<Vector3>      MeshVertices       { get; }
+		internal List<int>          MeshTriangles      { get; }
+		internal List<List<int>>    RoomOutlines       { get; }
+		internal RoomMeshDictionary RoomMeshDictionary { get; }
 
-		public MeshSolverData(
+		internal MeshSolverData(
 			Mesh mesh,
 			List<Vector3> meshVertices,
 			List<int> meshTriangles,

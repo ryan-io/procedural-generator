@@ -3,31 +3,24 @@ using CommunityToolkit.HighPerformance;
 using UnityEngine;
 
 namespace ProceduralGeneration {
-	public class SetAllTilesSyncTileTypeSolver : TileTypeSolver {
+	internal class StandardTileSetterSolver : TileTypeSolver {
 		TileHashset       TileHashset       { get; }
 		TileMapDictionary TileMapDictionary { get; }
 		TileDictionary    TileDictionary    { get; }
 		int               MapWidth          { get; }
 		int               MapHeight         { get; }
 
-
 		/// <summary>
 		/// span is still allocated on the stack during this invocation
 		/// </summary>
 		/// <param name="span">Pre-stack allocated span for generating primary amap</param>
-		public override void SetTiles(Span2D<int> span) {
+		internal override void Set(Span2D<int> span) {
 			for (var i = 0; i < MapWidth * MapHeight; i++) {
 				var row   = i / MapHeight;
 				var column = i % MapHeight;
 				
 				TileTaskCreator(span, row, column);
 			}
-
-			//
-			// for (var x = 0; x < MapWidth; x++) {
-			// 	for (var y = 0; y < MapHeight; y++)
-			// 		TileTaskCreator(span, x, y);
-			// }
 		}
 
 		void TileTaskCreator(Span2D<int> span, int currentX, int currentY) {
@@ -78,18 +71,15 @@ namespace ProceduralGeneration {
 
 		void AddToHashSet(TileRecord record) => TileHashset.Add(record);
 
-		public SetAllTilesSyncTileTypeSolver(
-			ProceduralConfig config,
-			TileHashset tileHashset, TileMapDictionary dictionary, Grid grid,
-			StopWatchWrapper stopWatch) {
-			TileMapDictionary = dictionary;
-			MapWidth          = config.Rows;
-			MapHeight         = config.Columns;
-			TileDictionary    = config.TileDictionary;
-			TileHashset       = tileHashset;
+		internal StandardTileSetterSolver(TileSolversCtx ctx, TileMapperCtx mapperCtx, GeneratorToolsCtx toolsCtx) {
+			MapWidth          = ctx.Dimensions.Rows;
+			MapHeight         = ctx.Dimensions.Columns;
+			TileMapDictionary = ctx.TileMapDictionary;
+			TileDictionary    = ctx.TileDictionary;
+			TileHashset       = ctx.TileHashset;
 
-			_generatorTools = new GeneratorTools(config, grid, stopWatch);
-			_tileMapper     = new TileMapper(config, dictionary, grid, stopWatch);
+			_generatorTools = new GeneratorTools(toolsCtx);
+			_tileMapper     = new TileMapper(mapperCtx, toolsCtx, ctx);
 
 			_tileWeightDictionary = new TileWeightDictionary {
 				{ OUTLINES, new WeightedRandom<int> { { 0, 75 }, { 1, 25 } } }
