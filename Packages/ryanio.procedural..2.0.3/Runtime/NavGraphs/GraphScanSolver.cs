@@ -16,8 +16,6 @@ namespace ProceduralGeneration {
 	/// This will run synchronously if not awaited/forgotten
 	/// </summary>
 	public class GraphScanner : AsyncUnitOfWork<GraphScanner.Args> {
-		StopWatchWrapper StopWatch { get; }
-
 		protected override async UniTask TaskLogic(Args args, CancellationToken token) {
 			if (args.IsAsync) {
 				await ScanGraphAsync(args, token);
@@ -44,8 +42,6 @@ namespace ProceduralGeneration {
 				sB.Append(GenLogging.SPACE);
 				sB.Append(progress.progress * 100);
 
-				GenLogging.Instance.LogWithTimeStamp(LogLevel.Normal, StopWatch.TimeElapsed, sB.ToString(),
-					"GraphScanAsync");
 #endif
 
 				if (token.IsCancellationRequested) {
@@ -53,8 +49,6 @@ namespace ProceduralGeneration {
 					sB.Clear();
 					sB.Append("Cancellation was requested. Cleaning up Pathfinding.");
 
-					GenLogging.Instance.LogWithTimeStamp(
-						LogLevel.Error, StopWatch.TimeElapsed, sB.ToString(), "GraphScanAsync_Cancelled");
 #endif
 					yield break;
 				}
@@ -68,20 +62,15 @@ namespace ProceduralGeneration {
 			sB.Clear();
 			sB.Append("Pathfinding has completed.");
 
-			GenLogging.Instance.LogWithTimeStamp(LogLevel.Normal, StopWatch.TimeElapsed, sB.ToString(),
-				"GraphScanAsync_Complete");
 
 			sB.Clear();
 			sB.Append(PATHFINDING_NODES);
 			sB.Append(args.Graph.CountNodes());
 
-			GenLogging.Instance.LogWithTimeStamp(LogLevel.Normal, StopWatch.TimeElapsed, sB.ToString(),
-				"GraphScanAsync_TotalNodes");
 #endif
 		}
 
-		public GraphScanner(StopWatchWrapper stopWatch) {
-			StopWatch = stopWatch;
+		public GraphScanner() {
 		}
 
 		public readonly struct Args {

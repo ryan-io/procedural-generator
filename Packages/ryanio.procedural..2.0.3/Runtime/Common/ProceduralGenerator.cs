@@ -200,10 +200,11 @@ namespace ProceduralGeneration {
 				// NavGraphRulesSolver.ResetGridGraphRules(gridGraph);
 				// NavGraphRulesSolver.SetGridGraphRules(gridGraph);
 
+				//???
 				DataProcessor = new DataProcessor(_config, _data, TileMapDictionary, Grid, RegionRemoverSolver.Rooms);
 
 				//var erosionData = ErosionSolver.Erode(gridGraph);
-				GraphScanner.ScanGraph(gridGraph);
+				//GraphScanner.ScanGraph(gridGraph);
 				Dictionary<int, List<Vector3>> dict;
 				var                            colliderCoords = new Dictionary<int, List<SerializableVector3>>();
 				(_data.BoundaryCorners, dict) = ColliderSolver.Solve(_data, TileMapDictionary);

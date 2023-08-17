@@ -7,7 +7,7 @@ namespace ProceduralGeneration {
 	/// <summary>
 	///  This needs work... will need to be refactored and overall architecture needs to be rethought
 	/// </summary>
-	public interface IActions : IProceduralLogging {
+	internal interface IActions : IProceduralLogging {
 		GameObject        GetOwner();
 		Dimensions        GetMapDimensions();
 		GameObject        GetColliderGameObject();
@@ -20,6 +20,7 @@ namespace ProceduralGeneration {
 		Grid              GetGrid();
 		SeedInfo          GetSeed();
 		TileHashset       GetTileHashset();
+		MeshData    GetMeshData();
 		string            GetSerializationName();
 		string            GetDeserializationName();
 		float             GetTimeElapsed();
@@ -36,5 +37,6 @@ namespace ProceduralGeneration {
 		void SetColliderGameObject(GameObject o);
 		void SetTileMapDictionary(TileMapDictionary tileMapDictionary);
 		void SetGrid(Grid grid);
+		void SetMeshData(MeshData meshData);
 	}
 }

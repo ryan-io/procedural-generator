@@ -9,7 +9,7 @@ namespace ProceduralGeneration {
 		GameObject           Parent       { get; }
 		[CanBeNull] Material InitMaterial { get; }
 
-		internal void Render(MeshSolverData data, string name) {
+		internal void Render(MeshData data, string name) {
 			if (string.IsNullOrWhiteSpace(name))
 				name = Constants.PROCEDURAL_MESH_NAME;
 

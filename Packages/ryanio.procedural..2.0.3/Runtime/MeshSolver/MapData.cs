@@ -32,7 +32,7 @@ namespace ProceduralGeneration {
 			return dict;
 		}
 
-		internal MapData(TileHashset tileHashset, MeshSolverData meshCollisionData) {
+		internal MapData(TileHashset tileHashset, MeshData meshCollisionData) {
 			TileHashset        = tileHashset;
 			Mesh               = meshCollisionData.Mesh;
 			RoomOutlines       = meshCollisionData.RoomOutlines;

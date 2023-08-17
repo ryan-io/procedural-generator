@@ -12,8 +12,9 @@ namespace ProceduralGeneration {
 	///		appropriate solver class and defining a new process (inherit from GenerationProcess).
 	/// </summary>
 	internal class StandardProcess : GenerationProcess {
-		internal override void Run(Span2D<int> map) {
+		internal override MapData Run(Span2D<int> map) {
 			var ctxCreator = new ContextCreator(Actions);
+			var data       = new MapData(Actions.GetTileHashset(), Actions.GetMeshData());
 
 			FillMap(map, ctxCreator.GetNewFillMapCtx());
 			SmoothMap(map, ctxCreator.GetNewSmoothMapCtx());
@@ -31,6 +32,8 @@ namespace ProceduralGeneration {
 			BuildNavigation(new GridGraphBuilder(
 				ctxCreator.GetNewGridGraphBuilderCtx()), 
 				ctxCreator.GetNewNavigationSolverCtx());
+			
+			
 		}
 
 		static void FillMap(Span2D<int> map, FillMapSolverCtx ctx) {
@@ -67,6 +70,8 @@ namespace ProceduralGeneration {
 			ProceduralService.GetNavigationSolver(() => new NavigationSolver(builder, ctx))
 			                 .Build();
 		}
+		
+		static void CreateColliders
 
 		internal StandardProcess(IActions actions) : base(actions) {
 		}

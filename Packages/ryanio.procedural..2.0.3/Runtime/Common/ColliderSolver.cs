@@ -7,7 +7,7 @@ using BCL;
 using UnityEngine;
 
 namespace ProceduralGeneration {
-	public class ColliderSolver {
+	internal class ColliderSolver {
 		ProceduralConfig   Config       { get; }
 		StopWatchWrapper   StopWatch    { get; }
 		GameObject         ProcGenObj   { get; }
@@ -16,7 +16,7 @@ namespace ProceduralGeneration {
 		LayerMask          ObstacleMask { get; }
 		LayerMask          BoundaryMask { get; }
 
-		public (Dictionary<int, List<Vector3>> SpriteBoundaryCoords, Dictionary<int, List<Vector3>> AllBoundaryCoords) 
+		internal (Dictionary<int, List<Vector3>> SpriteBoundaryCoords, Dictionary<int, List<Vector3>> ColliderCoords) 
 			Solve(MapData mapData, TileMapDictionary dictionary, [CallerMemberName] string caller = "") {
 			try {
 				CollisionSolver solver;
@@ -44,7 +44,7 @@ namespace ProceduralGeneration {
 			}
 		}
 
-		public ColliderSolver(
+		internal ColliderSolver(
 			ProceduralConfig config,
 			GameObject procGenObj,
 			GameObject colliderObj,

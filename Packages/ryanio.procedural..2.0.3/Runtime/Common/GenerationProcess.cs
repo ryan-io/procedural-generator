@@ -12,12 +12,12 @@ namespace ProceduralGeneration {
 	///		4) Set tiles (TileSetterSolver)
 	///		5) Create mesh (MeshSolver)
 	///		6) Build navigation (NavigationSolver)
-	///		7) Return the map
+	///		
 	/// </summary>
 	internal abstract class GenerationProcess {
 		protected IActions Actions { get; }
 
-		internal abstract void Run(Span2D<int> map);
+		internal abstract MapData Run(Span2D<int> map);
 
 		protected GenerationProcess(IActions actions) {
 			Actions = actions;

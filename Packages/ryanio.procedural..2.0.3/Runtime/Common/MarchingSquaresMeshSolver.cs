@@ -9,11 +9,11 @@ namespace ProceduralGeneration {
 		GameObject Owner            { get; }
 		string     SerializableName { get; }
 		
-		internal override MeshSolverData Create(Span2D<int> map) {
+		internal override MeshData Create(Span2D<int> map) {
 			var (triangles, vertices) = _meshTriangulationSolver.Triangulate(map.ToArray());
 			var roomMeshes = new RoomMeshDictionary();
 
-			var data = new MeshSolverData(
+			var data = new MeshData(
 				_meshTriangulationSolver.SolvedMesh,
 				vertices,
 				triangles,

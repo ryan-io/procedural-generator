@@ -15,5 +15,7 @@ namespace ProceduralGeneration {
 		}
 
 		public string GetDeserializationName() => ProceduralConfig.NameSeedIteration;
+		
+		public MeshData GetMeshData() => MeshData;
 	}
 }
