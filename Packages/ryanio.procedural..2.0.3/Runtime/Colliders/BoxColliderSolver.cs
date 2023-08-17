@@ -5,37 +5,38 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 
 namespace ProceduralGeneration {
-	public class BoxCollisionSolver : CollisionSolver {
-		GameObject                     RootGameObject { get; }
-		Dictionary<string, GameObject> ColliderOwners { get; }
-		float                          SkinWidth      { get; }
+	internal class BoxCollisionSolver : CollisionSolver {
+		GameObject                     RootGameObject     { get; }
+		GameObject                     ColliderGameObject { get; }
+		Dictionary<string, GameObject> ColliderOwners     { get; }
+		List<List<int>>                RoomOutlines       { get; }
+		List<Vector3>                  MeshVertices       { get; }
+		Tilemap                        Tilemap            { get; }
+		LayerMask                      ObstacleLayerMask  { get; }
+		float                          SkinWidth          { get; }
 
-
-		protected override Tilemap BoundaryTilemap { get; }
-
-		public override Dictionary<int, List<Vector3>> CreateCollider(CollisionSolverDto dto, 
-			[CallerMemberName] string caller = "") {
-			var data = dto.MapData;
+		internal override Coordinates CreateCollider([CallerMemberName] string caller = "") {
+			//var data = dto.MapData;
 			var dict = new Dictionary<int, List<Vector3>>();
-			
+
 			CreateRotateColliderObject(ZERO_ANGLE,            0f);
 			CreateRotateColliderObject(FORTY_FIVE_ANGLE,      45f);
 			CreateRotateColliderObject(ONE_THIRTY_FIVE_ANGLE, 135f);
 
-			var roomObject = AddRoom(dto.ColliderGameObject);
+			var roomObject = AddRoom(ColliderGameObject);
 			roomObject.MakeStatic(true);
 
-			for (var i = 0; i < data.RoomOutlines.Count; i++) {
-				var outline     = data.RoomOutlines[i];
+			for (var i = 0; i < RoomOutlines.Count; i++) {
+				var outline     = RoomOutlines[i];
 				var outlineList = new List<Vector3>();
 				dict.Add(i, outlineList);
-				
+
 				for (var j = 0; j < outline.Count; j++) {
 					if (j + 1 >= outline.Count)
 						continue;
 
-					var point0 = data.MeshVertices[outline[j]];
-					var point1 =  data.MeshVertices[outline[j + 1]];
+					var point0 = MeshVertices[outline[j]];
+					var point1 = MeshVertices[outline[j + 1]];
 
 					var cx = (point0.x + point1.x) / 2f;
 					var cy = (point0.y + point1.y) / 2f;
@@ -52,8 +53,8 @@ namespace ProceduralGeneration {
 				}
 			}
 
-			roomObject.SetLayer(dto.ObstacleLayer);
-			return dict;
+			roomObject.SetLayer(ObstacleLayerMask);
+			return new Coordinates(dict, dict);
 		}
 
 		void CreateRotateColliderObject(string id, float angle) {
@@ -69,11 +70,13 @@ namespace ProceduralGeneration {
 			ColliderOwners.Add(id, obj);
 		}
 
-		public BoxCollisionSolver(ProceduralConfig config, TileMapDictionary dictionary, GameObject rootGameObject) {
-			ColliderOwners  = new Dictionary<string, GameObject>();
-			RootGameObject  = rootGameObject;
-			SkinWidth       = config.BoxColliderSkinWidth;
-			BoundaryTilemap = dictionary[TileMapType.Ground];
+		internal BoxCollisionSolver(ColliderSolverCtx ctx) {
+			ColliderOwners     = new Dictionary<string, GameObject>();
+			RootGameObject     = ctx.Owner;
+			ColliderGameObject = ctx.ColliderGo;
+			RoomOutlines       = ctx.RoomOutlines;
+			SkinWidth          = ctx.SkinWidth;
+			Tilemap            = ctx.TileMapDictionary[TileMapType.Ground];
 		}
 
 		const string ZERO_ANGLE            = "zeroAngle";

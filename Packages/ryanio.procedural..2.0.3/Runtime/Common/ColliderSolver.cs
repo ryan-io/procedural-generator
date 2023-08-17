@@ -1,61 +1,28 @@
 // Engine.Procedural
 
-using System;
-using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using BCL;
-using UnityEngine;
 
 namespace ProceduralGeneration {
 	internal class ColliderSolver {
-		ProceduralConfig   Config       { get; }
-		StopWatchWrapper   StopWatch    { get; }
-		GameObject         ProcGenObj   { get; }
-		GameObject         ColliderObj  { get; }
-		ColliderSolverType SolverType   { get; }
-		LayerMask          ObstacleMask { get; }
-		LayerMask          BoundaryMask { get; }
+		internal Coordinates Solve([CallerMemberName] string caller = "") {
+			CollisionSolver solver;
 
-		internal (Dictionary<int, List<Vector3>> SpriteBoundaryCoords, Dictionary<int, List<Vector3>> ColliderCoords) 
-			Solve(MapData mapData, TileMapDictionary dictionary, [CallerMemberName] string caller = "") {
-			try {
-				CollisionSolver solver;
+			if (_ctx.ColliderSolverType == ColliderSolverType.Box)
+				solver = new BoxCollisionSolver(_ctx);
 
-				var dto = new CollisionSolverDto(
-					mapData,
-					ColliderObj,
-					ObstacleMask,
-					BoundaryMask);
+			else if (_ctx.ColliderSolverType == ColliderSolverType.Edge)
+				solver = new EdgeCollisionSolver(_ctx);
 
-				if (SolverType == ColliderSolverType.Box)
-					solver = new BoxCollisionSolver(Config, dictionary, ProcGenObj);
+			else
+				solver = new PrimitiveCollisionSolver(_ctx);
 
-				else if (SolverType == ColliderSolverType.Edge)
-					solver = new EdgeCollisionSolver(Config, dictionary, StopWatch);
-
-				else
-					solver = new PrimitiveCollisionSolver(Config, dictionary, ColliderObj);
-				
-				return (solver.CreateCollider(dto), solver.AllBoundaryPoints);
-			}
-			catch (Exception) {
-				GenLogging.Instance.Log("Error thrown " + caller, "ColliderSolver", LogLevel.Error);
-				throw;
-			}
+			return solver.CreateCollider();
 		}
 
-		internal ColliderSolver(
-			ProceduralConfig config,
-			GameObject procGenObj,
-			GameObject colliderObj,
-			StopWatchWrapper stopWatch) {
-			Config       = config;
-			ObstacleMask = config.ObstacleLayerMask;
-			BoundaryMask = config.BoundaryLayerMask;
-			SolverType   = config.SolverType;
-			ProcGenObj   = procGenObj;
-			ColliderObj  = colliderObj;
-			StopWatch    = stopWatch;
+		internal ColliderSolver(ColliderSolverCtx ctx) {
+			_ctx       = ctx;
 		}
+
+		readonly ColliderSolverCtx _ctx;
 	}
 }

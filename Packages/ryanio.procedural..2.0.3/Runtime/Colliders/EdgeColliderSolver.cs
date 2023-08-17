@@ -4,71 +4,47 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using BCL;
+using Microsoft.Win32.SafeHandles;
+using TMPro;
 using UnityBCL;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using Object = UnityEngine.Object;
 
 namespace ProceduralGeneration {
-	public class EdgeCollisionSolver : CollisionSolver {
+	internal class EdgeCollisionSolver : CollisionSolver {
 		public EdgeCollider2D[] Colliders                   { get; private set; }
 		Vector2                 LastCalculatedPosition      { get; set; }
-		StopWatchWrapper        StopWatch                   { get; }
 		Vector2                 LastCalculatedPoint         { get; set; }
 		Vector2                 LastCalculatedStartingPoint { get; set; }
+		List<Vector3>           MeshVertices                { get; }
 		Vector2                 EdgeColliderOffset          { get; }
+		List<List<int>>         RoomOutlines                { get; }
+		GameObject              ColliderGo                  { get; }
 
 		float EdgeColliderRadius { get; }
 		int   BorderSize         { get; }
 		int   NumOfRows          { get; }
 		int   NumOfCols          { get; }
 
-		protected override Tilemap BoundaryTilemap { get; }
-
 		/// <summary>
 		///					*****   THIS IS AN UNSAFE METHOD   *****
 		/// </summary>
 		/// <param name="dto">Relevant data transfer object to create colliders</param>
-		public override Dictionary<int, List<Vector3>> CreateCollider(CollisionSolverDto dto, [CallerMemberName] string caller = "") {
-			try {
-				var data = dto.MapData;
+		internal override Coordinates CreateCollider([CallerMemberName] string caller = "") {
 				var dict = new Dictionary<int, List<Vector3>>();
-				
-				LogOutlineCount(data);
 				var outlineCounter = 0;
-				LogRoomOutlineCount(data);
-
 				var edgePoints     = new List<Vector2>();
-				var allocationSize = GetLargestCount(data.RoomOutlines);
-
-				// int* pointer = stackalloc int[allocationSize];
-				// var  span    = new Span<int>(pointer, allocationSize);
-
 				
 				
-				foreach (var outline in data.RoomOutlines) {
-					// span.Clear();
-					// var array = outline.ToArray();
-					//
-					// for (var i = 0; i < array.Length; i++)
-					// 	span[i] = array[i];
-
+				foreach (var outline in RoomOutlines) {
 					if (outline.Count < 2)
 						continue;
 
-					outlineCounter = ProcessOutline(dto, edgePoints, outlineCounter, outline, data);
+					outlineCounter = ProcessOutline(edgePoints, outlineCounter, outline);
 				}
 
-				return dict;
-			}
-
-			catch (Exception) {
-				GenLogging.Instance.Log(
-					"Error thrown from " + caller,
-					"EdgeColliderSolver", LogLevel.Error);
-
-				throw;
-			}
+				return new Coordinates(dict, dict);
 		}
 
 		int GetLargestCount(List<List<int>> outlines) {
@@ -82,53 +58,17 @@ namespace ProceduralGeneration {
 			return output;
 		}
 
-		static void LogRoomOutlineCount(MapData data) {
-			GenLogging.Instance.Log("Total roomoulines: " + data.RoomOutlines.Count.ToString(), "RoomOUtlines",
-				LogLevel.Test);
-		}
-
-		void LogOutlineCount(MapData data) {
-			GenLogging.Instance.LogWithTimeStamp(
-				LogLevel.Normal,
-				StopWatch.TimeElapsed,
-				GetVerifyRoomsMsg(data.RoomOutlines.Count),
-				CTX);
-		}
-
-		int ProcessOutline(
-			CollisionSolverDto dto, List<Vector2> edgePoints,
-			int outlineCounter,
-			List<int> outline,
-			MapData data) {
+		int ProcessOutline(List<Vector2> edgePoints, int outlineCounter, List<int> outline) {
 			edgePoints.Clear();
 			outlineCounter++;
 
-			GenLogging.Instance.Log(
-				"Total nodes for outline #" + outlineCounter + ": " + outline.Count,
-				"CreateColliders");
-
-			var roomObject   = CreateRoom(dto, outlineCounter);
+			var roomObject   = CreateRoom(outlineCounter);
 			var edgeCollider = roomObject.AddComponent<EdgeCollider2D>();
 			edgeCollider.offset = EdgeColliderOffset;
 
 			var  array   = outline.ToArray();
-			// int* pointer = stackalloc int[array.Length];
-			// var  span    = new Span<int>(pointer, array.Length);
-
-			// for (var i = 0; i < array.Length; i++) {
-			// 	span[i] = array[i];
-			// }
-
 			for (var i = 0; i < array.Length; i++)
-				DetermineColliderOutline(data, array, i, edgePoints);
-
-			// if (Vector2.Distance(edgePoints.First(), edgePoints.Last()) < 3) {
-			// 	edgePoints.Add(edgePoints.First());
-			// }
-			//
-			// if (Vector2.Distance(LastCalculatedStartingPoint, edgePoints.Last()) < 3) {
-			// 	edgePoints.Add(LastCalculatedStartingPoint);
-			// }
+				DetermineColliderOutline(array, i, edgePoints);
 
 			if (edgePoints.IsEmptyOrNull() || edgePoints.Count <= MIN_POINTS_REQUIRED) {
 				if (roomObject) {
@@ -149,10 +89,10 @@ namespace ProceduralGeneration {
 			return outlineCounter;
 		}
 
-		void DetermineColliderOutline(MapData data, IReadOnlyList<int> outline, int i, List<Vector2> edgePoints) {
+		void DetermineColliderOutline(IReadOnlyList<int> outline, int i, List<Vector2> edgePoints) {
 			var pos = new Vector3(
-				data.MeshVertices[outline[i]].x,
-				data.MeshVertices[outline[i]].y,
+				MeshVertices[outline[i]].x,
+				MeshVertices[outline[i]].y,
 				0);
 
 			if (i >= 1) {
@@ -194,31 +134,24 @@ namespace ProceduralGeneration {
 			return is45 || is135 || is225 || is315;
 		}
 
-		GameObject CreateRoom(CollisionSolverDto dto, int outlineCounter) {
-			var roomObject = AddRoom(dto.ColliderGameObject, identifier: outlineCounter.ToString());
+		GameObject CreateRoom(int outlineCounter) {
+			var roomObject = AddRoom(ColliderGo, identifier: outlineCounter.ToString());
 			roomObject.MakeStatic(true);
 			roomObject.SetLayer(Constants.Layer.OBSTACLES);
 			return roomObject;
 		}
 
-		string GetVerifyRoomsMsg(int count) {
-			_sB.Clear();
-			_sB.Append(VERIFY_ROOMS_PREFIX);
-			_sB.Append(count);
-
-			return _sB.ToString();
-		}
-
-		public EdgeCollisionSolver(ProceduralConfig config, TileMapDictionary dictionary, StopWatchWrapper stopWatch) {
+		internal EdgeCollisionSolver(ColliderSolverCtx ctx) {
 			_sB                = new StringBuilder();
 			Colliders          = new EdgeCollider2D[COLLIDER_ALLOCATION_SIZE];
-			BoundaryTilemap    = dictionary[TileMapType.Boundary];
-			StopWatch          = stopWatch;
-			EdgeColliderOffset = config.EdgeColliderOffset;
-			EdgeColliderRadius = config.EdgeColliderRadius;
-			BorderSize         = config.BorderSize;
-			NumOfRows          = config.Rows;
-			NumOfCols          = config.Columns;
+			ColliderGo         = ctx.ColliderGo;
+			RoomOutlines       = ctx.RoomOutlines;
+			EdgeColliderOffset = ctx.EdgeColliderOffset;
+			EdgeColliderRadius = ctx.EdgeColliderRadius;
+			BorderSize         = ctx.BorderSize;
+			NumOfRows          = ctx.Dimensions.Rows;
+			NumOfCols          = ctx.Dimensions.Columns;
+			MeshVertices       = ctx.MeshVertices;
 		}
 
 		readonly StringBuilder _sB;

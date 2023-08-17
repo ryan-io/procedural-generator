@@ -44,5 +44,21 @@ namespace ProceduralGeneration {
 		internal ContextCreator(IActions actions) {
 			Actions = actions;
 		}
+
+		public ColliderSolverCtx GetNewColliderSolverCtx() {
+			return new(
+				Actions.GetOwner(),
+				Actions.GetColliderSolverType(),
+				Actions.GetTilemapDictionary(),
+				Actions.GetColliderGameObject(),
+				Actions.GetMeshData().MeshVertices,
+				Actions.GetMeshData().RoomOutlines,
+				Actions.GetObstacleMask(),
+				Actions.GetSkinWidth(),
+				Actions.GetEdgeColliderOffset(),
+				Actions.GetEdgeColliderRadius(),
+				Actions.GetMapDimensions(),
+				Actions.GetBorderSize());
+		}
 	}
 }

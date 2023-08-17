@@ -21,5 +21,12 @@ namespace ProceduralGeneration {
 		public float GetGraphCollideDiameter() => ProceduralConfig.NavGraphCollisionDetectionDiameter;
 
 		public float GetNodeSize() => ProceduralConfig.NavGraphNodeSize;
+		
+		public float GetSkinWidth() => ProceduralConfig.PrimitiveColliderSkinWidth;
+
+		public Vector2 GetEdgeColliderOffset() => ProceduralConfig.EdgeColliderOffset;
+
+		public float              GetEdgeColliderRadius() => ProceduralConfig.EdgeColliderRadius;
+		public ColliderSolverType GetColliderSolverType() => ProceduralConfig.SolverType;
 	}
 }

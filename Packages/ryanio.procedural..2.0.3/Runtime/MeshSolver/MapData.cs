@@ -7,23 +7,24 @@ using UnityEngine;
 namespace ProceduralGeneration {
 	[Serializable]
 	internal class MapData {
-		[field: SerializeField] internal TileHashset                    TileHashset          { get; private set; }
-		[field: SerializeField] internal Mesh                           Mesh                 { get; private set; }
-		[field: SerializeField] internal List<Vector3>                  MeshVertices         { get; private set; }
-		[field: SerializeField] internal List<int>                      MeshTriangles        { get; private set; }
-		[field: SerializeField] internal List<List<int>>                RoomOutlines         { get; private set; }
-		[field: SerializeField] internal List<Vector3>                  TilePositionsShifted { get; set; }
-		[field: SerializeField] internal Dictionary<int, List<Vector3>> BoundaryCorners      { get; set; }
-		[field: SerializeField] internal RoomMeshDictionary             RoomMeshDictionary   { get; private set; }
+		[field: SerializeField] internal TileHashset                                TileHashset          { get; set; }
+		[field: SerializeField] internal Mesh                                       Mesh                 { get; set; }
+		[field: SerializeField] internal List<Vector3>                              MeshVertices         { get; set; }
+		[field: SerializeField] internal List<int>                                  MeshTriangles        { get; set; }
+		[field: SerializeField] internal List<List<int>>                            RoomOutlines         { get; set; }
+		[field: SerializeField] internal List<Vector3>                              TilePositionsShifted { get; set; }
+		[field: SerializeField] internal Dictionary<int, List<SerializableVector3>> SpriteBoundaryCoords { get; set; }
+		[field: SerializeField] internal Dictionary<int, List<SerializableVector3>> ColliderCoords       { get; set; }
+		[field: SerializeField] internal RoomMeshDictionary                         RoomMeshDictionary   { get; set; }
 
 		internal Dictionary<int, List<SerializableVector3>> GetBoundaryCoords() {
-			if (BoundaryCorners.IsEmptyOrNull())
+			if (SpriteBoundaryCoords.IsEmptyOrNull())
 				return default;
 
 			var dict  = new Dictionary<int, List<SerializableVector3>>();
-			var index = BoundaryCorners.Keys.First();
+			var index = SpriteBoundaryCoords.Keys.First();
 
-			foreach (var corner in BoundaryCorners) {
+			foreach (var corner in SpriteBoundaryCoords) {
 				var serializedList = corner.Value.AsSerialized().ToList();
 				dict.Add(index, serializedList);
 				index++;
@@ -32,6 +33,10 @@ namespace ProceduralGeneration {
 			return dict;
 		}
 
+		internal MapData() {
+			
+		}
+		
 		internal MapData(TileHashset tileHashset, MeshData meshCollisionData) {
 			TileHashset        = tileHashset;
 			Mesh               = meshCollisionData.Mesh;

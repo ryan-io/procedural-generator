@@ -3,51 +3,51 @@ using System.Runtime.CompilerServices;
 using ProceduralAuxiliary;
 using UnityBCL;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 using Object = UnityEngine.Object;
 
 namespace ProceduralGeneration {
-	public class PrimitiveCollisionSolver : CollisionSolver {
-		protected override Tilemap BoundaryTilemap   { get; }
-		GameObject                 ColliderGo        { get; }
-		List<Vector3>              MeshVertices      { get; set; }
-		Vector3                    Char1             { get; set; }
-		Vector3                    Char2             { get; set; }
-		bool                       CurrentIsColinear { get; set; }
-		bool                       LastWasColinear   { get; set; }
-		float                      SkinWidth         { get; }
-		float                      Radius            { get; }
+	internal class PrimitiveCollisionSolver : CollisionSolver {
+		GameObject      ColliderGo        { get; }
+		List<Vector3>   MeshVertices      { get;  }
+		List<List<int>> RoomOutlines      { get; }
+		Vector3         Char1             { get; set; }
+		Vector3         Char2             { get; set; }
+		bool            CurrentIsColinear { get; set; }
+		bool            LastWasColinear   { get; set; }
+		float           SkinWidth         { get; }
 
 		/// <summary>
 		/// 3 points (x1,y1), (x2,y2), and (x3,y3) are colinear (in a line) if:
 		/// (x2-x1)(y3-y2) - (y2-y1)(x3-x2) = 0
 		/// </summary>
-		/// <param name="dto"></param>
 		/// <param name="caller"></param>
-		public override Dictionary<int, List<Vector3>> CreateCollider(CollisionSolverDto dto,
-			[CallerMemberName] string caller = "") {
-			MeshVertices = dto.MapData.MeshVertices;
-			var roomOutlines = dto.MapData.RoomOutlines;
-			var dict         = new Dictionary<int, List<Vector3>>();
+		internal override Coordinates CreateCollider([CallerMemberName] string caller = "") {
+			var coords = new Coordinates(
+				new Dictionary<int, List<Vector3>>(),
+				new Dictionary<int, List<Vector3>>());
 
 			ColliderGo.MakeStatic(true);
 			ColliderGo.ZeroPosition();
 
-			for (var i = 0; i < roomOutlines.Count; i++) {
+			for (var i = 0; i < RoomOutlines.Count; i++) {
 				var outlines = new List<Vector3>();
-				AllBoundaryPoints.Add(i, new List<Vector3>());
-				dict.Add(i, outlines);
+				coords.ColliderCoords.Add(i, new List<Vector3>());
+				coords.SpriteBoundaryCoords.Add(i, outlines);
 
-				InstantiateCollider(outlines, roomOutlines, i);
+				InstantiateCollider(coords, outlines, i);
 			}
 
-			CoreExtensions.SetLayerRecursive(ColliderGo, LayerMask.NameToLayer("Boundary"));
-			return dict;
+			CoreExtensions.SetLayerRecursive(ColliderGo, LayerMask.NameToLayer(Constants.Layer.BOUNDARY));
+
+			return coords;
 		}
 
-		void InstantiateCollider(ICollection<Vector3> outlines, IReadOnlyList<List<int>> roomOutlines, int index) {
+		void InstantiateCollider(
+			Coordinates coords,
+			ICollection<Vector3> outlines,
+			int index) {
 			var col     = CreateNewPrimitiveCollider(index.ToString());
-			var outline = roomOutlines[index];
+			var outline = RoomOutlines[index];
 			var objList = new GameObject[3];
 
 			// PrimitiveCollider API requires a "starting" point of three game objects with colliders
@@ -55,7 +55,7 @@ namespace ProceduralGeneration {
 			SetStarting(outlines, outline, col, objList);
 
 			for (var i = 0; i < outline.Count; i++) {
-				var allBoundaryList = AllBoundaryPoints[index];
+				var allBoundaryList = coords.ColliderCoords[index];
 				var newPoint        = GetNewPoint(outline, i);
 
 				if (!allBoundaryList.Contains(newPoint))
@@ -105,12 +105,6 @@ namespace ProceduralGeneration {
 			LastWasColinear = CurrentIsColinear;
 		}
 
-		// Vector3 DefineAndCreateHandle(IReadOnlyList<int> outline, int index, ProceduralPrimitiveCollider col) {
-		// 	var newPoint = GetNewPoint(outline, index);
-		// 	CreateHandle(col, newPoint, col.corners[^1], col.corners[^1].GetSiblingIndex() + 1);
-		// 	return newPoint;
-		// }
-
 		void ValidateAndAddFirst(ICollection<Vector3> outlines, Vector3 newPoint) {
 			Char1 = newPoint;
 
@@ -134,22 +128,15 @@ namespace ProceduralGeneration {
 			else {
 				if (LastWasColinear) {
 					if (!outlines.Contains(Char1)) {
-						//var last = outLineList.Last();
-
-						//if (Vector3.Distance(Char1, last) < CullDistance)
 						outlines.Add(Char1);
 					}
 				}
 
 				if (!outlines.Contains(newPoint)) {
-					//var last = outLineList.Last();
-
-					//if (Vector3.Distance(newPoint, last) <CullDistance)
 					outlines.Add(newPoint);
 				}
 			}
 		}
-
 
 		ProceduralPrimitiveCollider CreateNewPrimitiveCollider(string identifier) {
 			var obj = new GameObject {
@@ -168,23 +155,21 @@ namespace ProceduralGeneration {
 
 			for (var i = 0; i < 3; i++) {
 				var newObj = new GameObject().transform;
+				
 				newObj.SetParent(col.gameObject.transform);
 				newObj.localPosition   = Vector3.forward * (0.5f * 5 * i);
 				newObj.gameObject.name = i.ToString();
-#if UNITY_EDITOR
-				//PolygonColliderEditorExtention.DrawIcon(newObj.gameObject, 0);
-#endif
+
 				col.corners.Add(newObj);
 			}
 
-			//orcePopulateCorners();
 			return col;
 		}
 
 		void InjectSettings(ProceduralPrimitiveCollider col) {
 			col.depth            = SkinWidth / 2f;
 			col.heigth           = SkinWidth / 2f;
-			col.radius           = Radius;
+			col.radius           = SkinWidth;
 			col.onlyWhenSelected = true;
 		}
 
@@ -199,11 +184,11 @@ namespace ProceduralGeneration {
 		Vector3 GetNewPoint(IReadOnlyList<int> outline, int index) =>
 			new(MeshVertices[outline[index]].x, MeshVertices[outline[index]].y, 0);
 
-		public PrimitiveCollisionSolver(ProceduralConfig config, TileMapDictionary dictionary, GameObject colliderGo) {
-			SkinWidth       = config.PrimitiveColliderRadius;
-			Radius          = config.PrimitiveColliderRadius;
-			BoundaryTilemap = dictionary[TileMapType.Ground];
-			ColliderGo      = colliderGo;
+		public PrimitiveCollisionSolver(ColliderSolverCtx ctx) {
+			SkinWidth    = ctx.SkinWidth;
+			ColliderGo   = ctx.ColliderGo;
+			RoomOutlines = ctx.RoomOutlines;
+			MeshVertices = ctx.MeshVertices;
 		}
 	}
 }

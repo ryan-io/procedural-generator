@@ -205,9 +205,9 @@ namespace ProceduralGeneration {
 
 				//var erosionData = ErosionSolver.Erode(gridGraph);
 				//GraphScanner.ScanGraph(gridGraph);
-				Dictionary<int, List<Vector3>> dict;
-				var                            colliderCoords = new Dictionary<int, List<SerializableVector3>>();
-				(_data.BoundaryCorners, dict) = ColliderSolver.Solve(_data, TileMapDictionary);
+				// Dictionary<int, List<Vector3>> dict;
+				 var                            colliderCoords = new Dictionary<int, List<SerializableVector3>>();
+				(_data.SpriteBoundaryCoords, dict) = ColliderSolver.Solve(_data, TileMapDictionary);
 
 				for (var i = 0; i < dict.Count; i++) {
 					colliderCoords[i] = dict[i].AsSerialized().ToList();
@@ -216,7 +216,7 @@ namespace ProceduralGeneration {
 				//GenLogging.Instance.Log("Setting shifted tile positions in map data", "MapData");
 
 				var borderSolver = new SpriteShapeBorderSolver(_spriteShapeConfig, gameObject);
-				borderSolver.GenerateProceduralBorder(_data.BoundaryCorners, CurrentSerializableName);
+				borderSolver.GenerateProceduralBorder(_data.SpriteBoundaryCoords, CurrentSerializableName);
 
 				new CutGraphColliders().Cut(_config.ColliderCutters);
 				new CreateBoundaryColliders(_config, DataProcessor).Create(GeneratedCollidersObj);

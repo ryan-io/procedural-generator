@@ -6,12 +6,8 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 
 namespace ProceduralGeneration {
-	public abstract class CollisionSolver {
-		public             Dictionary<int, List<Vector3>> AllBoundaryPoints { get; }
-		protected abstract Tilemap                        BoundaryTilemap   { get; }
-
-		public abstract Dictionary<int, List<Vector3>> CreateCollider(
-			CollisionSolverDto dto, [CallerMemberName] string caller = "");
+	internal abstract class CollisionSolver {
+		internal abstract Coordinates CreateCollider([CallerMemberName] string caller = "");
 
 		protected GameObject AddRoom(GameObject parent, string identifier = "", params Type[] componentsToAdd) {
 			var newObj = new GameObject($"room {identifier} - colliders") {
@@ -27,10 +23,6 @@ namespace ProceduralGeneration {
 				newObj.AddComponent(component);
 
 			return newObj;
-		}
-
-		public CollisionSolver() {
-			AllBoundaryPoints = new Dictionary<int, List<Vector3>>();
 		}
 	}
 }

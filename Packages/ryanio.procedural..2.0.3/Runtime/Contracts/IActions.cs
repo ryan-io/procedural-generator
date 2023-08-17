@@ -1,5 +1,6 @@
 // ProceduralGeneration
 
+using System.Collections.Generic;
 using Pathfinding;
 using UnityEngine;
 
@@ -13,6 +14,7 @@ namespace ProceduralGeneration {
 		GameObject        GetColliderGameObject();
 		TileMapDictionary GetTilemapDictionary();
 		ColliderType      GetColliderType();
+		ColliderSolverType GetColliderSolverType();
 		LayerMask         GetObstacleMask();
 		float             GetGraphCollideDiameter();
 		float             GetNodeSize();
@@ -34,9 +36,12 @@ namespace ProceduralGeneration {
 		int               GetBorderSize();
 		bool              GetShouldCreateTileLabels();
 
-		void SetColliderGameObject(GameObject o);
-		void SetTileMapDictionary(TileMapDictionary tileMapDictionary);
-		void SetGrid(Grid grid);
-		void SetMeshData(MeshData meshData);
+		void    SetColliderGameObject(GameObject o);
+		void    SetTileMapDictionary(TileMapDictionary tileMapDictionary);
+		void    SetGrid(Grid grid);
+		void    SetMeshData(MeshData meshData);
+		float   GetSkinWidth();
+		Vector2 GetEdgeColliderOffset();
+		float   GetEdgeColliderRadius();
 	}
 }

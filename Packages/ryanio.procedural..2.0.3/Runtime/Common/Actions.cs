@@ -1,7 +1,6 @@
 // ProceduralGeneration
 
 using BCL;
-using Pathfinding;
 using UnityEngine;
 
 namespace ProceduralGeneration {

@@ -4,6 +4,7 @@ namespace ProceduralGeneration {
 	public static class Constants {
 		public static class Layer {
 			public const string OBSTACLES = "Obstacles";
+			public const string BOUNDARY  = "Boundary";
 		}
 
 		public static class SortingLayer {
@@ -23,7 +24,7 @@ namespace ProceduralGeneration {
 		public const string ITERATION_LABEL = "Iteration";
 
 		public const string SPRITE_SHAPE_SAVE_PREFIX = "SpriteShape_";
-		
+
 		public const string COLLIDER_COORDS_SAVE_PREFIX = "ColliderCoords_";
 
 		public const string SPRITE_BOUNDARY_KEY = "boundary-shape key ";
