@@ -206,12 +206,12 @@ namespace ProceduralGeneration {
 				//var erosionData = ErosionSolver.Erode(gridGraph);
 				//GraphScanner.ScanGraph(gridGraph);
 				// Dictionary<int, List<Vector3>> dict;
-				 var                            colliderCoords = new Dictionary<int, List<SerializableVector3>>();
-				(_data.SpriteBoundaryCoords, dict) = ColliderSolver.Solve(_data, TileMapDictionary);
-
-				for (var i = 0; i < dict.Count; i++) {
-					colliderCoords[i] = dict[i].AsSerialized().ToList();
-				}
+				//  var                            colliderCoords = new Dictionary<int, List<SerializableVector3>>();
+				// (_data.SpriteBoundaryCoords, dict) = ColliderSolver.Solve(_data, TileMapDictionary);
+				//
+				// for (var i = 0; i < dict.Count; i++) {
+				// 	colliderCoords[i] = dict[i].AsSerialized().ToList();
+				// }
 
 				//GenLogging.Instance.Log("Setting shifted tile positions in map data", "MapData");
 

@@ -19,6 +19,10 @@ namespace ProceduralGeneration {
 		internal static NavigationSolver GetNavigationSolver(Func<NavigationSolver> constructor)
 			=> constructor.Invoke();
 		
-		internal static ColliderSolver GetColliderSolver(Func<ColliderSolver> constructor) => constructor.Invoke();
+		internal static ColliderSolver          GetColliderSolver(Func<ColliderSolver> constructor) => constructor.Invoke();
+
+		public static SpriteShapeBorderSolver GetSpriteShapeBorderSolver(Func<SpriteShapeBorderSolver> func) {
+			throw new NotImplementedException();
+		}
 	}
 }

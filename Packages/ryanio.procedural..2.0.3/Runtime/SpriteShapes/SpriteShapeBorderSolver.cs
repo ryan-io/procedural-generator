@@ -6,12 +6,12 @@ using UnityEngine.U2D;
 using Object = UnityEngine.Object;
 
 namespace ProceduralGeneration {
-	public class SpriteShapeBorderSolver {
+	internal class SpriteShapeBorderSolver {
 		Ppu        Ppu   { get; }
 		Transform  Owner { get; }
 		GameObject Go    { get; set; }
 
-		public void GenerateProceduralBorder(
+		internal void GenerateProceduralBorder(
 			Dictionary<int, List<Vector3>> positions, 
 			string serializedName,
 			[CallerMemberName] string name = "") {
@@ -134,9 +134,9 @@ namespace ProceduralGeneration {
 			return obj;
 		}
 
-		public SpriteShapeBorderSolver(SpriteShapeConfig config, GameObject owner) {
-			_config         = config;
-			Owner           = owner.transform;
+		internal SpriteShapeBorderSolver(SpriteShapeBorderCtx ctx) {
+			_config         = ctx.Config;
+			Owner           = ctx.Owner.transform;
 		}
 
 		readonly SpriteShapeConfig _config;
