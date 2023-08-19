@@ -1,5 +1,8 @@
 // ProceduralGeneration
 
+using System.Collections.Generic;
+using UnityEngine;
+
 namespace ProceduralGeneration {
 	internal class ContextCreator {
 		IActions Actions { get; }
@@ -59,6 +62,13 @@ namespace ProceduralGeneration {
 				Actions.GetEdgeColliderRadius(),
 				Actions.GetMapDimensions(),
 				Actions.GetBorderSize());
+		}
+
+		public SpriteShapeBorderCtx GetNewSpriteShapeBorderCtx() {
+			return new(
+				Actions.GetSpriteShapeConfig(),
+				Actions.GetOwner(),
+				Actions.GetCoordinates().SpriteBoundaryCoords);
 		}
 	}
 }

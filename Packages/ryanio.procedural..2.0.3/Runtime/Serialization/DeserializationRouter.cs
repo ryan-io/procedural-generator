@@ -59,7 +59,7 @@ namespace ProceduralGeneration {
 				nameSeedIteration, Constants.SPRITE_SHAPE_SAVE_PREFIX, directories);
 
 			var solver = new SpriteShapeBorderSolver(Actions.GetSpriteShapeConfig(), Actions.GetOwner());
-			solver.GenerateProceduralBorder(positions, Actions.GetDeserializationName());
+			solver.Generate(positions, Actions.GetDeserializationName());
 		}
 
 		void DeserializeColliderCoords(string nameSeedIteration, (string raw, string full) directories, GameObject go) {

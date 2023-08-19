@@ -8,12 +8,15 @@ namespace ProceduralGeneration {
 		public ProceduralConfig  ProceduralConfig  { private get; set; }
 		public SpriteShapeConfig SpriteShapeConfig { private get; set; }
 
-		public float GetTimeElapsed() => _stopWatch.TimeElapsed;
+		public SpriteShapeConfig GetSpriteShapeConfig() => SpriteShapeConfig;
+		public float             GetTimeElapsed() => _stopWatch.TimeElapsed;
 
 		public void SetColliderGameObject(GameObject o)                       => ColliderGameObject = o;
 		public void SetTileMapDictionary(TileMapDictionary tileMapDictionary) => TileMapDictionary = tileMapDictionary;
 		public void SetGrid(Grid grid)                                        => Grid = grid;
-		public void SetMeshData(MeshData meshData)                            => MeshData = meshData;
+		
+
+		public void SetMeshData(MeshData meshData) => MeshData = meshData;
 
 		GameObject        ColliderGameObject { get; set; }
 		TileMapDictionary TileMapDictionary  { get; set; }

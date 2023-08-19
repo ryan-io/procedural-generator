@@ -5,11 +5,12 @@ using UnityEngine;
 
 namespace ProceduralGeneration {
 	internal readonly struct Coordinates {
-		internal Dictionary<int, List<Vector3>> SpriteBoundaryCoords { get; }
-		internal Dictionary<int, List<Vector3>> ColliderCoords       { get; }
+		internal IReadOnlyDictionary<int, List<Vector3>> SpriteBoundaryCoords { get; }
+		internal IReadOnlyDictionary<int, List<Vector3>> ColliderCoords       { get; }
 
-		public Coordinates(Dictionary<int, List<Vector3>> spriteBoundaryCoords,
-			Dictionary<int, List<Vector3>> colliderCoords) {
+		public Coordinates(
+			IReadOnlyDictionary<int, List<Vector3>> spriteBoundaryCoords,
+			IReadOnlyDictionary<int, List<Vector3>> colliderCoords) {
 			SpriteBoundaryCoords = spriteBoundaryCoords;
 			ColliderCoords       = colliderCoords;
 		}

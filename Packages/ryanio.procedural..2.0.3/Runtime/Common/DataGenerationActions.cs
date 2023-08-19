@@ -2,6 +2,8 @@
 
 namespace ProceduralGeneration {
 	internal partial class Actions {
+		Coordinates Coordinates { get; set; }
+		
 		public SeedInfo GetSeed() => new(ProceduralConfig.Seed, ProceduralConfig.LastIteration);
 		
 		public string GetSerializationName() {
@@ -15,6 +17,10 @@ namespace ProceduralGeneration {
 		}
 
 		public string GetDeserializationName() => ProceduralConfig.NameSeedIteration;
+
+		public Coordinates GetCoordinates() => Coordinates;
+
+		public void SetCoords(Coordinates coordinates) => Coordinates = coordinates;
 		
 		public MeshData GetMeshData() => MeshData;
 	}

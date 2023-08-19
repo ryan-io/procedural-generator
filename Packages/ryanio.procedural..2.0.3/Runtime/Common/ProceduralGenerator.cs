@@ -215,8 +215,8 @@ namespace ProceduralGeneration {
 
 				//GenLogging.Instance.Log("Setting shifted tile positions in map data", "MapData");
 
-				var borderSolver = new SpriteShapeBorderSolver(_spriteShapeConfig, gameObject);
-				borderSolver.GenerateProceduralBorder(_data.SpriteBoundaryCoords, CurrentSerializableName);
+				// var borderSolver = new SpriteShapeBorderSolver(_spriteShapeConfig, gameObject);
+				// borderSolver.Generate(_data.SpriteBoundaryCoords, CurrentSerializableName);
 
 				new CutGraphColliders().Cut(_config.ColliderCutters);
 				new CreateBoundaryColliders(_config, DataProcessor).Create(GeneratedCollidersObj);

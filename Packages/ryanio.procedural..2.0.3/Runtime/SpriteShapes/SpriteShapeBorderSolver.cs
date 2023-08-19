@@ -11,7 +11,7 @@ namespace ProceduralGeneration {
 		Transform  Owner { get; }
 		GameObject Go    { get; set; }
 
-		internal void GenerateProceduralBorder(
+		internal void Generate(
 			Dictionary<int, List<Vector3>> positions, 
 			string serializedName,
 			[CallerMemberName] string name = "") {
@@ -20,7 +20,6 @@ namespace ProceduralGeneration {
 		}
 
 		void RunProcedure(Dictionary<int, List<Vector3>> boundaryPositions) {
-			GenLogging.Instance.Log(Message.START_SHAPE_BOUNDARY_GENERATION, Constants.SPRITE_BOUNDARY_CTX);
 			ClearBorderGameObjects();
 
 			var currentRoomIndex = 0;

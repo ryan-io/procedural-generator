@@ -33,7 +33,8 @@ namespace ProceduralGeneration {
 				ctxCreator.GetNewNavigationSolverCtx());
 
 			var coordinates = CreateColliders(ctxCreator.GetNewColliderSolverCtx());
-			AssignCoordinates(data, coordinates);
+			AssignCoordinates(coordinates);
+			GenerateSpriteShapeBorder(ctxCreator.GetNewSpriteShapeBorderCtx());
 
 			return new MapData();
 		}
@@ -77,15 +78,11 @@ namespace ProceduralGeneration {
 			return ProceduralService.GetColliderSolver(() => new ColliderSolver(ctx)).Solve();
 		}
 
-		static void AssignCoordinates(MapData data, Coordinates coordinates) {
-			var serialize = new Serialize();
-			data.SpriteBoundaryCoords = coordinates.SpriteBoundaryCoords;
-			data.ColliderCoords       = coordinates.ColliderCoords;
+		static void GenerateSpriteShapeBorder(SpriteShapeBorderCtx ctx) {
+			ProceduralService.GetSpriteShapeBorderSolver(() => new SpriteShapeBorderSolver(ctx)).Generate();
 		}
 
-		static SpriteShapeBorderSolver GenerateSpriteShapeBorder(SpriteShapeBorderCtx ctx) {
-			return ProceduralService.GetSpriteShapeBorderSolver(() => new SpriteShapeBorderSolver(ctx));
-		}
+		void AssignCoordinates(Coordinates coordinates) => Actions.SetCoords(coordinates);
 
 		internal StandardProcess(IActions actions) : base(actions) {
 		}

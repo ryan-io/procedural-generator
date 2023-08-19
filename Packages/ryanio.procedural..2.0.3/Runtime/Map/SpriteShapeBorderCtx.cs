@@ -5,14 +5,14 @@ using UnityEngine;
 
 namespace ProceduralGeneration {
 	internal readonly struct SpriteShapeBorderCtx {
-		internal SpriteShapeConfig                          Config      { get; }
-		internal GameObject                                 Owner       { get; }
-		internal IReadOnlyDictionary<string, List<Vector3>> Coordinates { get; }
+		internal SpriteShapeConfig                       Config      { get; }
+		internal GameObject                              Owner       { get; }
+		internal IReadOnlyDictionary<int, List<Vector3>> Coordinates { get; }
 
 		public SpriteShapeBorderCtx(
-			SpriteShapeConfig config, 
+			SpriteShapeConfig config,
 			GameObject owner,
-			IReadOnlyDictionary<string, List<Vector3>> coordinates) {
+			IReadOnlyDictionary<int, List<Vector3>> coordinates) {
 			Config      = config;
 			Owner       = owner;
 			Coordinates = coordinates;
