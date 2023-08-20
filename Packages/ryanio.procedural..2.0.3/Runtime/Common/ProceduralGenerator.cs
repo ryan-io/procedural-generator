@@ -58,7 +58,7 @@ namespace ProceduralGeneration {
 					new GeneratorSceneSetupService(actions).Run();
 
 					run.Generation();
-					run.Serialization();
+					//run.Serialization();
 
 					onCompleteLog = Message.GENERATION_COMPLETE;
 				}

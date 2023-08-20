@@ -22,8 +22,8 @@ namespace ProceduralGeneration {
 				}
 
 #if UNITY_STANDALONE || UNITY_EDITOR
-			var log = new UnityLogging();
-			log.Msg($"Total rooms generated: {outlines.Count}", "Total Rooms Created", italic: true, bold: true);
+			// var log = new UnityLogging();
+			// log.Msg($"Total rooms generated: {outlines.Count}", "Total Rooms Created", italic: true, bold: true);
 #endif
 		}
 

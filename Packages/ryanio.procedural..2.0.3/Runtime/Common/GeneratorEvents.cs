@@ -11,6 +11,8 @@ namespace ProceduralGeneration {
 		internal void InvokeEvent(string eventIdentifier) {
 			if (string.IsNullOrWhiteSpace(eventIdentifier))
 				return;
+			
+			Observables[eventIdentifier].Signal();
 		}
 		
 		internal void RegisterEvent(string eventIdentifier, [CanBeNull] Action action) {

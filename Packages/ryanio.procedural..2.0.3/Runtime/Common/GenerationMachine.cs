@@ -25,7 +25,6 @@ namespace ProceduralGeneration {
 		}
 
 		internal static GenerationMachine Create(IActions actions) => new(actions);
-
 		readonly ProceduralConfig  _proceduralConfig;
 		readonly SpriteShapeConfig _spriteShapeConfig;
 	}
