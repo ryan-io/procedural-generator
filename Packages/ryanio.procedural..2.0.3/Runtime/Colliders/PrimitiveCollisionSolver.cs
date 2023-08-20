@@ -8,7 +8,7 @@ using Object = UnityEngine.Object;
 namespace ProceduralGeneration {
 	internal class PrimitiveCollisionSolver : CollisionSolver {
 		GameObject      ColliderGo        { get; }
-		List<Vector3>   MeshVertices      { get;  }
+		List<Vector3>   MeshVertices      { get; }
 		List<List<int>> RoomOutlines      { get; }
 		Vector3         Char1             { get; set; }
 		Vector3         Char2             { get; set; }
@@ -22,28 +22,27 @@ namespace ProceduralGeneration {
 		/// </summary>
 		/// <param name="caller"></param>
 		internal override Coordinates CreateCollider([CallerMemberName] string caller = "") {
-			var coords = new Coordinates(
-				new Dictionary<int, List<Vector3>>(),
-				new Dictionary<int, List<Vector3>>());
+			var spriteBorderCoords = new Dictionary<int, List<Vector3>>();
+			var colliderCoords     = new Dictionary<int, List<Vector3>>();
 
 			ColliderGo.MakeStatic(true);
 			ColliderGo.ZeroPosition();
 
 			for (var i = 0; i < RoomOutlines.Count; i++) {
 				var outlines = new List<Vector3>();
-				coords.ColliderCoords.Add(i, new List<Vector3>());
-				coords.SpriteBoundaryCoords.Add(i, outlines);
+				colliderCoords.Add(i, new List<Vector3>());
+				spriteBorderCoords.Add(i, outlines);
 
-				InstantiateCollider(coords, outlines, i);
+				InstantiateCollider(colliderCoords, outlines, i);
 			}
 
 			CoreExtensions.SetLayerRecursive(ColliderGo, LayerMask.NameToLayer(Constants.Layer.BOUNDARY));
 
-			return coords;
+			return new Coordinates(spriteBorderCoords, colliderCoords);
 		}
 
 		void InstantiateCollider(
-			Coordinates coords,
+			Dictionary<int, List<Vector3>> colliderCoords,
 			ICollection<Vector3> outlines,
 			int index) {
 			var col     = CreateNewPrimitiveCollider(index.ToString());
@@ -55,7 +54,7 @@ namespace ProceduralGeneration {
 			SetStarting(outlines, outline, col, objList);
 
 			for (var i = 0; i < outline.Count; i++) {
-				var allBoundaryList = coords.ColliderCoords[index];
+				var allBoundaryList = colliderCoords[index];
 				var newPoint        = GetNewPoint(outline, i);
 
 				if (!allBoundaryList.Contains(newPoint))
@@ -155,7 +154,7 @@ namespace ProceduralGeneration {
 
 			for (var i = 0; i < 3; i++) {
 				var newObj = new GameObject().transform;
-				
+
 				newObj.SetParent(col.gameObject.transform);
 				newObj.localPosition   = Vector3.forward * (0.5f * 5 * i);
 				newObj.gameObject.name = i.ToString();

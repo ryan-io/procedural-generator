@@ -22,7 +22,7 @@ namespace ProceduralGeneration {
 		}
 
 		public GeneratorEvents(IActions actions) {
-			Observables = Create.Observables(actions.GetProceduralConfig());
+			Observables = Create.Observables(actions.GetSerializedEvents());
 		}
 	}
 }

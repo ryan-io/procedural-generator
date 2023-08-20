@@ -15,7 +15,7 @@ namespace ProceduralGeneration {
 		/// <param name="info">Info pertaining to current serialized seed</param>
 		/// <param name="mapName">Name of map</param>
 		public void SerializeSeed(SeedInfo info, string mapName) {
-			new SerializeSeedInfo().Serialize(info, mapName);
+			new SerializeSeedInfo().Serialize(info, mapName, Logger);
 		}
 
 		/// <summary>

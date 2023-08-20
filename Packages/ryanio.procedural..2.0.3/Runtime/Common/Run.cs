@@ -4,14 +4,12 @@ namespace ProceduralGeneration {
 	internal class Run {
 		IActions Actions { get; }
 
-		internal void Generation(IMachine machine) {
-			machine.InvokeEvent(StateObservableId.ON_RUN);
-			
+		internal void Generation() {
 			var generationRouter = new GenerationRouter(Actions, new StandardProcess(Actions));
 			generationRouter.Run();
 		}
 
-		internal void Serialization(IMachine machine) {
+		internal void Serialization() {
 			var ctxCreator = new ContextCreator(Actions);
 			
 			var router = new SerializationRouter(
@@ -23,11 +21,14 @@ namespace ProceduralGeneration {
 			router.Run(Actions.GetMapName(), Actions.GetCoordinates());
 		}
 
-		internal void Deserialization(IMachine machine) {
-			machine.InvokeEvent(StateObservableId.ON_RUN);
-
-			var deserializeRouter = new DeserializationRouter(Actions);
-			deserializeRouter.ValidateAndDeserialize(Actions.GetDeserializationName(), Actions.GetColliderGameObject());
+		internal void Deserialization() {
+			var ctxCreator = new ContextCreator(Actions);
+			
+			var router = new DeserializationRouter(
+				ctxCreator.GetNewDeserializationRoute(), 
+				Actions);
+			
+			router.Run(Actions.GetDeserializationName(), Actions.GetColliderGameObject());
 		}
 		
 		public Run(IActions actions) {

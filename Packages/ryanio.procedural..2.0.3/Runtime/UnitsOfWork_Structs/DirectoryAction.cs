@@ -6,7 +6,7 @@ using UnityBCL.Serialization;
 using UnityEditor;
 
 namespace ProceduralGeneration {
-	public class DirectoryAction {
+	internal class DirectoryAction {
 		/// <summary>
 		///   Returns the directory of the map.
 		/// </summary>
@@ -14,7 +14,7 @@ namespace ProceduralGeneration {
 		/// <returns>Full path to map directory</returns>
 		/// <exception cref="SerializationException">Throws if serializableMapName is not serialized</exception>
 		/// <exception cref="DirectoryNotFoundException">Throws if cannot find map directory</exception>
-		public string GetMapDirectory(string serializableMapName) {
+		internal string GetMapDirectory(string serializableMapName) {
 			if (string.IsNullOrWhiteSpace(serializableMapName)) {
 				return string.Empty;
 			}
@@ -41,7 +41,7 @@ namespace ProceduralGeneration {
 		/// <returns>Full path to map directory</returns>
 		/// <exception cref="SerializationException">Throws if serializableMapName is not serialized</exception>
 		/// <exception cref="DirectoryNotFoundException">Throws if cannot find map directory</exception>
-		public string GetMapDirectoryRaw(string serializableMapName) {
+		internal string GetMapDirectoryRaw(string serializableMapName) {
 			if (string.IsNullOrWhiteSpace(serializableMapName)) {
 				return string.Empty;
 			}
@@ -68,7 +68,7 @@ namespace ProceduralGeneration {
 		/// <returns>Full map to directory of map</returns>
 		/// <exception cref="SerializationException">Throws if serializableMapName is not serialized</exception>
 		[CanBeNull]
-		public string CreateNewDirectory(string serializableMapName) {
+		internal string CreateNewDirectory(string serializableMapName) {
 			try {
 				var isSerialized = new ValidationSerializedName().Validate(serializableMapName);
 
@@ -93,7 +93,7 @@ namespace ProceduralGeneration {
 		/// </summary>
 		/// <param name="serializedName"></param>
 		/// <returns>Tuple containing the full directory & raw directory paths</returns>
-		public static (string raw, string full) GetMapDirectories(string serializedName) {
+		internal static (string raw, string full) GetMapDirectories(string serializedName) {
 			var location     = UnitySaveLocation.GetDefault;
 			var internalName = Constants.BACKSLASH      + serializedName + Constants.BACKSLASH;
 			var directory    = location.SaveLocation    + internalName;
@@ -105,7 +105,7 @@ namespace ProceduralGeneration {
 		///  Returns the serialized data directories. This is the default location where all serialized data is stored.
 		/// </summary>
 		/// <returns>Tuple containing the full directory & raw directory paths for SerializedData</returns>
-		public static (string raw, string full) GetSerializedDataDirectories() {
+		internal static (string raw, string full) GetSerializedDataDirectories() {
 			var location = UnitySaveLocation.GetDefault;
 			return (location.SaveLocationRaw, location.SaveLocation);
 		}
@@ -124,14 +124,16 @@ namespace ProceduralGeneration {
 		/// </summary>
 		/// <param name="serializedName">Name of map to delete</param>
 		/// <param name="actions"></param>
-		public static void DeleteDirectory(string serializedName, [CanBeNull] IActions actions) {
+		/// <param name="logger"></param>
+		internal static void DeleteDirectory(string serializedName, [CanBeNull] IActions actions, 
+			[CanBeNull] IProceduralLogging logger) {
 			var directories     = GetMapDirectories(serializedName);
 			var directoryExists = Directory.Exists(directories.full);
 
 			if (directoryExists) {
-				MetaData.Delete(serializedName);
+				MetaData.Delete(serializedName, logger);
 				Directory.Delete(directories.full, true);
-				SeedCleaner.Delete(serializedName);
+				SeedCleaner.Delete(serializedName, logger);
 				AssetDatabase.Refresh();
 
 				actions?.Log($"Deleted {serializedName} directory", nameof(DeleteDirectory));

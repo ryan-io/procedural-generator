@@ -9,8 +9,8 @@ namespace ProceduralGeneration {
 		internal string   SerializableName { get; }
 
 		public SerializationRouterCtx(SeedInfo seedInfo, Grid grid, string serializableName) {
-			SeedInfo              = seedInfo;
-			Grid                  = grid;
+			SeedInfo         = seedInfo;
+			Grid             = grid;
 			SerializableName = serializableName;
 		}
 	}

@@ -1,7 +1,6 @@
 ﻿// Engine.Procedural
 
 using System.Threading;
-using BCL;
 using Cysharp.Threading.Tasks;
 using Pathfinding;
 using UnityBCL;
@@ -11,8 +10,7 @@ using UnityEngine.Tilemaps;
 namespace ProceduralGeneration {
 	public class NodeSerializationSolver : AsyncUnitOfWork {
 		GraphScanner      GraphScanner               { get; }
-		ISeed         Seed                   { get; }
-		StopWatchWrapper  StopWatch                  { get; }
+		ISeed             Seed                       { get; }
 		WalkabilityRule   WalkabilityRule            { get; }
 		TileMapDictionary TileMapDictionary          { get; }
 		ColliderType      CollisionType              { get; }
@@ -78,15 +76,14 @@ namespace ProceduralGeneration {
 			return (groundTilemapStatus, boundaryTilemapStatus);
 		}
 
-		public NodeSerializationSolver(ProceduralConfig config, ISeed seed, TileMapDictionary dictionary, 
-		StopWatchWrapper stopWatch) {
-			GraphScanner = new GraphScanner(stopWatch);
+		public NodeSerializationSolver(ProceduralConfig config, ISeed seed, TileMapDictionary dictionary) {
+			GraphScanner = new GraphScanner();
 			WalkabilityRule = new WalkabilityRule(
 				dictionary[TileMapType.Boundary],
 				dictionary[TileMapType.Ground],
 				Constants.CELL_SIZE);
 
-			Seed                   = seed;
+			Seed                       = seed;
 			TileMapDictionary          = dictionary;
 			Name                       = config.Name;
 			CollisionType              = config.NavGraphCollisionType;
@@ -94,7 +91,6 @@ namespace ProceduralGeneration {
 			HeightTestLayerMask        = config.NavGraphHeightTestLayerMask;
 			CollisionDetectionDiameter = config.NavGraphCollisionDetectionDiameter;
 			CollisionDetectionHeight   = config.NavGraphCollisionDetectionHeight;
-			StopWatch                  = stopWatch;
 			SerializedDataSaveLocation = Constants.SERIALIZED_DATA_FOLDER;
 		}
 	}

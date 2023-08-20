@@ -46,12 +46,17 @@ namespace ProceduralGeneration {
 		Vector2                            GetEdgeColliderOffset();
 		float                              GetEdgeColliderRadius();
 
-		void   SetColliderGameObject(GameObject o);
-		void   SetTileMapDictionary(TileMapDictionary tileMapDictionary);
-		void   SetGrid(Grid grid);
-		void   SetCoords(Coordinates coordinates);
-		void   SetMeshData(MeshData meshData);
-		void   StopTimer();
-		string GetMapName();
+		void            SetColliderGameObject(GameObject o);
+		void            SetTileMapDictionary(TileMapDictionary tileMapDictionary);
+		void            SetGrid(Grid grid);
+		void            SetCoords(Coordinates coordinates);
+		void            SetMeshData(MeshData meshData);
+		void            StopTimer();
+		string          GetMapName();
+		bool            GetShouldDeserializePathfinding();
+		bool            GetShouldDeserializeMapPrefab();
+		bool            GetShouldDeserializeSpriteShape();
+		bool            GetShouldDeserializeColliderCoords();
+		EventDictionary GetSerializedEvents();
 	}
 }

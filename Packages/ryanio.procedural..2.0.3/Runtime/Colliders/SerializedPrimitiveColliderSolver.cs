@@ -7,19 +7,18 @@ using UnityBCL;
 using UnityEngine;
 
 namespace ProceduralGeneration {
-	public class SerializedPrimitiveCollisionSolver {
+	internal class SerializedPrimitiveCollisionSolver {
 		GameObject ColliderGo { get; }
 		float      SkinWidth  { get; }
 		float      Radius     { get; }
 
-		public void CreateColliderFromDict(Dictionary<int, List<Vector3>> dict) {
+		internal void CreateColliderFromDict(Dictionary<int, List<Vector3>> dict) {
 			ColliderGo.MakeStatic(true);
 			ColliderGo.ZeroPosition();
 
 			int tracker = 0;
 
 			if (dict.IsEmptyOrNull()) {
-				GenLogging.Instance.Log("Position dictionary was empty", "DeserializeColliders", LogLevel.Error);
 				return;
 			}
 			
@@ -91,7 +90,6 @@ namespace ProceduralGeneration {
 				col.corners.Add(newObj);
 			}
 
-			//orcePopulateCorners();
 			return col;
 		}
 
@@ -102,10 +100,10 @@ namespace ProceduralGeneration {
 			col.onlyWhenSelected = true;
 		}
 
-		public SerializedPrimitiveCollisionSolver(ProceduralConfig config, GameObject colliderGo) {
-			ColliderGo = colliderGo;
-			SkinWidth  = config.PrimitiveColliderSkinWidth;
-			Radius     = config.PrimitiveColliderRadius;
+		internal SerializedPrimitiveCollisionSolver(SerializedPrimitiveCollisionSolverCtx ctx) {
+			ColliderGo = ctx.ColliderGo;
+			SkinWidth  = ctx.SkinWidth;
+			Radius     = ctx.Radius;
 		}
 	}
 }

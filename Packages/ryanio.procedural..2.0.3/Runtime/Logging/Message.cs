@@ -64,5 +64,24 @@
 		internal const string CANT_SERIALIZE_MAP_GO = "Could not save map prefab. There may be one already serialized.";
 
 		internal const string SERIALIZE_MAP_AT = "Serialized map at: ";
+
+		internal const string SERIALIZED_NAME_NULL_EMPTY = "Serializable name was null or empty.";
+
+		internal const string SERIALIZE_GENERAL_INVALID_NAME_PREFIX = "The provided id: ";
+		
+		internal const string SERIALIZE_ASTAR_INVALID_NAME =
+			", could not be found. This is likely due to not serializing Astar data (check settings).";
+		
+		internal const string SERIALIZE_SPRITE_SHAPE_INVALID_NAME =
+			", could not be found. This is likely due to not serializing SpriteShape data (check settings).";
+		
+		internal const string SERIALIZE_COLLIDER_COORDS_INVALID_NAME =
+			", could not be found. This is likely due to not serializing Collider data (check settings).";
+		
+		internal const string DESERIALIZE_MAP_PREFAB	= "Deserializing map prefab at: ";
+		
+		internal const string CANNOT_DELETE_META_DATA = "Could not delete meta data file: ";
+
+		internal const string CANNOT_DELETE_SEED = "Could not delete seed from tracker file: ";
 	}
 }

@@ -35,16 +35,16 @@ namespace ProceduralGeneration {
 		internal TileMapperCtx GetNewTileMapperCtx() => new(Actions.GetShouldCreateTileLabels());
 
 		internal MeshSolverCtx GetNewMeshSolverCtx() => new(Actions.GetOwner(), Actions.GetSerializationName());
-		
+
 		internal NavigationSolverCtx GetNewNavigationSolverCtx() => new(
 			Actions.GetTilemapDictionary(),
 			Actions.GetGraphColliderCutters());
-		
+
 		internal GridGraphBuilderCtx GetNewGridGraphBuilderCtx() => new(
 			Actions.GetMapDimensions(),
-			Actions.GetColliderType(), 
-			Actions.GetObstacleMask(), 
-			Actions.GetGraphCollideDiameter(), 
+			Actions.GetColliderType(),
+			Actions.GetObstacleMask(),
+			Actions.GetGraphCollideDiameter(),
 			Actions.GetNodeSize());
 
 		internal ContextCreator(IActions actions) {
@@ -74,7 +74,15 @@ namespace ProceduralGeneration {
 				Actions.GetCoordinates().SpriteBoundaryCoords,
 				Actions.GetSerializationName());
 		}
-		
+
+		internal SpriteShapeBorderCtx GetNewSpriteShapeBorderCtx(IReadOnlyDictionary<int, List<Vector3>> coords) {
+			return new(
+				Actions.GetSpriteShapeConfig(),
+				Actions.GetOwner(),
+				coords,
+				Actions.GetSerializationName());
+		}
+
 		internal GridCharacteristicsSolverCtx GetNewGridCharacteristicsSolverCtx() {
 			return new(
 				Actions.GetGrid(),
@@ -93,13 +101,28 @@ namespace ProceduralGeneration {
 		internal SerializationRouterCtx GetNewSerializationRouterCtx() {
 			return new SerializationRouterCtx(Actions.GetSeed(), Actions.GetGrid(), Actions.GetSerializationName());
 		}
-		
+
 		internal SerializationRoute GetNewSerializationRoute() {
 			return new SerializationRoute(
 				Actions.GetShouldSerializePathfinding(),
 				Actions.GetShouldSerializeMapPrefab(),
 				Actions.GetShouldSerializeSpriteShape(),
 				Actions.GetShouldSerializeColliderCoords());
+		}
+
+		internal DeserializationRoute GetNewDeserializationRoute() {
+			return new DeserializationRoute(
+				Actions.GetShouldDeserializePathfinding(),
+				Actions.GetShouldDeserializeMapPrefab(),
+				Actions.GetShouldDeserializeSpriteShape(),
+				Actions.GetShouldDeserializeColliderCoords());
+		}
+
+		internal SerializedPrimitiveCollisionSolverCtx GetNewSerializedPrimitiveCollisionSolverCtx() {
+			return new SerializedPrimitiveCollisionSolverCtx(
+				Actions.GetColliderGameObject(),
+				Actions.GetSkinWidth(),
+				Actions.GetEdgeColliderRadius());
 		}
 	}
 }

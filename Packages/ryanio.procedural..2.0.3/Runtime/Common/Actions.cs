@@ -12,7 +12,7 @@ namespace ProceduralGeneration {
 		public SpriteShapeConfig                  GetSpriteShapeConfig()    => SpriteShapeConfig;
 		public IReadOnlyList<GraphColliderCutter> GetGraphColliderCutters() => ProceduralConfig.ColliderCutters;
 
-		public float                              GetTimeElapsed() => _stopWatch.TimeElapsed;
+		public float GetTimeElapsed() => _stopWatch.TimeElapsed;
 
 		public bool GetShouldSerializePathfinding() => ProceduralConfig.ShouldSerializePathfinding;
 
@@ -22,11 +22,20 @@ namespace ProceduralGeneration {
 
 		public bool GetShouldSerializeColliderCoords() => ProceduralConfig.ShouldSerializeColliderCoords;
 
-		public void   SetColliderGameObject(GameObject o)                       => ColliderGameObject = o;
-		public void   SetTileMapDictionary(TileMapDictionary tileMapDictionary) => TileMapDictionary = tileMapDictionary;
-		public void   SetGrid(Grid grid)                                        => Grid = grid;
-		public void   StopTimer()                                               => _stopWatch.Stop();
-		public string GetMapName()                                              => ProceduralConfig.Name;
+		public void SetColliderGameObject(GameObject o) => ColliderGameObject = o;
+		public void SetTileMapDictionary(TileMapDictionary tileMapDictionary) => TileMapDictionary = tileMapDictionary;
+		public void SetGrid(Grid grid) => Grid = grid;
+		public void StopTimer() => _stopWatch.Stop();
+		public string GetMapName() => ProceduralConfig.Name;
+
+		public bool GetShouldDeserializePathfinding() => ProceduralConfig.ShouldSerializePathfinding;
+
+		public bool GetShouldDeserializeMapPrefab() => ProceduralConfig.ShouldDeserializeMapPrefab;
+
+		public bool GetShouldDeserializeSpriteShape() => ProceduralConfig.ShouldDeserializeSpriteShape;
+
+		public bool            GetShouldDeserializeColliderCoords() => ProceduralConfig.ShouldDeserializeColliderCoords;
+		public EventDictionary GetSerializedEvents()                => ProceduralConfig.SerializedEvents;
 
 		public void SetMeshData(MeshData meshData) => MeshData = meshData;
 

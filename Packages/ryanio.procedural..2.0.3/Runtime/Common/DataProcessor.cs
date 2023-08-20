@@ -8,8 +8,8 @@ using UnityEngine.Tilemaps;
 using Random = UnityEngine.Random;
 
 namespace ProceduralGeneration {
-	public class DataProcessor {
-		public bool IsReady { get; set; } = false;
+	internal class DataProcessor {
+		internal bool IsReady { get; set; } = false;
 
 		Tilemap             BoundaryTilemap { get; }
 		MapData             MapData         { get; }
@@ -24,7 +24,7 @@ namespace ProceduralGeneration {
 		
 		// Moved to GetProcessedCellPositions.Get 
 		
-		// public Vector3[] GetBorderCellPositions() {
+		// internal Vector3[] GetBorderCellPositions() {
 		// 	var output = new List<Vector3>();
 		//
 		// 	foreach (var record in MapData.TileHashset) {
@@ -46,7 +46,7 @@ namespace ProceduralGeneration {
 		// 	return output.ToArray();
 		// }
 
-		public void DrawRooms() {
+		internal void DrawRooms() {
 			if (Rooms.IsEmptyOrNull()) {
 				return;
 			}
@@ -69,7 +69,7 @@ namespace ProceduralGeneration {
 		/// <summary>
 		///					*****   THIS IS AN UNSAFE METHOD   *****
 		/// </summary>
-		public unsafe void DrawRoomOutlines() {
+		internal unsafe void DrawRoomOutlines() {
 			if (MapData.RoomOutlines.IsEmptyOrNull()) {
 				return;
 			}
@@ -117,7 +117,7 @@ namespace ProceduralGeneration {
 			}
 		}
 
-		public unsafe void DrawTilePositionsShifted() {
+		/*internal unsafe void DrawTilePositionsShifted() {
 			var ctx = IsReady ? "Ready; " + MapData.TilePositionsShifted.Count() : "NotReady";
 			GenLogging.Instance.Log("Status of data processor: " + ctx, "NodeCount");
 
@@ -147,19 +147,21 @@ namespace ProceduralGeneration {
 			catch (Exception e) {
 				GenLogging.Instance.Log(e.TargetSite.Name, "DrawShiftedTilePositions", LogLevel.Error);
 			}
-		}
+		}*/
 
+		/*
 		/// <summary>
 		///					*****   THIS IS AN UNSAFE METHOD   *****
 		/// </summary>
-		public void DrawMapBoundary() {
+		internal void DrawMapBoundary() {
 			var shiftedPositions = GetBorderCellPositions();
 
 			foreach (var position in shiftedPositions) {
 				DebugExt.DrawCircle(position, Color.white, true, .2f);
 			}
 		}
-
+*/
+		
 		int DetermineHighestRoomCount() {
 			int currentHighestCount = 0;
 
@@ -182,7 +184,7 @@ namespace ProceduralGeneration {
 			return GridToDrawOn.CellToWorld(new Vector3Int(t.x, t.y, 0));
 		}
 
-		public DataProcessor(
+		internal DataProcessor(
 			ProceduralConfig config,
 			MapData mapData,
 			TileMapDictionary dictionary, 
