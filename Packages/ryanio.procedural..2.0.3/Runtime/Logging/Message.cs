@@ -60,5 +60,9 @@
 		internal const string STATE_TO_DISPOSE = "State changed to disposing.";
 		
 		internal const string STATE_TO_ERROR = "State changed to error.";
+
+		internal const string CANT_SERIALIZE_MAP_GO = "Could not save map prefab. There may be one already serialized.";
+
+		internal const string SERIALIZE_MAP_AT = "Serialized map at: ";
 	}
 }

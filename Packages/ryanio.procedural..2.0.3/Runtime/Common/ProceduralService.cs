@@ -1,7 +1,6 @@
 // ProceduralGeneration
 
 using System;
-using Pathfinding;
 
 namespace ProceduralGeneration {
 	internal static class ProceduralService {
@@ -18,11 +17,17 @@ namespace ProceduralGeneration {
 
 		internal static NavigationSolver GetNavigationSolver(Func<NavigationSolver> constructor)
 			=> constructor.Invoke();
-		
-		internal static ColliderSolver          GetColliderSolver(Func<ColliderSolver> constructor) => constructor.Invoke();
 
-		public static SpriteShapeBorderSolver GetSpriteShapeBorderSolver(Func<SpriteShapeBorderSolver> func) {
-			throw new NotImplementedException();
+		internal static ColliderSolver GetColliderSolver(Func<ColliderSolver> constructor) => constructor.Invoke();
+
+		internal static SpriteShapeBorderSolver GetSpriteShapeBorderSolver(Func<SpriteShapeBorderSolver> constructor)
+			=> constructor.Invoke();
+
+		public static CreateBoundaryColliders GetCutCollidersSolver(Func<CreateBoundaryColliders> constructor)
+			=> constructor.Invoke();
+
+		public static GridCharacteristicsSolver GetGridCharacteristicsSolver(Func<GridCharacteristicsSolver> constructor) {
+			return constructor.Invoke();
 		}
 	}
 }

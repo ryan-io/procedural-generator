@@ -21,27 +21,30 @@ namespace ProceduralGeneration {
 		int                 NumOfCols       { get; }
 		int                 BorderSize      { get; }
 
-		public Vector3[] GetBorderCellPositions() {
-			var output = new List<Vector3>();
-
-			foreach (var record in MapData.TileHashset) {
-				if (!record.IsMapBoundary)
-					continue;
-
-				var shiftedBorder = BorderSize / 2f;
-				var shiftedX      = Mathf.CeilToInt(-NumOfRows  / 2f);
-				var shiftedY      = Mathf.FloorToInt(-NumOfCols / 2f);
-
-				var pos = new Vector3(
-					record.Coordinate.x + shiftedX + shiftedBorder,
-					record.Coordinate.y + shiftedY + shiftedBorder,
-					0);
-
-				output.Add(pos);
-			}
-
-			return output.ToArray();
-		}
+		
+		// Moved to GetProcessedCellPositions.Get 
+		
+		// public Vector3[] GetBorderCellPositions() {
+		// 	var output = new List<Vector3>();
+		//
+		// 	foreach (var record in MapData.TileHashset) {
+		// 		if (!record.IsMapBoundary)
+		// 			continue;
+		//
+		// 		var shiftedBorder = BorderSize / 2f;
+		// 		var shiftedX      = Mathf.CeilToInt(-NumOfRows  / 2f);
+		// 		var shiftedY      = Mathf.FloorToInt(-NumOfCols / 2f);
+		//
+		// 		var pos = new Vector3(
+		// 			record.Coordinate.x + shiftedX + shiftedBorder,
+		// 			record.Coordinate.y + shiftedY + shiftedBorder,
+		// 			0);
+		//
+		// 		output.Add(pos);
+		// 	}
+		//
+		// 	return output.ToArray();
+		// }
 
 		public void DrawRooms() {
 			if (Rooms.IsEmptyOrNull()) {

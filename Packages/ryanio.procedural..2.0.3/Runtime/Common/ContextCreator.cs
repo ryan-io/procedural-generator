@@ -1,5 +1,6 @@
 // ProceduralGeneration
 
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -29,13 +30,15 @@ namespace ProceduralGeneration {
 			Actions.GetTileHashset(),
 			Actions.GetGrid());
 
-		internal GeneratorToolsCtx GetNewTileToolsCtx() => new(Actions.GetMapDimensions(), Actions.GetGrid());
+		internal GeneratorToolsCtx GetNewGeneratorToolsCtx() => new(Actions.GetMapDimensions(), Actions.GetGrid());
 
 		internal TileMapperCtx GetNewTileMapperCtx() => new(Actions.GetShouldCreateTileLabels());
 
 		internal MeshSolverCtx GetNewMeshSolverCtx() => new(Actions.GetOwner(), Actions.GetSerializationName());
 		
-		internal NavigationSolverCtx GetNewNavigationSolverCtx() => new(Actions.GetTilemapDictionary());
+		internal NavigationSolverCtx GetNewNavigationSolverCtx() => new(
+			Actions.GetTilemapDictionary(),
+			Actions.GetGraphColliderCutters());
 		
 		internal GridGraphBuilderCtx GetNewGridGraphBuilderCtx() => new(
 			Actions.GetMapDimensions(),
@@ -48,7 +51,7 @@ namespace ProceduralGeneration {
 			Actions = actions;
 		}
 
-		public ColliderSolverCtx GetNewColliderSolverCtx() {
+		internal ColliderSolverCtx GetNewColliderSolverCtx() {
 			return new(
 				Actions.GetOwner(),
 				Actions.GetColliderSolverType(),
@@ -64,11 +67,39 @@ namespace ProceduralGeneration {
 				Actions.GetBorderSize());
 		}
 
-		public SpriteShapeBorderCtx GetNewSpriteShapeBorderCtx() {
+		internal SpriteShapeBorderCtx GetNewSpriteShapeBorderCtx() {
 			return new(
 				Actions.GetSpriteShapeConfig(),
 				Actions.GetOwner(),
-				Actions.GetCoordinates().SpriteBoundaryCoords);
+				Actions.GetCoordinates().SpriteBoundaryCoords,
+				Actions.GetSerializationName());
+		}
+		
+		internal GridCharacteristicsSolverCtx GetNewGridCharacteristicsSolverCtx() {
+			return new(
+				Actions.GetGrid(),
+				Actions.GetSerializationName());
+		}
+
+		internal ColliderPointSetterCtx GetNewColliderPointSetterCtx() {
+			return new(
+				Actions.GetColliderGameObject(),
+				Actions.GetTileHashset(),
+				Actions.GetMapDimensions(),
+				Actions.GetBorderSize(),
+				Actions.GetEdgeColliderRadius());
+		}
+
+		internal SerializationRouterCtx GetNewSerializationRouterCtx() {
+			return new SerializationRouterCtx(Actions.GetSeed(), Actions.GetGrid(), Actions.GetSerializationName());
+		}
+		
+		internal SerializationRoute GetNewSerializationRoute() {
+			return new SerializationRoute(
+				Actions.GetShouldSerializePathfinding(),
+				Actions.GetShouldSerializeMapPrefab(),
+				Actions.GetShouldSerializeSpriteShape(),
+				Actions.GetShouldSerializeColliderCoords());
 		}
 	}
 }

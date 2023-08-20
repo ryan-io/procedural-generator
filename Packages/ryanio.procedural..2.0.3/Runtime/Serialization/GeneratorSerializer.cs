@@ -6,16 +6,16 @@ using UnityEngine;
 
 namespace ProceduralGeneration {
 	public class GeneratorSerializer {
-		GameObject           Container           { get; }
-		BCL.StopWatchWrapper StopWatch           { get; }
+		GameObject         GridGo { get; }
+		IProceduralLogging Logger { get; }
 
 		/// <summary>
-		/// This method should be invoked before invoking CreateMapFolder.
+		/// This method should be invoked before invoking CreateMapFolder. This method will serialize the current seed.
 		/// </summary>
-		/// <param name="info"></param>
-		/// <param name="config"></param>
-		public void SerializeSeed(SeedInfo info, ProceduralConfig config) {
-			new SerializeSeedInfo().Serialize(info, config.Name);
+		/// <param name="info">Info pertaining to current serialized seed</param>
+		/// <param name="mapName">Name of map</param>
+		public void SerializeSeed(SeedInfo info, string mapName) {
+			new SerializeSeedInfo().Serialize(info, mapName);
 		}
 
 		/// <summary>
@@ -28,16 +28,11 @@ namespace ProceduralGeneration {
 			var path          = mapDirectory.GetUniquePathRawPrefab(Constants.SAVE_MAP_PREFIX + name);
 			var prefabCreator = new PrefabCreator();
 
-			if (!prefabCreator.CreateAndSaveAsPrefab(Container, path)) {
-				GenLogging.Instance.Log(
-					"Could not save map prefab. There may be one already serialized.",
-					"SerializeMap",
-					BCL.LogLevel.Error);
+			if (!prefabCreator.CreateAndSaveAsPrefab(GridGo, path)) {
+				Logger.LogError(Message.CANT_SERIALIZE_MAP_GO, nameof(SerializeMapGameObject));
 			}
 			else {
-				GenLogging.Instance.Log(
-					"Serialized map at: " + path,
-					"SerializeMap");
+				Logger.Log( Message.SERIALIZE_MAP_AT + path, nameof(SerializeMapGameObject));
 			}
 		}
 
@@ -65,7 +60,7 @@ namespace ProceduralGeneration {
 		/// <param name="directories">Full and raw paths to SerializedData</param>
 		public void SerializeSpriteShape(
 			string name,
-			Dictionary<int, List<SerializableVector3>> coordinates,
+			IReadOnlyDictionary<int, List<SerializableVector3>> coordinates,
 			(string raw, string full) directories) {
 			Help.ValidateNameIsSerialized(name);
 
@@ -82,15 +77,15 @@ namespace ProceduralGeneration {
 		/// <param name="name">Name of ColliderCoords file</param>
 		/// <param name="coordinates">Collection of SerializableVector3</param>
 		/// <param name="directories"></param>
-		public void SerializeColliderCoords(string name, Dictionary<int, List<SerializableVector3>> coordinates,
+		public void SerializeColliderCoords(string name, IReadOnlyDictionary<int, List<SerializableVector3>> coordinates,
 			(string raw, string full) directories) {
 			if (string.IsNullOrWhiteSpace(name) || coordinates.IsEmptyOrNull())
 				return;
 			Help.ValidateNameIsSerialized(name);
-			
+
 			if (coordinates.IsEmptyOrNull())
 				return;
-			
+
 			name = Constants.COLLIDER_COORDS_SAVE_PREFIX + name;
 			SerializeJson(name, directories.full, coordinates);
 		}
@@ -117,12 +112,11 @@ namespace ProceduralGeneration {
 		/// <summary>
 		///  Constructor for the GeneratorSerializer class.
 		/// </summary>
-		/// <param name="config">ProcGen config</param>
-		/// <param name="container">Root GameObject containing ProceduralGenerator component</param>
-		/// <param name="stopWatch">Instance of stopwatch for outputting timeElapsed</param>
-		public GeneratorSerializer(ProceduralConfig config, GameObject container, BCL.StopWatchWrapper stopWatch) {
-			StopWatch           = stopWatch;
-			Container           = container;
+		/// <param name="gridGo">Root GameObject containing ProceduralGenerator component</param>
+		/// <param name="logger"></param>
+		public GeneratorSerializer(GameObject gridGo, IProceduralLogging logger) {
+			GridGo = gridGo;
+			Logger = logger;
 		}
 	}
 }

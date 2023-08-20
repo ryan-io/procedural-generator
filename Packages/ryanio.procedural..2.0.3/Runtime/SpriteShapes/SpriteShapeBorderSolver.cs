@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityBCL;
@@ -7,37 +8,36 @@ using Object = UnityEngine.Object;
 
 namespace ProceduralGeneration {
 	internal class SpriteShapeBorderSolver {
-		Ppu        Ppu   { get; }
-		Transform  Owner { get; }
-		GameObject Go    { get; set; }
+		const Ppu                               PPU = Ppu.Eight;
+		Transform                               Owner          { get; }
+		GameObject                              Go             { get; set; }
+		IReadOnlyDictionary<int, List<Vector3>> Coordinates    { get; }
+		string                                  SerializedName { get; }
 
-		internal void Generate(
-			Dictionary<int, List<Vector3>> positions, 
-			string serializedName,
-			[CallerMemberName] string name = "") {
-			SetupGameObject(serializedName);
-			RunProcedure(positions);
+		internal void Generate([CallerMemberName] string name = "") {
+			SetupGameObject();
+			RunProcedure();
 		}
 
-		void RunProcedure(Dictionary<int, List<Vector3>> boundaryPositions) {
+		void RunProcedure() {
 			ClearBorderGameObjects();
 
 			var currentRoomIndex = 0;
 
-			foreach (var outline in boundaryPositions) {
+			foreach (var outline in Coordinates) {
 				CreateSpriteShapeBorderAndPopulate(outline.Value, currentRoomIndex);
 				currentRoomIndex++;
 			}
 		}
 
-		
+
 		void CreateSpriteShapeBorderAndPopulate(IReadOnlyList<Vector3> boundaryPositions, int currentRoomIndex) {
 			var obj = InstantiateSpriteControllerPrefab();
 			obj.name = Constants.SPRITE_BOUNDARY_KEY + currentRoomIndex;
 
 			var controller = obj.GetComponent<SpriteShapeController>();
-			controller.worldSpaceUVs      = _config.IsSplineAdaptive;
-			controller.fillPixelsPerUnit  = (int)Ppu;
+			controller.worldSpaceUVs     = _config.IsSplineAdaptive;
+			controller.fillPixelsPerUnit = (int)PPU;
 			var spline = controller.spline;
 			controller.fillPixelsPerUnit = (float)_config.Ppu;
 			spline.Clear();
@@ -52,35 +52,35 @@ namespace ProceduralGeneration {
 
 			for (var i = 0; i < limit; i++) {
 				if (spline.GetPointCount() > maxNodes) {
-					var newObjName = 
-						Constants.SPRITE_BOUNDARY_KEY + 
-						currentRoomIndex + 
-						Constants.SPACE + 
-						Constants.ITERATION_LABEL + 
+					var newObjName =
+						Constants.SPRITE_BOUNDARY_KEY +
+						currentRoomIndex              +
+						Constants.SPACE               +
+						Constants.ITERATION_LABEL     +
 						iterationCount;
-					
+
 					obj      = InstantiateSpriteControllerPrefab();
 					obj.name = newObjName;
 
-					controller                    = obj.GetComponent<SpriteShapeController>();
-					controller.worldSpaceUVs      = _config.IsSplineAdaptive;
-					
-					spline                        = controller.spline;
+					controller               = obj.GetComponent<SpriteShapeController>();
+					controller.worldSpaceUVs = _config.IsSplineAdaptive;
+
+					spline = controller.spline;
 					spline.Clear();
-					
+
 					iterationCount++;
 					indexTracker = 0;
-					
+
 					controller.spline.isOpenEnded = true;
 					controller.fillPixelsPerUnit  = (float)_config.Ppu;
 					controller.RefreshSpriteShape();
 				}
-				
+
 				indexTracker = CreateAndSetSplineSegment(boundaryPositions[i], spline, indexTracker, solver);
 				controller.RefreshSpriteShape();
 			}
-
 		}
+
 		ISplineSegmentSolver InstantiateTangentSolver() {
 			ISplineSegmentSolver solver;
 			switch (_config.SplineTangentMode) {
@@ -120,8 +120,8 @@ namespace ProceduralGeneration {
 			}
 		}
 
-		void SetupGameObject(string name) {
-			Go = new GameObject(Constants.SPRITE_SHAPE_SAVE_PREFIX + name) {
+		void SetupGameObject() {
+			Go = new GameObject(Constants.SPRITE_SHAPE_SAVE_PREFIX + SerializedName) {
 				transform = { parent = Owner }
 			};
 		}
@@ -134,8 +134,10 @@ namespace ProceduralGeneration {
 		}
 
 		internal SpriteShapeBorderSolver(SpriteShapeBorderCtx ctx) {
-			_config         = ctx.Config;
-			Owner           = ctx.Owner.transform;
+			_config        = ctx.Config;
+			Owner          = ctx.Owner.transform;
+			Coordinates    = ctx.Coordinates;
+			SerializedName = ctx.SerializedName;
 		}
 
 		readonly SpriteShapeConfig _config;

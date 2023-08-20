@@ -6,9 +6,9 @@ using UnityBCL;
 using UnityEngine;
 
 namespace ProceduralGeneration {
-	internal readonly struct Serialize {
-		internal Dictionary<int, List<SerializableVector3>> SerializeVector3Collection(
-			Dictionary<int, List<Vector3>> col) {
+	internal readonly struct Convert {
+		internal IReadOnlyDictionary<int, List<SerializableVector3>> DictionaryVector3ToSerializedVector3(
+			IReadOnlyDictionary<int, List<Vector3>> col) {
 			var output = new Dictionary<int, List<SerializableVector3>>();
 			var index  = col.Keys.First();
 

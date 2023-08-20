@@ -6,24 +6,26 @@ using UnityBCL;
 using UnityEngine;
 
 namespace ProceduralGeneration {
-	public readonly struct CreateBoundaryColliders {
-		DataProcessor Processor { get; }
-		float         Radius    { get; }
+	internal class CreateBoundaryColliders {
+		GameObject                ColliderGo { get; }
+		TileHashset               Hashset    { get; }
+		GetProcessedCellPositions Processor  { get; }
+		float                     Radius     { get; }
 
-		public void Create(GameObject parent) {
-			var vectors = Processor.GetBorderCellPositions();
+		internal void Set() {
+			var vectors = Processor.Get(Hashset);
 
 			if (vectors.IsEmptyOrNull())
 				return;
 
 			var obj = new GameObject("boundary") {
 				isStatic  = true,
-				transform = { parent = parent.transform }
+				transform = { parent = ColliderGo.transform }
 			};
 
 			var maxX = vectors.Max(vector => vector.x);
 			var minX = vectors.Min(vector => vector.x);
-			var maxY = vectors.Max(vector => vector.y); 
+			var maxY = vectors.Max(vector => vector.y);
 			var minY = vectors.Min(vector => vector.y);
 
 			var edgeCollider = obj.AddComponent<EdgeCollider2D>();
@@ -33,15 +35,18 @@ namespace ProceduralGeneration {
 			var bottomRight = new Vector2(maxX, minY);
 			var topRight    = new Vector2(maxX, maxY);
 
-			var pointList = new List<Vector2>() { bottomLeft, topLeft, topRight, bottomRight, bottomLeft };
+			var pointList = new List<Vector2> { bottomLeft, topLeft, topRight, bottomRight, bottomLeft };
 
 			edgeCollider.SetPoints(pointList);
 			edgeCollider.edgeRadius = Radius;
+			new SetAllEdgeColliderRadius(Radius).Set(ColliderGo);
 		}
 
-		public CreateBoundaryColliders(ProceduralConfig config, DataProcessor processor) {
-			Radius    = config.EdgeColliderRadius;
-			Processor = processor;
+		internal CreateBoundaryColliders(ColliderPointSetterCtx ctx) {
+			Processor  = new GetProcessedCellPositions(ctx.Dimensions, ctx.BorderSize);
+			ColliderGo = ctx.ColliderGo;
+			Hashset    = ctx.Hashset;
+			Radius     = ctx.Radius;
 		}
 	}
 }

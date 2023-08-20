@@ -1,5 +1,6 @@
 // ProceduralGeneration
 
+using System.Collections.Generic;
 using BCL;
 using UnityEngine;
 
@@ -8,13 +9,24 @@ namespace ProceduralGeneration {
 		public ProceduralConfig  ProceduralConfig  { private get; set; }
 		public SpriteShapeConfig SpriteShapeConfig { private get; set; }
 
-		public SpriteShapeConfig GetSpriteShapeConfig() => SpriteShapeConfig;
-		public float             GetTimeElapsed() => _stopWatch.TimeElapsed;
+		public SpriteShapeConfig                  GetSpriteShapeConfig()    => SpriteShapeConfig;
+		public IReadOnlyList<GraphColliderCutter> GetGraphColliderCutters() => ProceduralConfig.ColliderCutters;
 
-		public void SetColliderGameObject(GameObject o)                       => ColliderGameObject = o;
-		public void SetTileMapDictionary(TileMapDictionary tileMapDictionary) => TileMapDictionary = tileMapDictionary;
-		public void SetGrid(Grid grid)                                        => Grid = grid;
-		
+		public float                              GetTimeElapsed() => _stopWatch.TimeElapsed;
+
+		public bool GetShouldSerializePathfinding() => ProceduralConfig.ShouldSerializePathfinding;
+
+		public bool GetShouldSerializeMapPrefab() => ProceduralConfig.ShouldSerializeMapPrefab;
+
+		public bool GetShouldSerializeSpriteShape() => ProceduralConfig.ShouldSerializeSpriteShape;
+
+		public bool GetShouldSerializeColliderCoords() => ProceduralConfig.ShouldSerializeColliderCoords;
+
+		public void   SetColliderGameObject(GameObject o)                       => ColliderGameObject = o;
+		public void   SetTileMapDictionary(TileMapDictionary tileMapDictionary) => TileMapDictionary = tileMapDictionary;
+		public void   SetGrid(Grid grid)                                        => Grid = grid;
+		public void   StopTimer()                                               => _stopWatch.Stop();
+		public string GetMapName()                                              => ProceduralConfig.Name;
 
 		public void SetMeshData(MeshData meshData) => MeshData = meshData;
 

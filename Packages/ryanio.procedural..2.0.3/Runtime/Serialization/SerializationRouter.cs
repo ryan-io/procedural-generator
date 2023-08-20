@@ -1,44 +1,52 @@
 // ProceduralGeneration
 
 using System.Collections.Generic;
-using BCL;
 using UnityBCL;
-using UnityEngine;
 
 namespace ProceduralGeneration {
-	public class SerializationRouter {
+	internal class SerializationRouter {
+		SeedInfo            SeedInfo                      { get; }
 		GeneratorSerializer Serializer                    { get; }
+		string              SerializedName                { get; }
 		bool                ShouldSerializePathfinding    { get; }
 		bool                ShouldSerializeMapPrefab      { get; }
 		bool                ShouldSerializeSpriteShape    { get; }
 		bool                ShouldSerializeColliderCoords { get; }
 
-		public void ValidateAndSerialize(
-			string name,
-			string directory,
-			Dictionary<int, List<SerializableVector3>> boundaryCoords,
-			Dictionary<int, List<SerializableVector3>> colliderCoords) {
-			var directories = DirectoryAction.GetMapDirectories(name);
+		internal void Run(string mapName, Coordinates coordinates) {
+			var directory = new DirectoryAction().CreateNewDirectory(SerializedName);
+			Serializer.SerializeSeed(SeedInfo, SerializedName);
 
+			var directories = DirectoryAction.GetMapDirectories(mapName);
 			if (ShouldSerializePathfinding)
-				Serializer.SerializeCurrentAstarGraph(name, directory);
+				Serializer.SerializeCurrentAstarGraph(mapName, directory);
 
 			if (ShouldSerializeMapPrefab)
-				Serializer.SerializeMapGameObject(name, directories);
+				Serializer.SerializeMapGameObject(mapName, directories);
 
-			if (ShouldSerializeSpriteShape)
-				Serializer.SerializeSpriteShape(name, boundaryCoords, directories);
+			if (ShouldSerializeSpriteShape) {
+				var convertedCoords =
+					new Convert().DictionaryVector3ToSerializedVector3(coordinates.SpriteBoundaryCoords);
+				Serializer.SerializeSpriteShape(mapName, convertedCoords, directories);
+			}
 
-			if (ShouldSerializeColliderCoords)
-				Serializer.SerializeColliderCoords(name, colliderCoords, directories);
+			if (ShouldSerializeColliderCoords) {
+				var convertedCoords =
+					new Convert().DictionaryVector3ToSerializedVector3(coordinates.ColliderCoords);
+				Serializer.SerializeColliderCoords(mapName, convertedCoords, directories);
+			}
 		}
 
-		public SerializationRouter(ProceduralConfig config, GameObject gridObj, StopWatchWrapper stopWatch) {
-			Serializer                    = new GeneratorSerializer(config, gridObj, stopWatch);
-			ShouldSerializePathfinding    = config.ShouldSerializePathfinding;
-			ShouldSerializeMapPrefab      = config.ShouldSerializeMapPrefab;
-			ShouldSerializeSpriteShape    = config.ShouldSerializeSpriteShape;
-			ShouldSerializeColliderCoords = config.ShouldSerializeColliderCoords;
+		internal SerializationRouter(SerializationRouterCtx ctx, SerializationRoute route, IProceduralLogging logger) {
+			Serializer = new GeneratorSerializer(ctx.Grid.gameObject, logger);
+			
+			SeedInfo                      = ctx.SeedInfo;
+			SerializedName                = ctx.SerializableName;
+			
+			ShouldSerializePathfinding    = route.ShouldSerializePathfinding;
+			ShouldSerializeMapPrefab      = route.ShouldSerializeMapPrefab;
+			ShouldSerializeSpriteShape    = route.ShouldSerializeSpriteShape;
+			ShouldSerializeColliderCoords = route.ShouldSerializeColliderCoords;
 		}
 	}
 }

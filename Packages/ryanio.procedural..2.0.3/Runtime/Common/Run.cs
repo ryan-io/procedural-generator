@@ -9,8 +9,18 @@ namespace ProceduralGeneration {
 			
 			var generationRouter = new GenerationRouter(Actions, new StandardProcess(Actions));
 			generationRouter.Run();
+		}
+
+		internal void Serialization(IMachine machine) {
+			var ctxCreator = new ContextCreator(Actions);
 			
-			SetStateComplete(machine);
+			var router = new SerializationRouter(
+				ctxCreator.GetNewSerializationRouterCtx(),
+				ctxCreator.GetNewSerializationRoute(), 
+				Actions );
+
+			Actions.GetCoordinates();
+			router.Run(Actions.GetMapName(), Actions.GetCoordinates());
 		}
 
 		internal void Deserialization(IMachine machine) {
@@ -18,14 +28,8 @@ namespace ProceduralGeneration {
 
 			var deserializeRouter = new DeserializationRouter(Actions);
 			deserializeRouter.ValidateAndDeserialize(Actions.GetDeserializationName(), Actions.GetColliderGameObject());
-			
-			SetStateComplete(machine);
 		}
 		
-		void SetStateComplete(IMachine machine) {
-			machine.InvokeEvent(StateObservableId.ON_COMPLETE);
-		}
-
 		public Run(IActions actions) {
 			Actions = actions;
 		}

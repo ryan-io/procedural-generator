@@ -22,8 +22,7 @@ namespace ProceduralGeneration {
 	/// https://stackoverflow.com/questions/4260207/how-do-you-get-the-width-and-height-of-a-multi-dimensional-array
 	/// </summary>
 	[HideMonoScript]
-	public class ProceduralGenerator : Singleton<ProceduralGenerator, ProceduralGenerator>,
-	                                   ISeed, IOwner {
+	public class ProceduralGenerator : Singleton<ProceduralGenerator, ProceduralGenerator>, IOwner {
 		// public string CurrentSerializableName {
 		// 	get {
 		// 		var seedInfo = GetSeedInfo();
@@ -94,6 +93,8 @@ namespace ProceduralGeneration {
 			var actions = new Actions(this)
 				{ ProceduralConfig = _config, SpriteShapeConfig = _spriteShapeConfig };
 
+			IMachine machine = GenerationMachine.Create(actions).Run();
+
 			try {
 				var onCompleteLog = string.Empty;
 
@@ -102,7 +103,6 @@ namespace ProceduralGeneration {
 					return;
 				}
 
-				var machine = GenerationMachine.Create(actions).Run();
 				new InitializationService(actions).Run(machine);
 				var run = new Run(actions);
 
@@ -111,6 +111,7 @@ namespace ProceduralGeneration {
 					new GeneratorSetupService().Run();
 					new GeneratorSceneSetupService(actions).Run();
 					run.Generation(machine);
+					run.Serialization(machine);
 
 					onCompleteLog = Message.GENERATION_COMPLETE;
 				}
@@ -123,13 +124,16 @@ namespace ProceduralGeneration {
 				}
                 
 				// dispose
+				machine.InvokeEvent(StateObservableId.ON_DISPOSE);
 				
 				// complete
-                
+				actions.StopTimer();
+				machine.InvokeEvent(StateObservableId.ON_COMPLETE);
 				actions.Log(onCompleteLog, nameof(Load));
 			}
 			catch (Exception e) {
-				actions.LogError(Message.GENERATION_ERROR + e.Message, nameof(Load));
+				machine.InvokeEvent(StateObservableId.ON_ERROR);
+				actions.LogError(e.Message, nameof(Load));
 			}
 		}
 
@@ -218,28 +222,27 @@ namespace ProceduralGeneration {
 				// var borderSolver = new SpriteShapeBorderSolver(_spriteShapeConfig, gameObject);
 				// borderSolver.Generate(_data.SpriteBoundaryCoords, CurrentSerializableName);
 
-				new CutGraphColliders().Cut(_config.ColliderCutters);
-				new CreateBoundaryColliders(_config, DataProcessor).Create(GeneratedCollidersObj);
-				new RenameTilemapContainer().Rename(CurrentSerializableName, Grid.gameObject);
+				//new CutGraphColliders().Cut(_config.ColliderCutters);		moveted to NavigationSolver
+				//new CreateBoundaryColliders(_config, DataProcessor).Set(GeneratedCollidersObj);
+				// new RenameTilemapContainer().Rename(CurrentSerializableName, Grid.gameObject);
+				//
+				// Tools.SetOriginWrtMap(Grid.gameObject);
+				// Tools.SetGridScale(Constants.CELL_SIZE);
 
-				Tools.SetOriginWrtMap(Grid.gameObject);
-				Tools.SetGridScale(Constants.CELL_SIZE);
+				//GeneratorSerializer.SerializeSeed(GetSeedInfo(), _config);
 
-				GeneratorSerializer.SerializeSeed(GetSeedInfo(), _config);
-				var directory = new DirectoryAction().CreateNewDirectory(CurrentSerializableName);
-
-				new SetColliderObjName().Set(GeneratedCollidersObj,
-					Constants.SAVE_COLLIDERS_PREFIX + CurrentSerializableName);
+				// new SetColliderObjName().Set(GeneratedCollidersObj,
+				// 	Constants.SAVE_COLLIDERS_PREFIX + CurrentSerializableName);
 
 #region COMPLETE
 
-				new SetAllEdgeColliderRadius(_config.EdgeColliderRadius).Set(gameObject);
-				var router = new SerializationRouter(_config, Grid.gameObject, StopWatch);
-				router.ValidateAndSerialize(CurrentSerializableName, directory, _data.GetBoundaryCoords(),
-					colliderCoords);
-				StopWatch.Stop();
-				StateMachine.ChangeState(ProcessStep.Completing);
-				Observables[StateObservableId.ON_COMPLETE].Signal();
+				//new SetAllEdgeColliderRadius(_config.EdgeColliderRadius).Set(gameObject);
+				// var router = new SerializationRouter(_config, Grid.gameObject, StopWatch);
+				// router.Run(CurrentSerializableName, directory, _data.GetBoundaryCoords(),
+				// 	colliderCoords);
+				//StopWatch.Stop();
+				// StateMachine.ChangeState(ProcessStep.Completing);
+				// Observables[StateObservableId.ON_COMPLETE].Signal();
 
 #endregion
 

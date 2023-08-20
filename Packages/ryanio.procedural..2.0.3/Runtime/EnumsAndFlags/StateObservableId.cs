@@ -1,15 +1,15 @@
 ﻿namespace ProceduralGeneration {
-	public static class StateObservableId {
-		public static readonly string ON_CLEAN = "OnClean";
+	internal static class StateObservableId {
+		internal const string ON_CLEAN = "OnClean";
 
-		public static readonly string ON_INIT = "OnInit";
+		internal const string ON_INIT = "OnInit";
 
-		public static readonly string ON_RUN = "OnRun";
+		internal const string ON_RUN = "OnRun";
 
-		public static readonly string ON_COMPLETE = "OnComplete";
+		internal const string ON_COMPLETE = "OnComplete";
 
-		public static readonly string ON_DISPOSE = "OnDispose";
+		internal const string ON_DISPOSE = "OnDispose";
 
-		public static readonly string ON_ERROR = "OnError";
+		internal const string ON_ERROR = "OnError";
 	}
 }

@@ -13,8 +13,9 @@ namespace ProceduralGeneration {
 	/// </summary>
 	internal class StandardProcess : GenerationProcess {
 		internal override MapData Run(Span2D<int> map) {
-			var ctxCreator = new ContextCreator(Actions);
-			var data       = new MapData(Actions.GetTileHashset(), Actions.GetMeshData());
+			var ctxCreator        = new ContextCreator(Actions);
+			var data              = new MapData(Actions.GetTileHashset(), Actions.GetMeshData());
+			var generatorToolsCtx = ctxCreator.GetNewGeneratorToolsCtx();
 
 			FillMap(map, ctxCreator.GetNewFillMapCtx());
 			SmoothMap(map, ctxCreator.GetNewSmoothMapCtx());
@@ -23,7 +24,7 @@ namespace ProceduralGeneration {
 			SetTiles(map,
 				ctxCreator.GetNewTileSetterCtx(),
 				ctxCreator.GetNewTileMapperCtx(),
-				ctxCreator.GetNewTileToolsCtx());
+				generatorToolsCtx);
 
 			var meshData = CreateMesh(map, ctxCreator.GetNewMeshSolverCtx());
 			Actions.SetMeshData(meshData);
@@ -33,8 +34,11 @@ namespace ProceduralGeneration {
 				ctxCreator.GetNewNavigationSolverCtx());
 
 			var coordinates = CreateColliders(ctxCreator.GetNewColliderSolverCtx());
+
 			AssignCoordinates(coordinates);
+			SetBoundaryColliderPoints(ctxCreator.GetNewColliderPointSetterCtx());
 			GenerateSpriteShapeBorder(ctxCreator.GetNewSpriteShapeBorderCtx());
+			SetGridCharacteristics(ctxCreator.GetNewGridCharacteristicsSolverCtx(), generatorToolsCtx);
 
 			return new MapData();
 		}
@@ -59,9 +63,9 @@ namespace ProceduralGeneration {
 			TileSolversCtx tileSolverCtx,
 			TileMapperCtx mapperCtx,
 			GeneratorToolsCtx toolsCtx) {
-			ProceduralService.GetTileSetterSolver(() => new StandardTileSetterSolver(
-				                                      tileSolverCtx, mapperCtx, toolsCtx))
-			                 .Set(map);
+			ProceduralService.GetTileSetterSolver(
+				() => new StandardTileSetterSolver(
+					tileSolverCtx, mapperCtx, toolsCtx)).Set(map);
 		}
 
 		static MeshData CreateMesh(Span2D<int> map, MeshSolverCtx ctx) {
@@ -80,6 +84,15 @@ namespace ProceduralGeneration {
 
 		static void GenerateSpriteShapeBorder(SpriteShapeBorderCtx ctx) {
 			ProceduralService.GetSpriteShapeBorderSolver(() => new SpriteShapeBorderSolver(ctx)).Generate();
+		}
+
+		static void SetBoundaryColliderPoints(ColliderPointSetterCtx ctx) {
+			ProceduralService.GetCutCollidersSolver(() => new CreateBoundaryColliders(ctx)).Set();
+		}
+
+		static void SetGridCharacteristics(GridCharacteristicsSolverCtx ctx, GeneratorToolsCtx toolsCtx) {
+			ProceduralService.GetGridCharacteristicsSolver(
+				() => new GridCharacteristicsSolver(ctx, toolsCtx)).Set();
 		}
 
 		void AssignCoordinates(Coordinates coordinates) => Actions.SetCoords(coordinates);
