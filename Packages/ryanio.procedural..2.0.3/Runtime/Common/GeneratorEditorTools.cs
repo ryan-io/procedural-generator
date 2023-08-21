@@ -8,7 +8,7 @@ using UnityEngine.Tilemaps;
 using Random = UnityEngine.Random;
 
 namespace ProceduralGeneration {
-	internal class DataProcessor {
+	internal class GeneratorEditorTools {
 		internal bool IsReady { get; set; } = false;
 
 		Tilemap             BoundaryTilemap { get; }
@@ -184,7 +184,7 @@ namespace ProceduralGeneration {
 			return GridToDrawOn.CellToWorld(new Vector3Int(t.x, t.y, 0));
 		}
 
-		internal DataProcessor(
+		internal GeneratorEditorTools(
 			ProceduralConfig config,
 			MapData mapData,
 			TileMapDictionary dictionary, 

@@ -23,8 +23,6 @@ namespace ProceduralGeneration {
 			new RenderCleaner().Clean(owner);
 			new EnsureMapFitsOnStack().Ensure(config);
 			new CleanSpriteShapes().Clean(owner);
-
-			Actions.Log(Message.CLEAN_COMPLETE, nameof(Clean));
 		}
 
 		internal GeneratorCleaner(IActions actions) {

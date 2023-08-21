@@ -12,7 +12,7 @@ namespace ProceduralGeneration {
 		public SpriteShapeConfig                  GetSpriteShapeConfig()    => SpriteShapeConfig;
 		public IReadOnlyList<GraphColliderCutter> GetGraphColliderCutters() => ProceduralConfig.ColliderCutters;
 
-		public float GetTimeElapsed() => _stopWatch.TimeElapsed;
+		public float GetTimeElapsed() => _stopWatch.TimeElapsed * TIME_CONVERSION;
 
 		public bool GetShouldSerializePathfinding() => ProceduralConfig.ShouldSerializePathfinding;
 
@@ -58,5 +58,7 @@ namespace ProceduralGeneration {
 		readonly IProceduralLogging _logger;
 		readonly TileHashset        _tileHashset;
 		readonly StopWatchWrapper   _stopWatch;
+
+		const int TIME_CONVERSION = 1000;
 	}
 }

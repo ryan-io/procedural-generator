@@ -17,7 +17,6 @@ namespace ProceduralGeneration {
 				ctxCreator.GetNewSerializationRoute(), 
 				Actions );
 
-			Actions.GetCoordinates();
 			router.Run(Actions.GetMapName(), Actions.GetCoordinates());
 		}
 

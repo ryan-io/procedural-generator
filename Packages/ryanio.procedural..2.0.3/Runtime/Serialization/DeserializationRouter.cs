@@ -71,6 +71,7 @@ namespace ProceduralGeneration {
 		void DeserializeColliderCoords(string nameSeedIteration, (string raw, string full) directories, GameObject go) {
 			var colPos = Deserializer.DeserializeVector3(
 				nameSeedIteration, Constants.COLLIDER_COORDS_SAVE_PREFIX, directories);
+			
 			var ctxCreator = new ContextCreator(Actions);
 
 			var colSolver =
@@ -78,8 +79,9 @@ namespace ProceduralGeneration {
 			colSolver.CreateColliderFromDict(colPos);
 		}
 
-		internal DeserializationRouter(DeserializationRoute route, IProceduralLogging logger) {
-			Deserializer                    = new GeneratorDeserializer(logger);
+		internal DeserializationRouter(DeserializationRoute route, IActions actions) {
+			Deserializer                    = new GeneratorDeserializer(actions);
+			Actions                         = actions;
 			ShouldDeserializePathfinding    = route.ShouldDeserializePathfinding;
 			ShouldDeserializeColliderCoords = route.ShouldDeserializeColliderCoords;
 			ShouldDeserializeMapPrefab      = route.ShouldDeserializeMapPrefab;

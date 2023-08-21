@@ -13,7 +13,7 @@ namespace ProceduralGeneration {
 	/// </summary>
 	internal class StandardProcess : GenerationProcess {
 		internal override MapData Run(Span2D<int> map) {
-			var ctxCreator        = new ContextCreator(Actions);
+			var ctxCreator = new ContextCreator(Actions);
 			//var data              = new MapData(Actions.GetTileHashset(), Actions.GetMeshData());
 			var generatorToolsCtx = ctxCreator.GetNewGeneratorToolsCtx();
 

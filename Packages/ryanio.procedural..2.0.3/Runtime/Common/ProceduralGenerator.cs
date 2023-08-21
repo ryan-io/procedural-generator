@@ -1,11 +1,6 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using BCL;
-using CommunityToolkit.HighPerformance;
 using Sirenix.OdinInspector;
-using StateMachine;
-using TMPro;
 using UnityBCL;
 using UnityEngine;
 
@@ -46,42 +41,63 @@ namespace ProceduralGeneration {
 					return;
 				}
 
-				machine.InvokeEvent(StateObservableId.ON_INIT);
-				new InitializationService(actions).Run(_config);
-				machine.InvokeEvent(StateObservableId.ON_CLEAN);
-				var run = new Run(actions);
-
+				var run = Initialize(machine, actions, !_config.ShouldDeserialize);
 				machine.InvokeEvent(StateObservableId.ON_RUN);
 
 				if (_config.ShouldGenerate) {
-					new SeedValidator(_config).Validate(actions.GetSeed());
-					new GeneratorSceneSetupService(actions).Run();
-
-					run.Generation();
-					//run.Serialization();
-
-					onCompleteLog = Message.GENERATION_COMPLETE;
+					onCompleteLog = GenerateMap(actions, run);
 				}
 
 				else if (_config.ShouldDeserialize) {
-					new DeserializationService(actions).Run(actions);
-					run.Deserialization();
-
-					onCompleteLog = Message.DESERIALIZATION_COMPLETE;
+					onCompleteLog = DeserializeMap(actions, run);
 				}
 
-				// dispose
-				machine.InvokeEvent(StateObservableId.ON_DISPOSE);
-
-				// complete
-				actions.StopTimer();
-				machine.InvokeEvent(StateObservableId.ON_COMPLETE);
-				actions.Log(onCompleteLog, nameof(Load));
+				Dispose(machine);
+				Complete(actions, machine, onCompleteLog);
 			}
 			catch (Exception e) {
 				machine.InvokeEvent(StateObservableId.ON_ERROR);
 				actions.LogError(e.Message, nameof(Load));
 			}
+		}
+
+		Run Initialize(IMachine machine, IActions actions, bool initSeed = true) {
+			if (initSeed)
+				new SeedValidator(_config).Validate(actions.GetSeed());
+			
+			machine.InvokeEvent(StateObservableId.ON_INIT);
+			new InitializationService(actions).Run(_config);
+			machine.InvokeEvent(StateObservableId.ON_CLEAN);
+
+			return new Run(actions);
+		}
+
+		string GenerateMap(IActions actions, Run run) {
+			new GeneratorSceneSetupService(actions).Run();
+			
+			run.Generation();
+			run.Serialization();
+			
+			return Message.GENERATION_COMPLETE;
+		}
+
+		static string DeserializeMap(IActions actions, Run run) {
+			new DeserializationService(actions).Run(actions);
+			run.Deserialization();
+
+			return Message.DESERIALIZATION_COMPLETE;
+		}
+
+		static void Dispose(IMachine machine) {
+			machine.InvokeEvent(StateObservableId.ON_DISPOSE);
+		}
+
+		void Complete(Actions actions, IMachine machine, string onCompleteLog) {
+			actions.StopTimer();
+			machine.InvokeEvent(StateObservableId.ON_COMPLETE);
+
+			actions.Log(onCompleteLog,                                         nameof(Load));
+			actions.Log(Message.TOTAL_TIME_ELAPSED + actions.GetTimeElapsed() + " sec.", nameof(Load));
 		}
 
 #region TO-DO
@@ -106,7 +122,7 @@ namespace ProceduralGeneration {
 		[BoxGroup("Actions", centerLabel: true),
 		 HorizontalGroup("Actions/Buttons2"),
 		 ButtonGroup("Actions/Buttons2/Methods", Stretch = false, IconAlignment = IconAlignment.RightEdge)]
-		void ForceClean() => new GeneratorCleaner(new Actions(this)).Clean(_config);
+		void ForceClean() => new GeneratorCleaner(new Actions(this)).Clean(_config, true);
 
 		[BoxGroup("Actions"),
 		 HorizontalGroup("Actions/Buttons1"),
@@ -121,8 +137,13 @@ namespace ProceduralGeneration {
 		[BoxGroup("Actions"),
 		 HorizontalGroup("Actions/Buttons2"),
 		 ButtonGroup("Actions/Buttons2/Methods", Stretch = false, IconAlignment = IconAlignment.RightEdge)]
-		void DeleteSelectedSerialized() 
-			=> DirectoryAction.DeleteDirectory(_config.NameSeedIteration, default, default);
+		void DeleteSelectedSerialized() {
+			if (string.IsNullOrWhiteSpace(_config.NameSeedIteration))
+				return;
+			
+			DirectoryAction.DeleteDirectory(_config.NameSeedIteration, default, default);
+			_config.NameSeedIteration = Help.GetAllSeeds().FirstOrDefault();
+		}
 
 		[Button(ButtonSizes.Medium, ButtonStyle.CompactBox, Icon = SdfIconType.Signal,
 			IconAlignment = IconAlignment.RightOfText)]
@@ -139,7 +160,7 @@ namespace ProceduralGeneration {
 
 		[field: SerializeField, Required, BoxGroup("Configuration"), HideLabel]
 		SpriteShapeConfig _spriteShapeConfig = null!;
-
+  
 		[SerializeField, HideInInspector] MapData _data;
 	}
 }

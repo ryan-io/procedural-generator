@@ -78,10 +78,12 @@
 		internal const string SERIALIZE_COLLIDER_COORDS_INVALID_NAME =
 			", could not be found. This is likely due to not serializing Collider data (check settings).";
 		
-		internal const string DESERIALIZE_MAP_PREFAB	= "Deserializing map prefab at: ";
+		internal const string DESERIALIZE_MAP_PREFAB	= "Deserializing map prefab: ";
 		
 		internal const string CANNOT_DELETE_META_DATA = "Could not delete meta data file: ";
 
 		internal const string CANNOT_DELETE_SEED = "Could not delete seed from tracker file: ";
+		
+		internal const string TOTAL_TIME_ELAPSED = "Total time elapsed: ";
 	}
 }

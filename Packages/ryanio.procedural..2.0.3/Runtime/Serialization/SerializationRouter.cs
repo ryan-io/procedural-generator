@@ -14,26 +14,26 @@ namespace ProceduralGeneration {
 		bool                ShouldSerializeColliderCoords { get; }
 
 		internal void Run(string mapName, Coordinates coordinates) {
-			var directory = new DirectoryAction().CreateNewDirectory(SerializedName);
-			Serializer.SerializeSeed(SeedInfo, SerializedName);
-
-			var directories = DirectoryAction.GetMapDirectories(mapName);
+			Serializer.SerializeSeed(SeedInfo, mapName);
+			//var directory = new DirectoryAction().CreateNewDirectory(SerializedName);
+			var directories = DirectoryAction.GetMapDirectories(SerializedName);
+			
 			if (ShouldSerializePathfinding)
-				Serializer.SerializeCurrentAstarGraph(mapName, directory);
+				Serializer.SerializeCurrentAstarGraph(SerializedName, directories.full);
 
 			if (ShouldSerializeMapPrefab)
-				Serializer.SerializeMapGameObject(mapName, directories);
+				Serializer.SerializeMapGameObject(SerializedName, directories);
 
 			if (ShouldSerializeSpriteShape) {
 				var convertedCoords =
 					new Convert().DictionaryVector3ToSerializedVector3(coordinates.SpriteBoundaryCoords);
-				Serializer.SerializeSpriteShape(mapName, convertedCoords, directories);
+				Serializer.SerializeSpriteShape(SerializedName, convertedCoords, directories);
 			}
 
 			if (ShouldSerializeColliderCoords) {
 				var convertedCoords =
 					new Convert().DictionaryVector3ToSerializedVector3(coordinates.ColliderCoords);
-				Serializer.SerializeColliderCoords(mapName, convertedCoords, directories);
+				Serializer.SerializeColliderCoords(SerializedName, convertedCoords, directories);
 			}
 		}
 
