@@ -7,18 +7,14 @@ using Object = UnityEngine.Object;
 
 namespace ProceduralGeneration {
 	internal class PrimitiveCollisionSolver : CollisionSolver {
-		GameObject      ColliderGo        { get; }
-		List<Vector3>   MeshVertices      { get; }
-		List<List<int>> RoomOutlines      { get; }
-		Vector3         Char1             { get; set; }
-		Vector3         Char2             { get; set; }
-		bool            CurrentIsColinear { get; set; }
-		bool            LastWasColinear   { get; set; }
-		float           SkinWidth         { get; }
+		GameObject      ColliderGo   { get; }
+		List<Vector3>   MeshVertices { get; }
+		List<List<int>> RoomOutlines { get; }
+		Vector3         Char1        { get; set; }
+		float           SkinWidth    { get; }
+		float           LastSlope    { get; set; } 
 
 		/// <summary>
-		/// 3 points (x1,y1), (x2,y2), and (x3,y3) are colinear (in a line) if:
-		/// (x2-x1)(y3-y2) - (y2-y1)(x3-x2) = 0
 		/// </summary>
 		/// <param name="caller"></param>
 		internal override Coordinates CreateCollider([CallerMemberName] string caller = "") {
@@ -43,15 +39,22 @@ namespace ProceduralGeneration {
 
 		void InstantiateCollider(
 			Dictionary<int, List<Vector3>> colliderCoords,
-			ICollection<Vector3> spriteBorderVectors,
+			IList<Vector3> spriteBorderVectors,
 			int index) {
-			var col     = CreateNewPrimitiveCollider(index.ToString());
+			
 			var outline = RoomOutlines[index];
+			
+			if (outline.Count <= 10)
+				return;
+
+			var col     = CreateNewPrimitiveCollider(index.ToString());
 			var objList = new GameObject[3];
 
 			// PrimitiveCollider API requires a "starting" point of three game objects with colliders
 			// this section of the method satisfies this requirement and are later destroyed
 			SetStarting(spriteBorderVectors, outline, col, objList);
+
+			var initColliders = false;
 
 			for (var i = 0; i < outline.Count; i++) {
 				var allBoundaryList = colliderCoords[index];
@@ -88,37 +91,31 @@ namespace ProceduralGeneration {
 			objList[k] = col.corners[k].gameObject;
 		}
 
-		float lastSlope = Mathf.Infinity;
+		int stdIndex = 0;
 		
 		void CreateBodyColliders(Vector3 point, int index, ProceduralPrimitiveCollider col,
 			ICollection<Vector3> spriteBorderVectors) {
-			CreateHandle(col, point, col.corners[^1], col.corners[^1].GetSiblingIndex() + 1);
-
+			//col.corners[^1].GetSiblingIndex() + 1
 			if (index == 0) {
+				CreateHandle(col, point, col.corners[^1], stdIndex);
+				stdIndex++;
 				ValidateAndAddFirst(spriteBorderVectors, point);
 				return;
 			}
 
-			var slope = VectorF.GetSlope(point, Char1);
-			
-			var areEqual = Mathf.Abs(slope - lastSlope) < Constants.FLOATING_POINT_ERROR;
+			var slope    = VectorF.GetSlope(point, Char1);
+			var areEqual = Mathf.Abs(slope - LastSlope) < Constants.FLOATING_POINT_ERROR;
 
 			if (!areEqual) {
-				if (!spriteBorderVectors.Contains(Char1))
+				if (!spriteBorderVectors.Contains(Char1)) {
+					CreateHandle(col, Char1, col.corners[^1], stdIndex);
+					stdIndex++;
 					spriteBorderVectors.Add(Char1);
+				}
 			}
 
-			lastSlope = slope;
+			LastSlope = slope;
 			Char1     = point;
-
-			// else if (index == 1)
-			// 	ValidateAndAddSecond(spriteBorderVectors, point);
-			// else
-			// 	ValidateAndAddNew(spriteBorderVectors, point);
-			//
-			// Char1           = Char2;
-			// Char2           = point;
-			// LastWasColinear = CurrentIsColinear;
 		}
 
 		void ValidateAndAddFirst(ICollection<Vector3> outlines, Vector3 newPoint) {
@@ -126,32 +123,6 @@ namespace ProceduralGeneration {
 
 			if (!outlines.Contains(newPoint))
 				outlines.Add(newPoint);
-		}
-
-		void ValidateAndAddSecond(ICollection<Vector3> outlines, Vector3 newPoint) {
-			Char2 = newPoint;
-			if (!outlines.Contains(newPoint))
-				outlines.Add(newPoint);
-		}
-
-		void ValidateAndAddNew(ICollection<Vector3> outlines, Vector3 newPoint) {
-			CurrentIsColinear = VectorF.IsColinear(Char1, Char2, newPoint);
-
-			if (CurrentIsColinear) {
-				if (outlines.Contains(Char2))
-					outlines.Remove(Char2);
-			}
-			else {
-				if (LastWasColinear) {
-					if (!outlines.Contains(Char1)) {
-						outlines.Add(Char1);
-					}
-				}
-
-				if (!outlines.Contains(newPoint)) {
-					outlines.Add(newPoint);
-				}
-			}
 		}
 
 		ProceduralPrimitiveCollider CreateNewPrimitiveCollider(string identifier) {
@@ -205,6 +176,7 @@ namespace ProceduralGeneration {
 			ColliderGo   = ctx.ColliderGo;
 			RoomOutlines = ctx.RoomOutlines;
 			MeshVertices = ctx.MeshVertices;
+			LastSlope    = Mathf.Infinity;
 		}
 	}
 }

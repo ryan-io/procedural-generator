@@ -90,7 +90,7 @@ namespace ProceduralGeneration {
 		static void SetBoundaryColliderPoints(ColliderPointSetterCtx ctx) {
 			ProceduralService.GetCutCollidersSolver(() => new CreateBoundaryColliders(ctx)).Set();
 		}
-
+  
 		static void SetGridCharacteristics(GridCharacteristicsSolverCtx ctx, GeneratorToolsCtx toolsCtx) {
 			ProceduralService.GetGridCharacteristicsSolver(
 				() => new GridCharacteristicsSolver(ctx, toolsCtx)).Set();

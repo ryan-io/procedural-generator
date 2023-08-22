@@ -24,6 +24,9 @@ namespace ProceduralGeneration {
 			var currentRoomIndex = 0;
 
 			foreach (var outline in Coordinates) {
+				if (outline.Value.Count <= CUT_OFF)
+					continue;
+				
 				CreateSpriteShapeBorderAndPopulate(outline.Value, currentRoomIndex);
 				currentRoomIndex++;
 			}
@@ -35,7 +38,11 @@ namespace ProceduralGeneration {
 			var iterationCount = 1;
 			var name           = GetName(currentRoomIndex, iterationCount);
 			var ctx            = SetupNewSpriteShape(name);
-
+			
+			ctx.Controller.spline.Clear();
+			ctx.Controller.UpdateSpriteShapeParameters();
+			ctx.Controller.RefreshSpriteShape();
+			
 			int maxNodes = 250;
 			var limit    = boundaryPositions.Count;
 
@@ -45,7 +52,7 @@ namespace ProceduralGeneration {
 				// 	ctx.Controller.RefreshSpriteShape();
 				//
 				// 	iterationCount++;
-				// 	ctx = SetupNewSpriteShape(GetName(currentRoomIndex, iterationCount));
+				// 	ctx = SetupNewSpriteShape(GetName(currentRoomIndex, iterationCount));  
 				//
 				// 	i = 0;
 				// }
@@ -53,7 +60,9 @@ namespace ProceduralGeneration {
 				indexTracker =
 					CreateAndSetSplineSegment(boundaryPositions[i], ctx.Controller.spline, indexTracker, solver);
 			}
-			
+
+			ctx.Controller.UpdateSpriteShapeParameters();
+			ctx.Controller.RefreshSpriteShape();
 		}
 
 		static string GetName(int currentRoomIndex, int iterationCount) {
@@ -135,7 +144,7 @@ namespace ProceduralGeneration {
 			var obj = new GameObject {
 				transform = {
 					localPosition = Vector3.zero,
-					parent        = Owner
+					parent        = Go.transform	
 				},
 				name = name
 			};
@@ -145,15 +154,12 @@ namespace ProceduralGeneration {
 			var controller = obj.AddComponent<SpriteShapeController>();
 			ParameterizeController(controller);
 			ParameterizeRenderer(controller.spriteShapeRenderer);
-			controller.UpdateSpriteShapeParameters();
-			controller.RefreshSpriteShape();
 
 			return new SpriteShapeObjectCtx(obj, controller);
 		}
 
 		void ParameterizeController(SpriteShapeController controller) {
 			controller.spriteShape          = _config.Profile;
-			controller.splineDetail         = 2;
 			controller.spline.isOpenEnded   = _config.IsOpenEnded;
 			controller.worldSpaceUVs        = false;
 			controller.fillPixelsPerUnit    = (float)_config.Ppu;
@@ -161,6 +167,12 @@ namespace ProceduralGeneration {
 			controller.stretchTiling        = 0.0f;
 			controller.enableTangents       = _config.EnableTangents;
 			controller.autoUpdateCollider   = true;
+
+			const float initScalar = 2.0f;
+
+			for (var i = 0; i < 4; i++) {
+				controller.spline.InsertPointAt(i, new Vector3(i * initScalar, i * -initScalar));
+			}
 		}
 
 		void ParameterizeRenderer(SpriteShapeRenderer renderer) {
@@ -170,7 +182,7 @@ namespace ProceduralGeneration {
 			materials[1] = _config.EdgeMaterial;
 
 			renderer.sortingLayerName = Constants.SortingLayer.OBSTACLES;
-			renderer.sortingOrder   = _config.OrderInLayer;
+			renderer.sortingOrder     = _config.OrderInLayer;
 		}
 
 		internal SpriteShapeBorderSolver(SpriteShapeBorderCtx ctx) {
@@ -181,5 +193,6 @@ namespace ProceduralGeneration {
 		}
 
 		readonly SpriteShapeConfig _config;
+		const int CUT_OFF = 10;
 	}
 }

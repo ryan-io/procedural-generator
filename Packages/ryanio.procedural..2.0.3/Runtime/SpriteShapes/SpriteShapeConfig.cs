@@ -37,7 +37,7 @@ namespace ProceduralGeneration {
 		[field: SerializeField, FoldoutGroup("Sprite Shape Boundary", false)]
 		public bool FillTessellation { get; private set; } = true;
 
-		[field: SerializeField, FoldoutGroup("Sprite Shape Boundary", false), ValueDropdown("@_ppuList")]
+		[field: SerializeField, FoldoutGroup("Sprite Shape Boundary", false)]
 		public ShapeTangentMode SplineTangentMode { get; set; } = ShapeTangentMode.Continuous;
   
 		[field: SerializeField, FoldoutGroup("Sprite Shape Boundary", false)]
