@@ -308,8 +308,6 @@ namespace ProceduralGeneration {
 		internal void FindPathfinderInScene() =>
 			Pathfinder = new ObjectFinder().FindPathfinderInScene(Pathfinder);
 
-		bool ShouldShowDeserialize => !ShouldGenerate;
-
 		IEnumerable GetAllSeedsWrapper() {
 			var seeds = Help.GetAllSeeds();
 			var allSeedsWrapper = seeds.ToList();

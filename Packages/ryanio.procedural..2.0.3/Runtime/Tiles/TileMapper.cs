@@ -18,6 +18,7 @@ namespace ProceduralGeneration {
 
 			if (!TileMapDictionary.ContainsKey(TileMapType.Ground))
 				return;
+			
 			GeneratorTools.SetTile(
 				TileMapDictionary[TileMapType.Ground],
 				TileDictionary[TileId.GROUND],

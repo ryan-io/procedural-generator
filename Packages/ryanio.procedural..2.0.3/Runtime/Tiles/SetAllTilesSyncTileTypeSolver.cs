@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using BCL;
 using CommunityToolkit.HighPerformance;
 using UnityEngine;
@@ -15,6 +16,10 @@ namespace ProceduralGeneration {
 		/// </summary>
 		/// <param name="span">Pre-stack allocated span for generating primary amap</param>
 		internal override void Set(Span2D<int> span) {
+			// List<Vector3Int> groundTilePos = new List<Vector3Int>();
+			// List<Vector3Int> boundaryTilePos = new List<Vector3Int>();
+			// List<Vector3Int> groundTilePos = new List<Vector3Int>();
+			//
 			for (var i = 0; i < MapWidth * MapHeight; i++) {
 				var row   = i / MapHeight;
 				var column = i % MapHeight;

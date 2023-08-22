@@ -65,7 +65,8 @@ namespace ProceduralGeneration {
 			GeneratorToolsCtx toolsCtx) {
 			ProceduralService.GetTileSetterSolver(
 				() => new StandardTileSetterSolver(
-					tileSolverCtx, mapperCtx, toolsCtx)).Set(map);
+					tileSolverCtx, mapperCtx, toolsCtx))
+			                 .Set(map);
 		}
 
 		static MeshData CreateMesh(Span2D<int> map, MeshSolverCtx ctx) {

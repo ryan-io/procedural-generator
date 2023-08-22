@@ -84,11 +84,13 @@ namespace ProceduralGeneration {
 		}
 
 		// TODO: Need to determine an appropriate stackalloc size for handling adding Regions to a span
-		unsafe IEnumerable<Region> GetRegions(Span2D<int> primarySpan, int tileType) {
+		IEnumerable<Region> GetRegions(Span2D<int> primarySpan, int tileType) {
 			var regions = new List<Region>();
 
-			int* copyToAllocationPointer = stackalloc int[NumberOfRows * NumberOfCols];
-			var  mapFlags                = new Span2D<bool>(copyToAllocationPointer, NumberOfRows, NumberOfCols, 0);
+			//int* copyToAllocationPointer = stackalloc int[NumberOfRows * NumberOfCols];
+			//new Span2D<bool>(copyToAllocationPointer, NumberOfRows, NumberOfCols, 0);
+			var mapFlagsArray = new bool[NumberOfRows, NumberOfCols];
+			var mapFlags      = mapFlagsArray.AsSpan2D();
 
 			for (var x = 0; x < NumberOfRows; x++) {
 				for (var y = 0; y < NumberOfCols; y++)

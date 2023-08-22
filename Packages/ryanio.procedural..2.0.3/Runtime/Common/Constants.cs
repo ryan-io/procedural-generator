@@ -75,7 +75,7 @@ namespace ProceduralGeneration {
 
 		public const int CELL_SIZE = 1;
 
-		public const int MAP_DIMENSION_LIMIT = 320;
+		public const int MAP_DIMENSION_LIMIT = 2000;
 
 		public const float FLOATING_POINT_ERROR = 0.0005f;
 

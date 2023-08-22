@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityBCL;
 using UnityEngine;
+using UnityEngine.Analytics;
 using UnityEngine.U2D;
 using Object = UnityEngine.Object;
 
@@ -17,6 +18,7 @@ namespace ProceduralGeneration {
 		internal void Generate([CallerMemberName] string name = "") {
 			SetupGameObject();
 			RunProcedure();
+			UpdateAABB();
 		}
 
 		void RunProcedure() {
@@ -30,7 +32,6 @@ namespace ProceduralGeneration {
 			}
 		}
 
-
 		void CreateSpriteShapeBorderAndPopulate(IReadOnlyList<Vector3> boundaryPositions, int currentRoomIndex) {
 			var obj = InstantiateSpriteControllerPrefab();
 			obj.name = Constants.SPRITE_BOUNDARY_KEY + currentRoomIndex;
@@ -38,8 +39,10 @@ namespace ProceduralGeneration {
 			var controller = obj.GetComponent<SpriteShapeController>();
 			controller.worldSpaceUVs     = _config.IsSplineAdaptive;
 			controller.fillPixelsPerUnit = (int)PPU;
+
 			var spline = controller.spline;
 			controller.fillPixelsPerUnit = (float)_config.Ppu;
+
 			spline.Clear();
 			controller.spline.isOpenEnded = true;
 
@@ -97,6 +100,27 @@ namespace ProceduralGeneration {
 			}
 
 			return solver;
+		}
+
+		void UpdateAABB() {
+			var objs = Go.GetComponentsInChildren<Transform>();
+
+			if (objs.IsEmptyOrNull()) {
+				return;
+			}
+
+			foreach (var tr in objs) {
+				if (!tr)
+					continue;
+				
+				var controller = tr.GetComponent<SpriteShapeController>();
+				var rend       = tr.GetComponent<SpriteShapeRenderer>();
+
+				if (!controller || !rend)
+					continue;
+				
+				UpdateLocalAABB.Update(rend, controller, tr);
+			}
 		}
 
 		int CreateAndSetSplineSegment(Vector3 position, Spline spline, int indexTracker, ISplineSegmentSolver solver) {

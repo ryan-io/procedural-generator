@@ -5,8 +5,8 @@ using UnityEngine;
 using UnityEngine.U2D;
 
 namespace ProceduralGeneration {
-	public readonly struct CleanSpriteShapes {
-		public void Clean(GameObject owner) {
+	internal readonly struct CleanSpriteShapes {
+		internal void Clean(GameObject owner) {
 			if (!owner)
 				return;
 
