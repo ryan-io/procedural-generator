@@ -74,7 +74,7 @@ SpriteShapeRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 253430384
-  m_SortingLayer: 7
+  m_SortingLayer: 4
   m_SortingOrder: 35
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_MaskInteraction: 0
@@ -88,6 +88,7 @@ SpriteShapeRenderer:
   m_LocalAABB:
     m_Center: {x: 2.861144, y: -0.72156787, z: 0}
     m_Extent: {x: 4.849339, y: 2.1471312, z: 0}
+  m_SpriteSortPoint: 0
 --- !u!114 &6670686090030956310
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -108,8 +109,6 @@ MonoBehaviour:
       rightTangent: {x: -0.046471, y: 0.0017359795, z: 0}
       mode: 2
       height: 1
-      bevelCutoff: 0
-      bevelSize: 0
       spriteIndex: 0
       corner: 1
       m_CornerMode: 1
@@ -118,8 +117,6 @@ MonoBehaviour:
       rightTangent: {x: 1.0145392, y: 0.38184473, z: 0}
       mode: 1
       height: 1
-      bevelCutoff: 0
-      bevelSize: 0
       spriteIndex: 0
       corner: 1
       m_CornerMode: 1
@@ -128,8 +125,6 @@ MonoBehaviour:
       rightTangent: {x: 0, y: 0, z: 0}
       mode: 2
       height: 1
-      bevelCutoff: 0
-      bevelSize: 0
       spriteIndex: 0
       corner: 1
       m_CornerMode: 1
@@ -144,11 +139,12 @@ MonoBehaviour:
   m_ColliderDetail: 16
   m_ColliderOffset: 0
   m_UpdateCollider: 1
-  m_OptimizeCollider: 1
-  m_OptimizeGeometry: 1
   m_EnableTangents: 1
   m_GeometryCached: 1
-  m_UTess2D: 1
+  m_UTess2D: 0
+  m_Creator: {fileID: 0}
+  m_Modifiers: []
+  m_ColliderSegment: []
 --- !u!114 &6670686090030956304
 MonoBehaviour:
   m_ObjectHideFlags: 0

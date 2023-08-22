@@ -23,8 +23,8 @@ namespace ProceduralGeneration {
 				roomListB = rooms;
 			}
 
-			var spanRoomA = new Span<Room>(roomListA.ToArray());
-			var spanRoomB = new Span<Room>(roomListB.ToArray());
+			var spanRoomA = roomListA.ToArray().AsSpan();
+			var spanRoomB = roomListB.ToArray().AsSpan();
 
 			var bestDistance            = 0;
 			var bestTileA               = new Vector2Int();

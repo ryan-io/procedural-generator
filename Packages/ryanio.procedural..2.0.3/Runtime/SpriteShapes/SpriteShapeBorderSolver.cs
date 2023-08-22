@@ -1,15 +1,12 @@
-using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityBCL;
 using UnityEngine;
-using UnityEngine.Analytics;
 using UnityEngine.U2D;
 using Object = UnityEngine.Object;
 
 namespace ProceduralGeneration {
 	internal class SpriteShapeBorderSolver {
-		const Ppu                               PPU = Ppu.Eight;
 		Transform                               Owner          { get; }
 		GameObject                              Go             { get; set; }
 		IReadOnlyDictionary<int, List<Vector3>> Coordinates    { get; }
@@ -33,55 +30,39 @@ namespace ProceduralGeneration {
 		}
 
 		void CreateSpriteShapeBorderAndPopulate(IReadOnlyList<Vector3> boundaryPositions, int currentRoomIndex) {
-			var obj = InstantiateSpriteControllerPrefab();
-			obj.name = Constants.SPRITE_BOUNDARY_KEY + currentRoomIndex;
-
-			var controller = obj.GetComponent<SpriteShapeController>();
-			controller.worldSpaceUVs     = _config.IsSplineAdaptive;
-			controller.fillPixelsPerUnit = (int)PPU;
-
-			var spline = controller.spline;
-			controller.fillPixelsPerUnit = (float)_config.Ppu;
-
-			spline.Clear();
-			controller.spline.isOpenEnded = true;
-
 			var indexTracker   = 0;
 			var solver         = InstantiateTangentSolver();
-			var iterationCount = 2;
+			var iterationCount = 1;
+			var name           = GetName(currentRoomIndex, iterationCount);
+			var ctx            = SetupNewSpriteShape(name);
 
 			int maxNodes = 250;
 			var limit    = boundaryPositions.Count;
 
 			for (var i = 0; i < limit; i++) {
-				if (spline.GetPointCount() > maxNodes) {
-					var newObjName =
-						Constants.SPRITE_BOUNDARY_KEY +
-						currentRoomIndex              +
-						Constants.SPACE               +
-						Constants.ITERATION_LABEL     +
-						iterationCount;
+				// if (ctx.Controller.spline.GetPointCount() > maxNodes) {
+				// 	ctx.Controller.UpdateSpriteShapeParameters();
+				// 	ctx.Controller.RefreshSpriteShape();
+				//
+				// 	iterationCount++;
+				// 	ctx = SetupNewSpriteShape(GetName(currentRoomIndex, iterationCount));
+				//
+				// 	i = 0;
+				// }
 
-					obj      = InstantiateSpriteControllerPrefab();
-					obj.name = newObjName;
-
-					controller               = obj.GetComponent<SpriteShapeController>();
-					controller.worldSpaceUVs = _config.IsSplineAdaptive;
-
-					spline = controller.spline;
-					spline.Clear();
-
-					iterationCount++;
-					indexTracker = 0;
-
-					controller.spline.isOpenEnded = true;
-					controller.fillPixelsPerUnit  = (float)_config.Ppu;
-					controller.RefreshSpriteShape();
-				}
-
-				indexTracker = CreateAndSetSplineSegment(boundaryPositions[i], spline, indexTracker, solver);
-				controller.RefreshSpriteShape();
+				indexTracker =
+					CreateAndSetSplineSegment(boundaryPositions[i], ctx.Controller.spline, indexTracker, solver);
 			}
+			
+		}
+
+		static string GetName(int currentRoomIndex, int iterationCount) {
+			return
+				Constants.SPRITE_BOUNDARY_KEY +
+				currentRoomIndex              +
+				Constants.SPACE               +
+				Constants.ITERATION_LABEL     +
+				iterationCount;
 		}
 
 		ISplineSegmentSolver InstantiateTangentSolver() {
@@ -112,13 +93,13 @@ namespace ProceduralGeneration {
 			foreach (var tr in objs) {
 				if (!tr)
 					continue;
-				
+
 				var controller = tr.GetComponent<SpriteShapeController>();
 				var rend       = tr.GetComponent<SpriteShapeRenderer>();
 
 				if (!controller || !rend)
 					continue;
-				
+
 				UpdateLocalAABB.Update(rend, controller, tr);
 			}
 		}
@@ -150,11 +131,46 @@ namespace ProceduralGeneration {
 			};
 		}
 
-		GameObject InstantiateSpriteControllerPrefab() {
-			var obj = Object.Instantiate(_config.ControllerPrefab, Go.transform);
-			obj.transform.localPosition = Vector3.zero;
-			obj.transform.localScale    = _config.ScaleModifier * obj.transform.localScale;
-			return obj;
+		SpriteShapeObjectCtx SetupNewSpriteShape(string name) {
+			var obj = new GameObject {
+				transform = {
+					localPosition = Vector3.zero,
+					parent        = Owner
+				},
+				name = name
+			};
+
+			obj.transform.localScale = _config.ScaleModifier * obj.transform.localScale;
+
+			var controller = obj.AddComponent<SpriteShapeController>();
+			ParameterizeController(controller);
+			ParameterizeRenderer(controller.spriteShapeRenderer);
+			controller.UpdateSpriteShapeParameters();
+			controller.RefreshSpriteShape();
+
+			return new SpriteShapeObjectCtx(obj, controller);
+		}
+
+		void ParameterizeController(SpriteShapeController controller) {
+			controller.spriteShape          = _config.Profile;
+			controller.splineDetail         = 2;
+			controller.spline.isOpenEnded   = _config.IsOpenEnded;
+			controller.worldSpaceUVs        = false;
+			controller.fillPixelsPerUnit    = (float)_config.Ppu;
+			controller.cornerAngleThreshold = _config.CornerThreshold;
+			controller.stretchTiling        = 0.0f;
+			controller.enableTangents       = _config.EnableTangents;
+			controller.autoUpdateCollider   = true;
+		}
+
+		void ParameterizeRenderer(SpriteShapeRenderer renderer) {
+			var materials = renderer.sharedMaterials;
+
+			materials[0] = _config.FillMaterial;
+			materials[1] = _config.EdgeMaterial;
+
+			renderer.sortingLayerName = Constants.SortingLayer.OBSTACLES;
+			renderer.sortingOrder   = _config.OrderInLayer;
 		}
 
 		internal SpriteShapeBorderSolver(SpriteShapeBorderCtx ctx) {

@@ -133,6 +133,11 @@ namespace ProceduralGeneration {
 		 HorizontalGroup("Actions/Buttons1"),
 		 ButtonGroup("Actions/Buttons1/Methods", Stretch = false, IconAlignment = IconAlignment.RightEdge)]
 		void FindPathfinder() => _config.FindPathfinderInScene();
+		
+		[BoxGroup("Actions"),
+		 HorizontalGroup("Actions/Buttons1"),
+		 ButtonGroup("Actions/Buttons1/Methods", Stretch = false, IconAlignment = IconAlignment.RightEdge)]
+		void RefreshSpriteShapes() => new SpriteShapeRefreshService(gameObject).Run();
 
 		[BoxGroup("Actions"),
 		 HorizontalGroup("Actions/Buttons2"),
@@ -154,7 +159,7 @@ namespace ProceduralGeneration {
 		void Generate() {
 			Load();
 		}
-
+		
 		[field: SerializeField, Required, BoxGroup("Configuration"), HideLabel]
 		ProceduralConfig _config = null!;
 
