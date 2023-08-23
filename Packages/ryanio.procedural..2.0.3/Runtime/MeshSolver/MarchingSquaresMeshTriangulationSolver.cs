@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using CommunityToolkit.HighPerformance;
 using UnityEngine;
 
 namespace ProceduralGeneration {
@@ -9,7 +10,7 @@ namespace ProceduralGeneration {
 		Dictionary<int, List<Triangle>> TriangleTracker  { get; }
 		string                          SerializableName { get; }
 
-		internal override Tuple<List<int>, List<Vector3>> Triangulate(int[,] map) {
+		internal override Tuple<List<int>, List<Vector3>> Triangulate(Span2D<int> map) {
 			SquareGrid.SetSquares(map);
 			SetTriangles();
 			SolveMesh(map);
@@ -27,17 +28,15 @@ namespace ProceduralGeneration {
 			var xLength = SquareGrid.Squares.GetLength(0);
 			var yLength = SquareGrid.Squares.GetLength(1);
 
-
-			for (var i = 0; i < xLength * yLength; i++) {
-				var row    = i / yLength;
-				var column = i % yLength;
-
-				_triangulationAlgorithm.TriangulateSquare(
-					SquareGrid.Squares[row, column], CheckedVertices, TriangleTracker);
+			for (var x = 0; x < xLength; x++) {
+				for (var y = 0; y < yLength; y++) {
+					_triangulationAlgorithm.TriangulateSquare(
+						SquareGrid.Squares[x, y], CheckedVertices, TriangleTracker);
+				}
 			}
 		}
 
-		void SolveMesh(int[,] map) {
+		void SolveMesh(Span2D<int> map) {
 			var mesh     = new Mesh { name = Constants.SAVE_MESH_PREFIX + SerializableName };
 			var vertices = _triangulationAlgorithm.GetWalkableVertices;
 

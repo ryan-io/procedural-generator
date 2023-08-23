@@ -15,7 +15,7 @@ namespace ProceduralGeneration {
 				if (!record.IsMapBoundary)
 					continue;
 
-				var shiftedBorder = BorderSize / 2f;
+				var shiftedBorder = 0.0f;// BorderSize / 2f;
 				var shiftedX      = Mathf.CeilToInt(-Dimensions.Rows     / 2f);
 				var shiftedY      = Mathf.FloorToInt(-Dimensions.Columns / 2f);
 

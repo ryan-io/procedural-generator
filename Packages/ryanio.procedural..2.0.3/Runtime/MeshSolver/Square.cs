@@ -1,9 +1,16 @@
 namespace ProceduralGeneration {
 	public class Square {
-		public int  BitwiseNodesSum;
-		public Node CenterTop, CenterRight, CenterBottom, CenterLeft;
+		public          int  BitwiseNodesSum;
+		
+		public readonly Node CenterTop;
+		public readonly Node CenterRight;
+		public readonly Node CenterBottom;
+		public readonly Node CenterLeft;
 
-		public ControlNode TopLeft, TopRight, BottomRight, BottomLeft;
+		public readonly ControlNode TopLeft;
+		public readonly ControlNode TopRight;
+		public readonly ControlNode BottomRight;
+		public readonly ControlNode BottomLeft;
 
 		public Square(ControlNode topLeft, ControlNode topRight, ControlNode bottomRight, ControlNode bottomLeft) {
 			TopLeft      = topLeft;
@@ -19,10 +26,10 @@ namespace ProceduralGeneration {
 
 		void CalculateBitwiseSum(ControlNode topLeft, ControlNode topRight, ControlNode bottomRight,
 			ControlNode bottomLeft) {
-			if (topLeft.IsWall) BitwiseNodesSum     += 8;
-			if (topRight.IsWall) BitwiseNodesSum    += 4;
-			if (bottomRight.IsWall) BitwiseNodesSum += 2;
-			if (bottomLeft.IsWall) BitwiseNodesSum  += 1;
+			if (topLeft.IsWall) BitwiseNodesSum     += 1 <<3;
+			if (topRight.IsWall) BitwiseNodesSum    += 1 <<2;
+			if (bottomRight.IsWall) BitwiseNodesSum += 1 << 1;
+			if (bottomLeft.IsWall) BitwiseNodesSum  += 1 << 0;
 		}
 	}
 }

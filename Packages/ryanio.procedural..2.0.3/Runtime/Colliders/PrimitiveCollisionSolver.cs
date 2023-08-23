@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using ProceduralAuxiliary;
@@ -12,7 +13,7 @@ namespace ProceduralGeneration {
 		List<List<int>> RoomOutlines { get; }
 		Vector3         Char1        { get; set; }
 		float           SkinWidth    { get; }
-		float           LastSlope    { get; set; } 
+		float           LastSlope    { get; set; }
 
 		/// <summary>
 		/// </summary>
@@ -41,9 +42,8 @@ namespace ProceduralGeneration {
 			Dictionary<int, List<Vector3>> colliderCoords,
 			IList<Vector3> spriteBorderVectors,
 			int index) {
-			
 			var outline = RoomOutlines[index];
-			
+
 			if (outline.Count <= 10)
 				return;
 
@@ -89,8 +89,9 @@ namespace ProceduralGeneration {
 			objList[k] = col.corners[k].gameObject;
 		}
 
-		int stdIndex = 0;
-		
+		int stdIndex      = 0;
+		int lastSlopeSign = 0;
+
 		void CreateBodyColliders(Vector3 point, int index, ProceduralPrimitiveCollider col,
 			ICollection<Vector3> spriteBorderVectors) {
 			//col.corners[^1].GetSiblingIndex() + 1
@@ -101,8 +102,15 @@ namespace ProceduralGeneration {
 				return;
 			}
 
-			var slope    = VectorF.GetSlope(point, Char1);
-			var areEqual = Mathf.Abs(slope - LastSlope) < Constants.FLOATING_POINT_ERROR;
+			var slope     = VectorF.GetSlope(point, Char1);
+			var slopeSign = Math.Sign(slope);
+			var areEqual  = Mathf.Abs(slope - LastSlope) < Constants.FLOATING_POINT_ERROR;
+
+			// if (lastSlopeSign != 0) {
+			// 	if (slopeSign != lastSlopeSign) {
+			// 		areEqual = false;  
+			// 	}
+			// }
 
 			if (!areEqual) {
 				if (!spriteBorderVectors.Contains(Char1)) {
@@ -112,8 +120,9 @@ namespace ProceduralGeneration {
 				}
 			}
 
-			LastSlope = slope;
-			Char1     = point;
+			LastSlope     = slope;
+			lastSlopeSign = slopeSign;
+			Char1         = point;
 		}
 
 		void ValidateAndAddFirst(ICollection<Vector3> outlines, Vector3 newPoint) {

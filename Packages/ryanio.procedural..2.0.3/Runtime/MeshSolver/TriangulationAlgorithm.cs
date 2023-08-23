@@ -13,7 +13,10 @@ namespace ProceduralGeneration {
 		internal List<Vector3> GetWalkableVertices { get; }
 
 		internal void TriangulateSquare(
-			Square square, HashSet<int> checkedVertices, Dictionary<int, List<Triangle>> triangleTracker) {
+			Square square,
+			HashSet<int> checkedVertices,
+			Dictionary<int,
+				List<Triangle>> triangleTracker) {
 			switch (square.BitwiseNodesSum) {
 				case 0: break;
 				case 1:
@@ -109,6 +112,7 @@ namespace ProceduralGeneration {
 			GetWalkableTriangles.Add(c.VertexIndex);
 
 			var triangle = new Triangle(a.VertexIndex, b.VertexIndex, c.VertexIndex);
+			
 			TrackTriangle(triangle.vertexIndexA, triangle, triangleTracker);
 			TrackTriangle(triangle.vertexIndexB, triangle, triangleTracker);
 			TrackTriangle(triangle.vertexIndexC, triangle, triangleTracker);
@@ -127,7 +131,7 @@ namespace ProceduralGeneration {
 // ----------------------------------------------------------------------------------------->UV's<
 /*
  * If we need to assign UVs:
- * 
+ *
  * 	void AssignUV(int[,] map) {
 		var width   = map.GetLength(0);
 		var height  = map.GetLength(1);
