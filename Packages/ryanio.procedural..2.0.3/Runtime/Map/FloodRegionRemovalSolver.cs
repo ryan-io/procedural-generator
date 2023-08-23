@@ -8,8 +8,8 @@ namespace ProceduralGeneration {
 		internal override List<Room> Rooms                { get; set; }
 		int                          WallRemovalThreshold { get; }
 		int                          RoomRemovalThreshold { get; }
-		int                          NumberOfRows         { get; set; }
-		int                          NumberOfCols         { get; set; }
+		int                          Rows                 { get; set; }
+		int                          Columns              { get; set; }
 
 		internal FloodRegionRemovalSolver(RemoveRegionsSolverCtx ctx) {
 			_mapConnectionSolver = new MapConnectionSolver(ctx);
@@ -18,8 +18,8 @@ namespace ProceduralGeneration {
 		}
 
 		internal override void Remove(Span2D<int> primarySpan) {
-			NumberOfRows = primarySpan.Height;
-			NumberOfCols = primarySpan.Width;
+			Rows    = primarySpan.Height;
+			Columns = primarySpan.Width;
 
 			CullWalls(primarySpan);
 			CullRooms(primarySpan);
@@ -29,7 +29,7 @@ namespace ProceduralGeneration {
 			var regions = GetRegions(primarySpan, 1);
 
 			foreach (var region in regions)
-				if (region.Count < WallRemovalThreshold)
+				if (region.Count() < WallRemovalThreshold)
 					foreach (var tile in region)
 						primarySpan[tile.x, tile.y] = 0;
 		}
@@ -59,7 +59,7 @@ namespace ProceduralGeneration {
 		// TODO: Need to determine an appropriate stackalloc size for handling adding Regions to a span
 		Region GetRegionTiles(Span2D<int> map, int startX, int startY) {
 			var tiles    = new Region();
-			var mapFlags = new bool[NumberOfRows, NumberOfCols];
+			var mapFlags = new bool[Rows, Columns];
 			var tileType = map[startX, startY];
 
 			var queue = new Queue<Vector2Int>();
@@ -71,7 +71,7 @@ namespace ProceduralGeneration {
 				tiles.Add(tile);
 				for (var x = tile.x - 1; x <= tile.x + 1; x++) {
 					for (var y = tile.y - 1; y <= tile.y + 1; y++)
-						if (x >= 0 && x < NumberOfRows && y >= 0 && y < NumberOfCols
+						if (x >= 0 && x < Rows && y >= 0 && y < Columns
 						    && (x == tile.x || y == tile.y))
 							if (mapFlags[x, y] == false && map[x, y] == tileType) {
 								mapFlags[x, y] = true;
@@ -89,11 +89,11 @@ namespace ProceduralGeneration {
 
 			//int* copyToAllocationPointer = stackalloc int[NumberOfRows * NumberOfCols];
 			//new Span2D<bool>(copyToAllocationPointer, NumberOfRows, NumberOfCols, 0);
-			var mapFlagsArray = new bool[NumberOfRows, NumberOfCols];
+			var mapFlagsArray = new bool[Rows, Columns];
 			var mapFlags      = mapFlagsArray.AsSpan2D();
 
-			for (var x = 0; x < NumberOfRows; x++) {
-				for (var y = 0; y < NumberOfCols; y++)
+			for (var x = 0; x < Rows; x++) {
+				for (var y = 0; y < Columns; y++)
 					if (mapFlags[x, y] == false && primarySpan[x, y] == tileType) {
 						var newRegion = GetRegionTiles(primarySpan, x, y);
 						regions.Add(newRegion);

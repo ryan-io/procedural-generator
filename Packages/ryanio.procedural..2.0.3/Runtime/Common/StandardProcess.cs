@@ -49,7 +49,7 @@ namespace ProceduralGeneration {
 		}
 
 		static void SmoothMap(Span2D<int> map, SmoothMapSolverCtx ctx) {
-			ProceduralService.GetSmoothMapSolver(() => new MarchingSquaresSmoothMapSolver(ctx))
+			ProceduralService.GetSmoothMapSolver(() => new StandardSmoothMapSolver(ctx))
 			                 .Smooth(map);
 		}
 

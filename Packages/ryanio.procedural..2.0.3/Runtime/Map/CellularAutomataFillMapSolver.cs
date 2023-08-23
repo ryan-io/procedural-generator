@@ -18,12 +18,11 @@ namespace ProceduralGeneration {
 			var pseudoRandom = CreateRandom(Ctx.WallFillPercentage);
 			var rowLength    = primaryMap.Height;
 			var columnLength = primaryMap.Width;
-			
-			for (var i = 0; i < rowLength * columnLength; i++) {
-				var row   = i / columnLength;
-				var colum = i % columnLength;
-				
-				primaryMap[row, colum] = DetermineWallFill(rowLength, columnLength, row, colum, pseudoRandom);
+
+			for (var x = 0; x < rowLength; x++) {
+				for (var y = 0; y < columnLength; y++) {
+					primaryMap[x, y] = DetermineWallFill(rowLength, columnLength, x, y, pseudoRandom);
+				}
 			}
 		}
 

@@ -2,8 +2,9 @@ using UnityEngine;
 
 namespace ProceduralGeneration {
 	public class ControlNode : Node {
-		public Node Above, Right;
-		public bool IsWall;
+		public readonly Node Above;
+		public readonly Node Right;
+		public readonly bool IsWall;
 
 		public ControlNode(Vector2 position, bool isWall, float squareSize) : base(position) {
 			IsWall = isWall;

@@ -17,6 +17,7 @@ namespace ProceduralGeneration {
 			var dimensions     = Actions.GetMapDimensions();
 			var primaryPointer = stackalloc int[dimensions.Rows * dimensions.Columns];
 			var map            = new Span2D<int>(primaryPointer, dimensions.Rows, dimensions.Columns, pitch);
+			map.Clear();
 			//var map = new int[dimensions.Rows,dimensions.Columns];
 			_process.Run(map);
 			  

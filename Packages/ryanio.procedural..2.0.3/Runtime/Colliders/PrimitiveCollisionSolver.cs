@@ -54,8 +54,6 @@ namespace ProceduralGeneration {
 			// this section of the method satisfies this requirement and are later destroyed
 			SetStarting(spriteBorderVectors, outline, col, objList);
 
-			var initColliders = false;
-
 			for (var i = 0; i < outline.Count; i++) {
 				var allBoundaryList = colliderCoords[index];
 				var newPoint        = GetNewPoint(outline, i);

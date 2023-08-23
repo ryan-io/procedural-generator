@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using CommunityToolkit.HighPerformance;
 using Sirenix.OdinInspector;
 using UnityBCL;
 using UnityEngine;
@@ -167,5 +168,23 @@ namespace ProceduralGeneration {
 		SpriteShapeConfig _spriteShapeConfig = null!;
   
 		[SerializeField, HideInInspector] MapData _data;
+
+		[Button]
+		unsafe void Test() {
+			var primaryPointer = stackalloc int[_config.Rows * _config.Columns];
+			
+			var map            = new Span2D<int>(primaryPointer, _config.Rows, _config.Columns, 0);
+			map.Clear();
+			//Debug.LogWarning(map[_config.Rows -1, _config.Columns - 1]);
+			Debug.LogWarning($"Map rows: {map.Height}");
+			Debug.LogWarning($"Map columns: {map.Width}");
+
+			try {
+				Debug.LogWarning(map[_config.Rows -1, _config.Columns - 1]);
+			}
+			catch (Exception e) {
+				Debug.LogWarning(e.Message);
+			}
+		}
 	}
 }
