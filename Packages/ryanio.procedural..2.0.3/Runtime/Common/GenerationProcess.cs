@@ -1,5 +1,6 @@
 // ProceduralGeneration
 
+using System.Threading.Tasks;
 using CommunityToolkit.HighPerformance;
 
 namespace ProceduralGeneration {

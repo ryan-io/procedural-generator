@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.ExceptionServices;
 using Pathfinding;
 using Unity.Burst;
 using Unity.Collections;
@@ -15,24 +17,23 @@ using UnityEngine.Tilemaps;
 						// 	if (_collisions.Value[i])
 						// 		_collisions.Value[i] = null;
 						// }
-						
+
 						// var size    = Physics.OverlapBoxNonAlloc(worldPosGround, extends, _collisions.Value);
  */
 namespace ProceduralGeneration {
 	[Serializable]
 	public class WalkabilityRule : GridGraphRule {
-		[SerializeField] public Tilemap BoundaryTilemap;
-		[SerializeField] public Tilemap GroundTilemap;
-		[SerializeField] public float   CellSize;
-		Lazy<Collider[]>                _collisions = new(() => new Collider[10]);
+		Tilemap     _boundaryTilemap;
+		Tilemap     _groundTilemap;
+		TileHashset _tileHashset;
 
 		public WalkabilityRule() {
 		}
 
-		public WalkabilityRule(Tilemap boundaryTilemap, Tilemap groundTilemap, float cellSize) {
-			BoundaryTilemap = boundaryTilemap;
-			GroundTilemap   = groundTilemap;
-			CellSize        = cellSize;
+		public WalkabilityRule(Tilemap boundaryTilemap, Tilemap groundTilemap, TileHashset tileHashset) {
+			_boundaryTilemap = boundaryTilemap;
+			_groundTilemap   = groundTilemap;
+			_tileHashset     = tileHashset;
 		}
 
 		/*
@@ -67,44 +68,59 @@ namespace ProceduralGeneration {
 				ctx => {
 					var positions    = ctx.data.nodePositions.ToArray();
 					var hasTilesList = new List<bool>();
+					var size         = ctx.graph.nodeSize;
+
+					const int allocationSize = 4;
 
 					foreach (var position in positions) {
 						bool hasTile;
 
-						if (!BoundaryTilemap || !GroundTilemap)
+						if (!_boundaryTilemap || !_groundTilemap)
 							continue;
 
-						var worldPosBoundary = BoundaryTilemap.WorldToCell(position);
-						var worldPosGround   = GroundTilemap.WorldToCell(position);
-						var hasTileGround    = GroundTilemap.HasTile(worldPosGround);
-						var hasTileBoundary  = BoundaryTilemap.HasTile(worldPosBoundary);
+						var worldPosBoundary = _boundaryTilemap.WorldToCell(position);
+						var worldPosGround   = _groundTilemap.WorldToCell(position);
+						var hasTileGround    = _groundTilemap.HasTile(worldPosGround);
+						var hasTileBoundary  = _boundaryTilemap.HasTile(worldPosBoundary);
 
 						// RayCastHit & RayCastCommand buffers
-						var results      = new NativeArray<RaycastHit>(1, Allocator.TempJob);
-						var commands     = new NativeArray<RaycastCommand>(1, Allocator.TempJob);
+						var results  = new NativeArray<RaycastHit>(allocationSize, Allocator.TempJob);
+						var commands = new NativeArray<RaycastCommand>(allocationSize, Allocator.TempJob);
+
+						var direction = -Vector3.forward;
+
+						var scaledPosition = position / (size);
+
+						var positionCast1 = new Vector3(scaledPosition.x,  scaledPosition.y,  -0.5f);
+						var positionCast2 = new Vector3(-scaledPosition.x, -scaledPosition.y, -0.5f);
+						var positionCast3 = new Vector3(-scaledPosition.x, scaledPosition.y,  -0.5f);
+						var positionCast4 = new Vector3(scaledPosition.x,  -scaledPosition.y, -0.5f);
 						
-						var direction    = -Vector3.forward;
-						var positionCast = new Vector3(position.x, position.y, -0.5f);
-						
-						commands[0] = new RaycastCommand(positionCast, direction, QueryParameters.Default);
-						
+						commands[0] = new RaycastCommand(positionCast1, direction, QueryParameters.Default);
+						commands[1] = new RaycastCommand(positionCast2,  direction, QueryParameters.Default);
+						commands[2] = new RaycastCommand(positionCast3,  direction, QueryParameters.Default);
+						commands[3] = new RaycastCommand(positionCast4,  direction, QueryParameters.Default);
+
 						var handlePhys = RaycastCommand.ScheduleBatch(commands, results, 1);
-						
+
 						handlePhys.Complete();
+
+						//var batchedHit = results[0];
 						
-						var batchedHit = results[0];
 
 						if (!hasTileGround || hasTileBoundary) {
 							hasTile = false;
 						}
 						else {
-							if (batchedHit.collider != null && !batchedHit.collider.isTrigger) {
-								Debug.Log("Collider found!");
-								hasTile = false;
-							}
-							else {
-								hasTile = true;
-							}
+							
+							var acceptable = results.Where(hit => hit.collider && !hit.collider.isTrigger);
+							hasTile = acceptable.Count() < 1;
+							// if (batchedHit.collider && !batchedHit.collider.isTrigger) {
+							// 	hasTile = false;
+							// }
+							// else {
+							// 	hasTile = true;
+							// }
 						}
 
 						hasTilesList.Add(hasTile);
@@ -112,10 +128,7 @@ namespace ProceduralGeneration {
 						commands.Dispose();
 					}
 
-					//var test = ctx.tracker.NewNativeArray<bool>();
-
-					var hasTileNativeArray = new NativeArray<bool>(hasTilesList.ToArray(), Allocator
-					   .Persistent);
+					var hasTileNativeArray = new NativeArray<bool>(hasTilesList.ToArray(), Allocator.Persistent);
 
 					var walkabilityJob = new WalkabilityJobData {
 						Bounds        = ctx.data.bounds,

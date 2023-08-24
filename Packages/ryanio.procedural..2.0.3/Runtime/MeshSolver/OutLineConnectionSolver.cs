@@ -69,8 +69,9 @@ namespace ProceduralGeneration {
 			var sharedTriangleCount        = 0;
 
 			for (var i = 0; i < count; i++) {
-				if (trianglesContainingVertexA[i].Contains(vertexB))
+				if (trianglesContainingVertexA[i].Contains(vertexB)) {
 					sharedTriangleCount++;
+				}
 
 				if (sharedTriangleCount > 1)
 					break;

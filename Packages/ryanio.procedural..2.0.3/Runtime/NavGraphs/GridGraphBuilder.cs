@@ -23,7 +23,6 @@ namespace ProceduralGeneration {
 
 			graph.name = Constants.ASTAR_GRAPH_NAME;
 			SetGraph(graph);
-
 			return graph;
 		}
 

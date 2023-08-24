@@ -21,7 +21,7 @@ namespace ProceduralGeneration {
 		public NavigationSolver(NavGraphBuilder<GridGraph> builder, NavigationSolverCtx ctx) {
 			Builder         = builder;
 			ColliderCutters = ctx.ColliderCutters;
-			Solver          = new NavGraphRulesSolver(ctx.TileMapDictionary);
+			Solver          = new NavGraphRulesSolver(ctx.TileMapDictionary, ctx.TileHashset);
 			Scanner         = new GraphScanner();
 		}
 	}

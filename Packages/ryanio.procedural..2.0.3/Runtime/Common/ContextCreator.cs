@@ -38,7 +38,8 @@ namespace ProceduralGeneration {
 
 		internal NavigationSolverCtx GetNewNavigationSolverCtx() => new(
 			Actions.GetTilemapDictionary(),
-			Actions.GetGraphColliderCutters());
+			Actions.GetGraphColliderCutters(),
+			Actions.GetTileHashset());
 
 		internal GridGraphBuilderCtx GetNewGridGraphBuilderCtx() => new(
 			Actions.GetMapDimensions(),
