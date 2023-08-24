@@ -15,7 +15,7 @@ namespace ProceduralGeneration {
 			SetTriangles();
 			SolveMesh(map);
 			OutLineConnectionSolver.Solve(
-				_triangulationAlgorithm.GetWalkableVertices, CheckedVertices, Outlines, TriangleTracker);
+				_triangulationAlgorithm.GetWalkableVertices, CheckedVertices,  Outlines, TriangleTracker);
 
 			var output = Tuple.Create(
 				_triangulationAlgorithm.GetWalkableTriangles,

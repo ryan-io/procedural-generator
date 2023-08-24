@@ -14,7 +14,7 @@ namespace ProceduralGeneration {
 					if (newOutlineVertex != -1) {
 						checkedVertices.Add(i);
 
-						var newOutline = new List<int> { i };
+						var newOutline = new List<int>();
 						outlines.Add(newOutline);
 						FollowOutline(newOutlineVertex, outlines.Count - 1, checkedVertices, outlines, triangleTracker);
 						outlines[^1].Add(i);
@@ -29,6 +29,7 @@ namespace ProceduralGeneration {
 
 		static void FollowOutline(int vertexIndex, int outlineIndex, HashSet<int> checkedVertices,
 			List<List<int>> outlines, Dictionary<int, List<Triangle>> triangleTracker) {
+			
 			while (true) { // RECURSIVE FUNCTION
 				outlines[outlineIndex].Add(vertexIndex);
 				checkedVertices.Add(vertexIndex);
@@ -43,8 +44,10 @@ namespace ProceduralGeneration {
 			}
 		}
 
-		static int GetConnectedOutlineVertex(int vertexIndex, HashSet<int> checkedVertices,
-			Dictionary<int, List<Triangle>> triangleTracker) {
+		static int GetConnectedOutlineVertex(
+			int vertexIndex, 
+			ICollection<int> checkedVertices, 
+			Dictionary<int, List<Triangle>> triangleTracker) {  
 			var triangleList = triangleTracker[vertexIndex];
 			var count        = triangleList.Count;
 
@@ -54,6 +57,7 @@ namespace ProceduralGeneration {
 				for (var j = 0; j < 3; j++) {
 					var vertexB = triangle[j];
 
+					//&& !checkedVertices.Contains(vertexB) -> this is required. 
 					if (vertexB != vertexIndex && !checkedVertices.Contains(vertexB))
 						if (IsOutlineEdge(vertexIndex, vertexB, triangleTracker))
 							return vertexB;
@@ -71,10 +75,10 @@ namespace ProceduralGeneration {
 			for (var i = 0; i < count; i++) {
 				if (trianglesContainingVertexA[i].Contains(vertexB)) {
 					sharedTriangleCount++;
-				}
-
 				if (sharedTriangleCount > 1)
 					break;
+				}
+
 			}
 
 			return sharedTriangleCount == 1;
