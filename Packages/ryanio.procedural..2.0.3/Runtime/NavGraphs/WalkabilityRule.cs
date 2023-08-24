@@ -114,7 +114,7 @@ namespace ProceduralGeneration {
 						else {
 							
 							var acceptable = results.Where(hit => hit.collider && !hit.collider.isTrigger);
-							hasTile = acceptable.Count() < 1;
+							hasTile = !acceptable.Any();
 							// if (batchedHit.collider && !batchedHit.collider.isTrigger) {
 							// 	hasTile = false;
 							// }

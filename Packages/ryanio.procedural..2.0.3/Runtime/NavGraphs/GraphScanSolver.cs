@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using BCL;
 using Cysharp.Threading.Tasks;
 using JetBrains.Annotations;
@@ -22,12 +23,14 @@ namespace ProceduralGeneration {
 				
 			}
 			else {
-				
 				ScanGraph(args.Graph);
 			}
 		}
 
-		public void ScanGraph(NavGraph graph) => AstarPath.active.Scan(graph);
+		public void ScanGraph(NavGraph graph) {
+			Task.Run(() => AstarPath.active.Scan());
+			//UniTask.RunOnThreadPool(.AsUniTask().Forget();
+		}
 
 		IEnumerator ScanGraphAsync(Args args, CancellationToken token) {
 			Physics.SyncTransforms();
