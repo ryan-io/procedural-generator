@@ -3,19 +3,18 @@ using System.Runtime.CompilerServices;
 using ProceduralAuxiliary;
 using UnityBCL;
 using UnityEngine;
+using UnityEngine.ResourceManagement.Exceptions;
 using Object = UnityEngine.Object;
 
 namespace ProceduralGeneration {
 	internal class PrimitiveCollisionSolver : CollisionSolver {
-		GameObject                     ColliderGo        { get; }
-		List<Vector3>                  MeshVertices      { get; }
-		List<List<int>>                RoomOutlines      { get; }
-		Vector3                        Char1             { get; set; }
-		Vector3                        Char2             { get; set; }
-		float                          SkinWidth         { get; }
-		float                          LastSlope         { get; set; }
-		Dictionary<int, List<Vector3>> UnprocessedCoords { get; }
-		Dictionary<int, List<Vector3>> ProcessedCoords   { get; }
+		Dictionary<int, List<Vector3>> UnprocessedCoords   { get; }
+		Dictionary<int, List<Vector3>> ProcessedCoords     { get; }
+		GameObject                     ColliderGo          { get; }
+		List<Vector3>                  MeshVertices        { get; }
+		List<List<int>>                RoomOutlines        { get; }
+		int                            ProcessedCoordIndex { get; set; }
+		float                          SkinWidth           { get; }
 
 		/// <summary>
 		/// </summary>
@@ -26,6 +25,7 @@ namespace ProceduralGeneration {
 
 			for (var outlineIndex = 0; outlineIndex < RoomOutlines.Count; outlineIndex++) {
 				UnprocessedCoords.Add(outlineIndex, new List<Vector3>());
+				ProcessedCoords.Add(outlineIndex, new List<Vector3>());
 				ProcessCoords(outlineIndex);
 			}
 
@@ -42,36 +42,35 @@ namespace ProceduralGeneration {
 
 			var primitiveCollider = CreateNewPrimitiveCollider(currentOutlineIndex.ToString());
 
+			var processedOutlineList   = ProcessedCoords[currentOutlineIndex];
+			var unprocessedOutlineList = UnprocessedCoords[currentOutlineIndex];
+			
 			// PrimitiveCollider API requires a "starting" point of three game objects with colliders
 			// this section of the method satisfies this requirement and are later destroyed
-			var currentCoordinateList = UnprocessedCoords[currentOutlineIndex];
-			var tempObjectList        = SetStarting(currentCoordinateList, currentOutline, primitiveCollider);
+			var tempObjectList = SetStarting(processedOutlineList, currentOutline, primitiveCollider);
 
 			for (var i = 0; i < currentOutline.Count; i++) {
 				var newPoint = GetNewPoint(currentOutline, i);
 
-				if (!currentCoordinateList.Contains(newPoint))
-					currentCoordinateList.Add(newPoint);
+				if (!processedOutlineList.Contains(newPoint))
+					processedOutlineList.Add(newPoint);
+				
+				if (!unprocessedOutlineList.Contains(newPoint))
+					unprocessedOutlineList.Add(newPoint);
 			}
 
-			var tempCopy = new List<Vector3>(currentCoordinateList);
+			var tempCopy = new List<Vector3>(processedOutlineList);
 
-			for (var i = 2; i < currentCoordinateList.Count; i++) {
-				var point1 = currentCoordinateList[i - 2];
-				var point2 = currentCoordinateList[i - 1];
-				var point3 = currentCoordinateList[i];
-
-				if (!VectorF.IsColinear(point1, point2, point3))
-					continue;
-
-				if (tempCopy.Contains(point2))
-					tempCopy.Remove(point2);
+			for (var i = 2; i < processedOutlineList.Count; i++) {
+				DetermineColinearity(processedOutlineList, i, tempCopy);
 			}
 
 			foreach (var point in tempCopy) {
-				CreateHandle(primitiveCollider, point, primitiveCollider.corners[^1], stdIndex);
-				stdIndex++;
+				CreateHandle(primitiveCollider, point, primitiveCollider.corners[^1], ProcessedCoordIndex);
+				ProcessedCoordIndex++;
 			}
+
+			ProcessedCoords[currentOutlineIndex] = tempCopy;
 
 			foreach (var obj in tempObjectList) {
 				if (Application.isEditor)
@@ -79,6 +78,16 @@ namespace ProceduralGeneration {
 				else
 					Object.DestroyImmediate(obj);
 			}
+		}
+
+		static void DetermineColinearity(IReadOnlyList<Vector3> coords, int i, ICollection<Vector3> tempCopy) {
+			var points = new PieceWisePoints(coords[i - 2], coords[i - 1], coords[i]);
+
+			if (!VectorF.IsColinear(points.One, points.Two, points.Three))
+				return;
+
+			if (tempCopy.Contains(points.Two))
+				tempCopy.Remove(points.Two);
 		}
 
 		IEnumerable<GameObject> SetStarting(
@@ -98,20 +107,10 @@ namespace ProceduralGeneration {
 			return tempObjectList;
 		}
 
-		GameObject SetupStartingCollider(Vector3 point, int k, ProceduralPrimitiveCollider col) {
+		static GameObject SetupStartingCollider(Vector3 point, int k, ProceduralPrimitiveCollider col) {
 			col.corners[k].transform.position = point;
 			col.corners[k].gameObject.MakeStatic(true);
 			return col.corners[k].gameObject;
-		}
-
-		int stdIndex      = 0;
-		int lastSlopeSign = 0;
-
-		void ValidateAndAddFirst(ICollection<Vector3> outlines, Vector3 newPoint) {
-			Char1 = newPoint;
-
-			if (!outlines.Contains(newPoint))
-				outlines.Add(newPoint);
 		}
 
 		ProceduralPrimitiveCollider CreateNewPrimitiveCollider(string identifier) {
@@ -150,7 +149,7 @@ namespace ProceduralGeneration {
 			col.onlyWhenSelected = true;
 		}
 
-		void CreateHandle(Component easyWallCollider, Vector3 newPos, Transform cornerPrototype, int newIndex) {
+		static void CreateHandle(Component easyWallCollider, Vector3 newPos, Transform cornerPrototype, int newIndex) {
 			var newCorner = Object.Instantiate(
 				cornerPrototype, newPos, Quaternion.identity, easyWallCollider.transform);
 
@@ -166,7 +165,6 @@ namespace ProceduralGeneration {
 			ColliderGo        = ctx.ColliderGo;
 			RoomOutlines      = ctx.RoomOutlines;
 			MeshVertices      = ctx.MeshVertices;
-			LastSlope         = Mathf.Infinity;
 			UnprocessedCoords = new Dictionary<int, List<Vector3>>();
 			ProcessedCoords   = new Dictionary<int, List<Vector3>>();
 		}
