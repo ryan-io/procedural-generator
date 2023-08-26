@@ -41,7 +41,7 @@ namespace ProceduralGeneration {
 			if (data.enableGizmos == Toggle.No)
 				return;
 
-			Gizmos.DrawWireCube(Center, Size);
+			//Gizmos.DrawWireCube(Center, Size);
 		}
 
 		void SetStart() {

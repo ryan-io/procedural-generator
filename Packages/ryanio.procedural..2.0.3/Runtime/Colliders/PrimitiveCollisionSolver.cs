@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using ProceduralAuxiliary;
@@ -8,63 +7,73 @@ using Object = UnityEngine.Object;
 
 namespace ProceduralGeneration {
 	internal class PrimitiveCollisionSolver : CollisionSolver {
-		GameObject      ColliderGo   { get; }
-		List<Vector3>   MeshVertices { get; }
-		List<List<int>> RoomOutlines { get; }
-		Vector3         Char1        { get; set; }
-		float           SkinWidth    { get; }
-		float           LastSlope    { get; set; }
+		GameObject                     ColliderGo        { get; }
+		List<Vector3>                  MeshVertices      { get; }
+		List<List<int>>                RoomOutlines      { get; }
+		Vector3                        Char1             { get; set; }
+		Vector3                        Char2             { get; set; }
+		float                          SkinWidth         { get; }
+		float                          LastSlope         { get; set; }
+		Dictionary<int, List<Vector3>> UnprocessedCoords { get; }
+		Dictionary<int, List<Vector3>> ProcessedCoords   { get; }
 
 		/// <summary>
 		/// </summary>
 		/// <param name="caller"></param>
 		internal override Coordinates CreateCollider([CallerMemberName] string caller = "") {
-			var spriteBorderCoords = new Dictionary<int, List<Vector3>>();
-			var colliderCoords     = new Dictionary<int, List<Vector3>>();
-
 			ColliderGo.MakeStatic(true);
 			ColliderGo.ZeroPosition();
 
-			for (var i = 0; i < RoomOutlines.Count; i++) {
-				var spriteBorderVectors = new List<Vector3>();
-				colliderCoords.Add(i, new List<Vector3>());
-				spriteBorderCoords.Add(i, spriteBorderVectors);
-
-				InstantiateCollider(colliderCoords, spriteBorderVectors, i);
+			for (var outlineIndex = 0; outlineIndex < RoomOutlines.Count; outlineIndex++) {
+				UnprocessedCoords.Add(outlineIndex, new List<Vector3>());
+				ProcessCoords(outlineIndex);
 			}
 
 			CoreExtensions.SetLayerRecursive(ColliderGo, LayerMask.NameToLayer(Constants.Layer.BOUNDARY));
 
-			return new Coordinates(spriteBorderCoords, colliderCoords);
+			return new Coordinates(ProcessedCoords, UnprocessedCoords);
 		}
 
-		void InstantiateCollider(
-			Dictionary<int, List<Vector3>> colliderCoords,
-			IList<Vector3> spriteBorderVectors,
-			int index) {
-			var outline = RoomOutlines[index];
+		void ProcessCoords(int currentOutlineIndex) {
+			var currentOutline = RoomOutlines[currentOutlineIndex];
 
-			if (outline.Count <= 10)
+			if (currentOutline.Count <= 10)
 				return;
 
-			var col     = CreateNewPrimitiveCollider(index.ToString());
-			var objList = new GameObject[3];
+			var primitiveCollider = CreateNewPrimitiveCollider(currentOutlineIndex.ToString());
 
 			// PrimitiveCollider API requires a "starting" point of three game objects with colliders
 			// this section of the method satisfies this requirement and are later destroyed
-			SetStarting(spriteBorderVectors, outline, col, objList);
+			var currentCoordinateList = UnprocessedCoords[currentOutlineIndex];
+			var tempObjectList        = SetStarting(currentCoordinateList, currentOutline, primitiveCollider);
 
-			for (var i = 0; i < outline.Count; i++) {
-				var allBoundaryList = colliderCoords[index];
-				var newPoint        = GetNewPoint(outline, i);
+			for (var i = 0; i < currentOutline.Count; i++) {
+				var newPoint = GetNewPoint(currentOutline, i);
 
-				if (!allBoundaryList.Contains(newPoint))
-					allBoundaryList.Add(newPoint);
-
-				CreateBodyColliders(newPoint, i, col, spriteBorderVectors);
+				if (!currentCoordinateList.Contains(newPoint))
+					currentCoordinateList.Add(newPoint);
 			}
 
-			foreach (var obj in objList) {
+			var tempCopy = new List<Vector3>(currentCoordinateList);
+
+			for (var i = 2; i < currentCoordinateList.Count; i++) {
+				var point1 = currentCoordinateList[i - 2];
+				var point2 = currentCoordinateList[i - 1];
+				var point3 = currentCoordinateList[i];
+
+				if (!VectorF.IsColinear(point1, point2, point3))
+					continue;
+
+				if (tempCopy.Contains(point2))
+					tempCopy.Remove(point2);
+			}
+
+			foreach (var point in tempCopy) {
+				CreateHandle(primitiveCollider, point, primitiveCollider.corners[^1], stdIndex);
+				stdIndex++;
+			}
+
+			foreach (var obj in tempObjectList) {
 				if (Application.isEditor)
 					Object.DestroyImmediate(obj);
 				else
@@ -72,58 +81,31 @@ namespace ProceduralGeneration {
 			}
 		}
 
-		void SetStarting(ICollection<Vector3> outlines, List<int> outline, ProceduralPrimitiveCollider col,
-			GameObject[] objList) {
-			for (var k = 0; k < 3; k++) {
-				var newPoint = GetNewPoint(outline, k);
-				CreateOriginColliders(newPoint, k, col, objList);
+		IEnumerable<GameObject> SetStarting(
+			ICollection<Vector3> currentCoordinateList,
+			IReadOnlyList<int> outline,
+			ProceduralPrimitiveCollider col) {
+			var tempObjectList = new GameObject[3];
 
-				if (!outlines.Contains(newPoint))
-					outlines.Add(newPoint);
+			for (var index = 0; index < 3; index++) {
+				var newPoint = GetNewPoint(outline, index);
+				tempObjectList[index] = SetupStartingCollider(newPoint, index, col);
+
+				if (!currentCoordinateList.Contains(newPoint))
+					currentCoordinateList.Add(newPoint);
 			}
+
+			return tempObjectList;
 		}
 
-		void CreateOriginColliders(Vector3 point, int k, ProceduralPrimitiveCollider col, IList<GameObject> objList) {
+		GameObject SetupStartingCollider(Vector3 point, int k, ProceduralPrimitiveCollider col) {
 			col.corners[k].transform.position = point;
 			col.corners[k].gameObject.MakeStatic(true);
-			objList[k] = col.corners[k].gameObject;
+			return col.corners[k].gameObject;
 		}
 
 		int stdIndex      = 0;
 		int lastSlopeSign = 0;
-
-		void CreateBodyColliders(Vector3 point, int index, ProceduralPrimitiveCollider col,
-			ICollection<Vector3> spriteBorderVectors) {
-			//col.corners[^1].GetSiblingIndex() + 1
-			if (index == 0) {
-				CreateHandle(col, point, col.corners[^1], stdIndex);
-				stdIndex++;
-				ValidateAndAddFirst(spriteBorderVectors, point);
-				return;
-			}
-
-			var slope     = VectorF.GetSlope(point, Char1);
-			var slopeSign = Math.Sign(slope);
-			var areEqual  = Mathf.Abs(slope - LastSlope) < Constants.FLOATING_POINT_ERROR;
-
-			// if (lastSlopeSign != 0) {
-			// 	if (slopeSign != lastSlopeSign) {
-			// 		areEqual = false;  
-			// 	}
-			// }
-
-			if (!areEqual) {
-				if (!spriteBorderVectors.Contains(Char1)) {
-					CreateHandle(col, Char1, col.corners[^1], stdIndex);
-					stdIndex++;
-					spriteBorderVectors.Add(Char1);
-				}
-			}
-
-			LastSlope     = slope;
-			lastSlopeSign = slopeSign;
-			Char1         = point;
-		}
 
 		void ValidateAndAddFirst(ICollection<Vector3> outlines, Vector3 newPoint) {
 			Char1 = newPoint;
@@ -161,6 +143,7 @@ namespace ProceduralGeneration {
 		}
 
 		void InjectSettings(ProceduralPrimitiveCollider col) {
+			col.loop             = true;
 			col.depth            = SkinWidth / 2f;
 			col.heigth           = SkinWidth / 2f;
 			col.radius           = SkinWidth;
@@ -179,11 +162,13 @@ namespace ProceduralGeneration {
 			new(MeshVertices[outline[index]].x, MeshVertices[outline[index]].y, 0);
 
 		public PrimitiveCollisionSolver(ColliderSolverCtx ctx) {
-			SkinWidth    = ctx.SkinWidth;
-			ColliderGo   = ctx.ColliderGo;
-			RoomOutlines = ctx.RoomOutlines;
-			MeshVertices = ctx.MeshVertices;
-			LastSlope    = Mathf.Infinity;
+			SkinWidth         = ctx.SkinWidth;
+			ColliderGo        = ctx.ColliderGo;
+			RoomOutlines      = ctx.RoomOutlines;
+			MeshVertices      = ctx.MeshVertices;
+			LastSlope         = Mathf.Infinity;
+			UnprocessedCoords = new Dictionary<int, List<Vector3>>();
+			ProcessedCoords   = new Dictionary<int, List<Vector3>>();
 		}
 	}
 }

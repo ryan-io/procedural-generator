@@ -72,7 +72,7 @@ namespace ProceduralGeneration {
 			return new(
 				Actions.GetSpriteShapeConfig(),
 				Actions.GetOwner(),
-				Actions.GetCoordinates().SpriteBoundaryCoords,
+				Actions.GetCoordinates().ProcessedCoords,
 				Actions.GetSerializationName());
 		}
 

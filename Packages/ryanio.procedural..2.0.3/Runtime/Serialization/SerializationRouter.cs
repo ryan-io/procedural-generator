@@ -26,13 +26,13 @@ namespace ProceduralGeneration {
 
 			if (ShouldSerializeSpriteShape) {
 				var convertedCoords =
-					new Convert().DictionaryVector3ToSerializedVector3(coordinates.SpriteBoundaryCoords);
+					new Convert().DictionaryVector3ToSerializedVector3(coordinates.ProcessedCoords);
 				Serializer.SerializeSpriteShape(SerializedName, convertedCoords, directories);
 			}
 
 			if (ShouldSerializeColliderCoords) {
 				var convertedCoords =
-					new Convert().DictionaryVector3ToSerializedVector3(coordinates.ColliderCoords);
+					new Convert().DictionaryVector3ToSerializedVector3(coordinates.ProcessedCoords);
 				Serializer.SerializeColliderCoords(SerializedName, convertedCoords, directories);
 			}
 		}
