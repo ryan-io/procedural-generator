@@ -1,6 +1,7 @@
 // ProceduralGeneration
 
 using System.Collections.Generic;
+using System.Threading;
 using Pathfinding;
 
 namespace ProceduralGeneration {
@@ -14,7 +15,7 @@ namespace ProceduralGeneration {
 			var graph = Builder.Build();
 			Solver.ResetGridGraphRules(graph);
 			Solver.SetGridGraphRules(graph);
-			Scanner.ScanGraph(graph);
+			Scanner.Fire(new GraphScanner.Args(graph, false), CancellationToken.None);
 			new CutGraphColliders().Cut(ColliderCutters);
 		}
 

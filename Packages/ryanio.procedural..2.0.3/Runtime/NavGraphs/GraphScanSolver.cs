@@ -16,23 +16,21 @@ namespace ProceduralGeneration {
 	/// The NavGraph is the Astar generated graph; the flag is whether to run TaskLogic asynchronously
 	/// This will run synchronously if not awaited/forgotten
 	/// </summary>
-	public class GraphScanner : AsyncUnitOfWork<GraphScanner.Args> {
+	internal class GraphScanner : AsyncUnitOfWork<GraphScanner.Args> {
 		protected override async UniTask TaskLogic(Args args, CancellationToken token) {
 			if (args.IsAsync) {
 				await ScanGraphAsync(args, token);
-				
 			}
 			else {
 				ScanGraph(args.Graph);
 			}
 		}
 
-		public void ScanGraph(NavGraph graph) {
-			Task.Run(() => AstarPath.active.Scan());
-			//UniTask.RunOnThreadPool(.AsUniTask().Forget();
+		static void ScanGraph(NavGraph graph) {
+			graph.active.Scan();
 		}
 
-		IEnumerator ScanGraphAsync(Args args, CancellationToken token) {
+		static IEnumerator ScanGraphAsync(Args args, CancellationToken token) {
 			Physics.SyncTransforms();
 			var sB = new StringBuilder();
 
@@ -73,15 +71,18 @@ namespace ProceduralGeneration {
 #endif
 		}
 
-		public GraphScanner() {
+		internal GraphScanner() {
 		}
 
-		public readonly struct Args {
-			public             NavGraph Graph         { get; }
-			[CanBeNull] public Action   OnCompleteCtx { get; }
-			public             bool     IsAsync       { get; }
+		internal readonly struct Args {
+			internal             NavGraph Graph         { get; }
+			[CanBeNull] internal Action   OnCompleteCtx { get; }
+			internal             bool     IsAsync       { get; }
 
-			public Args(NavGraph graph, [CanBeNull] Action onCompleteCtx, bool isAsync) {
+			internal Args(NavGraph graph, bool isAsync) : this(graph, default, isAsync) {
+			}
+
+			internal Args(NavGraph graph, [CanBeNull] Action onCompleteCtx = default, bool isAsync = false) {
 				Graph         = graph;
 				IsAsync       = isAsync;
 				OnCompleteCtx = onCompleteCtx;

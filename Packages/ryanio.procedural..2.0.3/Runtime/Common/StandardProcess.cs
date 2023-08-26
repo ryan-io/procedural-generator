@@ -14,7 +14,6 @@ namespace ProceduralGeneration {
 	internal class StandardProcess : GenerationProcess {
 		internal override MapData Run(Span2D<int> map) {
 			var ctxCreator = new ContextCreator(Actions);
-			//var data              = new MapData(Actions.GetTileHashset(), Actions.GetMeshData());
 			var generatorToolsCtx = ctxCreator.GetNewGeneratorToolsCtx();
 
 			FillMap(map, ctxCreator.GetNewFillMapCtx());
@@ -40,7 +39,7 @@ namespace ProceduralGeneration {
 			GenerateSpriteShapeBorder(ctxCreator.GetNewSpriteShapeBorderCtx());
 			SetGridCharacteristics(ctxCreator.GetNewGridCharacteristicsSolverCtx(), generatorToolsCtx);
 
-			return new MapData();
+			return new MapData(Actions.GetTileHashset(), Actions.GetMeshData());
 		}
 
 		static void FillMap(Span2D<int> map, FillMapSolverCtx ctx) {
