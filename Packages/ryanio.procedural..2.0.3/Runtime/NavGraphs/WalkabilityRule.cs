@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.ExceptionServices;
 using Pathfinding;
 using Unity.Burst;
 using Unity.Collections;
@@ -21,7 +19,7 @@ using UnityEngine.Tilemaps;
 						// var size    = Physics.OverlapBoxNonAlloc(worldPosGround, extends, _collisions.Value);
  */
 namespace ProceduralGeneration {
-	[Serializable]
+	[Serializable, Pathfinding.Util.Preserve]
 	public class WalkabilityRule : GridGraphRule {
 		Tilemap     _boundaryTilemap;
 		Tilemap     _groundTilemap;
@@ -89,38 +87,36 @@ namespace ProceduralGeneration {
 
 						var direction = -Vector3.forward;
 
-						var scaledPosition = position / (size);
+						//var scaledPosition = position / (size);
 
-						var positionCast1 = new Vector3(scaledPosition.x,  scaledPosition.y,  -0.5f);
-						var positionCast2 = new Vector3(-scaledPosition.x, -scaledPosition.y, -0.5f);
-						var positionCast3 = new Vector3(-scaledPosition.x, scaledPosition.y,  -0.5f);
-						var positionCast4 = new Vector3(scaledPosition.x,  -scaledPosition.y, -0.5f);
+						//var positionCast1 = new Vector3(scaledPosition.x,  scaledPosition.y,  -0.5f);
+						// var positionCast2 = new Vector3(-scaledPosition.x, -scaledPosition.y, -0.5f);
+						// var positionCast3 = new Vector3(-scaledPosition.x, scaledPosition.y,  -0.5f);
+						// var positionCast4 = new Vector3(scaledPosition.x,  -scaledPosition.y, -0.5f);
 						
-						commands[0] = new RaycastCommand(positionCast1, direction, QueryParameters.Default);
-						commands[1] = new RaycastCommand(positionCast2,  direction, QueryParameters.Default);
-						commands[2] = new RaycastCommand(positionCast3,  direction, QueryParameters.Default);
-						commands[3] = new RaycastCommand(positionCast4,  direction, QueryParameters.Default);
+						commands[0] = new RaycastCommand(position, direction, QueryParameters.Default);
+						// commands[1] = new RaycastCommand(positionCast2,  direction, QueryParameters.Default);
+						// commands[2] = new RaycastCommand(positionCast3,  direction, QueryParameters.Default);
+						// commands[3] = new RaycastCommand(positionCast4,  direction, QueryParameters.Default);
 
 						var handlePhys = RaycastCommand.ScheduleBatch(commands, results, 1);
 
 						handlePhys.Complete();
 
-						//var batchedHit = results[0];
+						var batchedHit = results[0];
 						
-
 						if (!hasTileGround || hasTileBoundary) {
 							hasTile = false;
 						}
 						else {
-							
-							var acceptable = results.Where(hit => hit.collider && !hit.collider.isTrigger);
-							hasTile = !acceptable.Any();
-							// if (batchedHit.collider && !batchedHit.collider.isTrigger) {
-							// 	hasTile = false;
-							// }
-							// else {
-							// 	hasTile = true;
-							// }
+							// var acceptable = results.Where(hit => hit.collider && !hit.collider.isTrigger);
+							// hasTile = !acceptable.Any();
+							if (batchedHit.collider && !batchedHit.collider.isTrigger) {
+								hasTile = false;
+							}
+							else {
+								hasTile = true;
+							}
 						}
 
 						hasTilesList.Add(hasTile);
