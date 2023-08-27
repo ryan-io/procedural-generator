@@ -14,6 +14,7 @@ namespace ProceduralGeneration {
 			SquareGrid.SetSquares(map);
 			SetTriangles();
 			SolveMesh(map);
+			
 			OutLineConnectionSolver.Solve(
 				_triangulationAlgorithm.GetWalkableVertices, CheckedVertices,  Outlines, TriangleTracker);
 

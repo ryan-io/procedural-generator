@@ -31,13 +31,14 @@ namespace ProceduralGeneration {
 			_edgeTiles     = new Region();
 			ConnectedRooms = new List<Room>();
 
-			foreach (var tile in _tiles)
+			foreach (var tile in _tiles) {
 				for (var x = tile.x - 1; x < tile.x + 1; x++) {
 					for (var y = tile.y - 1; y < tile.y + 1; y++)
 						if (x == tile.x || y == tile.y)
 							if (map[x, y] == 1)
 								_edgeTiles.Add(tile);
 				}
+			}
 		}
 
 		[HideInInspector] public List<Room> ConnectedRooms { get; }

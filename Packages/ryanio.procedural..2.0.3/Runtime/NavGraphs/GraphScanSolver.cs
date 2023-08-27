@@ -56,18 +56,15 @@ namespace ProceduralGeneration {
 
 				yield return null;
 			}
-			
+
 			args.OnCompleteCtx?.Invoke();
-			
+
 #if UNITY_EDITOR || UNITY_STANDALONE
 			sB.Clear();
 			sB.Append("Pathfinding has completed.");
-
-
 			sB.Clear();
 			sB.Append(PATHFINDING_NODES);
 			sB.Append(args.Graph.CountNodes());
-
 #endif
 		}
 

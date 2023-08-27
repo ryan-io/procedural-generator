@@ -38,25 +38,27 @@ namespace ProceduralGeneration {
 		int                                GetRoomRemoveThreshold();
 		int                                GetBorderSize();
 		bool                               GetShouldCreateTileLabels();
-		bool                               GetShouldSerializePathfinding    ();
-		bool                               GetShouldSerializeMapPrefab      ();
-		bool                               GetShouldSerializeSpriteShape    ();
-		bool                               GetShouldSerializeColliderCoords ();
+		bool                               GetShouldSerializePathfinding();
+		bool                               GetShouldSerializeMapPrefab();
+		bool                               GetShouldSerializeSpriteShape();
+		bool                               GetShouldSerializeColliderCoords();
 		float                              GetSkinWidth();
 		Vector2                            GetEdgeColliderOffset();
 		float                              GetEdgeColliderRadius();
 
-		void            SetColliderGameObject(GameObject o);
-		void            SetTileMapDictionary(TileMapDictionary tileMapDictionary);
-		void            SetGrid(Grid grid);
-		void            SetCoords(Coordinates coordinates);
-		void            SetMeshData(MeshData meshData);
-		void            StopTimer();
-		string          GetMapName();
-		bool            GetShouldDeserializePathfinding();
-		bool            GetShouldDeserializeMapPrefab();
-		bool            GetShouldDeserializeSpriteShape();
-		bool            GetShouldDeserializeColliderCoords();
-		EventDictionary GetSerializedEvents();
+		void                SetColliderGameObject(GameObject o);
+		void                SetTileMapDictionary(TileMapDictionary tileMapDictionary);
+		void                SetGrid(Grid grid);
+		void                SetCoords(Coordinates coordinates);
+		void                SetMeshData(MeshData meshData);
+		void                StopTimer();
+		string              GetMapName();
+		bool                GetShouldDeserializePathfinding();
+		bool                GetShouldDeserializeMapPrefab();
+		bool                GetShouldDeserializeSpriteShape();
+		bool                GetShouldDeserializeColliderCoords();
+		EventDictionary     GetSerializedEvents();
+		IReadOnlyList<Room> GetRooms();
+		void                SetRooms(IReadOnlyList<Room> rooms);
 	}
 }

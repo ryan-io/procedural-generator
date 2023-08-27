@@ -43,9 +43,21 @@ namespace ProceduralGeneration {
 			ctx.Controller.UpdateSpriteShapeParameters();
 			ctx.Controller.RefreshSpriteShape();
 			
-			int maxNodes = 250;
-			var limit    = boundaryPositions.Count;
+			int maxNodes         = 250;
+			int currentNodeIndex = 0;
+			int limitTracker = 0;
+			var limit = boundaryPositions.Count;
 
+			while (currentNodeIndex <= maxNodes) {
+				if (limitTracker >= limit)
+					break;
+
+					
+					
+				currentNodeIndex++;
+				limit++;
+			}
+			
 			for (var i = 0; i < limit; i++) {
 				// if (ctx.Controller.spline.GetPointCount() > maxNodes) {
 				// 	ctx.Controller.UpdateSpriteShapeParameters();
@@ -152,8 +164,13 @@ namespace ProceduralGeneration {
 			obj.transform.localScale = _config.ScaleModifier * obj.transform.localScale;
 
 			var controller = obj.AddComponent<SpriteShapeController>();
+			
 			ParameterizeController(controller);
 			ParameterizeRenderer(controller.spriteShapeRenderer);
+			
+			controller.spline.Clear();
+			controller.UpdateSpriteShapeParameters();
+			controller.RefreshSpriteShape();
 
 			return new SpriteShapeObjectCtx(obj, controller);
 		}

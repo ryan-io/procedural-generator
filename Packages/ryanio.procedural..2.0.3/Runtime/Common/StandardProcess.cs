@@ -1,5 +1,6 @@
 // ProceduralGeneration
 
+using System.Collections.Generic;
 using CommunityToolkit.HighPerformance;
 using Pathfinding;
 
@@ -13,20 +14,20 @@ namespace ProceduralGeneration {
 	/// </summary>
 	internal class StandardProcess : GenerationProcess {
 		internal override MapData Run(Span2D<int> map) {
-			var ctxCreator = new ContextCreator(Actions);
+			var ctxCreator        = new ContextCreator(Actions);
 			var generatorToolsCtx = ctxCreator.GetNewGeneratorToolsCtx();
 
 			FillMap(map, ctxCreator.GetNewFillMapCtx());
 			SmoothMap(map, ctxCreator.GetNewSmoothMapCtx());
-			RemoveRegions(map, ctxCreator.GetNewRemoveRegionsCtx());
+			Actions.SetRooms(RemoveRegions(map, ctxCreator.GetNewRemoveRegionsCtx()));
 
 			SetTiles(map,
 				ctxCreator.GetNewTileSetterCtx(),
 				ctxCreator.GetNewTileMapperCtx(),
 				generatorToolsCtx);
 
-			var meshData = CreateMesh(map, ctxCreator.GetNewMeshSolverCtx());
-			Actions.SetMeshData(meshData);
+			CreateMesh(map, ctxCreator.GetNewMeshSolverCtx());
+			Actions.SetMeshData(CreateMesh(map, ctxCreator.GetNewMeshSolverCtx()));
 
 			BuildNavigation(new GridGraphBuilder(
 					ctxCreator.GetNewGridGraphBuilderCtx()),
@@ -52,8 +53,8 @@ namespace ProceduralGeneration {
 			                 .Smooth(map);
 		}
 
-		static void RemoveRegions(Span2D<int> map, RemoveRegionsSolverCtx ctx) {
-			ProceduralService.GetRegionRemovalSolver(() => new FloodRegionRemovalSolver(ctx))
+		static List<Room> RemoveRegions(Span2D<int> map, RemoveRegionsSolverCtx ctx) {
+			return ProceduralService.GetRegionRemovalSolver(() => new FloodFillRegionSolver(ctx))
 			                 .Remove(map);
 		}
 
@@ -63,8 +64,8 @@ namespace ProceduralGeneration {
 			TileMapperCtx mapperCtx,
 			GeneratorToolsCtx toolsCtx) {
 			ProceduralService.GetTileSetterSolver(
-				() => new StandardTileSetterSolver(
-					tileSolverCtx, mapperCtx, toolsCtx))
+				                  () => new StandardTileSetterSolver(
+					                  tileSolverCtx, mapperCtx, toolsCtx))
 			                 .Set(map);
 		}
 
@@ -89,7 +90,7 @@ namespace ProceduralGeneration {
 		static void SetBoundaryColliderPoints(ColliderPointSetterCtx ctx) {
 			ProceduralService.GetCutCollidersSolver(() => new CreateBoundaryColliders(ctx)).Set();
 		}
-  
+
 		static void SetGridCharacteristics(GridCharacteristicsSolverCtx ctx, GeneratorToolsCtx toolsCtx) {
 			ProceduralService.GetGridCharacteristicsSolver(
 				() => new GridCharacteristicsSolver(ctx, toolsCtx)).Set();

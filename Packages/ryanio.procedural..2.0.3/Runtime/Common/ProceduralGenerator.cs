@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Sirenix.OdinInspector;
 using UnityBCL;
@@ -19,8 +20,9 @@ namespace ProceduralGeneration {
 	[HideMonoScript]
 	public class ProceduralGenerator : Singleton<ProceduralGenerator, ProceduralGenerator>, IOwner {
 		public GameObject Go => gameObject;
-		
-		internal Coordinates GeneratedCoordinates { get; private set; }
+
+		internal Coordinates         GeneratedCoordinates { get; private set; }
+		internal IReadOnlyList<Room> Rooms                { get; private set; }
 
 		/// <summary>
 		///  Loads the generator. This is the entry point for the generator.
@@ -66,7 +68,7 @@ namespace ProceduralGeneration {
 		Run Initialize(IMachine machine, IActions actions, bool initSeed = true) {
 			if (initSeed)
 				new SeedValidator(_config).Validate(actions.GetSeed());
-			
+
 			machine.InvokeEvent(StateObservableId.ON_INIT);
 			new InitializationService(actions).Run(_config);
 			machine.InvokeEvent(StateObservableId.ON_CLEAN);
@@ -76,10 +78,10 @@ namespace ProceduralGeneration {
 
 		string GenerateMap(IActions actions, Run run) {
 			new GeneratorSceneSetupService(actions).Run();
-			
+
 			run.Generation();
 			run.Serialization();
-			
+
 			return Message.GENERATION_COMPLETE;
 		}
 
@@ -96,11 +98,12 @@ namespace ProceduralGeneration {
 
 		void Complete(IActions actions, IMachine machine, string onCompleteLog) {
 			GeneratedCoordinates = actions.GetCoordinates();
-			
+			Rooms                = actions.GetRooms();
+
 			actions.StopTimer();
 			machine.InvokeEvent(StateObservableId.ON_COMPLETE);
 
-			actions.Log(onCompleteLog,                                         nameof(Load));
+			actions.Log(onCompleteLog,                                                   nameof(Load));
 			actions.Log(Message.TOTAL_TIME_ELAPSED + actions.GetTimeElapsed() + " sec.", nameof(Load));
 		}
 
@@ -131,7 +134,7 @@ namespace ProceduralGeneration {
 		 HorizontalGroup("Actions/Buttons1"),
 		 ButtonGroup("Actions/Buttons1/Methods", Stretch = false, IconAlignment = IconAlignment.RightEdge)]
 		void FindPathfinder() => _config.FindPathfinderInScene();
-		
+
 		[BoxGroup("Actions"),
 		 HorizontalGroup("Actions/Buttons1"),
 		 ButtonGroup("Actions/Buttons1/Methods", Stretch = false, IconAlignment = IconAlignment.RightEdge)]
@@ -143,7 +146,7 @@ namespace ProceduralGeneration {
 		void DeleteSelectedSerialized() {
 			if (string.IsNullOrWhiteSpace(_config.NameSeedIteration))
 				return;
-			
+
 			DirectoryAction.DeleteDirectory(_config.NameSeedIteration, default, default);
 			_config.NameSeedIteration = Help.GetAllSeeds().FirstOrDefault();
 		}
@@ -157,16 +160,15 @@ namespace ProceduralGeneration {
 		void Generate() {
 			Load();
 		}
-		
+
 		[field: SerializeField, Required, BoxGroup("Configuration"), HideLabel]
 		ProceduralConfig _config = null!;
 
 		[field: SerializeField, Required, BoxGroup("Configuration"), HideLabel]
 		SpriteShapeConfig _spriteShapeConfig = null!;
-  
-		//[SerializeField, HideInInspector] MapData _data;
-		
-#endregion
 
+		//[SerializeField, HideInInspector] MapData _data;
+
+#endregion
 	}
 }

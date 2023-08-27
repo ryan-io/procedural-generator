@@ -34,8 +34,10 @@ namespace ProceduralGeneration {
 
 		public bool GetShouldDeserializeSpriteShape() => ProceduralConfig.ShouldDeserializeSpriteShape;
 
-		public bool            GetShouldDeserializeColliderCoords() => ProceduralConfig.ShouldDeserializeColliderCoords;
-		public EventDictionary GetSerializedEvents()                => ProceduralConfig.SerializedEvents;
+		public bool                GetShouldDeserializeColliderCoords() => ProceduralConfig.ShouldDeserializeColliderCoords;
+		public EventDictionary     GetSerializedEvents()                => ProceduralConfig.SerializedEvents;
+		public IReadOnlyList<Room> GetRooms()                           => Rooms;
+		public void                SetRooms(IReadOnlyList<Room> rooms)  => Rooms = rooms;
 
 		public void SetMeshData(MeshData meshData) => MeshData = meshData;
 
@@ -43,6 +45,7 @@ namespace ProceduralGeneration {
 		TileMapDictionary TileMapDictionary  { get; set; }
 		Grid              Grid               { get; set; }
 		MeshData          MeshData           { get; set; }
+		IReadOnlyList<Room>        Rooms              { get; set; }
 
 		/// <summary>
 		///   Constructor, does not initialize ProceduralConfig or SpriteShapeConfig.
