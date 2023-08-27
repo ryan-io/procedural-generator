@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityBCL;
@@ -26,55 +27,69 @@ namespace ProceduralGeneration {
 			foreach (var outline in Coordinates) {
 				if (outline.Value.Count <= CUT_OFF)
 					continue;
-				
+
 				CreateSpriteShapeBorderAndPopulate(outline.Value, currentRoomIndex);
 				currentRoomIndex++;
 			}
 		}
 
 		void CreateSpriteShapeBorderAndPopulate(IReadOnlyList<Vector3> boundaryPositions, int currentRoomIndex) {
-			var indexTracker   = 0;
-			var solver         = InstantiateTangentSolver();
-			var iterationCount = 1;
-			var name           = GetName(currentRoomIndex, iterationCount);
-			var ctx            = SetupNewSpriteShape(name);
-			
-			ctx.Controller.spline.Clear();
-			ctx.Controller.UpdateSpriteShapeParameters();
-			ctx.Controller.RefreshSpriteShape();
-			
-			int maxNodes         = 250;
-			int currentNodeIndex = 0;
-			int limitTracker = 0;
-			var limit = boundaryPositions.Count;
+			const int meshNodeLimit    = 100;
+			const int minimumNodeCount = 20;
+			var       forcePass        = true;
 
-			while (currentNodeIndex <= maxNodes) {
+			var solver         = InstantiateTangentSolver();
+			var ctx            = new SpriteShapeObjectCtx(default, default);
+			var nodeTracker    = int.MaxValue;
+			var limit          = boundaryPositions.Count;
+			var limitTracker   = 0;
+			var iterationCount = 0;
+
+			while (true) {
+				if (nodeTracker > meshNodeLimit && (forcePass || limit - nodeTracker >= minimumNodeCount)) {
+					forcePass = false;
+					iterationCount++;
+					var name = GetName(currentRoomIndex, iterationCount);
+
+					ctx = SetupNewSpriteShape(name);
+					ctx.Controller.spline.Clear();
+					ctx.Controller.UpdateSpriteShapeParameters();
+					ctx.Controller.RefreshSpriteShape();
+
+					limitTracker--;
+					limitTracker = Math.Clamp(limitTracker, 0, limit);
+					nodeTracker = 0;
+				}
+
 				if (limitTracker >= limit)
 					break;
 
-					
-					
-				currentNodeIndex++;
-				limit++;
-			}
-			
-			for (var i = 0; i < limit; i++) {
-				// if (ctx.Controller.spline.GetPointCount() > maxNodes) {
-				// 	ctx.Controller.UpdateSpriteShapeParameters();
-				// 	ctx.Controller.RefreshSpriteShape();
-				//
-				// 	iterationCount++;
-				// 	ctx = SetupNewSpriteShape(GetName(currentRoomIndex, iterationCount));  
-				//
-				// 	i = 0;
-				// }
+				nodeTracker = CreateAndSetSplineSegment(
+					boundaryPositions[limitTracker],
+					ctx.Controller.spline,
+					nodeTracker,
+					solver);
 
-				indexTracker =
-					CreateAndSetSplineSegment(boundaryPositions[i], ctx.Controller.spline, indexTracker, solver);
+				limitTracker++;
 			}
 
-			ctx.Controller.UpdateSpriteShapeParameters();
-			ctx.Controller.RefreshSpriteShape();
+			//for (var i = 0; i < limit; i++) {
+			// if (ctx.Controller.spline.GetPointCount() > maxNodes) {
+			// 	ctx.Controller.UpdateSpriteShapeParameters();
+			// 	ctx.Controller.RefreshSpriteShape();
+			//
+			// 	iterationCount++;
+			// 	ctx = SetupNewSpriteShape(GetName(currentRoomIndex, iterationCount));  
+			//
+			// 	i = 0;
+			// }
+
+			// nodeTracker =
+			// 	CreateAndSetSplineSegment(boundaryPositions[i], ctx.Controller.spline, nodeTracker, solver);
+			//}
+
+			// ctx.Controller.UpdateSpriteShapeParameters();
+			// ctx.Controller.RefreshSpriteShape();
 		}
 
 		static string GetName(int currentRoomIndex, int iterationCount) {
@@ -156,7 +171,7 @@ namespace ProceduralGeneration {
 			var obj = new GameObject {
 				transform = {
 					localPosition = Vector3.zero,
-					parent        = Go.transform	
+					parent        = Go.transform
 				},
 				name = name
 			};
@@ -164,10 +179,10 @@ namespace ProceduralGeneration {
 			obj.transform.localScale = _config.ScaleModifier * obj.transform.localScale;
 
 			var controller = obj.AddComponent<SpriteShapeController>();
-			
+
 			ParameterizeController(controller);
 			ParameterizeRenderer(controller.spriteShapeRenderer);
-			
+
 			controller.spline.Clear();
 			controller.UpdateSpriteShapeParameters();
 			controller.RefreshSpriteShape();
@@ -210,6 +225,6 @@ namespace ProceduralGeneration {
 		}
 
 		readonly SpriteShapeConfig _config;
-		const int CUT_OFF = 10;
+		const    int               CUT_OFF = 10;
 	}
 }
