@@ -87,7 +87,7 @@ namespace ProceduralGeneration {
 			var isValid = File.Exists(validationPath);
 
 			if (!isValid) {
-				Logger.LogError(
+				Logger.LogWarning(
 					Message.SERIALIZE_GENERAL_INVALID_NAME_PREFIX +
 					currentSerializableName                       +
 					Message.SERIALIZE_SPRITE_SHAPE_INVALID_NAME,
@@ -124,7 +124,7 @@ namespace ProceduralGeneration {
 			var isValid = File.Exists(validationPath);
 
 			if (!isValid) {
-				Logger.LogError(
+				Logger.LogWarning(
 					Message.SERIALIZE_GENERAL_INVALID_NAME_PREFIX +
 					currentSerializableName                       +
 					Message.SERIALIZE_COLLIDER_COORDS_INVALID_NAME,

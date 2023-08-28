@@ -62,6 +62,9 @@ namespace ProceduralGeneration {
 			var coords = Deserializer.DeserializeVector3(
 				nameSeedIteration, Constants.SPRITE_SHAPE_SAVE_PREFIX, directories);
 
+			if (coords == default)
+				return;
+
 			var ctxCreator = new ContextCreator(Actions);
 			var ctx        = ctxCreator.GetNewSpriteShapeBorderCtx(coords);
 
@@ -69,14 +72,17 @@ namespace ProceduralGeneration {
 		}
 
 		void DeserializeColliderCoords(string nameSeedIteration, (string raw, string full) directories, GameObject go) {
-			var colPos = Deserializer.DeserializeVector3(
+			var coords = Deserializer.DeserializeVector3(
 				nameSeedIteration, Constants.COLLIDER_COORDS_SAVE_PREFIX, directories);
+
+			if (coords == default)
+				return;
 			
 			var ctxCreator = new ContextCreator(Actions);
 
 			var colSolver =
 				new SerializedPrimitiveCollisionSolver(ctxCreator.GetNewSerializedPrimitiveCollisionSolverCtx());
-			colSolver.CreateColliderFromDict(colPos);
+			colSolver.CreateColliderFromDict(coords);
 		}
 
 		internal DeserializationRouter(DeserializationRoute route, IActions actions) {
