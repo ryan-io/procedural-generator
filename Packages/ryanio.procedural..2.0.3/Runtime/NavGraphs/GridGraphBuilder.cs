@@ -30,13 +30,11 @@ namespace ProceduralGeneration {
 			graph.cutCorners = true;
 			graph.is2D       = true;
 			graph.rotation   = new Vector3(90f, 0, 0);
-
 			graph.collision.heightCheck            = true;
 			graph.collision.unwalkableWhenNoGround = false;
 			graph.collision.type                   = ColliderType;
 			graph.collision.heightMask             = HeightLayerMask;
 			graph.collision.height                 = CollisionDetectionHeight;
-
 			//TODO: I feel this may need to be set to false. There old generator had this property set to false.
 			graph.collision.use2D    = true;
 			graph.collision.diameter = NavGraphCollisionDiameter;

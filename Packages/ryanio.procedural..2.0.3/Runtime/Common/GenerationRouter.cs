@@ -1,5 +1,6 @@
 // ProceduralGeneration
 
+using System.Threading;
 using CommunityToolkit.HighPerformance;
 
 namespace ProceduralGeneration {
@@ -20,6 +21,9 @@ namespace ProceduralGeneration {
 			map.Clear();
 			
 			_process.Run(map);
+
+			// var scanner = new GraphScanner();
+			// scanner.Fire(new GraphScanner.Args(AstarPath.active.graphs[0], false), CancellationToken.None);
 			
 			Actions.Log("'Standard Process' generation complete.", nameof(ProceduralGeneration.Run));
 		}

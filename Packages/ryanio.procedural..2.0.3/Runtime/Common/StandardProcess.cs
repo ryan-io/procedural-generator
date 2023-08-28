@@ -29,6 +29,8 @@ namespace ProceduralGeneration {
 			CreateMesh(map, ctxCreator.GetNewMeshSolverCtx());
 			Actions.SetMeshData(CreateMesh(map, ctxCreator.GetNewMeshSolverCtx()));
 
+			SetGridCharacteristics(ctxCreator.GetNewGridCharacteristicsSolverCtx(), generatorToolsCtx);
+			
 			BuildNavigation(new GridGraphBuilder(
 					ctxCreator.GetNewGridGraphBuilderCtx()),
 				ctxCreator.GetNewNavigationSolverCtx());
@@ -38,7 +40,6 @@ namespace ProceduralGeneration {
 			AssignCoordinates(coordinates);
 			SetBoundaryColliderPoints(ctxCreator.GetNewColliderPointSetterCtx());
 			GenerateSpriteShapeBorder(ctxCreator.GetNewSpriteShapeBorderCtx());
-			SetGridCharacteristics(ctxCreator.GetNewGridCharacteristicsSolverCtx(), generatorToolsCtx);
 
 			return new MapData(Actions.GetTileHashset(), Actions.GetMeshData());
 		}

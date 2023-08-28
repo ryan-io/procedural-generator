@@ -7,7 +7,7 @@ namespace ProceduralGeneration {
 	internal class GenLogging : IProceduralLogging {
 		public const string SPACE           = " ";
 		const        string TIMESTAMP_LABEL = ":::: ELAPSED - ";
-		const        string UNIT            = "sec.";
+		const        string UNIT            = "mSec.";
 
 		StopWatchWrapper StopWatch { get; }
 

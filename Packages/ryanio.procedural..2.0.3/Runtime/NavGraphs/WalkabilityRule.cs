@@ -64,9 +64,14 @@ namespace ProceduralGeneration {
 		public override void Register(GridGraphRules rules) {
 			rules.AddJobSystemPass(Pass.AfterConnections,
 				ctx => {
-					var positions    = ctx.data.nodePositions.ToArray();
+					var positions       = ctx.data.nodePositions;
+					//var scaledPositions = new NativeArray<Vector3>(positions.Length, Allocator.Persistent);
+
+					// for (var i = 0; i < positions.Length; i++) {
+					// 	scaledPositions[i] = Constants.CELL_SIZE * positions[i];
+					// }
+					
 					var hasTilesList = new List<bool>();
-					var size         = ctx.graph.nodeSize;
 
 					const int allocationSize = 4;
 
@@ -93,8 +98,8 @@ namespace ProceduralGeneration {
 						// var positionCast2 = new Vector3(-scaledPosition.x, -scaledPosition.y, -0.5f);
 						// var positionCast3 = new Vector3(-scaledPosition.x, scaledPosition.y,  -0.5f);
 						// var positionCast4 = new Vector3(scaledPosition.x,  -scaledPosition.y, -0.5f);
-						
-						commands[0] = new RaycastCommand(position, direction, QueryParameters.Default);
+
+						commands[0] = new RaycastCommand(Constants.CELL_SIZE * position, direction, QueryParameters.Default);
 						// commands[1] = new RaycastCommand(positionCast2,  direction, QueryParameters.Default);
 						// commands[2] = new RaycastCommand(positionCast3,  direction, QueryParameters.Default);
 						// commands[3] = new RaycastCommand(positionCast4,  direction, QueryParameters.Default);
@@ -104,7 +109,7 @@ namespace ProceduralGeneration {
 						handlePhys.Complete();
 
 						var batchedHit = results[0];
-						
+
 						if (!hasTileGround || hasTileBoundary) {
 							hasTile = false;
 						}
