@@ -25,8 +25,7 @@ namespace ProceduralGeneration {
 				ctxCreator.GetNewTileSetterCtx(),
 				ctxCreator.GetNewTileMapperCtx(),
 				generatorToolsCtx);
-
-			CreateMesh(map, ctxCreator.GetNewMeshSolverCtx());
+			
 			Actions.SetMeshData(CreateMesh(map, ctxCreator.GetNewMeshSolverCtx()));
 
 			SetGridCharacteristics(ctxCreator.GetNewGridCharacteristicsSolverCtx(), generatorToolsCtx);
