@@ -116,14 +116,14 @@ namespace ProceduralGeneration {
 
 		internal void SetOriginWrtMap(GameObject go) {
 			go.transform.position = new(
-				Mathf.CeilToInt(-MapWidth   / 2f),
-				Mathf.FloorToInt(-MapHeight / 2f),
+				Mathf.CeilToInt(-MapWidth   *Constants.CELL_SIZE / 2f),
+				Mathf.FloorToInt(-MapHeight *Constants.CELL_SIZE / 2f),
 				0);
 		}
 
 		internal void SetGridScale(int newScale) {
 			GridObj.gameObject.transform.localScale = new(newScale, newScale, newScale);
-		}
+		} 
 
 		bool IsBit(TileMask check, TileMask against) => check == against;
 

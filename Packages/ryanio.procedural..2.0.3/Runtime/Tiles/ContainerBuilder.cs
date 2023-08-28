@@ -16,7 +16,7 @@ namespace ProceduralGeneration {
 
 		GameObject BuildNewContainer() {
 			var obj = new GameObject("grid-container") {
-				transform = { parent = Root.transform, position = Vector3.zero }
+				transform = { parent = Root.transform }
 			};
 
 			return obj;
