@@ -52,8 +52,11 @@ namespace ProceduralGeneration {
 		public int CompareTo(Room other) => other._size.CompareTo(_size);
 
 		public static void ConnectRooms(Room a, Room b) {
-			if (a._isAccessibleToMainRoom) b.SetAccessibleFromMainRoom();
-			else if (b._isAccessibleToMainRoom) a.SetAccessibleFromMainRoom();
+			if (a._isAccessibleToMainRoom)
+				b.SetAccessibleFromMainRoom();
+			
+			else if (b._isAccessibleToMainRoom) 
+				a.SetAccessibleFromMainRoom();
 
 			a.ConnectedRooms.Add(b);
 			b.ConnectedRooms.Add(a);

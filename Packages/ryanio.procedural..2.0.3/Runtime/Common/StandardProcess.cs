@@ -19,7 +19,7 @@ namespace ProceduralGeneration {
 
 			FillMap(map, ctxCreator.GetNewFillMapCtx());
 			SmoothMap(map, ctxCreator.GetNewSmoothMapCtx());
-			Actions.SetRooms(RemoveRegions(map, ctxCreator.GetNewRemoveRegionsCtx()));
+			Actions.SetRooms(ProcessRoomsAndWalls(map, ctxCreator.GetNewRemoveRegionsCtx()));
 
 			SetTiles(map,
 				ctxCreator.GetNewTileSetterCtx(),
@@ -53,9 +53,9 @@ namespace ProceduralGeneration {
 			                 .Smooth(map);
 		}
 
-		static List<Room> RemoveRegions(Span2D<int> map, RemoveRegionsSolverCtx ctx) {
-			return ProceduralService.GetRegionRemovalSolver(() => new FloodFillRegionSolver(ctx))
-			                 .Remove(map);
+		static List<Room> ProcessRoomsAndWalls(Span2D<int> map, RemoveRegionsSolverCtx ctx) {
+			return ProceduralService.GetRoomsAndWallsSolver(() => new FloodFillRoomsAndWallsSolver(ctx))
+			                        .Remove(map);
 		}
 
 		static void SetTiles(

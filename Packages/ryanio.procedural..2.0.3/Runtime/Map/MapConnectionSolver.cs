@@ -7,7 +7,7 @@ using Random = System.Random;
 namespace ProceduralGeneration {
 	public class MapConnectionSolver {
 		Vector2Int CorridorWidth { get; }
-		int        MapHeight     { get; }
+		int        MapHeight     { get; } 
 		int        MapWidth      { get; }
 
 		internal Span2D<int> Connect(Span2D<int> map, List<Room> rooms, bool forceAccessibility = false) {
@@ -40,7 +40,14 @@ namespace ProceduralGeneration {
 				}
 
 				foreach (var roomB in spanRoomB) {
-					if (roomA == roomB || roomA.IsConnected(roomB)) continue;
+					if (roomA == roomB ) 
+						continue;
+
+					if (roomA.IsConnected(roomB)) {
+						possibleConnectionFound = false; 
+						break;
+					}
+					
 					for (var i = 0; i < roomA.EdgeTiles.Count; i++) {
 						for (var j = 0; j < roomB.EdgeTiles.Count; j++) {
 							var tileA = roomA.EdgeTiles[i];
@@ -84,8 +91,6 @@ namespace ProceduralGeneration {
 
 		Span2D<int> CreatePassage(Span2D<int> map, Room a, Room b, Vector2Int tileA, Vector2Int tileB) {
 			Room.ConnectRooms(a, b);
-			// Debug.DrawLine (CoordinatesToWorldPoints(tileA, dimensions), 
-			// 	CoordinatesToWorldPoints(tileB, dimensions), Color.green, 100);
 			var line = BresenhamDrawLine(tileA, tileB);
 
 			foreach (var t in line)

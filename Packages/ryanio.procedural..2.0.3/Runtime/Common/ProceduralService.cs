@@ -8,7 +8,7 @@ namespace ProceduralGeneration {
 
 		internal static SmoothMapSolver GetSmoothMapSolver(Func<SmoothMapSolver> constructor) => constructor.Invoke();
 
-		internal static RegionSolver GetRegionRemovalSolver(Func<RegionSolver> constructor)
+		internal static RegionSolver GetRoomsAndWallsSolver(Func<RegionSolver> constructor)
 			=> constructor.Invoke();
 
 		internal static TileTypeSolver GetTileSetterSolver(Func<TileTypeSolver> constructor) => constructor.Invoke();
