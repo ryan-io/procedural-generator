@@ -5,13 +5,13 @@ using CommunityToolkit.HighPerformance;
 using UnityEngine;
 
 namespace ProceduralGeneration {
-	internal class FloodFillRoomsAndWallsSolver : RegionSolver {
+	internal class FloodFillRegionSolver : RegionSolver {
 		int                          WallRemovalThreshold { get; }
 		int                          RoomRemovalThreshold { get; }
 		int                          Rows                 { get; set; }
 		int                          Columns              { get; set; }
 
-		internal FloodFillRoomsAndWallsSolver(RemoveRegionsSolverCtx ctx) {
+		internal FloodFillRegionSolver(RemoveRegionsSolverCtx ctx) {
 			_mapConnectionSolver = new MapConnectionSolver(ctx);
 			WallRemovalThreshold = ctx.WallRemoveThreshold;
 			RoomRemovalThreshold = ctx.RoomRemoveThreshold;

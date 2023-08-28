@@ -36,17 +36,14 @@ namespace ProceduralGeneration {
 			foreach (var roomA in spanRoomA) {
 				if (!forceAccessibility) {
 					possibleConnectionFound = false;
-					if (roomA.ConnectedRooms.Count > 0) continue;
+					
+					if (roomA.ConnectedRooms.Count > 0) 
+						continue;
 				}
 
 				foreach (var roomB in spanRoomB) {
-					if (roomA == roomB ) 
+					if (roomA == roomB || roomA.IsConnected(roomB)) 
 						continue;
-
-					if (roomA.IsConnected(roomB)) {
-						possibleConnectionFound = false; 
-						break;
-					}
 					
 					for (var i = 0; i < roomA.EdgeTiles.Count; i++) {
 						for (var j = 0; j < roomB.EdgeTiles.Count; j++) {
@@ -105,7 +102,8 @@ namespace ProceduralGeneration {
 					if (x * x + y * y <= radius * radius) { // inside of the circle
 						var drawX = linePoint.x + x;
 						var drawY = linePoint.y + y;
-						if (drawX >= 0 && drawX < MapWidth && drawY >= 0 && drawY < MapHeight)
+						
+						if (drawX >= BORDER_SAFETY_FACTOR && drawX < MapWidth-BORDER_SAFETY_FACTOR && drawY >= BORDER_SAFETY_FACTOR && drawY < MapHeight-BORDER_SAFETY_FACTOR)
 							map[drawX, drawY] = 0;
 					}
 			}
@@ -163,5 +161,7 @@ namespace ProceduralGeneration {
 		}
 
 		readonly Random _random;
+		
+		const int BORDER_SAFETY_FACTOR = 4;
 	}
 }

@@ -54,10 +54,10 @@ namespace ProceduralGeneration {
 		}
 
 		static List<Room> ProcessRoomsAndWalls(Span2D<int> map, RemoveRegionsSolverCtx ctx) {
-			return ProceduralService.GetRoomsAndWallsSolver(() => new FloodFillRoomsAndWallsSolver(ctx))
+			return ProceduralService.GetRoomsAndWallsSolver(() => new FloodFillRegionSolver(ctx))
 			                        .Remove(map);
 		}
-
+  
 		static void SetTiles(
 			Span2D<int> map,
 			TileSolversCtx tileSolverCtx,
