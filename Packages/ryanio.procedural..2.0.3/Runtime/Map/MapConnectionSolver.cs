@@ -7,15 +7,15 @@ using Random = System.Random;
 namespace ProceduralGeneration {
 	public class MapConnectionSolver {
 		Vector2Int CorridorWidth { get; }
-		int        MapHeight     { get; } 
+		int        MapHeight     { get; }
 		int        MapWidth      { get; }
 
 		internal Span2D<int> Connect(Span2D<int> map, List<Room> rooms, bool forceAccessibility = false) {
-			var roomListA     = new List<Room>();
-			var roomListB     = new List<Room>();
+			var roomListA = new List<Room>();
+			var roomListB = new List<Room>();
 
 			if (forceAccessibility) {
-				foreach (var room in rooms) 
+				foreach (var room in rooms)
 					DetermineList(room, roomListB, roomListA);
 			}
 			else {
@@ -36,15 +36,15 @@ namespace ProceduralGeneration {
 			foreach (var roomA in spanRoomA) {
 				if (!forceAccessibility) {
 					possibleConnectionFound = false;
-					
-					if (roomA.ConnectedRooms.Count > 0) 
+
+					if (roomA.ConnectedRooms.Count > 0)
 						continue;
 				}
 
 				foreach (var roomB in spanRoomB) {
-					if (roomA == roomB || roomA.IsConnected(roomB)) 
+					if (roomA == roomB || roomA.IsConnected(roomB))
 						continue;
-					
+
 					for (var i = 0; i < roomA.EdgeTiles.Count; i++) {
 						for (var j = 0; j < roomB.EdgeTiles.Count; j++) {
 							var tileA = roomA.EdgeTiles[i];
@@ -102,14 +102,19 @@ namespace ProceduralGeneration {
 					if (x * x + y * y <= radius * radius) { // inside of the circle
 						var drawX = linePoint.x + x;
 						var drawY = linePoint.y + y;
-						
-						if (drawX >= BORDER_SAFETY_FACTOR && drawX < MapWidth-BORDER_SAFETY_FACTOR && drawY >= BORDER_SAFETY_FACTOR && drawY < MapHeight-BORDER_SAFETY_FACTOR)
+
+						if (IsWithinBounds(drawX, drawY))
 							map[drawX, drawY] = 0;
 					}
 			}
 
 			return map;
 		}
+
+		bool IsWithinBounds(int drawX, int drawY) => drawX >= BORDER_SAFETY_FACTOR           &&
+		                                             drawX < MapWidth - BORDER_SAFETY_FACTOR &&
+		                                             drawY >= BORDER_SAFETY_FACTOR           &&
+		                                             drawY < MapHeight - BORDER_SAFETY_FACTOR;
 
 		Region BresenhamDrawLine(Vector2Int start, Vector2Int end) {
 			var line = new Region();
@@ -161,7 +166,7 @@ namespace ProceduralGeneration {
 		}
 
 		readonly Random _random;
-		
+
 		const int BORDER_SAFETY_FACTOR = 4;
 	}
 }
