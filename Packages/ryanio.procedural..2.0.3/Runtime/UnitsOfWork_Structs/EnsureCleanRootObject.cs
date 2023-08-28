@@ -15,9 +15,14 @@ namespace ProceduralGeneration {
 				return;
 
 			foreach (var c in components) {
-				if (c == null || !c || c == rootObject.transform)
+				if (!c || c == rootObject.transform)
 					continue;
 
+				var astarPaths = c.GetComponentsInChildren<AstarPath>();
+
+				if (!astarPaths.IsEmptyOrNull())
+					continue;
+				
 				Object.DestroyImmediate(c.gameObject);
 			}
 		}

@@ -4,6 +4,10 @@ namespace ProceduralGeneration {
 	public readonly struct GraphCleaner {
 		public void Clean() {
 			AstarPath.FindAstarPath();
+			
+			if (!AstarPath.active)
+				return;
+			
 			var data = AstarPath.active.data;
 
 			if (data == null || data.graphs.Length < 1)
