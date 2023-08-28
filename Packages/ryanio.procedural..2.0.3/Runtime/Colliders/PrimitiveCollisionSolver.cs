@@ -81,13 +81,15 @@ namespace ProceduralGeneration {
 		}
 
 		static void DetermineColinearity(IReadOnlyList<Vector3> coords, int i, ICollection<Vector3> tempCopy) {
-			var points = new PieceWisePoints(coords[i - 2], coords[i - 1], coords[i]);
+			var p1 = coords[i - 2];
+			var p2 = coords[i - 1];
+			var p3 = coords[i];
 
-			if (!VectorF.IsColinear(points.One, points.Two, points.Three))
+			if (!VectorF.IsColinear(p1, p2, p3))
 				return;
 
-			if (tempCopy.Contains(points.Two))
-				tempCopy.Remove(points.Two);
+			if (tempCopy.Contains(p2))
+				tempCopy.Remove(p2);
 		}
 
 		IEnumerable<GameObject> SetStarting(

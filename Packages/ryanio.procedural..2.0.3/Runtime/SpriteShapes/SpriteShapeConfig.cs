@@ -10,51 +10,51 @@ using UnityEngine.U2D;
 namespace ProceduralGeneration {
 	[Serializable]
 	public class SpriteShapeConfig {
-		[field: SerializeField, EnumToggleButtons, FoldoutGroup("Sprite Shape Boundary", false)]
+		[field: SerializeField, EnumToggleButtons, TabGroup("Tiles", TabLayouting = TabLayouting.MultiRow)]
 		public Ppu Ppu { get; set; } = Ppu.Sixteen;
 
-		[field: SerializeField, Range(0.1f, 1.0f), FoldoutGroup("Sprite Shape Boundary", false)]
+		[field: SerializeField, Range(0.1f, 1.0f), TabGroup("Tiles", TabLayouting = TabLayouting.MultiRow)]
 		public float ScaleModifier { get; set; } = 1;
 		
-		[field: SerializeField, FoldoutGroup("Sprite Shape Boundary", false)]
+		[field: SerializeField, TabGroup("Tiles", TabLayouting = TabLayouting.MultiRow)]
 		public LayerMask SortingLayer { get; private set; } 
 
-		[field: SerializeField, FoldoutGroup("Sprite Shape Boundary", false)]
+		[field: SerializeField, TabGroup("Tiles", TabLayouting = TabLayouting.MultiRow)]
 		public int OrderInLayer { get; private set; } = 35;
 		
-		[field: SerializeField, Range(20.0f, 80.0f), FoldoutGroup("Sprite Shape Boundary", false)]
+		[field: SerializeField, Range(20.0f, 80.0f), TabGroup("Tiles", TabLayouting = TabLayouting.MultiRow)]
 		public float CornerThreshold { get; set; } = 45f;
 
-		[field: SerializeField, FoldoutGroup("Sprite Shape Boundary", false)]
+		[field: SerializeField, TabGroup("Tiles", TabLayouting = TabLayouting.MultiRow)]
 		public bool IsSplineAdaptive { get; set; }
 
-		[field: SerializeField, FoldoutGroup("Sprite Shape Boundary", false)]
+		[field: SerializeField, TabGroup("Tiles", TabLayouting = TabLayouting.MultiRow)]
 		public bool IsOpenEnded { get; private set; } = true;
 
-		[field: SerializeField, FoldoutGroup("Sprite Shape Boundary", false)]
+		[field: SerializeField, TabGroup("Tiles", TabLayouting = TabLayouting.MultiRow)]
 		public bool EnableTangents { get; private set; } = true;
 
-		[field: SerializeField, FoldoutGroup("Sprite Shape Boundary", false)]
+		[field: SerializeField, TabGroup("Tiles", TabLayouting = TabLayouting.MultiRow)]
 		public bool FillTessellation { get; private set; } = true;
 
-		[field: SerializeField, FoldoutGroup("Sprite Shape Boundary", false)]
+		[field: SerializeField, TabGroup("Tiles", TabLayouting = TabLayouting.MultiRow)]
 		public ShapeTangentMode SplineTangentMode { get; set; } = ShapeTangentMode.Continuous;
   
-		[field: SerializeField, FoldoutGroup("Sprite Shape Boundary", false)]
+		[field: SerializeField, TabGroup("Tiles", TabLayouting = TabLayouting.MultiRow)]
 		[ShowIf("@TangentModeIsLinear")]
 		public bool ShouldSimplifySegments { get; set; } = true;
 
-		[field: SerializeField, FoldoutGroup("Sprite Shape Boundary", false)]
+		[field: SerializeField, TabGroup("Tiles", TabLayouting = TabLayouting.MultiRow)]
 		[ShowIf("@_displayTangentCoords")]
 		public GameObject TextMeshPrefab { get; set; }
 		
-		[field: SerializeField, FoldoutGroup("Sprite Shape Boundary", false)]
+		[field: SerializeField, TabGroup("Tiles", TabLayouting = TabLayouting.MultiRow)]
 		public SpriteShape Profile { get; private set; }
 		
-		[field: SerializeField, FoldoutGroup("Sprite Shape Boundary", false)]
+		[field: SerializeField, TabGroup("Tiles", TabLayouting = TabLayouting.MultiRow)]
 		public Material EdgeMaterial { get; private set; }
 		
-		[field: SerializeField, FoldoutGroup("Sprite Shape Boundary", false)]
+		[field: SerializeField, TabGroup("Tiles", TabLayouting = TabLayouting.MultiRow)]
 		public Material FillMaterial { get; private set; }
 
 		IEnumerable _ppuList = new ValueDropdownList<Ppu>() {

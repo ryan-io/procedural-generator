@@ -151,10 +151,6 @@ namespace ProceduralGeneration {
 			_config.NameSeedIteration = Help.GetAllSeeds().FirstOrDefault();
 		}
 
-		[Button(ButtonSizes.Medium, ButtonStyle.CompactBox, Icon = SdfIconType.Signal,
-			IconAlignment = IconAlignment.RightOfText)]
-		void ScaleMap(float scale) => Scale.Current(gameObject, scale);
-
 		[Button(ButtonSizes.Large, ButtonStyle.CompactBox, Icon = SdfIconType.Gear,
 			IconAlignment = IconAlignment.RightOfText)]
 		void Generate() {
@@ -166,8 +162,6 @@ namespace ProceduralGeneration {
 
 		[field: SerializeField, Required, BoxGroup("Configuration"), HideLabel]
 		SpriteShapeConfig _spriteShapeConfig = null!;
-
-		//[SerializeField, HideInInspector] MapData _data;
 
 #endregion
 	}
