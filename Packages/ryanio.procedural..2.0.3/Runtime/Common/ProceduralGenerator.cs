@@ -120,29 +120,30 @@ namespace ProceduralGeneration {
 
 		bool IsTileDictNullOrEmpty => _config.TileDictionary.IsEmptyOrNull();
 
-		[BoxGroup("Actions", centerLabel: true),
-		 HorizontalGroup("Actions/Buttons2"),
-		 ButtonGroup("Actions/Buttons2/Methods", Stretch = false, IconAlignment = IconAlignment.RightEdge)]
+		[BoxGroup("Actions", centerLabel: true), HorizontalGroup("Actions/Buttons2"), 
+		 ButtonGroup("Actions/Buttons2/Methods", Stretch = false, IconAlignment = IconAlignment.RightEdge), GUIColor(242f/255, 170f/255, 34f/255, 0.9f)]
 		void ForceClean() => new GeneratorCleaner(new Actions(this)).Clean(_config, true);
 
-		[BoxGroup("Actions"),
-		 HorizontalGroup("Actions/Buttons1"),
-		 ButtonGroup("Actions/Buttons1/Methods", Stretch = false, IconAlignment = IconAlignment.RightEdge)]
+		[BoxGroup("Map Configuration"),
+		 HorizontalGroup("Map Configuration/Buttons1"),
+		 ButtonGroup("Map Configuration/Buttons1/Methods", Stretch = false, IconAlignment = IconAlignment.RightEdge),
+		 GUIColor(154 / 255f, 208f / 255, 254f / 255, 1f)]
 		void FindGraphCutters() => _config.FindGraphColliderCuttersInScene();
 
-		[BoxGroup("Actions"),
-		 HorizontalGroup("Actions/Buttons1"),
-		 ButtonGroup("Actions/Buttons1/Methods", Stretch = false, IconAlignment = IconAlignment.RightEdge)]
+		[BoxGroup("Map Configuration"),
+		 HorizontalGroup("Map Configuration/Buttons1"),
+		 ButtonGroup("Map Configuration/Buttons1/Methods", Stretch = false, IconAlignment = IconAlignment.RightEdge),
+		 GUIColor(154 / 255f, 208f / 255, 254f / 255, 1f)]
 		void FindPathfinder() => _config.FindPathfinderInScene();
 
-		[BoxGroup("Actions"),
-		 HorizontalGroup("Actions/Buttons1"),
-		 ButtonGroup("Actions/Buttons1/Methods", Stretch = false, IconAlignment = IconAlignment.RightEdge)]
+		[BoxGroup("SpriteShape Configuration"),
+		 HorizontalGroup("SpriteShape Configuration/Buttons1"),
+		 ButtonGroup("SpriteShape Configuration/Buttons1/Methods", Stretch = false), GUIColor(154 / 255f, 208f / 255, 254f / 255, 1f)]
 		void RefreshSpriteShapes() => new SpriteShapeRefreshService(gameObject).Run();
 
 		[BoxGroup("Actions"),
 		 HorizontalGroup("Actions/Buttons2"),
-		 ButtonGroup("Actions/Buttons2/Methods", Stretch = false, IconAlignment = IconAlignment.RightEdge)]
+		 ButtonGroup("Actions/Buttons2/Methods", Stretch = false, IconAlignment = IconAlignment.RightEdge),GUIColor(255f/255, 143f/255, 167f/255, 0.75f)]
 		void DeleteSelectedSerialized() {
 			if (string.IsNullOrWhiteSpace(_config.NameSeedIteration))
 				return;
@@ -152,15 +153,15 @@ namespace ProceduralGeneration {
 		}
 
 		[Button(ButtonSizes.Large, ButtonStyle.CompactBox, Icon = SdfIconType.Gear,
-			IconAlignment = IconAlignment.RightOfText)]
+			IconAlignment = IconAlignment.RightOfText), GUIColor(8f/255, 195f/255, 108f/255, 0.9f)]
 		void Generate() {
 			Load();
 		}
 
-		[field: SerializeField, Required, BoxGroup("Configuration"), HideLabel]
+		[field: SerializeField, Required, BoxGroup("Map Configuration"), HideLabel]
 		ProceduralConfig _config = null!;
 
-		[field: SerializeField, Required, BoxGroup("Configuration"), HideLabel]
+		[field: SerializeField, Required, BoxGroup("SpriteShape Configuration"), HideLabel]
 		SpriteShapeConfig _spriteShapeConfig = null!;
 
 #endregion
