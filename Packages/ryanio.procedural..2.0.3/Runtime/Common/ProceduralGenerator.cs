@@ -124,9 +124,8 @@ namespace ProceduralGeneration {
 		 ButtonGroup("Actions/Buttons2/Methods", Stretch = false, IconAlignment = IconAlignment.RightEdge), GUIColor(242f/255, 170f/255, 34f/255, 0.9f)]
 		void ForceClean() => new GeneratorCleaner(new Actions(this)).Clean(_config, true);
 		
-		[BoxGroup("SpriteShape Configuration"),
-		 HorizontalGroup("SpriteShape Configuration/Buttons1"),
-		 ButtonGroup("SpriteShape Configuration/Buttons1/Methods", Stretch = false), GUIColor(154 / 255f, 208f / 255, 254f / 255, 1f)]
+		[BoxGroup("SpriteShape Configuration" ),Button(ButtonSizes.Large, Stretch = false, ButtonAlignment = 1), 
+		  GUIColor(154 / 255f, 208f / 255, 254f / 255, 1f)]
 		void RefreshSpriteShapes() => new SpriteShapeRefreshService(gameObject).Run();
 
 		[Button(ButtonSizes.Large, ButtonStyle.CompactBox, Icon = SdfIconType.Gear,
