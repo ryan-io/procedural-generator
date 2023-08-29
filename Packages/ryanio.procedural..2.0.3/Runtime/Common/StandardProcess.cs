@@ -20,7 +20,7 @@ namespace ProceduralGeneration {
 			FillMap(map, ctxCreator.GetNewFillMapCtx());
 			SmoothMap(map, ctxCreator.GetNewSmoothMapCtx());
 			Actions.SetRooms(ProcessRoomsAndWalls(map, ctxCreator.GetNewRemoveRegionsCtx()));
-
+			
 			SetTiles(map,
 				ctxCreator.GetNewTileSetterCtx(),
 				ctxCreator.GetNewTileMapperCtx(),

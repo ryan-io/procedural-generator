@@ -123,34 +123,11 @@ namespace ProceduralGeneration {
 		[BoxGroup("Actions", centerLabel: true), HorizontalGroup("Actions/Buttons2"), 
 		 ButtonGroup("Actions/Buttons2/Methods", Stretch = false, IconAlignment = IconAlignment.RightEdge), GUIColor(242f/255, 170f/255, 34f/255, 0.9f)]
 		void ForceClean() => new GeneratorCleaner(new Actions(this)).Clean(_config, true);
-
-		[BoxGroup("Map Configuration"),
-		 HorizontalGroup("Map Configuration/Buttons1"),
-		 ButtonGroup("Map Configuration/Buttons1/Methods", Stretch = false, IconAlignment = IconAlignment.RightEdge),
-		 GUIColor(154 / 255f, 208f / 255, 254f / 255, 1f)]
-		void FindGraphCutters() => _config.FindGraphColliderCuttersInScene();
-
-		[BoxGroup("Map Configuration"),
-		 HorizontalGroup("Map Configuration/Buttons1"),
-		 ButtonGroup("Map Configuration/Buttons1/Methods", Stretch = false, IconAlignment = IconAlignment.RightEdge),
-		 GUIColor(154 / 255f, 208f / 255, 254f / 255, 1f)]
-		void FindPathfinder() => _config.FindPathfinderInScene();
-
+		
 		[BoxGroup("SpriteShape Configuration"),
 		 HorizontalGroup("SpriteShape Configuration/Buttons1"),
 		 ButtonGroup("SpriteShape Configuration/Buttons1/Methods", Stretch = false), GUIColor(154 / 255f, 208f / 255, 254f / 255, 1f)]
 		void RefreshSpriteShapes() => new SpriteShapeRefreshService(gameObject).Run();
-
-		[BoxGroup("Actions"),
-		 HorizontalGroup("Actions/Buttons2"),
-		 ButtonGroup("Actions/Buttons2/Methods", Stretch = false, IconAlignment = IconAlignment.RightEdge),GUIColor(255f/255, 143f/255, 167f/255, 0.75f)]
-		void DeleteSelectedSerialized() {
-			if (string.IsNullOrWhiteSpace(_config.NameSeedIteration))
-				return;
-
-			DirectoryAction.DeleteDirectory(_config.NameSeedIteration, default, default);
-			_config.NameSeedIteration = Help.GetAllSeeds().FirstOrDefault();
-		}
 
 		[Button(ButtonSizes.Large, ButtonStyle.CompactBox, Icon = SdfIconType.Gear,
 			IconAlignment = IconAlignment.RightOfText), GUIColor(8f/255, 195f/255, 108f/255, 0.9f)]

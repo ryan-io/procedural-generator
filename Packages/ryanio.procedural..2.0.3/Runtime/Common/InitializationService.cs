@@ -5,7 +5,7 @@ namespace ProceduralGeneration {
 		IActions Actions { get; }
 
 		internal void Run(ProceduralConfig config) {
-			new GeneratorCleaner(Actions).Clean(config);
+			new GeneratorCleaner(Actions).Clean(config, true);
 			new ColliderGameObject(Actions).Setup();
 			new ActiveAstarData().Retrieve();
 		}

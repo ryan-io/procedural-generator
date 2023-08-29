@@ -14,7 +14,6 @@ namespace ProceduralGeneration {
 			bounds.Encapsulate(tr.position);
 			renderer.SetLocalAABB(bounds);
 			controller.RefreshSpriteShape();
-			Debug.Log("Updated AABB!");
 		}
 	}
 }

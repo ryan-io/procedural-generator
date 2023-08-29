@@ -41,10 +41,6 @@ namespace ProceduralGeneration {
 		[field: SerializeField, Sirenix.OdinInspector.ReadOnly, TabGroup("Setup", TabLayouting = TabLayouting.MultiRow)]
 		public int LastIteration { get; set; }
 
-		[field: SerializeField, Sirenix.OdinInspector.ShowIf("@ShouldDeserialize && !ShouldGenerate"), TabGroup("Setup", TabLayouting = TabLayouting.MultiRow),
-		        ValueDropdown(@"GetAllSeedsWrapper")]
-		public string NameSeedIteration { get; set; }
-
 		[field: SerializeField, Title("Monobehaviors"), HorizontalLine, Sirenix.OdinInspector.Required,TabGroup("Setup", TabLayouting = 
             TabLayouting.MultiRow), LabelText("Pathfinder"),LabelWidth(LABEL_WIDTH), SceneObjectsOnly]
 		public GameObject Pathfinder { get; private set; }
@@ -53,7 +49,11 @@ namespace ProceduralGeneration {
 
 #region SERIALIZATION
 
-		[field: SerializeField, Title("Serialization"), TabGroup("Serialize & Deserialize", TabLayouting = TabLayouting.MultiRow)]
+		[field: SerializeField,Title("Iteration Tracker"), TabGroup("Serialize & Deserialize", TabLayouting = TabLayouting.MultiRow), 
+		        ValueDropdown(@"GetAllSeedsWrapper")]
+		public string NameSeedIteration { get; set; }
+		
+		[field: SerializeField,Title("Serialization"), TabGroup("Serialize & Deserialize", TabLayouting = TabLayouting.MultiRow)]
 		public bool ShouldSerializePathfinding { get; private set; } = true;
 
 		[field: SerializeField, TabGroup("Serialize & Deserialize", TabLayouting = TabLayouting.MultiRow)]
@@ -80,6 +80,17 @@ namespace ProceduralGeneration {
 		
 		[field: SerializeField, TabGroup("Serialize & Deserialize", TabLayouting = TabLayouting.MultiRow)]
 		public bool ShouldDeserializeColliderCoords { get; private set; } = true;
+		
+		[TabGroup("Serialize & Deserialize", TabLayouting = TabLayouting.MultiRow),
+		 Sirenix.OdinInspector.Button(ButtonSizes.Large, Stretch = false, ButtonAlignment = 1), 
+		 GUIColor(255 / 255f, 0f / 255, 55f / 255, 1f)]
+		void DeleteSelectedSerialized() {
+			if (string.IsNullOrWhiteSpace(NameSeedIteration))
+				return;
+
+			DirectoryAction.DeleteDirectory(NameSeedIteration, default, default);
+			NameSeedIteration = Help.GetAllSeeds().FirstOrDefault();
+		}
 
 #endregion
 
@@ -198,8 +209,14 @@ namespace ProceduralGeneration {
 		[field: SerializeField, Sirenix.OdinInspector.ShowIf("@ErodePathfindingGrid"), TabGroup("Pathfinding", TabLayouting = TabLayouting.MultiRow)]
 		public bool DrawTilePositionGizmos { get; private set; }
 
-		[field: SerializeField, Sirenix.OdinInspector.ShowIf("@ErodePathfindingGrid"), TabGroup("Pathfinding", TabLayouting = TabLayouting.MultiRow)]
+		[field: SerializeField, Sirenix.OdinInspector.ShowIf("@ErodePathfindingGrid"), TabGroup("Pathfinding", 
+            TabLayouting = TabLayouting.MultiRow)]
 		public bool DrawTilePositionShiftedGizmos { get; private set; }
+		
+		[TabGroup("Pathfinding", TabLayouting = TabLayouting.MultiRow),
+		 Sirenix.OdinInspector.Button(ButtonSizes.Large, Stretch = false, ButtonAlignment = 1), 
+		 GUIColor(154 / 255f, 208f / 255, 254f      / 255,  1f)]
+		void FindPathfinder() => FindPathfinderInScene();
 
 #endregion
 
@@ -250,6 +267,12 @@ namespace ProceduralGeneration {
 		bool IsEdge      => SolverType == ColliderSolverType.Edge;
 		bool IsPrimitive => SolverType == ColliderSolverType.PrimitiveCombo;
 
+				
+		[TabGroup("Colliders", TabLayouting = TabLayouting.MultiRow),
+		 Sirenix.OdinInspector.Button(ButtonSizes.Large, Stretch = false, ButtonAlignment = 1), 
+		 GUIColor(154 / 255f, 208f / 255, 254f / 255, 1f)]
+		void FindGraphCutters() => FindGraphColliderCuttersInScene();
+		
 #endregion
 
 #region EVENTS

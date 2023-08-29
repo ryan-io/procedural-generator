@@ -12,7 +12,7 @@ namespace ProceduralGeneration {
 		public SpriteShapeConfig                  GetSpriteShapeConfig()    => SpriteShapeConfig;
 		public IReadOnlyList<GraphColliderCutter> GetGraphColliderCutters() => ProceduralConfig.ColliderCutters;
 
-		public float GetTimeElapsed() => _stopWatch.TimeElapsed * TIME_CONVERSION;
+		public float GetTimeElapsed() => _stopWatch.TimeElapsed;
 
 		public bool GetShouldSerializePathfinding() => ProceduralConfig.ShouldSerializePathfinding;
 
