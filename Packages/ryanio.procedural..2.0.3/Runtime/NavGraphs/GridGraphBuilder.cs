@@ -56,7 +56,7 @@ namespace ProceduralGeneration {
 
 			var sizeX = Mathf.RoundToInt(RealMapDimensions.x / NavGraphNodeSize);
 			var sizeY = Mathf.RoundToInt(RealMapDimensions.y / NavGraphNodeSize);
-			return new int2(sizeX, sizeY);
+			return new int2(sizeX, sizeY);   
 		}
 
 		internal GridGraphBuilder(GridGraphBuilderCtx ctx) {

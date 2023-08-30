@@ -1,10 +1,8 @@
 // ProceduralGeneration
 
-using System.Collections.Generic;
-using UnityBCL;
-
 namespace ProceduralGeneration {
 	internal class SerializationRouter {
+		IActions            Actions                       { get; }
 		SeedInfo            SeedInfo                      { get; }
 		GeneratorSerializer Serializer                    { get; }
 		string              SerializedName                { get; }
@@ -12,12 +10,17 @@ namespace ProceduralGeneration {
 		bool                ShouldSerializeMapPrefab      { get; }
 		bool                ShouldSerializeSpriteShape    { get; }
 		bool                ShouldSerializeColliderCoords { get; }
+		bool                ShouldSerializeMesh           { get; }
+
 
 		internal void Run(string mapName, Coordinates coordinates) {
 			Serializer.SerializeSeed(SeedInfo, mapName);
-			//var directory = new DirectoryAction().CreateNewDirectory(SerializedName);
 			var directories = DirectoryAction.GetMapDirectories(SerializedName);
-			
+
+			if (ShouldSerializeMesh)
+				Serializer.SerializeMesh(
+					new SerializeMeshJob(SerializedName, directories, Actions.GetMeshData().Mesh));
+
 			if (ShouldSerializePathfinding)
 				Serializer.SerializeCurrentAstarGraph(SerializedName, directories.full);
 
@@ -37,16 +40,19 @@ namespace ProceduralGeneration {
 			}
 		}
 
-		internal SerializationRouter(SerializationRouterCtx ctx, SerializationRoute route, IProceduralLogging logger) {
-			Serializer = new GeneratorSerializer(ctx.Grid.gameObject, logger);
-			
-			SeedInfo                      = ctx.SeedInfo;
-			SerializedName                = ctx.SerializableName;
-			
+
+		internal SerializationRouter(SerializationRouterCtx ctx, SerializationRoute route, IActions actions) {
+			Serializer = new GeneratorSerializer(ctx.Grid.gameObject, actions);
+
+			Actions        = actions;
+			SeedInfo       = ctx.SeedInfo;
+			SerializedName = ctx.SerializableName;
+
 			ShouldSerializePathfinding    = route.ShouldSerializePathfinding;
 			ShouldSerializeMapPrefab      = route.ShouldSerializeMapPrefab;
 			ShouldSerializeSpriteShape    = route.ShouldSerializeSpriteShape;
 			ShouldSerializeColliderCoords = route.ShouldSerializeColliderCoords;
+			ShouldSerializeMesh           = route.ShouldSerializeMesh;
 		}
 	}
 }

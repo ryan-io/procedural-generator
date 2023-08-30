@@ -108,7 +108,8 @@ namespace ProceduralGeneration {
 				Actions.GetShouldSerializePathfinding(),
 				Actions.GetShouldSerializeMapPrefab(),
 				Actions.GetShouldSerializeSpriteShape(),
-				Actions.GetShouldSerializeColliderCoords());
+				Actions.GetShouldSerializeColliderCoords(),
+				Actions.GetShouldSerializeMesh());
 		}
 
 		internal DeserializationRoute GetNewDeserializationRoute() {

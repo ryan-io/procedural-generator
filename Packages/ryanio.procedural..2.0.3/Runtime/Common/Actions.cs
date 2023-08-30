@@ -21,6 +21,7 @@ namespace ProceduralGeneration {
 		public bool GetShouldSerializeSpriteShape() => ProceduralConfig.ShouldSerializeSpriteShape;
 
 		public bool GetShouldSerializeColliderCoords() => ProceduralConfig.ShouldSerializeColliderCoords;
+		public bool GetShouldSerializeMesh()           => ProceduralConfig.ShouldSerializeMesh;
 
 		public void SetColliderGameObject(GameObject o) => ColliderGameObject = o;
 		public void SetTileMapDictionary(TileMapDictionary tileMapDictionary) => TileMapDictionary = tileMapDictionary;
@@ -61,7 +62,5 @@ namespace ProceduralGeneration {
 		readonly IProceduralLogging _logger;
 		readonly TileHashset        _tileHashset;
 		readonly StopWatchWrapper   _stopWatch;
-
-		const int TIME_CONVERSION = 1000;
 	}
 }

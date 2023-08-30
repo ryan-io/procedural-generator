@@ -42,6 +42,7 @@ namespace ProceduralGeneration {
 		bool                               GetShouldSerializeMapPrefab();
 		bool                               GetShouldSerializeSpriteShape();
 		bool                               GetShouldSerializeColliderCoords();
+		bool                               GetShouldSerializeMesh();
 		float                              GetSkinWidth();
 		Vector2                            GetEdgeColliderOffset();
 		float                              GetEdgeColliderRadius();

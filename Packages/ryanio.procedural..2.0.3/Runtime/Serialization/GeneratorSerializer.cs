@@ -1,11 +1,12 @@
 using System.Collections.Generic;
+using System.Linq;
 using BCL.Serialization;
 using Pathfinding.Serialization;
 using UnityBCL;
 using UnityEngine;
 
 namespace ProceduralGeneration {
-	public class GeneratorSerializer {
+	internal class GeneratorSerializer {
 		GameObject         GridGo { get; }
 		IProceduralLogging Logger { get; }
 
@@ -14,8 +15,24 @@ namespace ProceduralGeneration {
 		/// </summary>
 		/// <param name="info">Info pertaining to current serialized seed</param>
 		/// <param name="mapName">Name of map</param>
-		public void SerializeSeed(SeedInfo info, string mapName) {
+		internal void SerializeSeed(SeedInfo info, string mapName) {
 			new SerializeSeedInfo().Serialize(info, mapName, Logger);
+		}
+
+		/// <summary>
+		///  Serializes the current mesh to a file with the given name and path (relative to the project folder)
+		/// </summary>
+		internal void SerializeMesh(SerializeMeshJob job) {
+			var serMesh = new SerializableMesh {
+				Vertices  = job.Mesh.vertices.AsSerialized().ToArray(),
+				Uvs       = job.Mesh.uv.AsSerialized().ToArray(),
+				Triangles = job.Mesh.triangles
+			};
+			
+			Help.ValidateNameIsSerialized(job.Name);
+
+			var name = Constants.MESH_SAVE_PREFIX + job.Name;
+			SerializeJson(name, job.Directories.full, serMesh);
 		}
 
 		/// <summary>
@@ -23,7 +40,7 @@ namespace ProceduralGeneration {
 		/// </summary>
 		/// <param name="name"></param>
 		/// <param name="directories"></param>
-		public void SerializeMapGameObject(string name, (string raw, string full) directories) {
+		internal void SerializeMapGameObject(string name, (string raw, string full) directories) {
 			var mapDirectory  = new PathConstructor(directories);
 			var path          = mapDirectory.GetUniquePathRawPrefab(Constants.SAVE_MAP_PREFIX + name);
 			var prefabCreator = new PrefabCreator();
@@ -32,7 +49,7 @@ namespace ProceduralGeneration {
 				Logger.LogError(Message.CANT_SERIALIZE_MAP_GO, nameof(SerializeMapGameObject));
 			}
 			else {
-				Logger.Log( Message.SERIALIZE_MAP_AT + path, nameof(SerializeMapGameObject));
+				Logger.Log(Message.SERIALIZE_MAP_AT + path, nameof(SerializeMapGameObject));
 			}
 		}
 
@@ -41,7 +58,7 @@ namespace ProceduralGeneration {
 		/// </summary>
 		/// <param name="name">Serializable map name</param>
 		/// <param name="path"></param>
-		public void SerializeCurrentAstarGraph(string name, string path) {
+		internal void SerializeCurrentAstarGraph(string name, string path) {
 			Help.ValidateNameIsSerialized(name);
 
 			var settings = new SerializeSettings {
@@ -58,7 +75,7 @@ namespace ProceduralGeneration {
 		/// <param name="name">Name of A* graph file</param>
 		/// <param name="coordinates">Collection of SerializableVector3</param>
 		/// <param name="directories">Full and raw paths to SerializedData</param>
-		public void SerializeSpriteShape(
+		internal void SerializeSpriteShape(
 			string name,
 			IReadOnlyDictionary<int, List<SerializableVector3>> coordinates,
 			(string raw, string full) directories) {
@@ -77,7 +94,8 @@ namespace ProceduralGeneration {
 		/// <param name="name">Name of ColliderCoords file</param>
 		/// <param name="coordinates">Collection of SerializableVector3</param>
 		/// <param name="directories"></param>
-		public void SerializeColliderCoords(string name, IReadOnlyDictionary<int, List<SerializableVector3>> coordinates,
+		internal void SerializeColliderCoords(string name,
+			IReadOnlyDictionary<int, List<SerializableVector3>> coordinates,
 			(string raw, string full) directories) {
 			if (string.IsNullOrWhiteSpace(name) || coordinates.IsEmptyOrNull())
 				return;
@@ -98,7 +116,7 @@ namespace ProceduralGeneration {
 		/// <param name="name">Name of file (map)</param>
 		/// <param name="path">Save to directory</param>
 		/// <param name="obj">The object to serialize</param>
-		public void SerializeJson(string name, string path, object obj) {
+		internal void SerializeJson(string name, string path, object obj) {
 			if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(path) || obj == default)
 				return;
 
@@ -114,7 +132,7 @@ namespace ProceduralGeneration {
 		/// </summary>
 		/// <param name="gridGo">Root GameObject containing ProceduralGenerator component</param>
 		/// <param name="logger"></param>
-		public GeneratorSerializer(GameObject gridGo, IProceduralLogging logger) {
+		internal GeneratorSerializer(GameObject gridGo, IProceduralLogging logger) {
 			GridGo = gridGo;
 			Logger = logger;
 		}

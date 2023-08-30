@@ -54,6 +54,9 @@ namespace ProceduralGeneration {
 		public string NameSeedIteration { get; set; }
 		
 		[field: SerializeField,Title("Serialization"), TabGroup("Serialize & Deserialize", TabLayouting = TabLayouting.MultiRow)]
+		public bool ShouldSerializeMesh { get; private set; } = true;
+		
+		[field: SerializeField, TabGroup("Serialize & Deserialize", TabLayouting = TabLayouting.MultiRow)]
 		public bool ShouldSerializePathfinding { get; private set; } = true;
 
 		[field: SerializeField, TabGroup("Serialize & Deserialize", TabLayouting = TabLayouting.MultiRow)]
@@ -68,8 +71,10 @@ namespace ProceduralGeneration {
 #endregion
 
 #region DESERIALIZATION
+		[field: SerializeField,Title("Deserialization"), TabGroup("Serialize & Deserialize", TabLayouting = TabLayouting.MultiRow)]
+		public bool ShouldDeserializeMesh { get; private set; } = true;
 		
-		[field: SerializeField, Title("Deserialization"), TabGroup("Serialize & Deserialize", TabLayouting = TabLayouting.MultiRow)]
+		[field: SerializeField, TabGroup("Serialize & Deserialize", TabLayouting = TabLayouting.MultiRow)]
 		public bool ShouldDeserializePathfinding { get; private set; } = true;
 
 		[field: SerializeField, TabGroup("Serialize & Deserialize", TabLayouting = TabLayouting.MultiRow)]

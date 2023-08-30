@@ -5,7 +5,7 @@ namespace ProceduralGeneration {
 	public class StaticSize : Singleton<StaticSize> {
 		public int Scale { get; set; }
 	}
-	
+
 	public static class Constants {
 		public static class Layer {
 			public const string OBSTACLES = "Obstacles";
@@ -29,6 +29,8 @@ namespace ProceduralGeneration {
 		public const string ITERATION_LABEL = "Iteration";
 
 		public const string SPRITE_SHAPE_SAVE_PREFIX = "SpriteShape_";
+		
+		public const string MESH_SAVE_PREFIX         = "Mesh_";
 
 		public const string COLLIDER_COORDS_SAVE_PREFIX = "ColliderCoords_";
 
@@ -78,7 +80,7 @@ namespace ProceduralGeneration {
 
 		public const string TXT_FILE_TYPE = ".txt";
 
-		public const int CELL_SIZE = 4 ;
+		public const int CELL_SIZE = 4;
 
 		public const int MAP_DIMENSION_LIMIT = 2000;
 
