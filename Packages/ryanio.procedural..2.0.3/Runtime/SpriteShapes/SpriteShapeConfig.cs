@@ -28,21 +28,29 @@ namespace ProceduralGeneration {
 		[field: SerializeField, TabGroup("SpriteShape Boundary", TabLayouting = TabLayouting.MultiRow)]
 		public bool IsSplineAdaptive { get; set; }
 
-		[field: SerializeField, TabGroup("SpriteShape Boundary", TabLayouting = TabLayouting.MultiRow)]
-		public bool IsOpenEnded { get; private set; } = true;
+		[field: SerializeField, TabGroup("SpriteShape Boundary", TabLayouting = TabLayouting.MultiRow), 
+            EnumToggleButtons, LabelText("Open/Closed")]
+		Toggle IsOpenEndedToggle = Toggle.Yes;
+		public bool IsOpenEnded => IsOpenEndedToggle == Toggle.Yes;
 
-		[field: SerializeField, TabGroup("SpriteShape Boundary", TabLayouting = TabLayouting.MultiRow)]
-		public bool EnableTangents { get; private set; } = true;
+		[field: SerializeField, TabGroup("SpriteShape Boundary", TabLayouting = TabLayouting.MultiRow), 
+            EnumToggleButtons, LabelText("Set Tangents")]
+		Toggle SetTangentsToggle = Toggle.Yes;
+		public bool EnableTangents => SetTangentsToggle == Toggle.Yes;
 
-		[field: SerializeField, TabGroup("SpriteShape Boundary", TabLayouting = TabLayouting.MultiRow)]
-		public bool FillTessellation { get; private set; } = true;
+		[field: SerializeField, TabGroup("SpriteShape Boundary", TabLayouting = TabLayouting.MultiRow), 
+            EnumToggleButtons, LabelText("Use Fill Tessellation")]
+		Toggle FillTessellationToggle = Toggle.Yes;
+		
+		public bool FillTessellation => FillTessellationToggle == Toggle.Yes;
 
-		[field: SerializeField, TabGroup("SpriteShape Boundary", TabLayouting = TabLayouting.MultiRow)]
+		[field: SerializeField, TabGroup("SpriteShape Boundary", TabLayouting = TabLayouting.MultiRow), EnumToggleButtons]
 		public ShapeTangentMode SplineTangentMode { get; set; } = ShapeTangentMode.Continuous;
   
 		[field: SerializeField, TabGroup("SpriteShape Boundary", TabLayouting = TabLayouting.MultiRow)]
-		[ShowIf("@TangentModeIsLinear")]
-		public bool ShouldSimplifySegments { get; set; } = true;
+		[ShowIf("@TangentModeIsLinear"), EnumToggleButtons, LabelText("Simplify Segments")]
+		Toggle SimplifySegmentsToggle = Toggle.Yes;
+		public bool ShouldSimplifySegments => SimplifySegmentsToggle == Toggle.Yes;
 
 		[field: SerializeField, TabGroup("SpriteShape Boundary", TabLayouting = TabLayouting.MultiRow)]
 		[ShowIf("@_displayTangentCoords")]
@@ -65,5 +73,6 @@ namespace ProceduralGeneration {
 			{ "100", Ppu.OneHundred },
 			{ "128", Ppu.OneTwentyEight },
 		};
+		bool TangentModeIsLinear => SplineTangentMode == ShapeTangentMode.Linear;
 	}
 }
