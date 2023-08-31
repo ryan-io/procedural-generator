@@ -35,10 +35,12 @@ namespace ProceduralGeneration {
 
 		public bool GetShouldDeserializeSpriteShape() => ProceduralConfig.ShouldDeserializeSpriteShape;
 
-		public bool                GetShouldDeserializeColliderCoords() => ProceduralConfig.ShouldDeserializeColliderCoords;
-		public EventDictionary     GetSerializedEvents()                => ProceduralConfig.SerializedEvents;
-		public IReadOnlyList<Room> GetRooms()                           => Rooms;
-		public void                SetRooms(IReadOnlyList<Room> rooms)  => Rooms = rooms;
+		public bool GetShouldDeserializeColliderCoords() => ProceduralConfig.ShouldDeserializeColliderCoords;
+		public bool GetShouldDeserializeMesh()           => ProceduralConfig.ShouldDeserializeMesh;
+
+		public EventDictionary     GetSerializedEvents()               => ProceduralConfig.SerializedEvents;
+		public IReadOnlyList<Room> GetRooms()                          => Rooms;
+		public void                SetRooms(IReadOnlyList<Room> rooms) => Rooms = rooms;
 
 		public void SetMeshData(MeshData meshData) => MeshData = meshData;
 

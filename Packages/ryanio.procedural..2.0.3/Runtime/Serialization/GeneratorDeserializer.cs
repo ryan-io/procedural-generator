@@ -66,6 +66,49 @@ namespace ProceduralGeneration {
 		}
 
 		/// <summary>
+		///  Takes the current map name, reads serialized data if found, and deserialize a new mesh from a
+		///  serialized mesh
+		/// </summary>
+		/// <param name="currentSerializableName"></param>
+		/// <param name="prefix"></param>
+		/// <param name="directories"></param>
+		/// <returns>Mesh</returns>
+		[CanBeNull]
+		public Mesh DeserializeMesh(string currentSerializableName, string prefix,
+			(string raw, string full) directories) {
+			Serializer ??= new Serializer();
+
+			var pathConstructor = new PathConstructor(directories);
+
+			var validationPath =
+				pathConstructor.GetUniquePathJson(prefix + currentSerializableName);
+
+			var isValid = File.Exists(validationPath);
+
+			if (!isValid) {
+				Logger.LogWarning(
+					Message.SERIALIZE_GENERAL_INVALID_NAME_PREFIX +
+					currentSerializableName                       +
+					Message.SERIALIZE_SPRITE_SHAPE_INVALID_NAME,
+					nameof(DeserializeVector3));
+
+				return default;
+			}
+
+			var mesh             = new Mesh();
+			var serializedOutput = Serializer.DeserializeJson<SerializableMesh>(validationPath);
+
+			mesh.triangles = serializedOutput.Triangles;
+			mesh.uv        = serializedOutput.Uvs.Deserialized().ToArray();
+			mesh.vertices  = serializedOutput.Vertices.Deserialized().ToArray();
+			mesh.name      = Constants.SAVE_MESH_PREFIX + currentSerializableName;
+			
+			mesh.RecalculateNormals();
+
+			return mesh;
+		}
+
+		/// <summary>
 		///  Takes the current map name, reads serialized data if found, and generates a new sprite shape
 		///  based on already serialized data
 		/// </summary>
@@ -133,13 +176,16 @@ namespace ProceduralGeneration {
 				return default;
 			}
 
+			// TODO: should be 'build-friendly' and not use AssetDatabase
+#if UNITY_EDITOR
 			var obj = AssetDatabase.LoadAssetAtPath<GameObject>(assetPath);
 
 			if (obj) {
 				Logger.Log(Message.DESERIALIZE_MAP_PREFAB + obj.name, nameof(DeserializeMapPrefab));
-			}
-
 			return obj;
+			}
+#endif
+			return default;
 		}
 
 		public GeneratorDeserializer(IProceduralLogging logger) {

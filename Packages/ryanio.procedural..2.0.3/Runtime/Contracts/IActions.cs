@@ -58,6 +58,7 @@ namespace ProceduralGeneration {
 		bool                GetShouldDeserializeMapPrefab();
 		bool                GetShouldDeserializeSpriteShape();
 		bool                GetShouldDeserializeColliderCoords();
+		bool                GetShouldDeserializeMesh();
 		EventDictionary     GetSerializedEvents();
 		IReadOnlyList<Room> GetRooms();
 		void                SetRooms(IReadOnlyList<Room> rooms);

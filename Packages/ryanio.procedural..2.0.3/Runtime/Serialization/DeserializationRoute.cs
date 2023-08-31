@@ -6,16 +6,18 @@ namespace ProceduralGeneration {
 		internal bool ShouldDeserializeMapPrefab      { get; }
 		internal bool ShouldDeserializeSpriteShape    { get; }
 		internal bool ShouldDeserializeColliderCoords { get; }
+		internal bool ShouldDeserializeMesh           { get; }
 
 		public DeserializationRoute(
-			bool shouldDeserializePathfinding, 
-			bool shouldDeserializeMapPrefab, 
-			bool shouldDeserializeSpriteShape, 
-			bool shouldDeserializeColliderCoords) {
+			bool shouldDeserializePathfinding,
+			bool shouldDeserializeMapPrefab,
+			bool shouldDeserializeSpriteShape,
+			bool shouldDeserializeColliderCoords, bool shouldDeserializeMesh) {
 			ShouldDeserializePathfinding    = shouldDeserializePathfinding;
 			ShouldDeserializeMapPrefab      = shouldDeserializeMapPrefab;
 			ShouldDeserializeSpriteShape    = shouldDeserializeSpriteShape;
 			ShouldDeserializeColliderCoords = shouldDeserializeColliderCoords;
+			ShouldDeserializeMesh           = shouldDeserializeMesh;
 		}
 	}
 }

@@ -117,7 +117,8 @@ namespace ProceduralGeneration {
 				Actions.GetShouldDeserializePathfinding(),
 				Actions.GetShouldDeserializeMapPrefab(),
 				Actions.GetShouldDeserializeSpriteShape(),
-				Actions.GetShouldDeserializeColliderCoords());
+				Actions.GetShouldDeserializeColliderCoords(),
+                Actions.GetShouldDeserializeMesh());
 		}
 
 		internal SerializedPrimitiveCollisionSolverCtx GetNewSerializedPrimitiveCollisionSolverCtx() {

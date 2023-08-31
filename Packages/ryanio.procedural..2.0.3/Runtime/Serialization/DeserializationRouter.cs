@@ -12,11 +12,15 @@ namespace ProceduralGeneration {
 		bool                  ShouldDeserializeMapPrefab      { get; }
 		bool                  ShouldDeserializeSpriteShape    { get; }
 		bool                  ShouldDeserializeColliderCoords { get; }
+		bool                  ShouldDeserializeMesh           { get; }
 
 		internal void Run(string nameSeedIteration, GameObject generatedColliderObject) {
 			try {
 				Help.ValidateNameIsSerialized(nameSeedIteration);
 				var directories = DirectoryAction.GetMapDirectories(nameSeedIteration);
+
+				if (ShouldDeserializeMesh)
+					DeserializeMesh(nameSeedIteration, directories);
 
 				if (ShouldDeserializeMapPrefab)
 					DeserializeMap(nameSeedIteration, directories);
@@ -38,6 +42,16 @@ namespace ProceduralGeneration {
 					e.Message,
 					nameof(Run));
 			}
+		}
+
+		void DeserializeMesh(string nameSeedIteration, (string raw, string full) directories) {
+			var mesh = Deserializer.DeserializeMesh(nameSeedIteration, Constants.MESH_SAVE_PREFIX, directories);
+
+			if (mesh == null)
+				return;
+
+			var rendering = new MeshRendering(Actions.GetOwner(), default);
+			rendering.Render(mesh, nameSeedIteration);
 		}
 
 		void DeserializeMap(string nameSeedIteration, (string raw, string full) directories) {
@@ -77,7 +91,7 @@ namespace ProceduralGeneration {
 
 			if (coords == default)
 				return;
-			
+
 			var ctxCreator = new ContextCreator(Actions);
 
 			var colSolver =
@@ -92,6 +106,7 @@ namespace ProceduralGeneration {
 			ShouldDeserializeColliderCoords = route.ShouldDeserializeColliderCoords;
 			ShouldDeserializeMapPrefab      = route.ShouldDeserializeMapPrefab;
 			ShouldDeserializeSpriteShape    = route.ShouldDeserializeSpriteShape;
+			ShouldDeserializeMesh           = route.ShouldDeserializeMesh;
 		}
 	}
 }
