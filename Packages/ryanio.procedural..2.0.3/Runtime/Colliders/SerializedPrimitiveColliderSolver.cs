@@ -98,6 +98,7 @@ namespace ProceduralGeneration {
 			col.heigth           = SkinWidth / 2f;
 			col.radius           = Radius;
 			col.onlyWhenSelected = true;
+			col.loop             = true;
 		}
 
 		internal SerializedPrimitiveCollisionSolver(SerializedPrimitiveCollisionSolverCtx ctx) {

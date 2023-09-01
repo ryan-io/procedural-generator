@@ -95,12 +95,12 @@ namespace ProceduralGeneration {
 				return default;
 			}
 
-			var mesh             = new Mesh();
+			var mesh             = new Mesh();  
 			var serializedOutput = Serializer.DeserializeJson<SerializableMesh>(validationPath);
 
+			mesh.vertices  = serializedOutput.Vertices.Deserialized().ToArray();
 			mesh.triangles = serializedOutput.Triangles;
 			mesh.uv        = serializedOutput.Uvs.Deserialized().ToArray();
-			mesh.vertices  = serializedOutput.Vertices.Deserialized().ToArray();
 			mesh.name      = Constants.SAVE_MESH_PREFIX + currentSerializableName;
 			
 			mesh.RecalculateNormals();

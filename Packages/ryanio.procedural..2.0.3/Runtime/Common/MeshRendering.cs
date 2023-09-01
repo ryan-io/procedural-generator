@@ -17,7 +17,7 @@ namespace ProceduralGeneration {
 
 		internal void Render(Mesh mesh, string name) {
 			name = ValidateName(name);
-			var obj = SetupGameObject(name);
+			var obj = SetupGameObject(Constants.MESH_SAVE_PREFIX + name);
 			InstantiateMonobehaviors(mesh, obj);
 		}
 
