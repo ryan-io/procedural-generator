@@ -28,6 +28,7 @@ namespace ProceduralGeneration {
 		public void SetGrid(Grid grid) => Grid = grid;
 		public void StopTimer() => _stopWatch.Stop();
 		public string GetMapName() => ProceduralConfig.Name;
+		public bool GetShouldRenderTiles() => ProceduralConfig.ShouldRenderTiles;
 
 		public bool GetShouldDeserializePathfinding() => ProceduralConfig.ShouldSerializePathfinding;
 

@@ -1,13 +1,16 @@
+using System;
 using System.Collections.Generic;
 using BCL;
 using CommunityToolkit.HighPerformance;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 namespace ProceduralGeneration {
 	internal class StandardTileSetterSolver : TileTypeSolver {
 		TileHashset       TileHashset       { get; }
 		TileMapDictionary TileMapDictionary { get; }
 		TileDictionary    TileDictionary    { get; }
+		bool              ShouldRenderTiles { get; }
 		int               MapWidth          { get; }
 		int               MapHeight         { get; }
 
@@ -21,10 +24,21 @@ namespace ProceduralGeneration {
 			// List<Vector3Int> groundTilePos = new List<Vector3Int>();
 			//
 			for (var i = 0; i < MapWidth * MapHeight; i++) {
-				var row   = i / MapHeight;
+				var row    = i / MapHeight;
 				var column = i % MapHeight;
-				
+
 				TileTaskCreator(span, row, column);
+			}
+
+			if (!ShouldRenderTiles) {
+				foreach (var tilemap in TileMapDictionary.Values) {
+					var rend = tilemap.gameObject.GetComponent<TilemapRenderer>();
+
+					if (!rend)
+						continue;
+
+					rend.enabled = false;
+				}
 			}
 		}
 
@@ -82,6 +96,7 @@ namespace ProceduralGeneration {
 			TileMapDictionary = ctx.TileMapDictionary;
 			TileDictionary    = ctx.TileDictionary;
 			TileHashset       = ctx.TileHashset;
+			ShouldRenderTiles = ctx.ShouldRenderTiles;
 
 			_generatorTools = new GeneratorTools(toolsCtx);
 			_tileMapper     = new TileMapper(mapperCtx, toolsCtx, ctx);

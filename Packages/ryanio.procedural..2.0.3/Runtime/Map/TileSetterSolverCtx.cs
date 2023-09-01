@@ -9,14 +9,16 @@ namespace ProceduralGeneration {
 		internal TileDictionary    TileDictionary    { get; }
 		internal TileHashset       TileHashset       { get; }
 		internal Grid              Grid              { get; }
+		internal bool              ShouldRenderTiles { get; }
 
 		public TileSolversCtx(Dimensions dimensions, TileMapDictionary tileMapDictionary,
-			TileDictionary tileDictionary, TileHashset tileHashset, Grid grid) {
+			TileDictionary tileDictionary, TileHashset tileHashset, Grid grid, bool shouldRenderTiles) {
 			Dimensions        = dimensions;
 			TileMapDictionary = tileMapDictionary;
 			TileDictionary    = tileDictionary;
 			TileHashset       = tileHashset;
-			Grid         = grid;
+			Grid              = grid;
+			ShouldRenderTiles = shouldRenderTiles;
 		}
 	}
 }

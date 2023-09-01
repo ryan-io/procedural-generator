@@ -200,6 +200,11 @@ namespace ProceduralGeneration {
 
 #region TILES
 
+		
+		[field: SerializeField,EnumToggleButtons, TabGroup("Tiles", TabLayouting = TabLayouting.MultiRow), LabelText("Render Tilemaps")]
+		Toggle ShouldRenderTilesToggle { get; set; } = Toggle.Yes;
+		public bool ShouldRenderTiles => ShouldRenderTilesToggle == Toggle.Yes;
+		
 		[field: SerializeField,EnumToggleButtons, TabGroup("Tiles", TabLayouting = TabLayouting.MultiRow), LabelText("Create Tile Labels")]
 		Toggle CreateTileLabelsToggle { get; set; } = Toggle.Yes;
 		public bool ShouldCreateTileLabels => CreateTileLabelsToggle == Toggle.Yes;

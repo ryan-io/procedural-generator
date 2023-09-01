@@ -28,7 +28,8 @@ namespace ProceduralGeneration {
 			Actions.GetTilemapDictionary(),
 			Actions.GetTileDictionary(),
 			Actions.GetTileHashset(),
-			Actions.GetGrid());
+			Actions.GetGrid(),
+			Actions.GetShouldRenderTiles());
 
 		internal GeneratorToolsCtx GetNewGeneratorToolsCtx() => new(Actions.GetMapDimensions(), Actions.GetGrid());
 

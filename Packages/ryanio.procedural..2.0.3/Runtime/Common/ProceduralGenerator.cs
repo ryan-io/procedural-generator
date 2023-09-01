@@ -9,13 +9,10 @@ namespace ProceduralGeneration {
 	/// <summary>
 	///   This class is responsible for generating the map, mesh, collider, and serializing the data
 	///     Verifies the scene contains the required components in order to run procedural generation logic
-	///     This class will also kickoff the generation process
+	///     This class will also kickoff the generation or deserialization process
 	/// 
 	///     *** The Procedural Generator requires unsafe context ***
 	/// 
-	/// rowsOrHeight = GetLength(0)
-	/// this is clearly opposite of what I thought
-	/// https://stackoverflow.com/questions/4260207/how-do-you-get-the-width-and-height-of-a-multi-dimensional-array
 	/// </summary>
 	[HideMonoScript]
 	public partial class ProceduralGenerator : Singleton<ProceduralGenerator, ProceduralGenerator>, IOwner {
