@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityBCL;
+using UnityEditor;
 using UnityEngine;
 
 namespace ProceduralGeneration {
@@ -61,6 +62,9 @@ namespace ProceduralGeneration {
 			catch (Exception e) {
 				machine.InvokeEvent(StateObservableId.ON_ERROR);
 				actions.LogError(e.Message, nameof(Load));
+			}
+			finally {
+				AssetDatabase.Refresh();
 			}
 		}
 

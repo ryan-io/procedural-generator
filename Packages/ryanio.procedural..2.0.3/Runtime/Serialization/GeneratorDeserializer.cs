@@ -50,6 +50,7 @@ namespace ProceduralGeneration {
 			var data = Serializer.DeserializeJson<byte[]>(mapDirectory);
 
 			if (!data.IsEmptyOrNull()) {
+				Logger.Log(Message.DESERIALIZE_ASTAR + currentSerializableName, nameof(DeserializeAstar));
 				new ActiveAstarData().Retrieve();
 				AstarPath.active.data.DeserializeGraphs(data);
 
@@ -95,6 +96,7 @@ namespace ProceduralGeneration {
 				return default;
 			}
 
+			Logger.Log(Message.DESERIALIZE_MESH + currentSerializableName, nameof(DeserializeMesh));
 			var mesh             = new Mesh();  
 			var serializedOutput = Serializer.DeserializeJson<SerializableMesh>(validationPath);
 
@@ -139,6 +141,7 @@ namespace ProceduralGeneration {
 				return default;
 			}
 
+			Logger.Log(Message.DESERIALIZE_VECTOR_SET + currentSerializableName, nameof(DeserializeVector3));
 			var dict = new Dictionary<int, List<Vector3>>();
 			var serializedOutput =
 				Serializer.DeserializeJson<Dictionary<int, List<SerializableVector3>>>(validationPath);

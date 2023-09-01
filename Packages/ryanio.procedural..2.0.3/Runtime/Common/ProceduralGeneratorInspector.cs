@@ -1,5 +1,6 @@
 // ProceduralGeneration
 
+using System;
 using Sirenix.OdinInspector;
 using UnityBCL;
 using UnityEngine;
@@ -28,7 +29,7 @@ namespace ProceduralGeneration {
 		 GUIColor(154 / 255f, 208f / 255, 254f / 255, 1f)]
 		void RefreshSpriteShapes() => new SpriteShapeRefreshService(gameObject).Run();
 
-		[Button(ButtonSizes.Large, ButtonStyle.CompactBox, Icon = SdfIconType.Gear,
+		[Button(ButtonSizes.Large, ButtonStyle.Box, Icon = SdfIconType.Gear, Name = "@ActionLabel",
 			 IconAlignment = IconAlignment.RightOfText), GUIColor(8f / 255, 195f / 255, 108f / 255, 0.9f)]
 		void Generate() {
 			Load();
@@ -41,5 +42,17 @@ namespace ProceduralGeneration {
 		SpriteShapeConfig _spriteShapeConfig = null!;
 
 #endregion
+
+		void OnValidate() {
+			if (_config == null)
+				return;
+
+			ActionLabel = _config.ShouldGenerate ? GENERATE : DESERIALIZE;
+		}
+
+		string ActionLabel { get; set; } = string.Empty;
+
+		const string GENERATE    = "Generate";
+		const string DESERIALIZE = "Deserialize";
 	}
 }

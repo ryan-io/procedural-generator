@@ -40,7 +40,7 @@ namespace ProceduralGeneration {
 			Sb.Clear();
 			Sb.Append(ctx);
 			Sb.Append(TIMESTAMP_LABEL);
-			Sb.Append(StopWatch.TimeElapsed.ToString(CultureInfo.InvariantCulture));
+			Sb.Append(StopWatch.TimeElapsed);
 			Sb.Append(SPACE);
 			Sb.Append(UNIT);
 

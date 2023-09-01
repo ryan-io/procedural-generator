@@ -79,6 +79,9 @@
 			", could not be found. This is likely due to not serializing Collider data (check settings).";
 		
 		internal const string DESERIALIZE_MAP_PREFAB	= "Deserializing map prefab: ";
+		internal const string DESERIALIZE_ASTAR	= "Deserializing astar pathfinding: ";
+		internal const string DESERIALIZE_MESH	= "Deserializing mesh: ";
+		internal const string DESERIALIZE_VECTOR_SET	= "Deserializing vector set: ";
 		
 		internal const string CANNOT_DELETE_META_DATA = "Could not delete meta data file: ";
 
