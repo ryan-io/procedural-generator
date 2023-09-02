@@ -1,7 +1,5 @@
 // ProceduralGeneration
 
-using System.Threading;
-using Cysharp.Threading.Tasks;
 using Sirenix.OdinInspector;
 using UnityBCL;
 using UnityEngine;
@@ -44,24 +42,17 @@ namespace ProceduralGeneration {
 
 #endregion
 
-		void Reset() {
-			const string pathfindingPrefabLocation = "Packages/ryanio.procedural..2.0.3/Assets/Prefabs/prefab_box-collider-solver.prefab";
-			var          logger                    = new UnityLogging();
-			logger.Log("Setting up Astar pathfinding.");
-			name = "procedural-generator";
-			transform.position = Vector3.zero;
-
-			if (AstarPath.active) 
-				return;
-			
-			_config.Pathfinder = new GameObject("pathfinder") {
-				transform = { parent = gameObject.transform, position = Vector3.zero, localPosition = Vector3.zero }
-			};
+		void CreatePathfinder() {
+			if (AstarPath.active && _config !=null && !_config.Pathfinder && AstarPath.active.gameObject) {
+				_config.Pathfinder = AstarPath.active.gameObject;
+			}
 		}
 
 		void OnValidate() {
 			if (_config != null)
 				ActionLabel = _config.ShouldGenerate ? GENERATE : DESERIALIZE;
+
+			CreatePathfinder();
 		}
 
 		string ActionLabel { get; set; } = string.Empty;
