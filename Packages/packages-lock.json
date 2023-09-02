@@ -35,7 +35,7 @@
       "dependencies": {}
     },
     "com.ryanio.procedural-generation": {
-      "version": "file:ryanio.procedural..2.0.3",
+      "version": "file:ryanio.procedural.1.0.0",
       "depth": 0,
       "source": "embedded",
       "dependencies": {
