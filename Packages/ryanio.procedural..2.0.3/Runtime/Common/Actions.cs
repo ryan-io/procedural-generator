@@ -29,6 +29,7 @@ namespace ProceduralGeneration {
 		public void StopTimer() => _stopWatch.Stop();
 		public string GetMapName() => ProceduralConfig.Name;
 		public bool GetShouldRenderTiles() => ProceduralConfig.ShouldRenderTiles;
+		public   Material           GetMeshMaterial() => ProceduralConfig.MeshMaterial;
 
 		public bool GetShouldDeserializePathfinding() => ProceduralConfig.ShouldSerializePathfinding;
 

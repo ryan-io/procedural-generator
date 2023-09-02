@@ -14,7 +14,7 @@ namespace ProceduralGeneration {
 		LayerMask    HeightLayerMask           { get; }
 
 		internal override GridGraph Build() {
-			var astarData = new ActiveAstarData().Retrieve();
+			var astarData = ActiveAstarData.Retrieve();
 			var graph     = astarData.AddGraph(typeof(GridGraph)) as GridGraph;
 
 			if (graph == null) {

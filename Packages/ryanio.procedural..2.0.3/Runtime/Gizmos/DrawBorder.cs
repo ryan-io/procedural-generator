@@ -1,9 +1,10 @@
+using Sirenix.OdinInspector;
 using UnityBCL;
 using UnityEngine;
 
 namespace ProceduralGeneration.Gizmos {
 	public class DrawBorder : MonoBehaviour {
-		[field: SerializeField] public ProceduralGenerator Generator        { get; private set; }
+		[field: SerializeField, Required] public ProceduralGenerator Generator        { get; private set; }
 		[field: SerializeField] public bool                DrawProcessed    { get; private set; }
 		[field: SerializeField] public bool                DrawUnprocessed  { get; private set; }
 		[field: SerializeField] public bool                DrawRoomOutlines { get; private set; }

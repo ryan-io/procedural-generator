@@ -51,7 +51,7 @@ namespace ProceduralGeneration {
 
 			if (!data.IsEmptyOrNull()) {
 				Logger.Log(Message.DESERIALIZE_ASTAR + currentSerializableName, nameof(DeserializeAstar));
-				new ActiveAstarData().Retrieve();
+				ActiveAstarData.Retrieve();
 				AstarPath.active.data.DeserializeGraphs(data);
 
 

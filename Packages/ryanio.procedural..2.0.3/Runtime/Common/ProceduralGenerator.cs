@@ -62,6 +62,7 @@ namespace ProceduralGeneration {
 			}
 			finally {
 				AssetDatabase.Refresh();
+				//Temporary.ZoomSceneCamera(cameraSizes.editorCamSize);
 			}
 		}
 

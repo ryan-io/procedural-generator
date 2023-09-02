@@ -5,6 +5,7 @@ using System.Linq;
 using NaughtyAttributes;
 using Pathfinding;
 using Sirenix.OdinInspector;
+using Sirenix.Utilities.Editor;
 using UnityBCL;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -53,7 +54,12 @@ namespace ProceduralGeneration {
 		[field: SerializeField, Title("Monobehaviors"), HorizontalLine, Sirenix.OdinInspector.Required, TabGroup(
 			        "Setup", TabLayouting =
 				        TabLayouting.MultiRow), LabelText("Pathfinder"), LabelWidth(LABEL_WIDTH), SceneObjectsOnly]
-		public GameObject Pathfinder { get; private set; }
+		public GameObject Pathfinder { get; set; }
+		
+		[TabGroup("Monobehaviors", TabLayouting = TabLayouting.MultiRow), Sirenix.OdinInspector.ShowIf("@IsPathfinderNull"),
+		 Sirenix.OdinInspector.Button(ButtonSizes.Large, Stretch = false, ButtonAlignment = 1),
+		 GUIColor(154 / 255f, 208f / 255, 254f / 255, 1f)]
+		void FindPathfinder() => FindPathfinderInScene();
 
 #endregion
 
@@ -196,6 +202,9 @@ namespace ProceduralGeneration {
 		[field: SerializeField, TabGroup("Map", TabLayouting = TabLayouting.MultiRow)]
 		public LayerMask BoundaryLayerMask { get; private set; }
 
+		[field: SerializeField, TabGroup("Map", TabLayouting = TabLayouting.MultiRow)]
+		public Material MeshMaterial { get; private set; }
+        
 #endregion
 
 #region TILES
@@ -274,11 +283,6 @@ namespace ProceduralGeneration {
 			        TabLayouting = TabLayouting.MultiRow), EnumToggleButtons, LabelText("Draw Node Positions Shifted")]
 		Toggle DrawNodePositionShiftedGizmosToggle { get; set; } = Toggle.Yes;
 		public bool DrawTilePositionShiftedGizmos => DrawNodePositionShiftedGizmosToggle == Toggle.No;
-
-		[TabGroup("Pathfinding", TabLayouting = TabLayouting.MultiRow),
-		 Sirenix.OdinInspector.Button(ButtonSizes.Large, Stretch = false, ButtonAlignment = 1),
-		 GUIColor(154 / 255f, 208f / 255, 254f / 255, 1f)]
-		void FindPathfinder() => FindPathfinderInScene();
 
 #endregion
 
@@ -394,6 +398,8 @@ namespace ProceduralGeneration {
 		}
 
 #endregion
-		
+
+		bool IsPathfinderNull => !Pathfinder;
+
 	}
 }

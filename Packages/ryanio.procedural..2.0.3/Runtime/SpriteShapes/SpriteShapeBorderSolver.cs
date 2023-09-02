@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using ProceduralGeneration.Gizmos;
 using UnityBCL;
 using UnityEngine;
 using UnityEngine.U2D;
@@ -34,7 +35,7 @@ namespace ProceduralGeneration {
 		}
 
 		void CreateSpriteShapeBorderAndPopulate(IReadOnlyList<Vector3> boundaryPositions, int currentRoomIndex) {
-			const int meshNodeLimit    = 100;
+			const int meshNodeLimit    = 250;
 			const int minimumNodeCount = 20;
 			var       forcePass        = true;
 
@@ -51,14 +52,14 @@ namespace ProceduralGeneration {
 					iterationCount++;
 					var name = GetName(currentRoomIndex, iterationCount);
 
-					ctx = SetupNewSpriteShape(name);
+					ctx = SetupNewSpriteShape(name, iterationCount);
 					ctx.Controller.spline.Clear();
 					ctx.Controller.UpdateSpriteShapeParameters();
 					ctx.Controller.RefreshSpriteShape();
 
 					limitTracker--;
 					limitTracker = Math.Clamp(limitTracker, 0, limit);
-					nodeTracker = 0;
+					nodeTracker  = 0;
 				}
 
 				if (limitTracker >= limit)
@@ -167,7 +168,7 @@ namespace ProceduralGeneration {
 			};
 		}
 
-		SpriteShapeObjectCtx SetupNewSpriteShape(string name) {
+		SpriteShapeObjectCtx SetupNewSpriteShape(string name, int iterationCount) {
 			var obj = new GameObject {
 				transform = {
 					localPosition = Vector3.zero,
@@ -181,7 +182,7 @@ namespace ProceduralGeneration {
 			var controller = obj.AddComponent<SpriteShapeController>();
 
 			ParameterizeController(controller);
-			ParameterizeRenderer(controller.spriteShapeRenderer);
+			ParameterizeRenderer(controller.spriteShapeRenderer, iterationCount);
 
 			controller.spline.Clear();
 			controller.UpdateSpriteShapeParameters();
@@ -207,14 +208,16 @@ namespace ProceduralGeneration {
 			}
 		}
 
-		void ParameterizeRenderer(SpriteShapeRenderer renderer) {
+		void ParameterizeRenderer(SpriteShapeRenderer renderer, int iterationCount) {
 			var materials = renderer.sharedMaterials;
 
 			materials[0] = _config.FillMaterial;
 			materials[1] = _config.EdgeMaterial;
 
-			renderer.sortingLayerName = Constants.SortingLayer.OBSTACLES;
-			renderer.sortingOrder     = _config.OrderInLayer;
+			renderer.allowOcclusionWhenDynamic = false;
+			renderer.sortingLayerName          = Constants.SortingLayer.OBSTACLES;
+			renderer.sortingOrder              = _config.OrderInLayer;
+			renderer.rendererPriority          = iterationCount;
 		}
 
 		internal SpriteShapeBorderSolver(SpriteShapeBorderCtx ctx) {
@@ -225,6 +228,7 @@ namespace ProceduralGeneration {
 		}
 
 		readonly SpriteShapeConfig _config;
-		const    int               CUT_OFF = 10;
+		const    int               CUT_OFF            = 10;
+		const    float             TEMP_CAM_ZOOM_SIZE = 2000f;
 	}
 }

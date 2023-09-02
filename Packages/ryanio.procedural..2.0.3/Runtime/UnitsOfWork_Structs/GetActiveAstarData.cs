@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace ProceduralGeneration {
 	public readonly struct ActiveAstarData {
-		public AstarData Retrieve() {
+		public static AstarData Retrieve() {
 #if UNITY_EDITOR
 			if (Application.isEditor && !Application.isPlaying)
 				AstarPath.FindAstarPath();

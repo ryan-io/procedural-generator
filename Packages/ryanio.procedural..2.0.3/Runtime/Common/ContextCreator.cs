@@ -35,7 +35,8 @@ namespace ProceduralGeneration {
 
 		internal TileMapperCtx GetNewTileMapperCtx() => new(Actions.GetShouldCreateTileLabels());
 
-		internal MeshSolverCtx GetNewMeshSolverCtx() => new(Actions.GetOwner(), Actions.GetSerializationName());
+		internal MeshSolverCtx GetNewMeshSolverCtx() 
+			=> new(Actions.GetOwner(), Actions.GetMeshMaterial(), Actions.GetSerializationName());
 
 		internal NavigationSolverCtx GetNewNavigationSolverCtx() => new(
 			Actions.GetTilemapDictionary(),

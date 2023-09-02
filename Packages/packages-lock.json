@@ -34,7 +34,7 @@
       "source": "embedded",
       "dependencies": {}
     },
-    "com.omniengine.procedural": {
+    "com.ryanio.procedural-generation": {
       "version": "file:ryanio.procedural..2.0.3",
       "depth": 0,
       "source": "embedded",

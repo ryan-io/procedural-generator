@@ -1,13 +1,11 @@
 {
-  "name": "com.omniengine.procedural",
+  "name": "com.ryanio.procedural-generation",
   "displayName": "ryan-io-procedural-generator",
   "description": "Includes 2D implementations of flood fill & marching cubes for procedural dungeon generation. Includes Poisson procedural generation for object placement within scenes.",
-  "version": "2.0.1",
-  "unity": "2022.3",
-  "unityRelease": "1f1",
+  "version": "1.0.0",
   "type": "tool",
   "author": {
-    "name": "Ryan IO",
+    "name": "ryan-io ",
     "email": "ryan@ryandeveloper.io",
     "url": "ryandeveloper.io"
   },
