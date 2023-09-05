@@ -11,7 +11,7 @@ namespace ProceduralGeneration {
 			new RenameTilemapContainer().Rename(SerializationName, Grid.gameObject);
 			var tools = new GeneratorTools(ToolsCtx);
 			tools.SetOriginWrtMap(Grid.gameObject);
-			tools.SetGridScale(Constants.CELL_SIZE);
+			tools.SetGridScale(Constants.Instance.CellSize);
 		}
 		
 		public GridCharacteristicsSolver(GridCharacteristicsSolverCtx ctx, GeneratorToolsCtx toolsCtx) {

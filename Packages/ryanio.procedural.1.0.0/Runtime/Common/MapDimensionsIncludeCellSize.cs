@@ -8,8 +8,8 @@ namespace ProceduralGeneration {
 		int MapHeight { get; }
 
 		public int2 Get() {
-			var width  = Constants.CELL_SIZE * MapWidth;
-			var height = Constants.CELL_SIZE * MapHeight;
+			var width  = Constants.Instance.CellSize * MapWidth;
+			var height = Constants.Instance.CellSize * MapHeight;
 			return new int2(width, height);
 		}
 

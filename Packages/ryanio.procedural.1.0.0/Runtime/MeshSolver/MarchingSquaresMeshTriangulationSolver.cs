@@ -43,7 +43,7 @@ namespace ProceduralGeneration {
 
 			mesh.vertices  = vertices.ToArray();
 			mesh.triangles = _triangulationAlgorithm.GetWalkableTriangles.ToArray();
-			mesh.uv        = ProceduralMeshUVSolver.CalculateUVs(map, vertices, Constants.CELL_SIZE);
+			mesh.uv        = ProceduralMeshUVSolver.CalculateUVs(map, vertices, Constants.Instance.CellSize);
 			mesh.RecalculateNormals();
 
 			SolvedMesh = mesh;

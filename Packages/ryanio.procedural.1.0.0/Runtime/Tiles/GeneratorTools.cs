@@ -116,8 +116,8 @@ namespace ProceduralGeneration {
 
 		internal void SetOriginWrtMap(GameObject go) {
 			go.transform.position = new(
-				Mathf.CeilToInt(-MapWidth   *Constants.CELL_SIZE / 2f),
-				Mathf.FloorToInt(-MapHeight *Constants.CELL_SIZE / 2f),
+				Mathf.CeilToInt(-MapWidth   *Constants.Instance.CellSize / 2f),
+				Mathf.FloorToInt(-MapHeight *Constants.Instance.CellSize / 2f),
 				0);
 		}
 

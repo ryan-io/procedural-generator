@@ -164,8 +164,8 @@ namespace ProceduralGeneration {
 		        TabGroup("Map", TabLayouting = TabLayouting.MultiRow)]
 		public int Rows { get; set; } = 100;
 
-		[field: SerializeField, Range(1, 10), TabGroup("Map", TabLayouting = TabLayouting.MultiRow)]
-		public int Scale { get; private set; } = 1;
+		[field: SerializeField, Range(1, 15), TabGroup("Map", TabLayouting = TabLayouting.MultiRow)]
+		public int CellSize { get; private set; } = 1;
 
 		[field: SerializeField, Range(1, 10), TabGroup("Map", TabLayouting = TabLayouting.MultiRow)]
 		public int BorderSize { get; private set; } = 1;

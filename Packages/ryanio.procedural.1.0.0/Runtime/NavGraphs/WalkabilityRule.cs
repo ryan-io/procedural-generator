@@ -99,7 +99,8 @@ namespace ProceduralGeneration {
 						// var positionCast3 = new Vector3(-scaledPosition.x, scaledPosition.y,  -0.5f);
 						// var positionCast4 = new Vector3(scaledPosition.x,  -scaledPosition.y, -0.5f);
 
-						commands[0] = new RaycastCommand(Constants.CELL_SIZE * position, direction, QueryParameters.Default);
+						commands[0] = new RaycastCommand(Constants.Instance.CellSize * position, direction, QueryParameters
+                            .Default);
 						// commands[1] = new RaycastCommand(positionCast2,  direction, QueryParameters.Default);
 						// commands[2] = new RaycastCommand(positionCast3,  direction, QueryParameters.Default);
 						// commands[3] = new RaycastCommand(positionCast4,  direction, QueryParameters.Default);

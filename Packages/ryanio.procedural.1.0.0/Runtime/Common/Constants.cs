@@ -2,11 +2,7 @@
 using UnityEngine;
 
 namespace ProceduralGeneration {
-	public class StaticSize : Singleton<StaticSize> {
-		public int Scale { get; set; }
-	}
-
-	public static class Constants {
+	public class Constants : Singleton<Constants> {
 		public static class Layer {
 			public const string OBSTACLES = "Obstacles";
 			public const string BOUNDARY  = "Boundary";
@@ -80,7 +76,7 @@ namespace ProceduralGeneration {
 
 		public const string TXT_FILE_TYPE = ".txt";
 
-		public const int CELL_SIZE = 4;
+		public int CellSize { get; private set; } = 1;
 
 		public const int MAP_DIMENSION_LIMIT = 2000;
 
@@ -103,6 +99,15 @@ namespace ProceduralGeneration {
 			};
 
 			return output;
+		}
+
+		public void SetCellSize(int size) {
+			if (size < 1) {
+				CellSize = 1;
+				return;
+			}
+
+			CellSize = size;
 		}
 	}
 }
