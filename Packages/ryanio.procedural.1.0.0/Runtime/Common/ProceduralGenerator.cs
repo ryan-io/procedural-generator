@@ -61,7 +61,7 @@ namespace ProceduralGeneration {
 				actions.LogError(e.Message, nameof(Load));
 			}
 			finally {
-				AssetDatabase.Refresh();
+				//AssetDatabase.Refresh(); // standard settings: 1.32sec, 210.1MB GC Alloc
 			}
 		}
 

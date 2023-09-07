@@ -2,6 +2,10 @@
 using UnityEngine;
 
 namespace ProceduralGeneration {
+	public static class pConstant {
+		public const string PREFIX = "Generator - ";
+	}
+	
 	public class Constants : Singleton<Constants> {
 		public static class Layer {
 			public const string OBSTACLES = "Obstacles";
