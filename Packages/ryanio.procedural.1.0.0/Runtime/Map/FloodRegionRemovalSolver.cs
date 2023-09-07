@@ -21,8 +21,8 @@ namespace ProceduralGeneration {
 			Rows    = primarySpan.Height;
 			Columns = primarySpan.Width;
 
-			var copy = new Span2D<int>(new int[Rows, Columns]);
-			primarySpan.CopyTo(copy);
+			// var copy = new Span2D<int>(new int[Rows, Columns]);
+			// primarySpan.CopyTo(copy);
 
 			CullWalls(primarySpan);
 			return CullRooms(primarySpan);
