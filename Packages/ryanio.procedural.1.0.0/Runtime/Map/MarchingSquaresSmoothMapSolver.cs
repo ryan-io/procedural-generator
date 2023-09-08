@@ -1,5 +1,6 @@
 using CommunityToolkit.HighPerformance;
 using Unity.Burst;
+using Unity.Jobs;
 using Unity.Profiling;
 
 namespace ProceduralGeneration {
@@ -17,11 +18,15 @@ namespace ProceduralGeneration {
 		internal override void Smooth(Span2D<int> map, Dimensions dimensions) {
 			var copy = new Span2D<int>(map.ToArray());
 
+			var job    = new SmoothMapJob(map);
+			var handle = job.Schedule(SmoothingIterations, new JobHandle());
+			handle.Complete();
+			
 			for (var i = 0; i < SmoothingIterations; i++) {
 				GetSmoothedMap(map, copy, dimensions);
 				copy.CopyTo(map);
 			}
-			
+
 			/*
 			 * OPTIONAL -> this leads to more chaos
 			 * for (var i = 0; i < Ctx.SmoothingIterations; i++) {
@@ -33,26 +38,25 @@ namespace ProceduralGeneration {
 
 		static readonly ProfilerMarker m_GetSmoothedMap = new(nameof(GetSmoothedMap));
 
+		[BurstCompile]
 		static void GetSmoothedMap(Span2D<int> original, Span2D<int> copy, Dimensions dimensions) {
 			using (m_GetSmoothedMap.Auto()) {
-				var rows    = original.Height;
-				var columns = original.Width;
+				var rows = original.Height;
+				var cols = original.Width;
 				
-				// for (int i = 0; i < rows * columns; i++) {
-				// 	int x = i % columns, y = i / rows;
-				// 	copy = DetermineNeighborLimits( x,  y, copy, original);
+				// for (var i = 0; i < rows * cols; i++) {
+				// 	var row = i / cols;
+				// 	var col = i % cols;
+				// 	DetermineNeighborLimits(row, col, original, copy, dimensions);
+				// 	// logic   
+				// 	
 				// }
 				
-				
 				for (var x = 0; x < rows; x++) {
-					
-					
-					for (var y = 0; y < columns; y++) {
+					for (var y = 0; y < cols; y++) {
 						DetermineNeighborLimits(x, y, original, copy, dimensions);
 					}
 				}
-
-				//return copy;
 			}
 		}
 
@@ -60,7 +64,8 @@ namespace ProceduralGeneration {
 
 		static readonly ProfilerMarker m_DetermineNeighborLimits = new(nameof(DetermineNeighborLimits));
 
-		static void DetermineNeighborLimits(int x, int y, Span2D<int> original, Span2D<int> copy, Dimensions dimensions) {
+		static void DetermineNeighborLimits(int x, int y, Span2D<int> original, Span2D<int> copy,
+			Dimensions dimensions) {
 			using (m_DetermineNeighborLimits.Auto()) {
 				var surroundingWalls = GetAdjacentWallsCount(x, y, original, dimensions);
 
@@ -81,7 +86,7 @@ namespace ProceduralGeneration {
 				var count = 0;
 
 				for (var neighborX = x - 1; neighborX <= x + 1; neighborX++) {
-					for (var neighborY = y - 1; neighborY <= y + 1; neighborY++) 
+					for (var neighborY = y - 1; neighborY <= y + 1; neighborY++)
 						count = DetermineCount(x, y, neighborX, neighborY, count, original, dimensions);
 				}
 
@@ -111,9 +116,9 @@ namespace ProceduralGeneration {
 
 		static bool IsWithinBoundary(int neighborX, int neighborY, Dimensions dimensions) {
 			using (m_IsWithinBoundary.Auto()) {
-				return neighborX > BORDER_SAFETY_FACTOR                       &&
+				return neighborX > BORDER_SAFETY_FACTOR                   &&
 				       neighborX < dimensions.Rows - BORDER_SAFETY_FACTOR &&
-				       neighborY > BORDER_SAFETY_FACTOR                       &&
+				       neighborY > BORDER_SAFETY_FACTOR                   &&
 				       neighborY < dimensions.Columns - BORDER_SAFETY_FACTOR;
 			}
 		}
