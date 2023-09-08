@@ -18,10 +18,6 @@ namespace ProceduralGeneration {
 		internal override void Smooth(Span2D<int> map, Dimensions dimensions) {
 			var copy = new Span2D<int>(map.ToArray());
 
-			var job    = new SmoothMapJob(map);
-			var handle = job.Schedule(SmoothingIterations, new JobHandle());
-			handle.Complete();
-			
 			for (var i = 0; i < SmoothingIterations; i++) {
 				GetSmoothedMap(map, copy, dimensions);
 				copy.CopyTo(map);
