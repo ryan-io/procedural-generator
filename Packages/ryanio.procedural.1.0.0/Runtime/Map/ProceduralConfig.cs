@@ -6,9 +6,16 @@ using NaughtyAttributes;
 using Pathfinding;
 using Sirenix.OdinInspector;
 using Sirenix.Utilities.Editor;
+using Unity.Burst.Intrinsics;
 using UnityBCL;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using static Unity.Burst.Intrinsics.X86.Sse3;
+using static Unity.Burst.Intrinsics.X86.Sse;
+using static Unity.Burst.Intrinsics.X86.Sse2;
+using static Unity.Burst.Intrinsics.X86.Sse4_1;
+using static Unity.Burst.Intrinsics.X86.Sse4_2;
+using static Unity.Burst.Intrinsics.v256;
 
 namespace ProceduralGeneration {
 	[Serializable]
@@ -55,8 +62,9 @@ namespace ProceduralGeneration {
 			        "Setup", TabLayouting =
 				        TabLayouting.MultiRow), LabelText("Pathfinder"), LabelWidth(LABEL_WIDTH), SceneObjectsOnly]
 		public GameObject Pathfinder { get; set; }
-		
-		[TabGroup("Monobehaviors", TabLayouting = TabLayouting.MultiRow), Sirenix.OdinInspector.ShowIf("@IsPathfinderNull"),
+
+		[TabGroup("Monobehaviors", TabLayouting = TabLayouting.MultiRow),
+		 Sirenix.OdinInspector.ShowIf("@IsPathfinderNull"),
 		 Sirenix.OdinInspector.Button(ButtonSizes.Large, Stretch = false, ButtonAlignment = 1),
 		 GUIColor(154 / 255f, 208f / 255, 254f / 255, 1f)]
 		void FindPathfinder() => FindPathfinderInScene();
@@ -91,11 +99,13 @@ namespace ProceduralGeneration {
 		[field: SerializeField, EnumToggleButtons, LabelText("Sprite Shape"),
 		        TabGroup("Serialize & Deserialize", TabLayouting = TabLayouting.MultiRow)]
 		Toggle SerializeSpriteShapeToggle { get; set; } = Toggle.Yes;
+
 		public bool ShouldSerializeSpriteShape => SerializeSpriteShapeToggle == Toggle.Yes;
 
 		[field: SerializeField, EnumToggleButtons, LabelText("Colliders"),
 		        TabGroup("Serialize & Deserialize", TabLayouting = TabLayouting.MultiRow)]
 		Toggle SerializeColliderCoordsToggle { get; set; } = Toggle.Yes;
+
 		public bool ShouldSerializeColliderCoords => SerializeColliderCoordsToggle == Toggle.Yes;
 
 #endregion
@@ -105,26 +115,31 @@ namespace ProceduralGeneration {
 		[field: SerializeField, Title("Deserialization"), EnumToggleButtons, LabelText("Mesh"),
 		        TabGroup("Serialize & Deserialize", TabLayouting = TabLayouting.MultiRow)]
 		Toggle DeserializeMeshToggle { get; set; } = Toggle.Yes;
+
 		public bool ShouldDeserializeMesh => DeserializeMeshToggle == Toggle.Yes;
 
 		[field: SerializeField, EnumToggleButtons, LabelText("Pathfinding"),
 		        TabGroup("Serialize & Deserialize", TabLayouting = TabLayouting.MultiRow)]
 		Toggle DeserializePathfindingToggle { get; set; } = Toggle.Yes;
+
 		public bool ShouldDeserializePathfinding => DeserializePathfindingToggle == Toggle.Yes;
 
 		[field: SerializeField, EnumToggleButtons, LabelText("Map Prefab"),
 		        TabGroup("Serialize & Deserialize", TabLayouting = TabLayouting.MultiRow)]
 		Toggle DeserializeMapPrefabToggle { get; set; } = Toggle.Yes;
+
 		public bool ShouldDeserializeMapPrefab => DeserializeMapPrefabToggle == Toggle.Yes;
 
 		[field: SerializeField, EnumToggleButtons, LabelText("Sprite Shape"),
 		        TabGroup("Serialize & Deserialize", TabLayouting = TabLayouting.MultiRow)]
 		Toggle DeserializeSpriteShapeToggle { get; set; } = Toggle.Yes;
+
 		public bool ShouldDeserializeSpriteShape => DeserializeSpriteShapeToggle == Toggle.Yes;
 
 		[field: SerializeField, EnumToggleButtons, LabelText("Colliders"),
 		        TabGroup("Serialize & Deserialize", TabLayouting = TabLayouting.MultiRow)]
 		Toggle DeserializeColliderCoordsToggle { get; set; } = Toggle.Yes;
+
 		public bool ShouldDeserializeColliderCoords => DeserializeColliderCoordsToggle == Toggle.Yes;
 
 		[TabGroup("Serialize & Deserialize", TabLayouting = TabLayouting.MultiRow),
@@ -204,22 +219,27 @@ namespace ProceduralGeneration {
 
 		[field: SerializeField, TabGroup("Map", TabLayouting = TabLayouting.MultiRow)]
 		public Material MeshMaterial { get; private set; }
-        
+
 #endregion
 
 #region TILES
 
-		
-		[field: SerializeField,EnumToggleButtons, TabGroup("Tiles", TabLayouting = TabLayouting.MultiRow), LabelText("Render Tilemaps")]
+		[field: SerializeField, EnumToggleButtons, TabGroup("Tiles", TabLayouting = TabLayouting.MultiRow),
+		        LabelText("Render Tilemaps")]
 		Toggle ShouldRenderTilesToggle { get; set; } = Toggle.Yes;
+
 		public bool ShouldRenderTiles => ShouldRenderTilesToggle == Toggle.Yes;
-		
-		[field: SerializeField,EnumToggleButtons, TabGroup("Tiles", TabLayouting = TabLayouting.MultiRow), LabelText("Create Tile Labels")]
+
+		[field: SerializeField, EnumToggleButtons, TabGroup("Tiles", TabLayouting = TabLayouting.MultiRow),
+		        LabelText("Create Tile Labels")]
 		Toggle CreateTileLabelsToggle { get; set; } = Toggle.Yes;
+
 		public bool ShouldCreateTileLabels => CreateTileLabelsToggle == Toggle.Yes;
 
-		[field: SerializeField,EnumToggleButtons, TabGroup("Tiles", TabLayouting = TabLayouting.MultiRow), LabelText("Create Tile Angles")]
+		[field: SerializeField, EnumToggleButtons, TabGroup("Tiles", TabLayouting = TabLayouting.MultiRow),
+		        LabelText("Create Tile Angles")]
 		Toggle CreateTileAnglesToggle { get; set; } = Toggle.Yes;
+
 		public bool ShouldGenerateAngles => CreateTileAnglesToggle == Toggle.Yes;
 
 		[field: SerializeField, DictionaryDrawerSettings(DisplayMode = DictionaryDisplayOptions.OneLine),
@@ -250,10 +270,12 @@ namespace ProceduralGeneration {
 		        TabGroup("Pathfinding", TabLayouting = TabLayouting.MultiRow)]
 		public float NavGraphNodeSize { get; private set; } = 0.5f;
 
-		[field: SerializeField, EnumToggleButtons, Title("Erosion"), TabGroup("Pathfinding", TabLayouting = TabLayouting.MultiRow), 
-            LabelText("Erode Pathfinding Grid")]
+		[field: SerializeField, EnumToggleButtons, Title("Erosion"),
+		        TabGroup("Pathfinding", TabLayouting = TabLayouting.MultiRow),
+		        LabelText("Erode Pathfinding Grid")]
 		Toggle ErodePathfindingGridToggle { get; set; } = Toggle.Yes;
-		public bool ErodePathfindingGrid  => ErodePathfindingGridToggle == Toggle.Yes;
+
+		public bool ErodePathfindingGrid => ErodePathfindingGridToggle == Toggle.Yes;
 
 		[field: SerializeField, Range(.1f, 8), Sirenix.OdinInspector.ShowIf("@ErodePathfindingGrid"),
 		        TabGroup("Pathfinding", TabLayouting = TabLayouting.MultiRow)]
@@ -269,19 +291,24 @@ namespace ProceduralGeneration {
 		public int StartingNodeIndexToErode { get; private set; } = 1;
 
 		[Title("Erosion Debugging", horizontalLine: false)]
-		[field: SerializeField, Sirenix.OdinInspector.ShowIf("@ErodePathfindingGrid"), EnumToggleButtons, LabelText("Draw Node Positions"),
+		[field: SerializeField, Sirenix.OdinInspector.ShowIf("@ErodePathfindingGrid"), EnumToggleButtons,
+		        LabelText("Draw Node Positions"),
 		        TabGroup("Pathfinding", TabLayouting = TabLayouting.MultiRow)]
 		Toggle DrawNodePositionGizmosToggle { get; set; } = Toggle.Yes;
+
 		public bool DrawNodePositionGizmos => DrawNodePositionGizmosToggle == Toggle.No;
 
-		[field: SerializeField, Sirenix.OdinInspector.ShowIf("@ErodePathfindingGrid"), EnumToggleButtons, LabelText("Draw Node Positions Shifted"),
+		[field: SerializeField, Sirenix.OdinInspector.ShowIf("@ErodePathfindingGrid"), EnumToggleButtons,
+		        LabelText("Draw Node Positions Shifted"),
 		        TabGroup("Pathfinding", TabLayouting = TabLayouting.MultiRow)]
 		Toggle DrawTilePositionGizmosToggle { get; set; } = Toggle.Yes;
+
 		public bool DrawTilePositionGizmos => DrawTilePositionGizmosToggle == Toggle.No;
 
 		[field: SerializeField, Sirenix.OdinInspector.ShowIf("@ErodePathfindingGrid"), TabGroup("Pathfinding",
 			        TabLayouting = TabLayouting.MultiRow), EnumToggleButtons, LabelText("Draw Node Positions Shifted")]
 		Toggle DrawNodePositionShiftedGizmosToggle { get; set; } = Toggle.Yes;
+
 		public bool DrawTilePositionShiftedGizmos => DrawNodePositionShiftedGizmosToggle == Toggle.No;
 
 #endregion
@@ -365,6 +392,29 @@ namespace ProceduralGeneration {
 
 #endregion
 
+#region SIMD
+
+		[ShowInInspector, TabGroup("SIMD", TabLayouting = TabLayouting.MultiRow), Sirenix.OdinInspector.ReadOnly]
+		public static bool Sse42Supported => X86.Sse4_2.IsSse42Supported;
+
+		[ShowInInspector, TabGroup("SIMD", TabLayouting = TabLayouting.MultiRow), Sirenix.OdinInspector.ReadOnly]
+		public static bool Sse41Supported => X86.Sse4_1.IsSse41Supported;
+
+		[ShowInInspector, TabGroup("SIMD", TabLayouting = TabLayouting.MultiRow), Sirenix.OdinInspector.ReadOnly]
+		public static bool Sse3Supported => X86.Sse3.IsSse3Supported;
+
+		[ShowInInspector, TabGroup("SIMD", TabLayouting = TabLayouting.MultiRow), Sirenix.OdinInspector.ReadOnly]
+		public static bool Sse2Supported => X86.Sse2.IsSse2Supported;
+
+		[ShowInInspector, TabGroup("SIMD", TabLayouting = TabLayouting.MultiRow), Sirenix.OdinInspector.ReadOnly]
+		public static bool Sse1Supported => X86.Sse.IsSseSupported;
+
+		[ShowInInspector, TabGroup("SIMD", TabLayouting = TabLayouting.MultiRow), Sirenix.OdinInspector.ReadOnly]
+		public static bool AvxSupported => X86.Avx.IsAvxSupported;
+		public static bool Avx2Supported => X86.Avx2.IsAvx2Supported;
+
+#endregion
+
 #region SCOPE_CONSTANTS
 
 		const string EROSION_TAG_INFO =
@@ -400,6 +450,5 @@ namespace ProceduralGeneration {
 #endregion
 
 		bool IsPathfinderNull => !Pathfinder;
-
 	}
 }

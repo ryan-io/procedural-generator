@@ -53,8 +53,8 @@ namespace ProceduralGeneration {
 
 		static void SmoothMap(Span2D<int> map, SmoothMapSolverCtx ctx) {
 			using (SmoothMapMarker.Auto()) {
-				ProceduralService.GetSmoothMapSolver(() => new StandardSmoothMapSolver(ctx))
-				                 .Smooth(map);
+				ProceduralService.GetSmoothMapSolver(() => new StandardSmoothMapSolver(ctx))	
+				                 .Smooth(map, ctx.Dimensions);
 			}
 		}
 
