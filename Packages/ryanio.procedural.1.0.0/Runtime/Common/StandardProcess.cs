@@ -1,9 +1,7 @@
 // ProceduralGeneration
 
 using System.Collections.Generic;
-using CommunityToolkit.HighPerformance;
 using Pathfinding;
-using Unity.Burst;
 using Unity.Profiling;
 
 namespace ProceduralGeneration {
@@ -15,12 +13,12 @@ namespace ProceduralGeneration {
 	///		appropriate solver class and defining a new process (inherit from GenerationProcess).
 	/// </summary>
 	internal class StandardProcess : GenerationProcess {
-		internal override MapData Run(Span2D<int> map) {
+		internal override MapData Run(int[,] map) {
 			var ctxCreator        = new ContextCreator(Actions);
 			var generatorToolsCtx = ctxCreator.GetNewGeneratorToolsCtx();
 
-			FillMap(map, ctxCreator.GetNewFillMapCtx());
-			SmoothMap(map, ctxCreator.GetNewSmoothMapCtx());
+			FillMap(ref map, ctxCreator.GetNewFillMapCtx());
+			SmoothMap(ref map, ctxCreator.GetNewSmoothMapCtx());
 			Actions.SetRooms(ProcessRoomsAndWalls(map, ctxCreator.GetNewRemoveRegionsCtx()));
 
 			SetTiles(map,
@@ -46,23 +44,23 @@ namespace ProceduralGeneration {
 		}
 
 		
-		static void FillMap(Span2D<int> map, FillMapSolverCtx ctx) {
+		static void FillMap(ref int[,] map, FillMapSolverCtx ctx) {
 			using (FillMapMarker.Auto()) {
 				ProceduralService.GetFillMapSolver(() => new CellularAutomataFillMapSolver(ctx))
-				                 .Fill(map);
+				                 .Fill(ref map);
 			}
 		}
 
 		
-		static void SmoothMap(Span2D<int> map, SmoothMapSolverCtx ctx) {
+		static void SmoothMap(ref int[,] map, SmoothMapSolverCtx ctx) {
 			using (SmoothMapMarker.Auto()) {
 				ProceduralService.GetSmoothMapSolver(() => new StandardSmoothMapSolver(ctx))	
-				                 .Smooth(map, ctx.Dimensions);
+				                 .Smooth(ref map, ctx.Dimensions);
 			}
 		}
 
 		
-		static List<Room> ProcessRoomsAndWalls(Span2D<int> map, RemoveRegionsSolverCtx ctx) {
+		static List<Room> ProcessRoomsAndWalls(int[,] map, RemoveRegionsSolverCtx ctx) {
 			using (ProcessRoomsAndWallsMarker.Auto()) {
 				return ProceduralService.GetRoomsAndWallsSolver(
 					() => new FloodFillRegionSolver(ctx)).Remove(map);
@@ -71,7 +69,7 @@ namespace ProceduralGeneration {
 
 		
 		static void SetTiles(
-			Span2D<int> map,
+			int[,] map,
 			TileSolversCtx tileSolverCtx,
 			TileMapperCtx mapperCtx,
 			GeneratorToolsCtx toolsCtx) {
@@ -82,7 +80,7 @@ namespace ProceduralGeneration {
 		}
 
 		
-		static MeshData CreateMesh(Span2D<int> map, MeshSolverCtx ctx) {
+		static MeshData CreateMesh(int[,] map, MeshSolverCtx ctx) {
 			using (CreateMeshMarker.Auto()) {
 				return ProceduralService.GetMeshSolver(() => new MarchingSquaresMeshSolver(ctx))
 				                        .Create(map);

@@ -2,7 +2,7 @@ using CommunityToolkit.HighPerformance;
 
 namespace ProceduralGeneration {
 	internal abstract class SmoothMapSolver {
-		internal abstract void Smooth(Span2D<int> map, Dimensions dimensions);
+		internal abstract void Smooth(ref int[,] map, Dimensions dimensions);
 	}
 }
 
