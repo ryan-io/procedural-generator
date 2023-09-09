@@ -1,6 +1,5 @@
 using System.Diagnostics;
 using CommunityToolkit.HighPerformance;
-using Unity.Burst;
 using Unity.Jobs;
 using Unity.Profiling;
 using Debug = UnityEngine.Debug;
@@ -20,10 +19,12 @@ namespace ProceduralGeneration {
 			using (m_Smooth.Auto()) {
 				var copy = new Span2D<int>(map.ToArray());
 
+				/*	UPDATED FOR BURST &JOBS		------------------------------------------------------------------>
 				var job    = new SmoothMapJob(map.ToArray());
 				var handle = job.Schedule(SmoothingIterations, new JobHandle());
 
 				var sw = Stopwatch.StartNew();
+				
 				while (true) {
 					if (handle.IsCompleted)
 						break;
@@ -42,11 +43,13 @@ namespace ProceduralGeneration {
 					// logic   
 					map[row, col] = (int)job.MapProcessed[i].Z;
 				}
-
-				// for (var i = 0; i < SmoothingIterations; i++) {
-				// 	GetSmoothedMap(map, copy, dimensions);
-				// 	copy.CopyTo(map);
-				// }
+*/																	//<------------------------------------------------------------------
+					
+				
+				for (var i = 0; i < SmoothingIterations; i++) {
+					GetSmoothedMap(map, copy, dimensions);
+					copy.CopyTo(map);
+				}
 
 				/*
 				 * OPTIONAL -> this leads to more chaos

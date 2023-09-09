@@ -4,7 +4,6 @@ using System;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Jobs;
-using UnityEngine;
 using Vector3 = System.Numerics.Vector3;
 
 namespace ProceduralGeneration {
@@ -33,9 +32,7 @@ namespace ProceduralGeneration {
 		public void Execute(int index) {
 			var cols        = (int)m_Dimensions[0].Y;
 			var rows        = (int)m_Dimensions[0].X;
-			var totalLength = (int)m_Dimensions[0].Z;
-Debug.Log("Rows: " + rows);
-Debug.Log("Cols: " + cols);
+            
 			var tracker = 0;
 			for (var row = 0; row < rows; row++) {
 				for (var col = 0; col < cols; col++) {
@@ -107,18 +104,12 @@ Debug.Log("Cols: " + cols);
 			m_Dimensions = new NativeArray<Vector3>(1, Allocator.Persistent) {
 				[0] = new(map.GetLength(0), map.GetLength(1), totalLength)
 			};
-			
-			Debug.Log("Rows: " + m_Dimensions[0].X);
-			Debug.Log("Cols: " + m_Dimensions[0].Y);
-			Debug.Log("Total: " + m_Dimensions[0].Z);
-			//MapProcessedInt = new NativeArray<int>(1, Allocator.Persistent) { [0] = 0 };;
 		}
 
 		public void Dispose() {
 			Map.Dispose();
 			MapProcessed.Dispose();
 			m_Dimensions.Dispose();
-			//MapProcessedInt.Dispose();
 		}
 
 		const int COMPARISON_LIMIT     = 4;
