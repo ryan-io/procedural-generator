@@ -45,7 +45,7 @@ namespace ProceduralGeneration {
 			return new MapData(Actions.GetTileHashset(), Actions.GetMeshData());
 		}
 
-		[BurstCompile]
+		
 		static void FillMap(Span2D<int> map, FillMapSolverCtx ctx) {
 			using (FillMapMarker.Auto()) {
 				ProceduralService.GetFillMapSolver(() => new CellularAutomataFillMapSolver(ctx))
@@ -53,7 +53,7 @@ namespace ProceduralGeneration {
 			}
 		}
 
-		[BurstCompile]
+		
 		static void SmoothMap(Span2D<int> map, SmoothMapSolverCtx ctx) {
 			using (SmoothMapMarker.Auto()) {
 				ProceduralService.GetSmoothMapSolver(() => new StandardSmoothMapSolver(ctx))	
@@ -61,7 +61,7 @@ namespace ProceduralGeneration {
 			}
 		}
 
-		[BurstCompile]
+		
 		static List<Room> ProcessRoomsAndWalls(Span2D<int> map, RemoveRegionsSolverCtx ctx) {
 			using (ProcessRoomsAndWallsMarker.Auto()) {
 				return ProceduralService.GetRoomsAndWallsSolver(
@@ -69,7 +69,7 @@ namespace ProceduralGeneration {
 			}
 		}
 
-		[BurstCompile]
+		
 		static void SetTiles(
 			Span2D<int> map,
 			TileSolversCtx tileSolverCtx,
@@ -81,7 +81,7 @@ namespace ProceduralGeneration {
 			}
 		}
 
-		[BurstCompile]
+		
 		static MeshData CreateMesh(Span2D<int> map, MeshSolverCtx ctx) {
 			using (CreateMeshMarker.Auto()) {
 				return ProceduralService.GetMeshSolver(() => new MarchingSquaresMeshSolver(ctx))
@@ -89,7 +89,7 @@ namespace ProceduralGeneration {
 			}
 		}
 
-		[BurstCompile]
+		
 		static void BuildNavigation(NavGraphBuilder<GridGraph> builder, NavigationSolverCtx ctx) {
 			using (BuildNavigationMarker.Auto()) {
 				ProceduralService.GetNavigationSolver(() => new NavigationSolver(builder, ctx))
@@ -97,28 +97,28 @@ namespace ProceduralGeneration {
 			}
 		}
 
-		[BurstCompile]
+		
 		static Coordinates CreateColliders(ColliderSolverCtx ctx) {
 			using (CreateCollidersMarker.Auto()) {
 				return ProceduralService.GetColliderSolver(() => new ColliderSolver(ctx)).Solve();
 			}
 		}
 
-		[BurstCompile]
+		
 		static void GenerateSpriteShapeBorder(SpriteShapeBorderCtx ctx) {
 			using (GenerateSpriteShapeBorderMarker.Auto()) {
 				ProceduralService.GetSpriteShapeBorderSolver(() => new SpriteShapeBorderSolver(ctx)).Generate();
 			}
 		}
 
-		[BurstCompile]
+		
 		static void SetBoundaryColliderPoints(ColliderPointSetterCtx ctx) {
 			using (SetBoundaryColliderPointsBorderMarker.Auto()) {
 				ProceduralService.GetCutCollidersSolver(() => new CreateBoundaryColliders(ctx)).Set();
 			}
 		}
 
-		[BurstCompile]
+		
 		static void SetGridCharacteristics(GridCharacteristicsSolverCtx ctx, GeneratorToolsCtx toolsCtx) {
 			using (SetGridCharacteristicsBorderMarker.Auto()) {
 				ProceduralService.GetGridCharacteristicsSolver(

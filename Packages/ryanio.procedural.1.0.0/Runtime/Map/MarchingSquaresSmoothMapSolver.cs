@@ -1,12 +1,14 @@
+using System.Diagnostics;
 using CommunityToolkit.HighPerformance;
 using Unity.Burst;
 using Unity.Jobs;
 using Unity.Profiling;
+using Debug = UnityEngine.Debug;
 
 namespace ProceduralGeneration {
 	internal class StandardSmoothMapSolver : SmoothMapSolver {
-		int SmoothingIterations { get; }
-
+		int                            SmoothingIterations { get; }
+		static readonly ProfilerMarker m_Smooth = new(nameof(Smooth));
 		/// <summary>
 		/// Will take the primary map span, make a copy, performed calculations over the entire mapSpanCopy
 		/// The number of times to perform all calculations = SmoothingIterations
@@ -14,27 +16,50 @@ namespace ProceduralGeneration {
 		/// </summary>
 		/// <param name="map">The primary map span</param>
 		/// <param name="dimensions">Map dimensions</param>
-		[BurstCompile]
 		internal override void Smooth(Span2D<int> map, Dimensions dimensions) {
-			var copy = new Span2D<int>(map.ToArray());
+			using (m_Smooth.Auto()) {
+				var copy = new Span2D<int>(map.ToArray());
 
-			for (var i = 0; i < SmoothingIterations; i++) {
-				GetSmoothedMap(map, copy, dimensions);
-				copy.CopyTo(map);
-			}
+				var job    = new SmoothMapJob(map.ToArray());
+				var handle = job.Schedule(SmoothingIterations, new JobHandle());
 
-			/*
-			 * OPTIONAL -> this leads to more chaos
-			 * for (var i = 0; i < Ctx.SmoothingIterations; i++) {
-				GetSmoothedMap(map, copy);
-				copy.CopyTo(map);
+				var sw = Stopwatch.StartNew();
+				while (true) {
+					if (handle.IsCompleted)
+						break;
+				}
+
+				handle.Complete();
+				sw.Stop();
+				Debug.Log("Job took " + sw.ElapsedMilliseconds + "ms");
+
+				var rows = map.Height;
+				var cols = map.Width;
+				for (var i = 0; i < rows * cols; i++) {
+					var row = i / cols;
+					var col = i % cols;
+
+					// logic   
+					map[row, col] = (int)job.MapProcessed[i].Z;
+				}
+
+				// for (var i = 0; i < SmoothingIterations; i++) {
+				// 	GetSmoothedMap(map, copy, dimensions);
+				// 	copy.CopyTo(map);
+				// }
+
+				/*
+				 * OPTIONAL -> this leads to more chaos
+				 * for (var i = 0; i < Ctx.SmoothingIterations; i++) {
+					GetSmoothedMap(map, copy);
+					copy.CopyTo(map);
+				}
+				 */
 			}
-			 */
 		}
 
 		static readonly ProfilerMarker m_GetSmoothedMap = new(nameof(GetSmoothedMap));
-
-		[BurstCompile]
+		
 		static void GetSmoothedMap(Span2D<int> original, Span2D<int> copy, Dimensions dimensions) {
 			using (m_GetSmoothedMap.Auto()) {
 				var rows = original.Height;
