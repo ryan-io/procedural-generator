@@ -19,7 +19,7 @@ using UnityEngine.Tilemaps;
 						// var size    = Physics.OverlapBoxNonAlloc(worldPosGround, extends, _collisions.Value);
  */
 namespace ProceduralGeneration {
-	[Serializable, Pathfinding.Util.Preserve]
+	[Serializable, Pathfinding.Util.Preserve, BurstCompile]
 	public class WalkabilityRule : GridGraphRule {
 		Tilemap     _boundaryTilemap;
 		Tilemap     _groundTilemap;
@@ -146,7 +146,7 @@ namespace ProceduralGeneration {
 		}
 
 		[BurstCompile]
-		struct WalkabilityJobData : IJob, INodeModifier {
+		public struct WalkabilityJobData : IJob, INodeModifier {
 			public IntBounds           Bounds;
 			public NativeArray<float4> NodeNormals;
 

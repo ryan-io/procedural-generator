@@ -3,13 +3,20 @@ using System.Runtime.CompilerServices;
 using ProceduralAuxiliary;
 using UnityBCL;
 using UnityEngine;
-using UnityEngine.ResourceManagement.Exceptions;
 using Object = UnityEngine.Object;
 
 namespace ProceduralGeneration {
+	internal class ColliderPointProcessor {
+		internal List<Vector3> Process() {
+			var job = new DetermineColinearityJob() {
+				
+			}
+		}
+	}
+	
 	internal class PrimitiveCollisionSolver : CollisionSolver {
-		Dictionary<int, List<Vector3>> UnprocessedCoords   { get; }
-		Dictionary<int, List<Vector3>> ProcessedCoords     { get; }
+		// Dictionary<int, List<Vector3>> UnprocessedCoords   { get; }
+		// Dictionary<int, List<Vector3>> ProcessedCoords     { get; }  
 		GameObject                     ColliderGo          { get; }
 		List<Vector3>                  MeshVertices        { get; }
 		List<List<int>>                RoomOutlines        { get; }

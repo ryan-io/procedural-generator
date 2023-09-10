@@ -7,7 +7,6 @@ using Unity.Collections;
 using Unity.Jobs;
 
 namespace ProceduralGeneration {
-	[BurstCompile]
 	internal struct FillMapJob : IJobParallelFor, IDisposable {
 		public void Execute(int index) {
 			throw new NotImplementedException();
@@ -23,7 +22,6 @@ namespace ProceduralGeneration {
 	// 	
 	// }
 
-	[BurstCompile]
 	internal struct GetAdjacentWallCountJob : IJobFor, IDisposable {
 		[ReadOnly, NativeDisableParallelForRestriction] public NativeArray2D<int> NativeMap;
 
