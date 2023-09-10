@@ -47,34 +47,34 @@ namespace ProceduralGeneration {
 			// label.gameObject.tag = TileMapper.Label;
 		}
 
-		internal TileMask SolveMask(Span2D<int> span, int x, int y, bool isBoundary) {
+		internal TileMask SolveMask(ref int[,] map, int x, int y, bool isBoundary) {
 			var bit = TileMask.None;
 
 			if (isBoundary)
 				return bit;
 
-			if (IsFilled(span, x - 1, y + 1)) //Debug.Msg("Is NW");
+			if (IsFilled(ref map, x - 1, y + 1)) //Debug.Msg("Is NW");
 				bit |= TileMask.NorthWest;
 
-			if (IsFilled(span, x, y + 1)) //Debug.Msg("Is N");
+			if (IsFilled(ref map, x, y + 1)) //Debug.Msg("Is N");
 				bit |= TileMask.North;
 
-			if (IsFilled(span, x + 1, y + 1)) //Debug.Msg("Is NE");
+			if (IsFilled(ref map, x + 1, y + 1)) //Debug.Msg("Is NE");
 				bit |= TileMask.NorthEast;
 
-			if (IsFilled(span, x - 1, y)) //Debug.Msg("Is W");
+			if (IsFilled(ref map, x - 1, y)) //Debug.Msg("Is W");
 				bit |= TileMask.West;
 
-			if (IsFilled(span, x + 1, y)) //Debug.Msg("Is E");
+			if (IsFilled(ref map, x + 1, y)) //Debug.Msg("Is E");
 				bit |= TileMask.East;
 
-			if (IsFilled(span, x - 1, y - 1)) //Debug.Msg("Is SW");
+			if (IsFilled(ref map, x - 1, y - 1)) //Debug.Msg("Is SW");
 				bit |= TileMask.SouthWest;
 
-			if (IsFilled(span, x, y - 1)) //Debug.Msg("Is S");	
+			if (IsFilled(ref map, x, y - 1)) //Debug.Msg("Is S");	
 				bit |= TileMask.South;
 
-			if (IsFilled(span, x + 1, y - 1)) //Debug.Msg("Is SE");
+			if (IsFilled(ref map, x + 1, y - 1)) //Debug.Msg("Is SE");
 				bit |= TileMask.SouthEast;
 
 			return bit;
@@ -101,7 +101,7 @@ namespace ProceduralGeneration {
 			return true;
 		}
 
-		internal static bool IsFilled(Span2D<int> span, int x, int y) => span[x, y] == 1;
+		internal static bool IsFilled(ref int[,] span, int x, int y) => span[x, y] == 1;
 
 		internal void SetTile(Tilemap map, TileBase tile, Vector3Int position) {
 			if (map == null) {
@@ -116,13 +116,14 @@ namespace ProceduralGeneration {
 
 		internal void SetOriginWrtMap(GameObject go) {
 			go.transform.position = new(
-				Mathf.CeilToInt(-MapWidth   *Constants.Instance.CellSize / 2f),
-				Mathf.FloorToInt(-MapHeight *Constants.Instance.CellSize / 2f),
+				Mathf.CeilToInt(-MapWidth   * Constants.Instance.CellSize / 2f),
+				Mathf.FloorToInt(-MapHeight * Constants.Instance.CellSize / 2f),
 				0);
 		}
 
 		internal void SetGridScale(int newScale) {
-			GridObj.gameObject.transform.localScale = new(newScale, newScale, newScale);
+			GridObj.cellSize                        = new Vector3(newScale, newScale, 0);
+			GridObj.gameObject.transform.localScale = new(1, 1, 1);
 		} 
 
 		bool IsBit(TileMask check, TileMask against) => check == against;

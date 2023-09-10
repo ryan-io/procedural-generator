@@ -18,7 +18,7 @@ namespace ProceduralGeneration {
 	internal abstract class GenerationProcess {
 		protected IActions Actions { get; }
 
-		internal abstract MapData Run(int[,] map);
+		internal abstract MapData Run(ref int[,] map);
 
 		protected GenerationProcess(IActions actions) {
 			Actions = actions;

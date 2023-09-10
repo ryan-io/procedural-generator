@@ -4,9 +4,9 @@ namespace ProceduralGeneration {
 	internal class Run {
 		IActions Actions { get; }
 
-		internal void Generation() {
+		internal MapData Generation() {
 			var generationRouter = new GenerationRouter(Actions, new StandardProcess(Actions));
-			generationRouter.Run();
+			return generationRouter.Run();
 		}
 
 		internal void Serialization() {

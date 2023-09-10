@@ -1,4 +1,8 @@
+using System;
+using System.Collections.Generic;
+using Unity.Jobs;
 using Unity.Profiling;
+using UnityEngine;
 
 namespace ProceduralGeneration {
 	internal class StandardSmoothMapSolver : SmoothMapSolver {
@@ -14,46 +18,54 @@ namespace ProceduralGeneration {
 		/// <param name="dimensions">Map dimensions</param>
 		internal override void Smooth(ref int[,] map, Dimensions dimensions) {
 			using (m_Smooth.Auto()) {
-				var copy = map.Clone() as int[,]; // this is ok; value types are deep copied
+				//var copy = map.Clone() as int[,]; // this is ok; value types are deep copied
 
-				/*	UPDATED FOR BURST &JOBS		------------------------------------------------------------------>
-				var job    = new SmoothMapJob(map.ToArray());
-				var handle = job.Schedule(SmoothingIterations, new JobHandle());
+				//UPDATED FOR BURST &JOBS 		------------------------------------------------------------------>
+				HashSet<IDisposable> jobs   = new HashSet<IDisposable>();
+				var                  handle = default(JobHandle);
+				try {
+					for (var i = 0; i < SmoothingIterations; i++) {
+						var job = new SmoothMapJobCombined(ref map);
+						jobs.Add(job);
+						handle = job.Schedule(1, handle);
 
-				var sw = Stopwatch.StartNew();
-
-				while (true) {
-					if (handle.IsCompleted)
-						break;
-				}
-
-				handle.Complete();
-				sw.Stop();
-				Debug.Log("Job took " + sw.ElapsedMilliseconds + "ms");
-
-				var rows = map.Height;
-				var cols = map.Width;
-				for (var i = 0; i < rows * cols; i++) {
-					var row = i / cols;
-					var col = i % cols;
-
-					// logic
-					map[row, col] = (int)job.MapProcessed[i].Z;
-				}
-*/ //<------------------------------------------------------------------
-
-
-				for (var i = 0; i < SmoothingIterations; i++) {
-					GetSmoothedMap(ref map, ref copy, dimensions);
-
-					for (var j = 0; j < map.GetLength(0); j++) {
-						for (var k = 0; k < map.GetLength(1); k++) {
-							map[j, k] = copy[j, k];
+						while (true) {
+							if (handle.IsCompleted)
+								break;
 						}
-						
+
+						int index = 0;
+
+						handle.Complete();
+						for (var row = 0; row < map.GetLength(0); row++) {
+							for (var col = 0; col < map.GetLength(1); col++) {
+								map[row, col] = job.OutputProcessed[index];
+								index++;
+							}
+						}
 					}
-					//copy.CopyTo(map);
 				}
+				catch (Exception e) {
+					foreach (var job in jobs) {
+						job?.Dispose();
+					}
+
+					throw;
+				}
+
+				//<------------------------------------------------------------------
+
+
+				// for (var i = 0; i < SmoothingIterations; i++) {
+				// 	GetSmoothedMap(ref map, ref copy, dimensions);
+				//
+				// 	for (var j = 0; j < map.GetLength(0); j++) {
+				// 		for (var k = 0; k < map.GetLength(1); k++) {
+				// 			map[j, k] = copy[j, k];
+				// 		}
+				// 		
+				// 	}
+				// }
 
 				/*
 				 * OPTIONAL -> this leads to more chaos
@@ -92,7 +104,7 @@ namespace ProceduralGeneration {
 
 		static readonly ProfilerMarker m_DetermineNeighborLimits = new(nameof(DetermineNeighborLimits));
 
-		static void DetermineNeighborLimits(int row, int col, ref int[,] map,ref int[,] copy,
+		static void DetermineNeighborLimits(int row, int col, ref int[,] map, ref int[,] copy,
 			Dimensions dimensions) {
 			using (m_DetermineNeighborLimits.Auto()) {
 				var surroundingWalls = GetAdjacentWallsCount(row, col, ref map, dimensions);
@@ -109,7 +121,7 @@ namespace ProceduralGeneration {
 
 		static readonly ProfilerMarker m_GetAdjacentWallsCount = new(nameof(GetAdjacentWallsCount));
 
-		static int GetAdjacentWallsCount(int row, int col,ref int[,] original, Dimensions dimensions) {
+		static int GetAdjacentWallsCount(int row, int col, ref int[,] original, Dimensions dimensions) {
 			using (m_GetAdjacentWallsCount.Auto()) {
 				var count = 0;
 

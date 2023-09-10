@@ -1,6 +1,4 @@
-﻿using BCL;
-using CommunityToolkit.HighPerformance;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Tilemaps;
 
 namespace ProceduralGeneration {
@@ -37,46 +35,46 @@ namespace ProceduralGeneration {
 				position);
 		}
 
-		internal void FillAngles(Span2D<int> span, int x, int y) {
+		internal void FillAngles(ref int[,] map, int x, int y) {
 			if (Utility.IsBoundary(MapWidth, MapHeight, x, y))
 				return;
 
-			if (IsNorthWestTile(span, x, y))
+			if (IsNorthWestTile(ref map, x, y))
 				CreateNorthWestAngle(x, y);
 
-			else if (IsNorthEastTile(span, x, y))
+			else if (IsNorthEastTile(ref map, x, y))
 				CreateNorthEastAngle(x, y);
 
-			else if (IsSouthWestAngle(span, x, y))
+			else if (IsSouthWestAngle(ref map, x, y))
 				CreateSouthWestAngle(x, y);
 
-			else if (IsSouthEastAngle(span, x, y))
+			else if (IsSouthEastAngle(ref map, x, y))
 				CreateSouthEastAngle(x, y);
 		}
 
-		internal bool FillPockets(Span2D<int> span, int x, int y) {
+		internal bool FillPockets(ref int[,] map, int x, int y) {
 			if (Utility.IsBoundary(MapWidth, MapHeight, x, y))
 				return false;
 
-			if (IsNorthPocket(span, x, y)) {
+			if (IsNorthPocket(ref map, x, y)) {
 				CreateNorthPocket(x, y);
 
 				return true;
 			}
 
-			if (IsSouthPocket(span, x, y)) {
+			if (IsSouthPocket(ref map, x, y)) {
 				CreateSouthPocket(x, y);
 
 				return true;
 			}
 
-			if (IsEastPocket(span, x, y)) {
+			if (IsEastPocket(ref map, x, y)) {
 				CreateEastPocket(x, y);
 
 				return true;
 			}
 
-			if (IsWestPocket(span, x, y)) {
+			if (IsWestPocket(ref map, x, y)) {
 				CreateWestPocket(x, y);
 
 				return true;
@@ -173,155 +171,155 @@ namespace ProceduralGeneration {
 				new Vector3Int(x, y, 0));
 		}
 
-		bool IsSouthEastAngle(Span2D<int> span, int x, int y) =>
-			!GeneratorTools.IsFilled(span, x - 1, y) &&
-			(CaseFour(span, x, y)                || CaseEight(span, x, y) || CaseTwelve(span, x, y)
-			 || CaseSouthEastEdgeOne(span, x, y) || CaseSouthEastEdgeTwo(span, x, y));
+		bool IsSouthEastAngle(ref int[,] map, int x, int y) =>
+			!GeneratorTools.IsFilled(ref map, x - 1, y) &&
+			(CaseFour(ref map, x, y)                || CaseEight(ref map, x, y) || CaseTwelve(ref map, x, y)
+			 || CaseSouthEastEdgeOne(ref map, x, y) || CaseSouthEastEdgeTwo(ref map, x, y));
 
-		bool IsSouthWestAngle(Span2D<int> span, int x, int y) =>
-			(!GeneratorTools.IsFilled(span, x + 1, y) &&
-			 (CaseThree(span, x, y)               || CaseSeven(span, x, y) || CaseEleven(span, x, y)
-			  || CaseSouthWestEdgeOne(span, x, y) || CaseSouthWestEdgeTwo(span, x, y)))
-			|| CaseSouthWestEdgeThree(span, x, y);
+		bool IsSouthWestAngle(ref int[,] map, int x, int y) =>
+			(!GeneratorTools.IsFilled(ref map, x + 1, y) &&
+			 (CaseThree(ref map, x, y)               || CaseSeven(ref map, x, y) || CaseEleven(ref map, x, y)
+			  || CaseSouthWestEdgeOne(ref map, x, y) || CaseSouthWestEdgeTwo(ref map, x, y)))
+			|| CaseSouthWestEdgeThree(ref map, x, y);
 
-		bool IsNorthEastTile(Span2D<int> span, int x, int y) =>
-			(!GeneratorTools.IsFilled(span, x - 1, y) &&
-			 (CaseTwo(span, x, y)              || CaseSix(span, x, y) || CaseTen(span, x, y) ||
-			  CaseNorthEastEdgeOne(span, x, y) ||
-			  CaseNorthEastEdgeTwo(span, x, y))) ||
-			CaseNorthEastEdgeThree(span, x, y);
+		bool IsNorthEastTile(ref int[,] map, int x, int y) =>
+			(!GeneratorTools.IsFilled(ref map, x - 1, y) &&
+			 (CaseTwo(ref map, x, y)              || CaseSix(ref map, x, y) || CaseTen(ref map, x, y) ||
+			  CaseNorthEastEdgeOne(ref map, x, y) ||
+			  CaseNorthEastEdgeTwo(ref map, x, y))) ||
+			CaseNorthEastEdgeThree(ref map, x, y);
 
 
-		bool IsNorthWestTile(Span2D<int> span, int x, int y) =>
-			!GeneratorTools.IsFilled(span, x + 1, y) &&
-			(CaseOne(span, x, y)              || CaseFive(span, x, y) || CaseNine(span, x, y) ||
-			 CaseNorthWestEdgeOne(span, x, y) || CaseNorthWestEdgeTwo(span, x, y));
+		bool IsNorthWestTile(ref int[,] map, int x, int y) =>
+			!GeneratorTools.IsFilled(ref map, x + 1, y) &&
+			(CaseOne(ref map, x, y)              || CaseFive(ref map, x, y) || CaseNine(ref map, x, y) ||
+			 CaseNorthWestEdgeOne(ref map, x, y) || CaseNorthWestEdgeTwo(ref map, x, y));
 
-		bool IsNorthPocket(Span2D<int> span, int x, int y) =>
-			(CaseThree(span, x, y) && CaseFour(span, x, y)) ||
-			CaseNorthPocketEdgeOne(span, x, y)              ||
-			CaseNorthPocketEdgeTwo(span, x, y);
+		bool IsNorthPocket(ref int[,] map, int x, int y) =>
+			(CaseThree(ref map, x, y) && CaseFour(ref map, x, y)) ||
+			CaseNorthPocketEdgeOne(ref map, x, y)                  ||
+			CaseNorthPocketEdgeTwo(ref map, x, y);
 
-		bool IsSouthPocket(Span2D<int> span, int x, int y) =>
-			(CaseOne(span, x, y) && CaseTwo(span, x, y)) ||
-			(CaseOne(span, x, y) && GeneratorTools.IsFilled(span, x + 1, y));
+		bool IsSouthPocket(ref int[,] map, int x, int y) =>
+			(CaseOne(ref map, x, y) && CaseTwo(ref map, x, y)) ||
+			(CaseOne(ref map, x, y) && GeneratorTools.IsFilled(ref map, x + 1, y));
 
-		bool IsEastPocket(Span2D<int> span, int x, int y) =>
-			(CaseOne(span, x, y)   && CaseThree(span, x, y))                   ||
-			(CaseOne(span, x, y)   && GeneratorTools.IsFilled(span, x, y - 1)) ||
-			(CaseThree(span, x, y) && GeneratorTools.IsFilled(span, x, y + 1));
+		bool IsEastPocket(ref int[,] map, int x, int y) =>
+			(CaseOne(ref map, x, y)   && CaseThree(ref map, x, y))                   ||
+			(CaseOne(ref map, x, y)   && GeneratorTools.IsFilled(ref map, x, y - 1)) ||
+			(CaseThree(ref map, x, y) && GeneratorTools.IsFilled(ref map, x, y + 1));
 
-		bool IsWestPocket(Span2D<int> span, int x, int y) =>
-			(CaseTwo(span, x, y) && CaseFour(span, x, y)) ||
-			CaseWestPocketEdgeOne(span, x, y)             ||
-			CaseWestPocketEdgeTwo(span, x, y);
+		bool IsWestPocket(ref int[,] map, int x, int y) =>
+			(CaseTwo(ref map, x, y) && CaseFour(ref map, x, y)) ||
+			CaseWestPocketEdgeOne(ref map, x, y)                 ||
+			CaseWestPocketEdgeTwo(ref map, x, y);
 
-		bool CaseWestPocketEdgeTwo(Span2D<int> span, int x, int y) =>
-			CaseFour(span, x, y) && GeneratorTools.IsFilled(span, x, y + 1);
+		bool CaseWestPocketEdgeTwo(ref int[,] map, int x, int y) =>
+			CaseFour(ref map, x, y) && GeneratorTools.IsFilled(ref map, x, y + 1);
 
-		bool CaseWestPocketEdgeOne(Span2D<int> span, int x, int y) =>
-			CaseFour(span, x, y) && GeneratorTools.IsFilled(span, x, y + 1) &&
-			GeneratorTools.IsFilled(span,                         x    - 1, y + 1);
+		bool CaseWestPocketEdgeOne(ref int[,] map, int x, int y) =>
+			CaseFour(ref map, x, y) && GeneratorTools.IsFilled(ref map, x, y + 1) &&
+			GeneratorTools.IsFilled(ref map,                            x    - 1, y + 1);
 
-		bool CaseOne(Span2D<int> span, int x, int y) =>
-			GeneratorTools.IsFilled(span, x - 1, y) && GeneratorTools.IsFilled(span, x - 1, y + 1) &&
-			GeneratorTools.IsFilled(span, x,     y                                     + 1);
+		bool CaseOne(ref int[,] map, int x, int y) =>
+			GeneratorTools.IsFilled(ref map, x - 1, y) && GeneratorTools.IsFilled(ref map, x - 1, y + 1) &&
+			GeneratorTools.IsFilled(ref map, x,     y                                        + 1);
 
-		bool CaseTwo(Span2D<int> span, int x, int y) =>
-			GeneratorTools.IsFilled(span, x, y + 1) && GeneratorTools.IsFilled(span, x + 1, y + 1) &&
-			GeneratorTools.IsFilled(span, x    + 1,                                  y);
+		bool CaseTwo(ref int[,] map, int x, int y) =>
+			GeneratorTools.IsFilled(ref map, x, y + 1) && GeneratorTools.IsFilled(ref map, x + 1, y + 1) &&
+			GeneratorTools.IsFilled(ref map, x    + 1,                                     y);
 
-		bool CaseThree(Span2D<int> span, int x, int y) =>
-			GeneratorTools.IsFilled(span, x - 1, y) && GeneratorTools.IsFilled(span, x - 1, y - 1) &&
-			GeneratorTools.IsFilled(span, x,     y                                     - 1);
+		bool CaseThree(ref int[,] map, int x, int y) =>
+			GeneratorTools.IsFilled(ref map, x - 1, y) && GeneratorTools.IsFilled(ref map, x - 1, y - 1) &&
+			GeneratorTools.IsFilled(ref map, x,     y                                        - 1);
 
-		bool CaseFour(Span2D<int> span, int x, int y) =>
-			GeneratorTools.IsFilled(span, x + 1, y) && GeneratorTools.IsFilled(span, x + 1, y - 1) &&
-			GeneratorTools.IsFilled(span, x,     y                                     - 1);
+		bool CaseFour(ref int[,] map, int x, int y) =>
+			GeneratorTools.IsFilled(ref map, x + 1, y) && GeneratorTools.IsFilled(ref map, x + 1, y - 1) &&
+			GeneratorTools.IsFilled(ref map, x,     y                                        - 1);
 
-		bool CaseFive(Span2D<int> span, int x, int y) =>
-			CaseOne(span, x, y) && GeneratorTools.IsFilled(span, x + 1, y + 1) &&
-			GeneratorTools.IsFilled(span,                        x - 1, y + 1);
+		bool CaseFive(ref int[,] map, int x, int y) =>
+			CaseOne(ref map, x, y) && GeneratorTools.IsFilled(ref map, x + 1, y + 1) &&
+			GeneratorTools.IsFilled(ref map,                           x - 1, y + 1);
 
-		bool CaseSix(Span2D<int> span, int x, int y)
-			=> CaseTwo(span, x, y) && GeneratorTools.IsFilled(span, x - 1, y + 1) &&
-			   GeneratorTools.IsFilled(span,                        x + 1, y - 1);
+		bool CaseSix(ref int[,] map, int x, int y)
+			=> CaseTwo(ref map, x, y) && GeneratorTools.IsFilled(ref map, x - 1, y + 1) &&
+			   GeneratorTools.IsFilled(ref map,                           x + 1, y - 1);
 
-		bool CaseSeven(Span2D<int> span, int x, int y) =>
-			CaseThree(span, x, y) && GeneratorTools.IsFilled(span, x - 1, y + 1) &&
-			GeneratorTools.IsFilled(span,                          x + 1, y - 1);
+		bool CaseSeven(ref int[,] map, int x, int y) =>
+			CaseThree(ref map, x, y) && GeneratorTools.IsFilled(ref map, x - 1, y + 1) &&
+			GeneratorTools.IsFilled(ref map,                             x + 1, y - 1);
 
-		bool CaseNorthPocketEdgeOne(Span2D<int> span, int x, int y) =>
-			CaseThree(span, x, y) && GeneratorTools.IsFilled(span, x + 1, y + 1) &&
-			GeneratorTools.IsFilled(span,                          x + 1, y);
+		bool CaseNorthPocketEdgeOne(ref int[,] map, int x, int y) =>
+			CaseThree(ref map, x, y) && GeneratorTools.IsFilled(ref map, x + 1, y + 1) &&
+			GeneratorTools.IsFilled(ref map,                             x + 1, y);
 
-		bool CaseNorthPocketEdgeTwo(Span2D<int> span, int x, int y) =>
-			CaseFour(span, x, y) && GeneratorTools.IsFilled(span, x - 1, y);
+		bool CaseNorthPocketEdgeTwo(ref int[,] map, int x, int y) =>
+			CaseFour(ref map, x, y) && GeneratorTools.IsFilled(ref map, x - 1, y);
 
-		bool CaseEight(Span2D<int> span, int x, int y) =>
-			CaseFour(span, x, y) && GeneratorTools.IsFilled(span, x + 1, y + 1) &&
-			GeneratorTools.IsFilled(span,                         x - 1, y + 1);
+		bool CaseEight(ref int[,] map, int x, int y) =>
+			CaseFour(ref map, x, y) && GeneratorTools.IsFilled(ref map, x + 1, y + 1) &&
+			GeneratorTools.IsFilled(ref map,                            x - 1, y + 1);
 
-		bool CaseNine(Span2D<int> span, int x, int y) =>
-			GeneratorTools.IsFilled(span, x - 1, y - 1) &&
-			GeneratorTools.IsFilled(span, x - 1, y)     &&
-			GeneratorTools.IsFilled(span, x,     y + 1) &&
-			GeneratorTools.IsFilled(span, x        + 1, y + 1);
+		bool CaseNine(ref int[,] map, int x, int y) =>
+			GeneratorTools.IsFilled(ref map, x - 1, y - 1) &&
+			GeneratorTools.IsFilled(ref map, x - 1, y)     &&
+			GeneratorTools.IsFilled(ref map, x,     y + 1) &&
+			GeneratorTools.IsFilled(ref map, x        + 1, y + 1);
 
-		bool CaseTen(Span2D<int> span, int x, int y) =>
-			GeneratorTools.IsFilled(span, x - 1, y + 1)    &&
-			GeneratorTools.IsFilled(span, x,     y + 1)    &&
-			GeneratorTools.IsFilled(span, x        + 1, y) &&
-			GeneratorTools.IsFilled(span, x        + 1, y - 1);
+		bool CaseTen(ref int[,] map, int x, int y) =>
+			GeneratorTools.IsFilled(ref map, x - 1, y + 1)    &&
+			GeneratorTools.IsFilled(ref map, x,     y + 1)    &&
+			GeneratorTools.IsFilled(ref map, x        + 1, y) &&
+			GeneratorTools.IsFilled(ref map, x        + 1, y - 1);
 
-		bool CaseEleven(Span2D<int> span, int x, int y) =>
-			GeneratorTools.IsFilled(span, x - 1, y + 1) &&
-			GeneratorTools.IsFilled(span, x - 1, y)     &&
-			GeneratorTools.IsFilled(span, x,     y - 1) &&
-			GeneratorTools.IsFilled(span, x        + 1, y - 1);
+		bool CaseEleven(ref int[,] map, int x, int y) =>
+			GeneratorTools.IsFilled(ref map, x - 1, y + 1) &&
+			GeneratorTools.IsFilled(ref map, x - 1, y)     &&
+			GeneratorTools.IsFilled(ref map, x,     y - 1) &&
+			GeneratorTools.IsFilled(ref map, x        + 1, y - 1);
 
-		bool CaseTwelve(Span2D<int> span, int x, int y) =>
-			GeneratorTools.IsFilled(span, x + 1, y + 1) &&
-			GeneratorTools.IsFilled(span, x + 1, y)     &&
-			GeneratorTools.IsFilled(span, x,     y - 1) &&
-			GeneratorTools.IsFilled(span, x        - 1, y - 1);
+		bool CaseTwelve(ref int[,] map, int x, int y) =>
+			GeneratorTools.IsFilled(ref map, x + 1, y + 1) &&
+			GeneratorTools.IsFilled(ref map, x + 1, y)     &&
+			GeneratorTools.IsFilled(ref map, x,     y - 1) &&
+			GeneratorTools.IsFilled(ref map, x        - 1, y - 1);
 
-		bool CaseNorthWestEdgeOne(Span2D<int> span, int x, int y) =>
-			GeneratorTools.IsFilled(span, x - 1, y)     &&
-			GeneratorTools.IsFilled(span, x,     y + 1) &&
-			GeneratorTools.IsFilled(span, x        + 1, y + 1);
+		bool CaseNorthWestEdgeOne(ref int[,] map, int x, int y) =>
+			GeneratorTools.IsFilled(ref map, x - 1, y)     &&
+			GeneratorTools.IsFilled(ref map, x,     y + 1) &&
+			GeneratorTools.IsFilled(ref map, x        + 1, y + 1);
 
-		bool CaseNorthWestEdgeTwo(Span2D<int> span, int x, int y) =>
-			CaseOne(span, x, y) && GeneratorTools.IsFilled(span, x + 1, y - 1);
+		bool CaseNorthWestEdgeTwo(ref int[,] map, int x, int y) =>
+			CaseOne(ref map, x, y) && GeneratorTools.IsFilled(ref map, x + 1, y - 1);
 
-		bool CaseSouthEastEdgeOne(Span2D<int> span, int x, int y) =>
-			GeneratorTools.IsFilled(span, x + 1, y)     &&
-			GeneratorTools.IsFilled(span, x,     y - 1) &&
-			GeneratorTools.IsFilled(span, x        - 1, y - 1);
+		bool CaseSouthEastEdgeOne(ref int[,] map, int x, int y) =>
+			GeneratorTools.IsFilled(ref map, x + 1, y)     &&
+			GeneratorTools.IsFilled(ref map, x,     y - 1) &&
+			GeneratorTools.IsFilled(ref map, x        - 1, y - 1);
 
-		bool CaseSouthEastEdgeTwo(Span2D<int> span, int x, int y) =>
-			CaseFour(span, x, y) && GeneratorTools.IsFilled(span, x - 1, y + 1);
+		bool CaseSouthEastEdgeTwo(ref int[,] map, int x, int y) =>
+			CaseFour(ref map, x, y) && GeneratorTools.IsFilled(ref map, x - 1, y + 1);
 
-		bool CaseSouthWestEdgeOne(Span2D<int> span, int x, int y) =>
-			GeneratorTools.IsFilled(span, x - 1, y + 1) && GeneratorTools.IsFilled(span, x - 1, y) &&
-			GeneratorTools.IsFilled(span, x,     y - 1);
+		bool CaseSouthWestEdgeOne(ref int[,] map, int x, int y) =>
+			GeneratorTools.IsFilled(ref map, x - 1, y + 1) && GeneratorTools.IsFilled(ref map, x - 1, y) &&
+			GeneratorTools.IsFilled(ref map, x,     y - 1);
 
-		bool CaseSouthWestEdgeTwo(Span2D<int> span, int x, int y) =>
-			CaseThree(span, x, y) && GeneratorTools.IsFilled(span, x + 1, y + 1);
+		bool CaseSouthWestEdgeTwo(ref int[,] map, int x, int y) =>
+			CaseThree(ref map, x, y) && GeneratorTools.IsFilled(ref map, x + 1, y + 1);
 
-		bool CaseSouthWestEdgeThree(Span2D<int> span, int x, int y) =>
-			GeneratorTools.IsFilled(span, x - 1, y) && GeneratorTools.IsFilled(span, x, y - 1);
+		bool CaseSouthWestEdgeThree(ref int[,] map, int x, int y) =>
+			GeneratorTools.IsFilled(ref map, x - 1, y) && GeneratorTools.IsFilled(ref map, x, y - 1);
 
-		bool CaseNorthEastEdgeOne(Span2D<int> span, int x, int y) =>
-			GeneratorTools.IsFilled(span, x, y + 1)    &&
-			GeneratorTools.IsFilled(span, x    + 1, y) &&
-			GeneratorTools.IsFilled(span, x    + 1, y - 1);
+		bool CaseNorthEastEdgeOne(ref int[,] map, int x, int y) =>
+			GeneratorTools.IsFilled(ref map, x, y + 1)    &&
+			GeneratorTools.IsFilled(ref map, x    + 1, y) &&
+			GeneratorTools.IsFilled(ref map, x    + 1, y - 1);
 
-		bool CaseNorthEastEdgeTwo(Span2D<int> span, int x, int y) =>
-			CaseTwo(span, x, y) && GeneratorTools.IsFilled(span, x - 1, y - 1);
+		bool CaseNorthEastEdgeTwo(ref int[,] map, int x, int y) =>
+			CaseTwo(ref map, x, y) && GeneratorTools.IsFilled(ref map, x - 1, y - 1);
 
-		bool CaseNorthEastEdgeThree(Span2D<int> span, int x, int y) =>
-			GeneratorTools.IsFilled(span, x + 1, y) && GeneratorTools.IsFilled(span, x, y + 1);
+		bool CaseNorthEastEdgeThree(ref int[,] map, int x, int y) =>
+			GeneratorTools.IsFilled(ref map, x + 1, y) && GeneratorTools.IsFilled(ref map, x, y + 1);
 
 		internal TileMapper(TileMapperCtx ctx, GeneratorToolsCtx toolsCtx, TileSolversCtx tileSolversCtx) {
 			GeneratorTools         = new GeneratorTools(toolsCtx);

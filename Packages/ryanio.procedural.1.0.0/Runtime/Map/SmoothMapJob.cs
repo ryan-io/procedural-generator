@@ -4,35 +4,24 @@ using System;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Jobs;
-using Vector3 = System.Numerics.Vector3;
+using UnityEngine;
 
 namespace ProceduralGeneration {
 	/// <summary>
 	///   Will take the primary map span, make a copy, and perform calculations which is stored in MapProcessed
 	/// </summary>
 	[BurstCompile]
-	internal struct SmoothMapJob : IJobFor, IDisposable {
-		// x-component: row
-		// y-component: column
-		// z-component: value
-		[ReadOnly] public NativeArray<Vector3> Map;
-		[NativeDisableParallelForRestriction]
-		public            NativeArray<Vector3> MapProcessed;
+	internal struct SmoothMapJobCombined : IJobFor, IDisposable {
+		[ReadOnly] NativeArray<int> _mapRows;
+		[ReadOnly] NativeArray<int> _mapCols;
+		[ReadOnly] NativeArray<int> _output;
 
-		// used in IJobParallelFor; this is to allow read access to indices in different threads
-		//[NativeDisableParallelForRestriction]
-		//public NativeArray<int> MapProcessedInt;
-
-		// x-component: rowLength
-		// y-component: columnLength
-		// z-component: totalLength
-		[NativeDisableParallelForRestriction]
-		NativeArray<Vector3> m_Dimensions;
+		[NativeDisableParallelForRestriction] public NativeArray<int> OutputProcessed;
 
 		public void Execute(int index) {
-			var cols        = (int)m_Dimensions[0].Y;
-			var rows        = (int)m_Dimensions[0].X;
-            
+			var rows = _mapRows.Length;
+			var cols = _mapCols.Length;
+
 			var tracker = 0;
 			for (var row = 0; row < rows; row++) {
 				for (var col = 0; col < cols; col++) {
@@ -40,11 +29,11 @@ namespace ProceduralGeneration {
 					var surroundingWalls = GetAdjacentWallsCount(row, col, tracker);
 
 					if (surroundingWalls > COMPARISON_LIMIT) {
-						MapProcessed[tracker] = new Vector3(row, col, 1);
+						OutputProcessed[tracker] = 1;
 					}
 
 					else if (surroundingWalls < COMPARISON_LIMIT) {
-						MapProcessed[tracker] = new Vector3(row, col, 0);
+						OutputProcessed[tracker] = 0;
 					}
 
 					tracker++;
@@ -66,7 +55,7 @@ namespace ProceduralGeneration {
 		int DetermineCount(int row, int col, int neighborRow, int neighborCol, int count, int index) {
 			if (IsWithinBoundary(neighborRow, neighborCol)) {
 				if (neighborRow != row || neighborCol != col) {
-					count += (int)Map[index].Z;
+					count += _output[index];
 				}
 			}
 
@@ -78,38 +67,39 @@ namespace ProceduralGeneration {
 		}
 
 		bool IsWithinBoundary(int neighborX, int neighborY) {
-			var rows = (int)m_Dimensions[0].X;
-			var cols = (int)m_Dimensions[0].Y;
+			var rows = _mapRows.Length;
+			var cols = _mapCols.Length;
 
 			return neighborX > BORDER_SAFETY_FACTOR        &&
 			       neighborX < rows - BORDER_SAFETY_FACTOR &&
 			       neighborY > BORDER_SAFETY_FACTOR        &&
 			       neighborY < cols - BORDER_SAFETY_FACTOR;
 		}
+  
+		public SmoothMapJobCombined(ref int[,] map) {
+			_mapRows = new NativeArray<int>(map.GetLength(0),                    Allocator.Persistent);
+			_mapCols = new NativeArray<int>(map.GetLength(1),                    Allocator.Persistent);
+			_output  = new NativeArray<int>(map.GetLength(0) * map.GetLength(1), Allocator.Persistent);
 
-		public SmoothMapJob(int[,] map) {
-			var totalLength = map.Length;
+			var outputIndex = 0;
 
-			Map          = new NativeArray<Vector3>(totalLength, Allocator.Persistent);
-			MapProcessed = new NativeArray<Vector3>(totalLength, Allocator.Persistent);
-			int tracker = 0;
-			
 			for (var row = 0; row < map.GetLength(0); row++) {
+				_mapRows[row] = row;
 				for (var col = 0; col < map.GetLength(1); col++) {
-					Map[tracker] = new Vector3(row, col, map[row, col]);
-					tracker++;
+					_mapCols[col]        = col;
+					_output[outputIndex] = map[row, col];
+					outputIndex++;
 				}
 			}
 
-			m_Dimensions = new NativeArray<Vector3>(1, Allocator.Persistent) {
-				[0] = new(map.GetLength(0), map.GetLength(1), totalLength)
-			};
+			OutputProcessed = new NativeArray<int>(map.GetLength(0) * map.GetLength(1), Allocator.Persistent);
 		}
 
 		public void Dispose() {
-			Map.Dispose();
-			MapProcessed.Dispose();
-			m_Dimensions.Dispose();
+			_mapRows.Dispose();
+			_mapCols.Dispose();
+			_output.Dispose();
+			OutputProcessed.Dispose();
 		}
 
 		const int COMPARISON_LIMIT     = 4;

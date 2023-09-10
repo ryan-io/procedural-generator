@@ -11,7 +11,7 @@ namespace ProceduralGeneration {
 		///  ***THIS IS NOT GARBAGE COLLECTED WHILE THE SPAN IS STILL IN CONTEXT***
 		///  This is an unsafe method.
 		/// </summary>
-		internal void Run() {
+		internal MapData Run() {
 			// the distance between each row in the span; should always be 0
 			const int pitch = 0;
 
@@ -21,12 +21,13 @@ namespace ProceduralGeneration {
 			//var  map            = new Span2D<int>(primaryPointer, dimensions.Rows, dimensions.Columns, pitch);
 			//map.Clear();
 			
-			_process.Run(map);
+			var data =_process.Run(ref map);
 
 			// var scanner = new GraphScanner();
 			// scanner.Fire(new GraphScanner.Args(AstarPath.active.graphs[0], false), CancellationToken.None);
 			
 			Actions.Log("'Standard Process' generation complete.", nameof(ProceduralGeneration.Run));
+			return data;
 		}
 
 		public GenerationRouter(IActions actions, GenerationProcess process) {

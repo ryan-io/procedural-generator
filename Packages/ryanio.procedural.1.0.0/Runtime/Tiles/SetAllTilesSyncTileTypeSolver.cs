@@ -1,6 +1,4 @@
-
 using BCL;
-using CommunityToolkit.HighPerformance;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -16,17 +14,13 @@ namespace ProceduralGeneration {
 		/// <summary>
 		/// span is still allocated on the stack during this invocation
 		/// </summary>
-		/// <param name="span">Pre-stack allocated span for generating primary amap</param>
-		internal override void Set(Span2D<int> span) {
-			// List<Vector3Int> groundTilePos = new List<Vector3Int>();
-			// List<Vector3Int> boundaryTilePos = new List<Vector3Int>();
-			// List<Vector3Int> groundTilePos = new List<Vector3Int>();
-			//
+		/// <param name="map">Pre-stack allocated span for generating primary amap</param>
+		internal override void Set(ref int[,] map) {
 			for (var i = 0; i < MapWidth * MapHeight; i++) {
 				var row    = i / MapHeight;
 				var column = i % MapHeight;
 
-				TileTaskCreator(span, row, column);
+				TileTaskCreator(ref map, row, column);
 			}
 
 			if (!ShouldRenderTiles) {
@@ -41,16 +35,16 @@ namespace ProceduralGeneration {
 			}
 		}
 
-		void TileTaskCreator(Span2D<int> span, int currentX, int currentY) {
+		void TileTaskCreator(ref int[,] span, int currentX, int currentY) {
 			var isBoundary = Utility.IsBoundary(MapWidth, MapHeight, currentX, currentY);
-			var bit        = _generatorTools.SolveMask(span, currentX, currentY, isBoundary);
+			var bit        = _generatorTools.SolveMask(ref span, currentX, currentY, isBoundary);
 
 			if (_generatorTools.IsWall(bit))
-				FillTiles(span, currentX, currentY, ref bit);
+				FillTiles(ref span, currentX, currentY, ref bit);
 		}
 
-		void FillTiles(Span2D<int> span, int x, int y, ref TileMask bit) {
-			var isFilled   = GeneratorTools.IsFilled(span, x, y);
+		void FillTiles(ref int[,] map, int x, int y, ref TileMask bit) {
+			var isFilled   = GeneratorTools.IsFilled(ref map, x, y);
 			var location   = new Vector2Int(x, y);
 			var isBoundary = Utility.IsBoundary(MapWidth, MapHeight, x, y);
 			var isPocket   = false;
@@ -67,8 +61,8 @@ namespace ProceduralGeneration {
 			}
 
 			else {
-				_tileMapper.FillAngles(span, x, y);
-				isPocket = _tileMapper.FillPockets(span, x, y);
+				_tileMapper.FillAngles(ref map, x, y);
+				isPocket = _tileMapper.FillPockets(ref map, x, y);
 			}
 
 			var hasAll  = _generatorTools.HasAllNeighbors(bit);

@@ -13,7 +13,7 @@ namespace ProceduralGeneration {
 	///		appropriate solver class and defining a new process (inherit from GenerationProcess).
 	/// </summary>
 	internal class StandardProcess : GenerationProcess {
-		internal override MapData Run(int[,] map) {
+		internal override MapData Run(ref int[,] map) {
 			var ctxCreator        = new ContextCreator(Actions);
 			var generatorToolsCtx = ctxCreator.GetNewGeneratorToolsCtx();
 
@@ -21,7 +21,7 @@ namespace ProceduralGeneration {
 			SmoothMap(ref map, ctxCreator.GetNewSmoothMapCtx());
 			Actions.SetRooms(ProcessRoomsAndWalls(map, ctxCreator.GetNewRemoveRegionsCtx()));
 
-			SetTiles(map,
+			SetTiles(ref map,
 				ctxCreator.GetNewTileSetterCtx(),
 				ctxCreator.GetNewTileMapperCtx(),
 				generatorToolsCtx);
@@ -40,7 +40,7 @@ namespace ProceduralGeneration {
 			SetBoundaryColliderPoints(ctxCreator.GetNewColliderPointSetterCtx());
 			GenerateSpriteShapeBorder(ctxCreator.GetNewSpriteShapeBorderCtx());
 
-			return new MapData(Actions.GetTileHashset(), Actions.GetMeshData());
+			return new MapData(map, Actions.GetTileHashset(), Actions.GetMeshData());
 		}
 
 		
@@ -58,7 +58,6 @@ namespace ProceduralGeneration {
 				                 .Smooth(ref map, ctx.Dimensions);
 			}
 		}
-
 		
 		static List<Room> ProcessRoomsAndWalls(int[,] map, RemoveRegionsSolverCtx ctx) {
 			using (ProcessRoomsAndWallsMarker.Auto()) {
@@ -69,13 +68,14 @@ namespace ProceduralGeneration {
 
 		
 		static void SetTiles(
-			int[,] map,
+			ref int[,] map,
 			TileSolversCtx tileSolverCtx,
 			TileMapperCtx mapperCtx,
 			GeneratorToolsCtx toolsCtx) {
 			using (SetTilesMarker.Auto()) {
 				ProceduralService.GetTileSetterSolver(
-					() => new StandardTileSetterSolver(tileSolverCtx, mapperCtx, toolsCtx)).Set(map);
+					() => new BurstTileSetterSolver()).Set(ref map); 
+				//new StandardTileSetterSolver(tileSolverCtx,mapperCtx, toolsCtx)).Set(ref map);
 			}
 		}
 

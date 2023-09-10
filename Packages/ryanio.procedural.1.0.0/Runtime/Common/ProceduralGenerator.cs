@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Sirenix.OdinInspector;
 using UnityBCL;
 using UnityEditor;
@@ -18,9 +19,12 @@ namespace ProceduralGeneration {
 	public partial class ProceduralGenerator : Singleton<ProceduralGenerator, ProceduralGenerator>, IOwner {
 		public GameObject Go => gameObject;
 
-		internal Coordinates         GeneratedCoordinates { get; private set; }
-		internal IReadOnlyList<Room> Rooms                { get; private set; }
+		internal             Coordinates         GeneratedCoordinates { get; private set; }
+		[CanBeNull] internal MapData             Data                 { get; private set; }
+		internal             IReadOnlyList<Room> Rooms                { get; private set; }
 
+		IActions Actions { get; set; }
+		
 		/// <summary>
 		///  Loads the generator. This is the entry point for the generator.
 		///  Specify whether to generate or deserialize.
@@ -29,36 +33,36 @@ namespace ProceduralGeneration {
 		///  Otherwise, will do nothing.
 		/// </summary>
 		void Load() {
-			var actions = new Actions(this)
+			Actions = new Actions(this)
 				{ ProceduralConfig = _config, SpriteShapeConfig = _spriteShapeConfig };
 
-			IMachine machine = GenerationMachine.Create(actions).Run();
+			IMachine machine = GenerationMachine.Create(Actions).Run();
 
 			try {
 				var onCompleteLog = string.Empty;
 
 				if (!_config.ShouldGenerate && !_config.ShouldDeserialize) {
-					actions.LogWarning(Message.NOT_SET_TO_RUN, nameof(Load));
+					Actions.LogWarning(Message.NOT_SET_TO_RUN, nameof(Load));
 					return;
 				}
 
-				var run = Initialize(machine, actions, !_config.ShouldDeserialize);
+				var run = Initialize(machine, Actions, !_config.ShouldDeserialize);
 				machine.InvokeEvent(StateObservableId.ON_RUN);
 
 				if (_config.ShouldGenerate) {
-					onCompleteLog = GenerateMap(actions, run);
+					onCompleteLog = GenerateMap(Actions, run);
 				}
 
 				else if (_config.ShouldDeserialize) {
-					onCompleteLog = DeserializeMap(actions, run);
+					onCompleteLog = DeserializeMap(Actions, run);
 				}
 
 				Dispose(machine);
-				Complete(actions, machine, onCompleteLog);
+				Complete(Actions, machine, onCompleteLog);
 			}
 			catch (Exception e) {
 				machine.InvokeEvent(StateObservableId.ON_ERROR);
-				actions.LogError(e.Message, nameof(Load));
+				Actions.LogError(e.Message, nameof(Load));
 			}
 			finally {
 				//AssetDatabase.Refresh(); // standard settings: 1.32sec, 210.1MB GC Alloc
@@ -79,7 +83,7 @@ namespace ProceduralGeneration {
 		string GenerateMap(IActions actions, Run run) {
 			new GeneratorSceneSetupService(actions).Run();
 
-			run.Generation();
+			Data = run.Generation();
 			run.Serialization();
 
 			return Message.GENERATION_COMPLETE;

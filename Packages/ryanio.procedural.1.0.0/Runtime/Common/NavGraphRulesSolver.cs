@@ -19,6 +19,7 @@ namespace ProceduralGeneration {
 		}
 
 		public NavGraphRulesSolver(TileMapDictionary dictionary, TileHashset tileHashset) {
+			TileHashset     = tileHashset;
 			GroundTilemap   = dictionary[TileMapType.Ground];
 			BoundaryTilemap = dictionary[TileMapType.Boundary];
 		}
