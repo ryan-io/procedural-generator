@@ -62,7 +62,7 @@ namespace ProceduralGeneration {
 		static List<Room> ProcessRoomsAndWalls(int[,] map, RemoveRegionsSolverCtx ctx) {
 			using (ProcessRoomsAndWallsMarker.Auto()) {
 				return ProceduralService.GetRoomsAndWallsSolver(
-					() => new FloodFillRegionSolver(ctx)).Remove(map);
+					() => new FloodFillRegionSolver(ctx)).Remove(ref map);
 			}
 		}
 
@@ -83,7 +83,7 @@ namespace ProceduralGeneration {
 		static MeshData CreateMesh(int[,] map, MeshSolverCtx ctx) {
 			using (CreateMeshMarker.Auto()) {
 				return ProceduralService.GetMeshSolver(() => new MarchingSquaresMeshSolver(ctx))
-				                        .Create(map);
+				                        .Create(ref map);
 			}
 		}
 

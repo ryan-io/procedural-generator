@@ -10,7 +10,7 @@ namespace ProceduralGeneration {
 		int        MapHeight     { get; }
 		int        MapWidth      { get; }
 
-		internal Span2D<int> Connect(Span2D<int> map, List<Room> rooms, bool forceAccessibility = false) {
+		internal void Connect(ref int[,] map, List<Room> rooms, bool forceAccessibility = false) {
 			var roomListA = new List<Room>();
 			var roomListB = new List<Room>();
 
@@ -65,18 +65,16 @@ namespace ProceduralGeneration {
 				}
 
 				if (possibleConnectionFound && !forceAccessibility)
-					map = CreatePassage(map, bestRoomA, bestRoomB, bestTileA, bestTileB);
+					CreatePassage(ref map, bestRoomA, bestRoomB, bestTileA, bestTileB);
 			}
 
 			if (possibleConnectionFound && forceAccessibility) {
-				map = CreatePassage(map, bestRoomA, bestRoomB, bestTileA, bestTileB);
-				map = Connect(map, rooms, true);
+				CreatePassage(ref map, bestRoomA, bestRoomB, bestTileA, bestTileB);
+				Connect(ref map, rooms, true);
 			}
 
 			if (!forceAccessibility)
-				map = Connect(map, rooms, true);
-
-			return map;
+				Connect(ref map, rooms, true);
 		}
 
 		static void DetermineList(Room room, ICollection<Room> roomListB, ICollection<Room> roomListA) {
@@ -86,17 +84,15 @@ namespace ProceduralGeneration {
 				roomListA.Add(room);
 		}
 
-		Span2D<int> CreatePassage(Span2D<int> map, Room a, Room b, Vector2Int tileA, Vector2Int tileB) {
+		void CreatePassage(ref int[,] map, Room a, Room b, Vector2Int tileA, Vector2Int tileB) {
 			Room.ConnectRooms(a, b);
 			var line = BresenhamDrawLine(tileA, tileB);
 
 			foreach (var t in line)
-				map = Draw(map, t, _random.Next(CorridorWidth.x, CorridorWidth.y));
-
-			return map;
+				Draw(ref map, t, _random.Next(CorridorWidth.x, CorridorWidth.y));
 		}
 
-		Span2D<int> Draw(Span2D<int> map, Vector2Int linePoint, int radius) {
+		void Draw(ref int[,] map, Vector2Int linePoint, int radius) {
 			for (var x = -radius; x <= radius; x++) {
 				for (var y = -radius; y <= radius; y++)
 					if (x * x + y * y <= radius * radius) { // inside of the circle
@@ -107,8 +103,6 @@ namespace ProceduralGeneration {
 							map[drawX, drawY] = 0;
 					}
 			}
-
-			return map;
 		}
 
 		bool IsWithinBounds(int drawX, int drawY) => drawX >= BORDER_SAFETY_FACTOR           &&

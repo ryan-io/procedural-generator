@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using CommunityToolkit.HighPerformance;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 namespace ProceduralGeneration {
 	internal class MarchingSquaresMeshTriangulationSolver : MeshTriangulationSolver {
@@ -10,13 +11,13 @@ namespace ProceduralGeneration {
 		Dictionary<int, List<Triangle>> TriangleTracker  { get; }
 		string                          SerializableName { get; }
 
-		internal override Tuple<List<int>, List<Vector3>> Triangulate(Span2D<int> map) {
-			SquareGrid.SetSquares(map);
+		internal override Tuple<List<int>, List<Vector3>> Triangulate(ref int[,] map) {
+			SquareGrid.SetSquares(ref map);
 			SetTriangles();
-			SolveMesh(map);
-			
+			SolveMesh(ref map);
+
 			OutLineConnectionSolver.Solve(
-				_triangulationAlgorithm.GetWalkableVertices, CheckedVertices,  Outlines, TriangleTracker);
+				_triangulationAlgorithm.GetWalkableVertices, CheckedVertices, Outlines, TriangleTracker);
 
 			var output = Tuple.Create(
 				_triangulationAlgorithm.GetWalkableTriangles,
@@ -37,13 +38,14 @@ namespace ProceduralGeneration {
 			}
 		}
 
-		void SolveMesh(Span2D<int> map) {
+		void SolveMesh(ref int[,] map) {
 			var mesh     = new Mesh { name = Constants.SAVE_MESH_PREFIX + SerializableName };
 			var vertices = _triangulationAlgorithm.GetWalkableVertices;
 
-			mesh.vertices  = vertices.ToArray();
-			mesh.triangles = _triangulationAlgorithm.GetWalkableTriangles.ToArray();
-			mesh.uv        = ProceduralMeshUVSolver.CalculateUVs(map, vertices, Constants.Instance.CellSize);
+			mesh.indexFormat = vertices.Count >= sizeof(UInt16) ? IndexFormat.UInt32 : IndexFormat.UInt16;
+			mesh.vertices    = vertices.ToArray();
+			mesh.triangles   = _triangulationAlgorithm.GetWalkableTriangles.ToArray();
+			mesh.uv          = ProceduralMeshUVSolver.CalculateUVs(ref map, vertices, Constants.Instance.CellSize);
 			mesh.RecalculateNormals();
 
 			SolvedMesh = mesh;

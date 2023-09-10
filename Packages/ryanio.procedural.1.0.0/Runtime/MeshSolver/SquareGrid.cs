@@ -5,9 +5,9 @@ namespace ProceduralGeneration {
 	public class SquareGrid {
 		public Square[,] Squares { get; private set; }
 
-		public void SetSquares(Span2D<int> map) {
-			var nodeCountX   = map.Height;
-			var nodeCountY   = map.Width;
+		public void SetSquares(ref int[,] map) {
+			var nodeCountX   = map.GetLength(0);
+			var nodeCountY   = map.GetLength(1);
 			var tileWidth    = nodeCountX * Constants.Instance.CellSize;
 			var tileHeight   = nodeCountY * Constants.Instance.CellSize;
 			var controlNodes = new ControlNode[nodeCountX, nodeCountY];

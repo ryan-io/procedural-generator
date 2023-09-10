@@ -17,36 +17,36 @@ namespace ProceduralGeneration {
 			RoomRemovalThreshold = ctx.RoomRemoveThreshold;
 		}
 
-		internal override List<Room> Remove(Span2D<int> primarySpan) {
-			Rows    = primarySpan.Height;
-			Columns = primarySpan.Width;
+		internal override List<Room> Remove(ref int[,] map) {
+			Rows    = map.GetLength(0);
+			Columns = map.GetLength(1);
 
 			// var copy = new Span2D<int>(new int[Rows, Columns]);
 			// primarySpan.CopyTo(copy);
 
-			CullWalls(primarySpan);
-			return CullRooms(primarySpan);
+			CullWalls(ref map);
+			return CullRooms(ref map);
 		}
 
-		void CullWalls(Span2D<int> primarySpan) {
-			var regions = GetRegions(primarySpan, 1);
+		void CullWalls(ref int[,] map) {
+			var regions = GetRegions(ref map, 1);
 
 			foreach (var region in regions)
 				if (region.Count() < WallRemovalThreshold)
 					foreach (var tile in region)
-						primarySpan[tile.x, tile.y] = 0;
+						map[tile.x, tile.y] = 0;
 		}
 
-		List<Room> CullRooms(Span2D<int> primarySpan) {
-			var regions        = GetRegions(primarySpan, 0);
+		List<Room> CullRooms(ref int[,] map) {
+			var regions        = GetRegions(ref map, 0);
 			var survivingRooms = new List<Room>();
 
 			foreach (var region in regions)
 				if (region.Count < RoomRemovalThreshold)
 					foreach (var tile in region)
-						primarySpan[tile.x, tile.y] = 1;
+						map[tile.x, tile.y] = 1;
 				else
-					survivingRooms.Add(new Room(region, primarySpan));
+					survivingRooms.Add(new Room(region, ref map));
 
 			if (!survivingRooms.Any()) {
 				return Enumerable.Empty<Room>().ToList();
@@ -56,12 +56,12 @@ namespace ProceduralGeneration {
 			survivingRooms[0].SetIsMainRoom(true);
 			survivingRooms[0].SetIsAccessibleToMainRoomDirect(true);
 
-			_mapConnectionSolver.Connect(primarySpan, survivingRooms);
+			_mapConnectionSolver.Connect(ref map, survivingRooms);
 			return survivingRooms;
 		}
 
 		// TODO: Need to determine an appropriate stackalloc size for handling adding Regions to a span
-		Region GetRegionTiles(Span2D<int> map, int startX, int startY) {
+		Region GetRegionTiles(ref int[,] map, int startX, int startY) {
 			var tiles    = new Region(); // List<Vector2Int>
 			var mapFlags = new bool[Rows, Columns];
 			var tileType = map[startX, startY];
@@ -89,15 +89,15 @@ namespace ProceduralGeneration {
 		}
 
 		// TODO: Need to determine an appropriate stackalloc size for handling adding Regions to a span
-		IEnumerable<Region> GetRegions(Span2D<int> primarySpan, int tileType) {
+		IEnumerable<Region> GetRegions(ref int[,] map, int tileType) {
 			var regions       = new List<Region>();
 			var mapFlagsArray = new bool[Rows, Columns];
 			var mapFlags      = mapFlagsArray.AsSpan2D();
 
 			for (var x = 0; x < Rows; x++) {
 				for (var y = 0; y < Columns; y++)
-					if (mapFlags[x, y] == false && primarySpan[x, y] == tileType) {
-						var newRegion = GetRegionTiles(primarySpan, x, y);
+					if (mapFlags[x, y] == false && map[x, y] == tileType) {
+						var newRegion = GetRegionTiles(ref map, x, y);
 						regions.Add(newRegion);
 
 						foreach (var tile in newRegion)

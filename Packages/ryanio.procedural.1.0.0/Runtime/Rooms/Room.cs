@@ -25,7 +25,7 @@ namespace ProceduralGeneration {
 		public Room() {
 		}
 
-		public Room(Region tiles, Span2D<int> map) {
+		public Room(Region tiles, ref int[,] map) {
 			_tiles         = tiles;
 			_size          = tiles.Count;
 			_edgeTiles     = new Region();

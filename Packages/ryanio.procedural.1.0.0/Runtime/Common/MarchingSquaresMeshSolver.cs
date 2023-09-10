@@ -11,8 +11,8 @@ namespace ProceduralGeneration {
 		[CanBeNull] Material MeshMaterial     { get; }
 		string               SerializableName { get; }
 		
-		internal override MeshData Create(Span2D<int> map) {
-			var (triangles, vertices) = _meshTriangulationSolver.Triangulate(map.ToArray());
+		internal override MeshData Create(ref int[,] map) {
+			var (triangles, vertices) = _meshTriangulationSolver.Triangulate(ref map);
 			var roomMeshes = new RoomMeshDictionary();
 
 			var data = new MeshData(

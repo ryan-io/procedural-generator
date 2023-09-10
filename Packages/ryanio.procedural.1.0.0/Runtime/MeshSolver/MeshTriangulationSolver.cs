@@ -7,6 +7,6 @@ namespace ProceduralGeneration {
 	internal abstract class MeshTriangulationSolver {
 		internal          List<List<int>>                 Outlines   { get; set; }
 		internal          Mesh                            SolvedMesh { get; set; }
-		internal abstract Tuple<List<int>, List<Vector3>> Triangulate(Span2D<int> map);
+		internal abstract Tuple<List<int>, List<Vector3>> Triangulate(ref int[,] map);
 	}
 }
