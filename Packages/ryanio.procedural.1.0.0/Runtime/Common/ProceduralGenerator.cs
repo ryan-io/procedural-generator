@@ -37,9 +37,9 @@ namespace ProceduralGeneration {
 				{ ProceduralConfig = _config, SpriteShapeConfig = _spriteShapeConfig };
 
 			IMachine machine = GenerationMachine.Create(Actions).Run();
+			var onCompleteLog = string.Empty;
 
 			try {
-				var onCompleteLog = string.Empty;
 
 				if (!_config.ShouldGenerate && !_config.ShouldDeserialize) {
 					Actions.LogWarning(Message.NOT_SET_TO_RUN, nameof(Load));
@@ -60,6 +60,10 @@ namespace ProceduralGeneration {
 				Dispose(machine);
 				Complete(Actions, machine, onCompleteLog);
 			}
+			catch (ObjectDisposedException) {
+				Complete(Actions, machine, onCompleteLog);
+				// this is thrown when the machine is disposed
+			}
 			catch (Exception e) {
 				machine.InvokeEvent(StateObservableId.ON_ERROR);
 				Actions.LogError(e.Message, nameof(Load));
@@ -77,7 +81,7 @@ namespace ProceduralGeneration {
 			new InitializationService(actions).Run(_config);
 			machine.InvokeEvent(StateObservableId.ON_CLEAN);
 
-			return new Run(actions);
+			return new Run(actions, machine);
 		}
 
 		string GenerateMap(IActions actions, Run run) {

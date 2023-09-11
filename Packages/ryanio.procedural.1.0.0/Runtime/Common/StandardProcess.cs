@@ -1,8 +1,10 @@
 // ProceduralGeneration
 
+using System;
 using System.Collections.Generic;
 using Pathfinding;
 using Unity.Profiling;
+using UnityBCL;
 
 namespace ProceduralGeneration {
 	/// <summary>
@@ -12,7 +14,9 @@ namespace ProceduralGeneration {
 	///  This is customizable; if you prefer to implement your algorithms, you can do so by inheriting from the
 	///		appropriate solver class and defining a new process (inherit from GenerationProcess).
 	/// </summary>
-	internal class StandardProcess : GenerationProcess {
+	internal class StandardProcess : GenerationProcess, IDisposable {
+		bool IsDisposed { get; set; }
+		
 		internal override MapData Run(ref int[,] map) {
 			var ctxCreator        = new ContextCreator(Actions);
 			var generatorToolsCtx = ctxCreator.GetNewGeneratorToolsCtx();
@@ -74,7 +78,7 @@ namespace ProceduralGeneration {
 			GeneratorToolsCtx toolsCtx) {
 			using (SetTilesMarker.Auto()) {
 				ProceduralService.GetTileSetterSolver(
-					() => new BurstTileSetterSolver()).Set(ref map); 
+					() => new StandardTileSetterSolver(tileSolverCtx, mapperCtx, toolsCtx)).Set(ref map); 
 				//new StandardTileSetterSolver(tileSolverCtx,mapperCtx, toolsCtx)).Set(ref map);
 			}
 		}
@@ -96,9 +100,13 @@ namespace ProceduralGeneration {
 		}
 
 		
-		static Coordinates CreateColliders(ColliderSolverCtx ctx) {
+		Coordinates CreateColliders(ColliderSolverCtx ctx) {
 			using (CreateCollidersMarker.Auto()) {
-				return ProceduralService.GetColliderSolver(() => new ColliderSolver(ctx)).Solve();
+				var colliderCreator = ProceduralService.GetColliderSolver(() => new ColliderSolver(ctx));
+
+				_disposables.Add(colliderCreator);
+				
+				return colliderCreator.Solve();
 			}
 		}
 
@@ -149,5 +157,18 @@ namespace ProceduralGeneration {
 
 		static readonly ProfilerMarker SetGridCharacteristicsBorderMarker =
 			new(pConstant.PREFIX + nameof(SetGridCharacteristics));
+
+		public void Dispose() {
+			if (_disposables.IsEmptyOrNull() || IsDisposed)
+				return;
+
+			IsDisposed = true;
+
+			foreach (var disposable in _disposables) {
+				disposable?.Dispose();
+			}
+		}
+		
+		readonly HashSet<IDisposable> _disposables = new();
 	}
 }

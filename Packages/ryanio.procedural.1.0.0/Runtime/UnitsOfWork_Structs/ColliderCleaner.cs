@@ -2,6 +2,7 @@
 
 using System;
 using ProceduralAuxiliary;
+using ProceduralAuxiliary.ProceduralCollider;
 using UnityBCL;
 using UnityEngine;
 using Object = UnityEngine.Object;

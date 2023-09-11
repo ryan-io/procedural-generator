@@ -3,6 +3,7 @@
 using System.Collections.Generic;
 using BCL;
 using ProceduralAuxiliary;
+using ProceduralAuxiliary.ProceduralCollider;
 using UnityBCL;
 using UnityEngine;
 

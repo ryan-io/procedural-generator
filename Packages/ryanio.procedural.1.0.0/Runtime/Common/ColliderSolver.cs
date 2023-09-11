@@ -1,22 +1,25 @@
 // Engine.Procedural
 
+using System;
 using System.Runtime.CompilerServices;
 
 namespace ProceduralGeneration {
-	internal class ColliderSolver {
-		internal Coordinates Solve([CallerMemberName] string caller = "") {
-			CollisionSolver solver;
+	internal class ColliderSolver : IDisposable {
+		protected bool IsDisposed { get; set; }
 
+		CollisionSolver Solver { get; set; }
+
+		internal Coordinates Solve([CallerMemberName] string caller = "") {
 			if (_ctx.ColliderSolverType == ColliderSolverType.Box)
-				solver = new BoxCollisionSolver(_ctx);
+				Solver = new BoxCollisionSolver(_ctx);
 
 			else if (_ctx.ColliderSolverType == ColliderSolverType.Edge)
-				solver = new EdgeCollisionSolver(_ctx);
+				Solver = new EdgeCollisionSolver(_ctx);
 
 			else
-				solver = new PrimitiveCollisionSolver(_ctx);
-			
-			return solver.CreateCollider();
+				Solver = new PrimitiveCollisionSolver(_ctx);
+
+			return Solver.CreateCollider();
 		}
 
 		internal ColliderSolver(ColliderSolverCtx ctx) {
@@ -24,5 +27,12 @@ namespace ProceduralGeneration {
 		}
 
 		readonly ColliderSolverCtx _ctx;
+
+		public virtual void Dispose() {
+			if (IsDisposed)
+				return;
+			
+			Solver?.Dispose();
+		}
 	}
 }

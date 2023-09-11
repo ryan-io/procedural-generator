@@ -1,34 +1,45 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
-using ProceduralAuxiliary;
+using ProceduralAuxiliary.ProceduralCollider;
 using UnityBCL;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
 namespace ProceduralGeneration {
-	internal class ColliderPointProcessor {
-		internal List<Vector3> Process() {
-			var job = new DetermineColinearityJob() {
-				
-			}
-		}
-	}
-	
 	internal class PrimitiveCollisionSolver : CollisionSolver {
-		// Dictionary<int, List<Vector3>> UnprocessedCoords   { get; }
-		// Dictionary<int, List<Vector3>> ProcessedCoords     { get; }  
+		public override void Dispose() {
+			if (IsDisposed)
+				return;
+
+			IsDisposed = true;
+			PointProcessor?.Dispose();
+		}
+		
+		Dictionary<int, List<Vector3>> UnprocessedCoords   { get; }
+		Dictionary<int, List<Vector3>> ProcessedCoords     { get; }
 		GameObject                     ColliderGo          { get; }
 		List<Vector3>                  MeshVertices        { get; }
 		List<List<int>>                RoomOutlines        { get; }
 		int                            ProcessedCoordIndex { get; set; }
 		float                          SkinWidth           { get; }
-
+		ColliderPointProcessor         PointProcessor      { get; set; }
+		
 		/// <summary>
 		/// </summary>
 		/// <param name="caller"></param>
 		internal override Coordinates CreateCollider([CallerMemberName] string caller = "") {
 			ColliderGo.MakeStatic(true);
 			ColliderGo.ZeroPosition();
+
+			PointProcessor = new ColliderPointProcessor();
+
+			var v2Verts = new List<Vector2>();
+			v2Verts.AddRange(MeshVertices.Select(v => new Vector2(v.x, v.y)));
+
+			var test = PointProcessor.Process(RoomOutlines, v2Verts);
+			Debug.Log("Creating primitive colliders");
 
 			for (var outlineIndex = 0; outlineIndex < RoomOutlines.Count; outlineIndex++) {
 				UnprocessedCoords.Add(outlineIndex, new List<Vector3>());
@@ -51,7 +62,7 @@ namespace ProceduralGeneration {
 
 			var processedOutlineList   = ProcessedCoords[currentOutlineIndex];
 			var unprocessedOutlineList = UnprocessedCoords[currentOutlineIndex];
-			
+
 			// PrimitiveCollider API requires a "starting" point of three game objects with colliders
 			// this section of the method satisfies this requirement and are later destroyed
 			var tempObjectList = SetStarting(processedOutlineList, currentOutline, primitiveCollider);
@@ -61,7 +72,7 @@ namespace ProceduralGeneration {
 
 				if (!processedOutlineList.Contains(newPoint))
 					processedOutlineList.Add(newPoint);
-				
+
 				if (!unprocessedOutlineList.Contains(newPoint))
 					unprocessedOutlineList.Add(newPoint);
 			}

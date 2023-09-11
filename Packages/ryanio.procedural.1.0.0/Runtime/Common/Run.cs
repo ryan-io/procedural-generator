@@ -3,9 +3,14 @@
 namespace ProceduralGeneration {
 	internal class Run {
 		IActions Actions { get; }
+		IMachine Machine { get; }
 
 		internal MapData Generation() {
-			var generationRouter = new GenerationRouter(Actions, new StandardProcess(Actions));
+			var process          = new StandardProcess(Actions);
+			var generationRouter = new GenerationRouter(Actions, process);
+			
+			Machine.RegisterEvent(StateObservableId.ON_DISPOSE, process.Dispose);
+			
 			return generationRouter.Run();
 		}
 
@@ -30,8 +35,9 @@ namespace ProceduralGeneration {
 			router.Run(Actions.GetDeserializationName(), Actions.GetColliderGameObject());
 		}
 		
-		public Run(IActions actions) {
+		public Run(IActions actions, IMachine machine) {
 			Actions = actions;
+			Machine = machine;
 		}
 	}
 }

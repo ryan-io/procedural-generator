@@ -13,8 +13,6 @@ namespace ProceduralGeneration {
 		/// </summary>
 		internal MapData Run() {
 			// the distance between each row in the span; should always be 0
-			const int pitch = 0;
-
 			var  dimensions     = Actions.GetMapDimensions();
 			//int* primaryPointer = stackalloc int[dimensions.Rows * dimensions.Columns];
 			var  map            = new int[dimensions.Rows,dimensions.Columns];
