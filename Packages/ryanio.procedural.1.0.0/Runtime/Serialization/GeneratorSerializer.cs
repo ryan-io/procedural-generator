@@ -75,9 +75,28 @@ namespace ProceduralGeneration {
 		/// <param name="name">Name of A* graph file</param>
 		/// <param name="coordinates">Collection of SerializableVector3</param>
 		/// <param name="directories">Full and raw paths to SerializedData</param>
-		internal void SerializeSpriteShape(
+		internal void SerializeSpriteShapeV3(
 			string name,
 			IReadOnlyDictionary<int, List<SerializableVector3>> coordinates,
+			(string raw, string full) directories) {
+			Help.ValidateNameIsSerialized(name);
+
+			if (coordinates.IsEmptyOrNull())
+				return;
+
+			name = Constants.SPRITE_SHAPE_SAVE_PREFIX + name;
+			SerializeJson(name, directories.full, coordinates);
+		}
+		
+		/// <summary>
+		/// Serializes the current A* graph to a file with the given name and path (relative to the project folder)
+		/// </summary>
+		/// <param name="name">Name of A* graph file</param>
+		/// <param name="coordinates">Collection of SerializableVector2</param>
+		/// <param name="directories">Full and raw paths to SerializedData</param>
+		internal void SerializeSpriteShapeV2(
+			string name,
+			IReadOnlyDictionary<int, List<SerializableVector2>> coordinates,
 			(string raw, string full) directories) {
 			Help.ValidateNameIsSerialized(name);
 
@@ -94,8 +113,28 @@ namespace ProceduralGeneration {
 		/// <param name="name">Name of ColliderCoords file</param>
 		/// <param name="coordinates">Collection of SerializableVector3</param>
 		/// <param name="directories"></param>
-		internal void SerializeColliderCoords(string name,
+		internal void SerializeColliderCoordsV3(string name,
 			IReadOnlyDictionary<int, List<SerializableVector3>> coordinates,
+			(string raw, string full) directories) {
+			if (string.IsNullOrWhiteSpace(name) || coordinates.IsEmptyOrNull())
+				return;
+			Help.ValidateNameIsSerialized(name);
+
+			if (coordinates.IsEmptyOrNull())
+				return;
+
+			name = Constants.COLLIDER_COORDS_SAVE_PREFIX + name;
+			SerializeJson(name, directories.full, coordinates);
+		}
+		
+		/// <summary>
+		/// Serializes a collection of SerializableVector2 to a file with the given name and path (relative to the project folder)
+		/// </summary>
+		/// <param name="name">Name of ColliderCoords file</param>
+		/// <param name="coordinates">Collection of SerializableVector2</param>
+		/// <param name="directories"></param>
+		internal void SerializeColliderCoordsV2(string name,
+			IReadOnlyDictionary<int, List<SerializableVector2>> coordinates,
 			(string raw, string full) directories) {
 			if (string.IsNullOrWhiteSpace(name) || coordinates.IsEmptyOrNull())
 				return;

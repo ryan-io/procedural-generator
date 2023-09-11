@@ -17,7 +17,7 @@ namespace ProceduralGeneration {
 
 		internal override Coordinates CreateCollider([CallerMemberName] string caller = "") {
 			//var data = dto.MapData;
-			var dict = new Dictionary<int, List<Vector3>>();
+			var dict = new Dictionary<int, List<Vector2>>();
 
 			CreateRotateColliderObject(ZERO_ANGLE,            0f);
 			CreateRotateColliderObject(FORTY_FIVE_ANGLE,      45f);
@@ -28,7 +28,7 @@ namespace ProceduralGeneration {
 
 			for (var i = 0; i < RoomOutlines.Count; i++) {
 				var outline     = RoomOutlines[i];
-				var outlineList = new List<Vector3>();
+				var outlineList = new List<Vector2>();
 				dict.Add(i, outlineList);
 
 				for (var j = 0; j < outline.Count; j++) {
@@ -54,7 +54,7 @@ namespace ProceduralGeneration {
 			}
 
 			roomObject.SetLayer(ObstacleLayerMask);
-			return new Coordinates(dict, dict);
+			return new Coordinates(dict);
 		}
 
 		void CreateRotateColliderObject(string id, float angle) {

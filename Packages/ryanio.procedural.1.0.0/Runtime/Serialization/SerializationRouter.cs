@@ -29,14 +29,14 @@ namespace ProceduralGeneration {
 
 			if (ShouldSerializeSpriteShape) {
 				var convertedCoords =
-					new Convert().DictionaryVector3ToSerializedVector3(coordinates.ProcessedCoords);
-				Serializer.SerializeSpriteShape(SerializedName, convertedCoords, directories);
+					new Convert().DictionaryVector2ToSerializedVector2(coordinates.Outlines);
+				Serializer.SerializeSpriteShapeV2(SerializedName, convertedCoords, directories);
 			}
 
 			if (ShouldSerializeColliderCoords) {
 				var convertedCoords =
-					new Convert().DictionaryVector3ToSerializedVector3(coordinates.ProcessedCoords);
-				Serializer.SerializeColliderCoords(SerializedName, convertedCoords, directories);
+					new Convert().DictionaryVector2ToSerializedVector2(coordinates.Outlines);
+				Serializer.SerializeColliderCoordsV2(SerializedName, convertedCoords, directories);
 			}
 		}
 

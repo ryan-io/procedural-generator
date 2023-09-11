@@ -19,12 +19,8 @@ namespace ProceduralGeneration.Gizmos {
 
 			Coordinates coordinates = Generator.GeneratedCoordinates;
 
-			if (DrawProcessed && !coordinates.ProcessedCoords.IsEmptyOrNull()) {
+			if (DrawProcessed && !coordinates.Outlines.IsEmptyOrNull()) {
 				DrawProcessedCoords(coordinates);
-			}
-
-			if (DrawUnprocessed && !coordinates.UnprocessedCoords.IsEmptyOrNull()) {
-				DrawUnprocessedCoords(coordinates);
 			}
 		}
 
@@ -41,17 +37,9 @@ namespace ProceduralGeneration.Gizmos {
 		}
 
 		static void DrawProcessedCoords(Coordinates coordinates) {
-			foreach (var coord in coordinates.ProcessedCoords.Values) {
+			foreach (var coord in coordinates.Outlines.Values) {
 				foreach (var position in coord) {
 					DebugExt.DrawPoint(position, Color.red, 0.5f);
-				}
-			}
-		}
-
-		static void DrawUnprocessedCoords(Coordinates coordinates) {
-			foreach (var coord in coordinates.UnprocessedCoords.Values) {
-				foreach (var position in coord) {
-					DebugExt.DrawCircle(position, Color.magenta, true, 0.25f);
 				}
 			}
 		}

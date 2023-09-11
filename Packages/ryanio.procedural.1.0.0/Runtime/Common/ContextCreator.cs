@@ -74,11 +74,11 @@ namespace ProceduralGeneration {
 			return new(
 				Actions.GetSpriteShapeConfig(),
 				Actions.GetOwner(),
-				Actions.GetCoordinates().ProcessedCoords,
+				Actions.GetCoordinates().Outlines,
 				Actions.GetSerializationName());
 		}
 
-		internal SpriteShapeBorderCtx GetNewSpriteShapeBorderCtx(IReadOnlyDictionary<int, List<Vector3>> coords) {
+		internal SpriteShapeBorderCtx GetNewSpriteShapeBorderCtx(IReadOnlyDictionary<int, List<Vector2>> coords) {
 			return new(
 				Actions.GetSpriteShapeConfig(),
 				Actions.GetOwner(),

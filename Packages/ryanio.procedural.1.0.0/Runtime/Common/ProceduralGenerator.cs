@@ -61,7 +61,9 @@ namespace ProceduralGeneration {
 				Complete(Actions, machine, onCompleteLog);
 			}
 			catch (ObjectDisposedException) {
+				Actions.LogWarning("Machine was disposed.", nameof(ObjectDisposedException));
 				Complete(Actions, machine, onCompleteLog);
+				throw;
 				// this is thrown when the machine is disposed
 			}
 			catch (Exception e) {

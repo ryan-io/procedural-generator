@@ -157,6 +157,53 @@ namespace ProceduralGeneration {
 			return dict;
 		}
 
+		/// <summary>
+		///  Takes the current map name, reads serialized data if found, and generates a new sprite shape
+		///  based on already serialized data
+		/// </summary>
+		/// <param name="currentSerializableName"></param>
+		/// <param name="prefix"></param>
+		/// <param name="directories"></param>
+		/// <returns>Dictionary of outlines. Each key contains a list of coordinates that signify a 'room'</returns>
+		/// <exception cref="Exception">Throws if no serialized data is found</exception>
+		[CanBeNull]
+		public Dictionary<int, List<Vector2>> DeserializeVector2(string currentSerializableName, string prefix,
+			(string raw, string full) directories) {
+			Serializer ??= new Serializer();
+
+			var pathConstructor = new PathConstructor(directories);
+
+			var validationPath =
+				pathConstructor.GetUniquePathJson(prefix + currentSerializableName);
+
+			var isValid = File.Exists(validationPath);
+
+			if (!isValid) {
+				Logger.LogWarning(
+					Message.SERIALIZE_GENERAL_INVALID_NAME_PREFIX +
+					currentSerializableName                       +
+					Message.SERIALIZE_SPRITE_SHAPE_INVALID_NAME,
+					nameof(DeserializeVector3));
+
+				return default;
+			}
+
+			Logger.Log(Message.DESERIALIZE_VECTOR_SET + currentSerializableName, nameof(DeserializeVector3));
+			var dict = new Dictionary<int, List<Vector2>>();
+			var serializedOutput =
+				Serializer.DeserializeJson<Dictionary<int, List<SerializableVector2>>>(validationPath);
+
+			if (serializedOutput.IsEmptyOrNull())
+				return default;
+
+			foreach (var pair in serializedOutput) {
+				var list = pair.Value.Select(v => (Vector2)v).ToList();
+				dict.Add(pair.Key, list);
+			}
+
+			return dict;
+		}
+		
 		[CanBeNull]
 		public GameObject DeserializeMapPrefab(string currentSerializableName, (string raw, string full) directories) {
 			var pathConstructor = new PathConstructor(directories);

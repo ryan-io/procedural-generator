@@ -11,7 +11,7 @@ namespace ProceduralGeneration {
 	internal class SpriteShapeBorderSolver {
 		Transform                               Owner          { get; }
 		GameObject                              Go             { get; set; }
-		IReadOnlyDictionary<int, List<Vector3>> Coordinates    { get; }
+		IReadOnlyDictionary<int, List<Vector2>> Coordinates    { get; }
 		string                                  SerializedName { get; }
 
 		internal void Generate([CallerMemberName] string name = "") {
@@ -34,7 +34,7 @@ namespace ProceduralGeneration {
 			}
 		}
 
-		void CreateSpriteShapeBorderAndPopulate(IReadOnlyList<Vector3> boundaryPositions, int currentRoomIndex) {
+		void CreateSpriteShapeBorderAndPopulate(IReadOnlyList<Vector2> boundaryPositions, int currentRoomIndex) {
 			const int meshNodeLimit    = 250;
 			const int minimumNodeCount = 20;
 			var       forcePass        = true;

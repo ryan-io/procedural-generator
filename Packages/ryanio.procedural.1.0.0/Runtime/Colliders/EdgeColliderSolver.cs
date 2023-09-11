@@ -32,7 +32,7 @@ namespace ProceduralGeneration {
 		/// </summary>
 		/// <param name="dto">Relevant data transfer object to create colliders</param>
 		internal override Coordinates CreateCollider([CallerMemberName] string caller = "") {
-				var dict = new Dictionary<int, List<Vector3>>();
+				var dict = new Dictionary<int, List<Vector2>>();
 				var outlineCounter = 0;
 				var edgePoints     = new List<Vector2>();
 				
@@ -44,7 +44,7 @@ namespace ProceduralGeneration {
 					outlineCounter = ProcessOutline(edgePoints, outlineCounter, outline);
 				}
 
-				return new Coordinates(dict, dict);
+				return new Coordinates(dict);
 		}
 
 		int GetLargestCount(List<List<int>> outlines) {

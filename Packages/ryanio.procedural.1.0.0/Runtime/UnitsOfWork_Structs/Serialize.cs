@@ -25,6 +25,24 @@ namespace ProceduralGeneration {
 			return output;
 		}
 
+		internal IReadOnlyDictionary<int, List<SerializableVector2>> DictionaryVector2ToSerializedVector2(
+			IReadOnlyDictionary<int, List<Vector2>> col) {
+			var output = new Dictionary<int, List<SerializableVector2>>();
+			var index  = col.Keys.First();
+
+			foreach (var corner in col) {
+				var serializedList = corner.Value.AsSerialized().ToList();
+				output.Add(index, serializedList);
+				index++;
+			}
+
+			// for (var i = index; i < col.Count; i++) {
+			// 	output[i] = col[i].AsSerialized().ToList();
+			// }
+
+			return output;
+		}
+		
 		/*	BEFORE REFACTOR
 		 * internal Dictionary<int, List<SerializableVector3>> GetBoundaryCoords() {
 			if (SpriteBoundaryCoords.IsEmptyOrNull())

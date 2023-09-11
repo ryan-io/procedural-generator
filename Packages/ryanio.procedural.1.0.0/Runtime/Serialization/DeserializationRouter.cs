@@ -73,7 +73,7 @@ namespace ProceduralGeneration {
 		}
 
 		void DeserializeSpriteShape(string nameSeedIteration, (string raw, string full) directories) {
-			var coords = Deserializer.DeserializeVector3(
+			var coords = Deserializer.DeserializeVector2(
 				nameSeedIteration, Constants.SPRITE_SHAPE_SAVE_PREFIX, directories);
 
 			if (coords == default)
