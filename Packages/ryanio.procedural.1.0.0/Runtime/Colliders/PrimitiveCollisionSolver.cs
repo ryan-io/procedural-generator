@@ -1,20 +1,15 @@
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using ProceduralAuxiliary;
-using Sirenix.Utilities;
-using Unity.Collections;
-using Unity.Jobs;
+using ProceduralAuxiliary.ProceduralCollider;
 using UnityBCL;
 using UnityEngine;
-using UnityEngine.ResourceManagement.Exceptions;
 using Component = UnityEngine.Component;
 using Object = UnityEngine.Object;
 
 namespace ProceduralGeneration {
 	internal class PrimitiveCollisionSolver : CollisionSolver {
-		Dictionary<int, List<Vector3>> UnprocessedCoords   { get; }
-		Dictionary<int, List<Vector3>> ProcessedCoords     { get; }
+		Dictionary<int, List<Vector2>> UnprocessedCoords   { get; }  
+		Dictionary<int, List<Vector2>> ProcessedCoords     { get; }
 		GameObject                     ColliderGo          { get; }
 		List<Vector3>                  MeshVertices        { get; }
 		List<List<int>>                RoomOutlines        { get; }
@@ -29,14 +24,14 @@ namespace ProceduralGeneration {
 			ColliderGo.ZeroPosition();
 
 			for (var outlineIndex = 0; outlineIndex < RoomOutlines.Count; outlineIndex++) {
-				UnprocessedCoords.Add(outlineIndex, new List<Vector3>());
-				ProcessedCoords.Add(outlineIndex, new List<Vector3>());
+				UnprocessedCoords.Add(outlineIndex, new List<Vector2>());
+				ProcessedCoords.Add(outlineIndex, new List<Vector2>());
 				ProcessCoords(outlineIndex);
 			}
 
 			CoreExtensions.SetLayerRecursive(ColliderGo, LayerMask.NameToLayer(Constants.Layer.BOUNDARY));
 
-			return new Coordinates(ProcessedCoords, UnprocessedCoords);
+			return new Coordinates(ProcessedCoords);
 		}
 
 		void ProcessCoords(int currentOutlineIndex) {
@@ -64,42 +59,11 @@ namespace ProceduralGeneration {
 					unprocessedOutlineList.Add(newPoint);
 			}
 
-			//var tempCopy = new List<Vector3>(processedOutlineList);
+			var tempCopy = new List<Vector2>(unprocessedOutlineList);
 
-			var nativeListUnprocessed =
-				new NativeList<System.Numerics.Vector3>(processedOutlineList.Count, Allocator.Persistent);
-
-			var nativeListProcess =
-				new NativeList<System.Numerics.Vector3>(processedOutlineList.Count, Allocator.Persistent);
-
-			for (var i = 0; i < nativeListUnprocessed.Length; i++) {
-				var v = processedOutlineList[i];
-				nativeListUnprocessed[i] = new System.Numerics.Vector3(v.x, v.y, v.z);
+			for (var i = 2; i < processedOutlineList.Count; i++) {
+				DetermineColinearity(processedOutlineList, i, tempCopy);
 			}
-
-			var job = new DetermineColinearityJob {
-				Unprocessed = nativeListUnprocessed,
-				Processed   = nativeListProcess
-			};
-
-			var handle = job.Schedule(nativeListUnprocessed.Length - 2, new JobHandle());
-			//
-			// while (true) {
-			// 	if (handleRoot.IsCompleted)
-			// 		break;
-			// }
-
-			handle.Complete();
-
-			var tempCopy = new List<Vector3>();
-
-			foreach (var v in nativeListProcess) {
-				tempCopy.Add(new Vector3(v.X, v.Y, v.Z));
-			}
-
-			// for (var i = 2; i < processedOutlineList.Count; i++) {
-			// 	DetermineColinearity(processedOutlineList, i, tempCopy);
-			// }
 
 			foreach (var point in tempCopy) {
 				CreateHandle(primitiveCollider, point, primitiveCollider.corners[^1], ProcessedCoordIndex);
@@ -116,7 +80,7 @@ namespace ProceduralGeneration {
 			}
 		}
 
-		static void DetermineColinearity(IReadOnlyList<Vector3> coords, int i, ICollection<Vector3> tempCopy) {
+		static void DetermineColinearity(IReadOnlyList<Vector2> coords, int i, ICollection<Vector2> tempCopy) {
 			var p1 = coords[i - 2];
 			var p2 = coords[i - 1];
 			var p3 = coords[i];
@@ -129,7 +93,7 @@ namespace ProceduralGeneration {
 		}
 
 		IEnumerable<GameObject> SetStarting(
-			ICollection<Vector3> currentCoordinateList,
+			ICollection<Vector2> currentCoordinateList,
 			IReadOnlyList<int> outline,
 			ProceduralPrimitiveCollider col) {
 			var tempObjectList = new GameObject[3];
@@ -195,16 +159,16 @@ namespace ProceduralGeneration {
 			newCorner.SetSiblingIndex(newIndex);
 		}
 
-		Vector3 GetNewPoint(IReadOnlyList<int> outline, int index) =>
-			new(MeshVertices[outline[index]].x, MeshVertices[outline[index]].y, 0);
+		Vector2 GetNewPoint(IReadOnlyList<int> outline, int index) =>
+			new(MeshVertices[outline[index]].x, MeshVertices[outline[index]].y);
 
 		public PrimitiveCollisionSolver(ColliderSolverCtx ctx) {
 			SkinWidth         = ctx.SkinWidth;
 			ColliderGo        = ctx.ColliderGo;
 			RoomOutlines      = ctx.RoomOutlines;
 			MeshVertices      = ctx.MeshVertices;
-			UnprocessedCoords = new Dictionary<int, List<Vector3>>();
-			ProcessedCoords   = new Dictionary<int, List<Vector3>>();
+			UnprocessedCoords = new Dictionary<int, List<Vector2>>();
+			ProcessedCoords   = new Dictionary<int, List<Vector2>>();
 		}
 	}
 }

@@ -3,6 +3,7 @@ using UnityBCL;
 using UnityEngine;
 
 namespace ProceduralGeneration.Gizmos {
+	
 	public class DrawBorder : MonoBehaviour {
 		[field: SerializeField, Required] public ProceduralGenerator Generator        { get; private set; }
 		[field: SerializeField] public bool                DrawProcessed    { get; private set; }

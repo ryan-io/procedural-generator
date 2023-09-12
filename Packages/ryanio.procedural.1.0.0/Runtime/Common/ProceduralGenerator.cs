@@ -23,8 +23,8 @@ namespace ProceduralGeneration {
 		[CanBeNull] internal MapData             Data                 { get; private set; }
 		internal             IReadOnlyList<Room> Rooms                { get; private set; }
 
-		IActions Actions { get; set; }
-		
+		internal IActions Actions { get; set; }
+
 		/// <summary>
 		///  Loads the generator. This is the entry point for the generator.
 		///  Specify whether to generate or deserialize.
@@ -36,11 +36,10 @@ namespace ProceduralGeneration {
 			Actions = new Actions(this)
 				{ ProceduralConfig = _config, SpriteShapeConfig = _spriteShapeConfig };
 
-			IMachine machine = GenerationMachine.Create(Actions).Run();
-			var onCompleteLog = string.Empty;
+			IMachine machine       = GenerationMachine.Create(Actions).Run();
+			var      onCompleteLog = string.Empty;
 
 			try {
-
 				if (!_config.ShouldGenerate && !_config.ShouldDeserialize) {
 					Actions.LogWarning(Message.NOT_SET_TO_RUN, nameof(Load));
 					return;

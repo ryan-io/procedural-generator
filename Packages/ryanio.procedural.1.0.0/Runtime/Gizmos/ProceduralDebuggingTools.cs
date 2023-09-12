@@ -8,23 +8,52 @@ using UnityEngine.U2D;
 namespace ProceduralGeneration.Gizmos {
 	public class ProceduralDebuggingTools : MonoBehaviour {
 		[SerializeField] bool _drawMapPosOnGrid = false;
-		[SerializeField, ShowIf("@_drawMapPosOnGrid")] Grid _grid;
+
+		[SerializeField, ShowIf("@_drawMapPosOnGrid")]
+		Grid _grid;
 
 		[ShowInInspector, ReadOnly] float CellSize => Constants.Instance.CellSize;
 
+		Vector3[,] _positions;
+
+		bool notSet;
+
+		[Button]
+		void ResetPositions() {
+			notSet = false;
+			_positions = null;
+		}
+
 		void OnDrawGizmosSelected() {
-			if (_drawMapPosOnGrid && Generator.Data!=null && _grid) {
+			if (_drawMapPosOnGrid && Generator.Data != null && _grid) {
 				var map = Generator.Data.Map;
-				
-				for (var x = 0; x < map.GetLength(0); x++) {
-					for (var y = 0; y < map.GetLength(1); y++) {
-						var pos       = _grid.CellToWorld(new Vector3Int(x, y, 0));
-						var offset    = Constants.Instance.CellSize /2f;
-						
-						Color color = map[x, y] == 1 ? Color.green : Color.red;
-						
-						DebugExt.DrawCircle(new Vector3(Constants.Instance.CellSize * x + offset, 
-							Constants.Instance.CellSize * y + offset, 0), color, true, 0.5f);
+
+				if (!notSet) {
+					var dims = Generator.Actions.GetMapDimensions();
+					_positions = new Vector3[map.GetLength(0), map.GetLength(1)];
+
+					for (var x = 0; x < map.GetLength(0); x++) {
+						for (var y = 0; y < map.GetLength(1); y++) {
+							var offsetX = Constants.Instance.CellSize / 2f - (Constants.Instance.CellSize * dims.Rows    / 2f);
+							var offsetY = Constants.Instance.CellSize / 2f - (Constants.Instance.CellSize * dims.Columns / 2f);
+
+							_offsetX = Constants.Instance.CellSize / 2f - Constants.Instance.CellSize * dims.Rows    / 2f;
+							_offsetY = Constants.Instance.CellSize / 2f - Constants.Instance.CellSize * dims.Columns / 2f;
+							
+							_positions[x, y] = new Vector3(
+								Constants.Instance.CellSize * x + offsetX,
+								Constants.Instance.CellSize * y + offsetY,
+								0);
+						}
+
+						notSet = true;
+					}
+				}
+
+				for (var i = 0; i < map.GetLength(0); i++) {
+					for (var j = 0; j < map.GetLength(1); j++) {
+						Color color = map[i, j] == 1 ? Color.green : Color.red;
+						DebugExt.DrawCircle(_positions[i, j], color, true, 0.5f);
 					}
 				}
 			}
