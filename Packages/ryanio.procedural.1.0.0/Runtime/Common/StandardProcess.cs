@@ -23,13 +23,8 @@ namespace ProceduralGeneration {
 
 			FillMap(ref map, ctxCreator.GetNewFillMapCtx());
 			SmoothMap(ref map, ctxCreator.GetNewSmoothMapCtx());
+			
 			Actions.SetRooms(ProcessRoomsAndWalls(map, ctxCreator.GetNewRemoveRegionsCtx()));
-
-			// SetTiles(ref map,
-			// 	ctxCreator.GetNewTileSetterCtx(),
-			// 	ctxCreator.GetNewTileMapperCtx(),
-			// 	generatorToolsCtx);
-
 			Actions.SetMeshData(CreateMesh(map, ctxCreator.GetNewMeshSolverCtx()));
 
 			SetGridCharacteristics(ctxCreator.GetNewGridCharacteristicsSolverCtx(), generatorToolsCtx);

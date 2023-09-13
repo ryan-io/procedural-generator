@@ -24,6 +24,8 @@ namespace ProceduralGeneration.Gizmos {
 			_positions = null;
 		}
 
+		//public float RunThrough();;
+		
 		void OnDrawGizmosSelected() {
 			if (_drawMapPosOnGrid && Generator.Data != null && _grid) {
 				var map = Generator.Data.Map;
@@ -37,8 +39,8 @@ namespace ProceduralGeneration.Gizmos {
 							var offsetX = Constants.Instance.CellSize / 2f - (Constants.Instance.CellSize * dims.Rows    / 2f);
 							var offsetY = Constants.Instance.CellSize / 2f - (Constants.Instance.CellSize * dims.Columns / 2f);
 
-							_offsetX = Constants.Instance.CellSize / 2f - Constants.Instance.CellSize * dims.Rows    / 2f;
-							_offsetY = Constants.Instance.CellSize / 2f - Constants.Instance.CellSize * dims.Columns / 2f;
+							// _offsetX = Constants.Instance.CellSize / 2f - Constants.Instance.CellSize * dims.Rows    / 2f;
+							// _offsetY = Constants.Instance.CellSize / 2f - Constants.Instance.CellSize * dims.Columns / 2f;
 							
 							_positions[x, y] = new Vector3(
 								Constants.Instance.CellSize * x + offsetX,
