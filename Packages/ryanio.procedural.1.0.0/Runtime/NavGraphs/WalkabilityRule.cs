@@ -21,17 +21,28 @@ using UnityEngine.Tilemaps;
 namespace ProceduralGeneration {
 	[Serializable, Pathfinding.Util.Preserve, BurstCompile]
 	public class WalkabilityRule : GridGraphRule {
-		Tilemap     _boundaryTilemap;
-		Tilemap     _groundTilemap;
-		TileHashset _tileHashset;
+		NativeArray<float3> _data;
 
-		public WalkabilityRule() {
-		}
+		public WalkabilityRule(ref int[,] map) {
+			var rows = map.GetLength(0);
+			var cols = map.GetLength(1);
 
-		public WalkabilityRule(Tilemap boundaryTilemap, Tilemap groundTilemap, TileHashset tileHashset) {
-			_boundaryTilemap = boundaryTilemap;
-			_groundTilemap   = groundTilemap;
-			_tileHashset     = tileHashset;
+			_data = new NativeArray<float3>(rows * cols, Allocator.Persistent);
+
+			var tracker = 0;
+			for (var x = 0; x < map.GetLength(0); x++) {
+				for (var y = 0; y < map.GetLength(1); y++) {
+					var offsetX = Constants.Instance.CellSize / 2f - (Constants.Instance.CellSize * rows / 2f);
+					var offsetY = Constants.Instance.CellSize / 2f - (Constants.Instance.CellSize * cols / 2f);
+
+					_data[tracker] = new float3(
+						Constants.Instance.CellSize * x + offsetX,
+						Constants.Instance.CellSize * y + offsetY,
+						map[x, y]);
+
+					tracker++;
+				}
+			}
 		}
 
 		/*
@@ -64,18 +75,12 @@ namespace ProceduralGeneration {
 		public override void Register(GridGraphRules rules) {
 			rules.AddJobSystemPass(Pass.AfterConnections,
 				ctx => {
-					var positions       = ctx.data.nodePositions;
-					//var scaledPositions = new NativeArray<Vector3>(positions.Length, Allocator.Persistent);
-
-					// for (var i = 0; i < positions.Length; i++) {
-					// 	scaledPositions[i] = Constants.CELL_SIZE * positions[i];
-					// }
-					
+					var nodePositions = ctx.data.nodePositions;
 					var hasTilesList = new List<bool>();
 
 					const int allocationSize = 4;
 
-					foreach (var position in positions) {
+					foreach (var position in nodePositions) {
 						bool hasTile;
 
 						if (!_boundaryTilemap || !_groundTilemap)
@@ -92,8 +97,9 @@ namespace ProceduralGeneration {
 
 						var direction = -Vector3.forward;
 
-						commands[0] = new RaycastCommand(Constants.Instance.CellSize * position, direction, QueryParameters
-                            .Default);
+						commands[0] = new RaycastCommand(Constants.Instance.CellSize * position, direction,
+							QueryParameters
+							   .Default);
 
 						var handlePhys = RaycastCommand.ScheduleBatch(commands, results, 1);
 

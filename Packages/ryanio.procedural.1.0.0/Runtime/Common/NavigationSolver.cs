@@ -11,10 +11,10 @@ namespace ProceduralGeneration {
 		GraphScanner                       Scanner         { get; }
 		IReadOnlyList<GraphColliderCutter> ColliderCutters { get; }
 
-		internal void Build() {
+		internal void Build(ref int[,] map) {
 			var graph = Builder.Build();
 			Solver.ResetGridGraphRules(graph);
-			Solver.SetGridGraphRules(graph);
+			Solver.SetGridGraphRules(graph, ref map);
 			//TODO: this can be removed if we leave scanning for after graph scaling; which I believe is the correct order
 			//Scanner.Fire(new GraphScanner.Args(graph, false), CancellationToken.None);
 			new CutGraphColliders().Cut(ColliderCutters);
@@ -23,7 +23,7 @@ namespace ProceduralGeneration {
 		public NavigationSolver(NavGraphBuilder<GridGraph> builder, NavigationSolverCtx ctx) {
 			Builder         = builder;
 			ColliderCutters = ctx.ColliderCutters;
-			Solver          = new NavGraphRulesSolver(ctx.TileMapDictionary, ctx.TileHashset);
+			Solver          = new NavGraphRulesSolver();
 			Scanner         = new GraphScanner();
 		}
 	}

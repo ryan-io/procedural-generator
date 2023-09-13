@@ -16,21 +16,21 @@ namespace ProceduralGeneration {
 	/// </summary>
 	internal class StandardProcess : GenerationProcess, IDisposable {
 		bool IsDisposed { get; set; }
-		
+
 		internal override MapData Run(ref int[,] map) {
 			var ctxCreator        = new ContextCreator(Actions);
 			var generatorToolsCtx = ctxCreator.GetNewGeneratorToolsCtx();
 
 			FillMap(ref map, ctxCreator.GetNewFillMapCtx());
 			SmoothMap(ref map, ctxCreator.GetNewSmoothMapCtx());
-			
+
 			Actions.SetRooms(ProcessRoomsAndWalls(map, ctxCreator.GetNewRemoveRegionsCtx()));
 			Actions.SetMeshData(CreateMesh(map, ctxCreator.GetNewMeshSolverCtx()));
 
 			SetGridCharacteristics(ctxCreator.GetNewGridCharacteristicsSolverCtx(), generatorToolsCtx);
 
-			BuildNavigation(new GridGraphBuilder(
-					ctxCreator.GetNewGridGraphBuilderCtx()),
+			BuildNavigation(ref map,
+				new GridGraphBuilder(ctxCreator.GetNewGridGraphBuilderCtx()),
 				ctxCreator.GetNewNavigationSolverCtx());
 
 			var coordinates = CreateColliders(ctxCreator.GetNewColliderSolverCtx());
@@ -42,7 +42,7 @@ namespace ProceduralGeneration {
 			return new MapData(map, Actions.GetTileHashset(), Actions.GetMeshData());
 		}
 
-		
+
 		static void FillMap(ref int[,] map, FillMapSolverCtx ctx) {
 			using (FillMapMarker.Auto()) {
 				ProceduralService.GetFillMapSolver(() => new CellularAutomataFillMapSolver(ctx))
@@ -50,14 +50,14 @@ namespace ProceduralGeneration {
 			}
 		}
 
-		
+
 		static void SmoothMap(ref int[,] map, SmoothMapSolverCtx ctx) {
 			using (SmoothMapMarker.Auto()) {
-				ProceduralService.GetSmoothMapSolver(() => new StandardSmoothMapSolver(ctx))	
+				ProceduralService.GetSmoothMapSolver(() => new StandardSmoothMapSolver(ctx))
 				                 .Smooth(ref map, ctx.Dimensions);
 			}
 		}
-		
+
 		static List<Room> ProcessRoomsAndWalls(int[,] map, RemoveRegionsSolverCtx ctx) {
 			using (ProcessRoomsAndWallsMarker.Auto()) {
 				return ProceduralService.GetRoomsAndWallsSolver(
@@ -65,7 +65,7 @@ namespace ProceduralGeneration {
 			}
 		}
 
-		
+
 		static void SetTiles(
 			ref int[,] map,
 			TileSolversCtx tileSolverCtx,
@@ -73,12 +73,12 @@ namespace ProceduralGeneration {
 			GeneratorToolsCtx toolsCtx) {
 			using (SetTilesMarker.Auto()) {
 				ProceduralService.GetTileSetterSolver(
-					() => new StandardTileSetterSolver(tileSolverCtx, mapperCtx, toolsCtx)).Set(ref map); 
+					() => new StandardTileSetterSolver(tileSolverCtx, mapperCtx, toolsCtx)).Set(ref map);
 				//new StandardTileSetterSolver(tileSolverCtx,mapperCtx, toolsCtx)).Set(ref map);
 			}
 		}
 
-		
+
 		static MeshData CreateMesh(int[,] map, MeshSolverCtx ctx) {
 			using (CreateMeshMarker.Auto()) {
 				return ProceduralService.GetMeshSolver(() => new MarchingSquaresMeshSolver(ctx))
@@ -86,40 +86,40 @@ namespace ProceduralGeneration {
 			}
 		}
 
-		
-		static void BuildNavigation(NavGraphBuilder<GridGraph> builder, NavigationSolverCtx ctx) {
+
+		static void BuildNavigation(ref int[,] map, NavGraphBuilder<GridGraph> builder, NavigationSolverCtx ctx) {
 			using (BuildNavigationMarker.Auto()) {
 				ProceduralService.GetNavigationSolver(() => new NavigationSolver(builder, ctx))
-				                 .Build();
+				                 .Build(ref map);
 			}
 		}
 
-		
+
 		Coordinates CreateColliders(ColliderSolverCtx ctx) {
 			using (CreateCollidersMarker.Auto()) {
 				var colliderCreator = ProceduralService.GetColliderSolver(() => new ColliderSolver(ctx));
 
 				_disposables.Add(colliderCreator);
-				
+
 				return colliderCreator.Solve();
 			}
 		}
 
-		
+
 		static void GenerateSpriteShapeBorder(SpriteShapeBorderCtx ctx) {
 			using (GenerateSpriteShapeBorderMarker.Auto()) {
 				ProceduralService.GetSpriteShapeBorderSolver(() => new SpriteShapeBorderSolver(ctx)).Generate();
 			}
 		}
 
-		
+
 		static void SetBoundaryColliderPoints(ColliderPointSetterCtx ctx) {
 			using (SetBoundaryColliderPointsBorderMarker.Auto()) {
 				ProceduralService.GetCutCollidersSolver(() => new CreateBoundaryColliders(ctx)).Set();
 			}
 		}
 
-		
+
 		static void SetGridCharacteristics(GridCharacteristicsSolverCtx ctx, GeneratorToolsCtx toolsCtx) {
 			using (SetGridCharacteristicsBorderMarker.Auto()) {
 				ProceduralService.GetGridCharacteristicsSolver(
@@ -163,7 +163,7 @@ namespace ProceduralGeneration {
 				disposable?.Dispose();
 			}
 		}
-		
+
 		readonly HashSet<IDisposable> _disposables = new();
 	}
 }
