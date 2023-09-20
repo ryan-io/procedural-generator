@@ -1,46 +1,51 @@
 using System;
-using System.Collections.Generic;
 using Pathfinding;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Jobs;
 using Unity.Mathematics;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
-/*
- * 	// var extends = new Vector3(CellSize / 2f, CellSize / 2f, CellSize / 2f);
-						//
-						// for (var i = 0; i < _collisions.Value.Length; i++) {
-						// 	if (_collisions.Value[i])
-						// 		_collisions.Value[i] = null;
-						// }
-
-						// var size    = Physics.OverlapBoxNonAlloc(worldPosGround, extends, _collisions.Value);
- */
 namespace ProceduralGeneration {
+	public struct NodeData {
+		public static NodeData Empty = new() {
+			IsTile   = false,
+			Position = Vector2.positiveInfinity
+		};
+
+		public Vector2 Position;
+		public bool    IsTile;
+	}
+
 	[Serializable, Pathfinding.Util.Preserve, BurstCompile]
 	public class WalkabilityRule : GridGraphRule {
-		NativeArray<float3> _data;
+		NativeList<NodeData> _nodeData;
+
+		public WalkabilityRule() {
+		}
 
 		public WalkabilityRule(ref int[,] map) {
 			var rows = map.GetLength(0);
 			var cols = map.GetLength(1);
 
-			_data = new NativeArray<float3>(rows * cols, Allocator.Persistent);
+			_nodeData = new NativeList<NodeData>(rows * cols, Allocator.Persistent);
 
-			var tracker = 0;
+			var offsetX =
+				Constants.Instance.CellSize / 2f - (Constants.Instance.CellSize * rows / 2f); // divide by 2 for center
+
+			var offsetY =
+				Constants.Instance.CellSize / 2f - (Constants.Instance.CellSize * cols / 2f); // divide by 2 for center
+
 			for (var x = 0; x < map.GetLength(0); x++) {
 				for (var y = 0; y < map.GetLength(1); y++) {
-					var offsetX = Constants.Instance.CellSize / 2f - (Constants.Instance.CellSize * rows / 2f);
-					var offsetY = Constants.Instance.CellSize / 2f - (Constants.Instance.CellSize * cols / 2f);
+					var newData = new NodeData {
+						Position = new Vector2(
+							Constants.Instance.CellSize * x + offsetX,
+							Constants.Instance.CellSize * y + offsetY),
+						IsTile = map[x, y] == 1
+					};
 
-					_data[tracker] = new float3(
-						Constants.Instance.CellSize * x + offsetX,
-						Constants.Instance.CellSize * y + offsetY,
-						map[x, y]);
-
-					tracker++;
+					_nodeData.AddNoResize(newData);
 				}
 			}
 		}
@@ -75,87 +80,54 @@ namespace ProceduralGeneration {
 		public override void Register(GridGraphRules rules) {
 			rules.AddJobSystemPass(Pass.AfterConnections,
 				ctx => {
-					var nodePositions = ctx.data.nodePositions;
-					var hasTilesList = new List<bool>();
-
-					const int allocationSize = 4;
-
-					foreach (var position in nodePositions) {
-						bool hasTile;
-
-						if (!_boundaryTilemap || !_groundTilemap)
-							continue;
-
-						var worldPosBoundary = _boundaryTilemap.WorldToCell(position);
-						var worldPosGround   = _groundTilemap.WorldToCell(position);
-						var hasTileGround    = _groundTilemap.HasTile(worldPosGround);
-						var hasTileBoundary  = _boundaryTilemap.HasTile(worldPosBoundary);
-
-						// RayCastHit & RayCastCommand buffers
-						var results  = new NativeArray<RaycastHit>(allocationSize, Allocator.TempJob);
-						var commands = new NativeArray<RaycastCommand>(allocationSize, Allocator.TempJob);
-
-						var direction = -Vector3.forward;
-
-						commands[0] = new RaycastCommand(Constants.Instance.CellSize * position, direction,
-							QueryParameters
-							   .Default);
-
-						var handlePhys = RaycastCommand.ScheduleBatch(commands, results, 1);
-
-						handlePhys.Complete();
-
-						var batchedHit = results[0];
-
-						if (!hasTileGround || hasTileBoundary) {
-							hasTile = false;
-						}
-						else {
-							// var acceptable = results.Where(hit => hit.collider && !hit.collider.isTrigger);
-							// hasTile = !acceptable.Any();
-							if (batchedHit.collider && !batchedHit.collider.isTrigger) {
-								hasTile = false;
-							}
-							else {
-								hasTile = true;
-							}
-						}
-
-						hasTilesList.Add(hasTile);
-						results.Dispose();
-						commands.Dispose();
-					}
-
-					var hasTileNativeArray = new NativeArray<bool>(hasTilesList.ToArray(), Allocator.Persistent);
-
-					var walkabilityJob = new WalkabilityJobData {
-						Bounds        = ctx.data.bounds,
-						WalkableNodes = ctx.data.nodeWalkable,
-						NodeNormals   = ctx.data.nodeNormals,
-						HasTiles      = hasTileNativeArray
+					var walkabilityJob = new WalkabilityJob {
+						Bounds             = ctx.data.bounds,
+						WalkableNodes      = ctx.data.nodeWalkable,
+						NodeNormals        = ctx.data.nodeNormals,
+						AstarNodePositions = ctx.data.nodePositions,
+						NodeData           = _nodeData,
+						IsWalkable         = new NativeArray<bool>(ctx.data.nodePositions.Length, Allocator.Persistent)
 					};
 
 					var handle = walkabilityJob.Schedule(ctx.tracker.AllWritesDependency);
 					handle.Complete();
-					hasTileNativeArray.Dispose();
 				});
 		}
 
 		[BurstCompile]
-		public struct WalkabilityJobData : IJob, INodeModifier {
-			public IntBounds           Bounds;
-			public NativeArray<float4> NodeNormals;
+		public struct WalkabilityJob : IJob, INodeModifier {
+			public IntBounds            Bounds;
+			public NativeArray<float4>  NodeNormals;
+			public NativeArray<Vector3> AstarNodePositions;
+			public NativeArray<bool>    WalkableNodes;
+			public NativeList<NodeData> NodeData;
 
-			[ReadOnly] public NativeArray<bool> HasTiles;
-
-			public NativeArray<bool> WalkableNodes;
+			public NativeArray<bool> IsWalkable;
 
 			public void Execute() {
+				for (var i = 0; i < AstarNodePositions.Length; i++) {
+					var nodePosition = AstarNodePositions[i];
+
+					var nodeIndex = 0;
+					foreach (var node in NodeData) {
+						var xComp = math.abs(node.Position.x - nodePosition.x);
+						var yComp = math.abs(node.Position.y - nodePosition.y);
+
+						if (xComp <= 0.005f && yComp <= 0.005f) {
+							IsWalkable[i] = !node.IsTile;
+							NodeData.RemoveAt(nodeIndex);
+							break;
+						}
+
+						nodeIndex++;
+					}
+				}
+
 				ForEachNode(Bounds, NodeNormals, ref this);
 			}
 
 			public void ModifyNode(int dataIndex, int dataX, int dataLayer, int dataZ) {
-				WalkableNodes[dataIndex] &= HasTiles[dataIndex];
+				WalkableNodes[dataIndex] &= IsWalkable[dataIndex];
 			}
 		}
 	}

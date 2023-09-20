@@ -20,12 +20,12 @@ namespace ProceduralGeneration.Gizmos {
 
 		[Button]
 		void ResetPositions() {
-			notSet = false;
+			notSet     = false;
 			_positions = null;
 		}
 
 		//public float RunThrough();;
-		
+
 		void OnDrawGizmosSelected() {
 			if (_drawMapPosOnGrid && Generator.Data != null && _grid) {
 				var map = Generator.Data.Map;
@@ -33,15 +33,11 @@ namespace ProceduralGeneration.Gizmos {
 				if (!notSet) {
 					var dims = Generator.Actions.GetMapDimensions();
 					_positions = new Vector3[map.GetLength(0), map.GetLength(1)];
+					var offsetX = Constants.Instance.CellSize / 2f - (Constants.Instance.CellSize * dims.Rows    / 2f);
+					var offsetY = Constants.Instance.CellSize / 2f - (Constants.Instance.CellSize * dims.Columns / 2f);
 
 					for (var x = 0; x < map.GetLength(0); x++) {
 						for (var y = 0; y < map.GetLength(1); y++) {
-							var offsetX = Constants.Instance.CellSize / 2f - (Constants.Instance.CellSize * dims.Rows    / 2f);
-							var offsetY = Constants.Instance.CellSize / 2f - (Constants.Instance.CellSize * dims.Columns / 2f);
-
-							// _offsetX = Constants.Instance.CellSize / 2f - Constants.Instance.CellSize * dims.Rows    / 2f;
-							// _offsetY = Constants.Instance.CellSize / 2f - Constants.Instance.CellSize * dims.Columns / 2f;
-							
 							_positions[x, y] = new Vector3(
 								Constants.Instance.CellSize * x + offsetX,
 								Constants.Instance.CellSize * y + offsetY,
@@ -55,7 +51,7 @@ namespace ProceduralGeneration.Gizmos {
 				for (var i = 0; i < map.GetLength(0); i++) {
 					for (var j = 0; j < map.GetLength(1); j++) {
 						Color color = map[i, j] == 1 ? Color.green : Color.red;
-						DebugExt.DrawCircle(_positions[i, j], color, true, 0.5f);
+						DebugExt.DrawCircle(_positions[i, j], color, true, Constants.Instance.CellSize/2f);
 					}
 				}
 			}
