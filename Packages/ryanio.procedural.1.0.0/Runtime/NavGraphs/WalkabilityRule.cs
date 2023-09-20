@@ -5,21 +5,30 @@ using Unity.Collections;
 using Unity.Jobs;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace ProceduralGeneration {
-	public struct NodeData {
-		public static NodeData Empty = new() {
+	public struct MapTileData : IEquatable<MapTileData> {
+		public static MapTileData Empty = new() {
 			IsTile   = false,
-			Position = Vector2.positiveInfinity
+			Position = Vector2.positiveInfinity,
+			Index    = -1
 		};
 
 		public Vector2 Position;
 		public bool    IsTile;
+		public int     Index;
+
+		public bool Equals(MapTileData other) => Index == other.Index;
+
+		public override bool Equals(object obj) => obj is MapTileData other && Equals(other);
+
+		public override int GetHashCode() => HashCode.Combine(Position, IsTile, Index);
 	}
 
 	[Serializable, Pathfinding.Util.Preserve, BurstCompile]
 	public class WalkabilityRule : GridGraphRule {
-		NativeList<NodeData> _nodeData;
+		NativeList<MapTileData> _nodeData;
 
 		public WalkabilityRule() {
 		}
@@ -28,7 +37,7 @@ namespace ProceduralGeneration {
 			var rows = map.GetLength(0);
 			var cols = map.GetLength(1);
 
-			_nodeData = new NativeList<NodeData>(rows * cols, Allocator.Persistent);
+			_nodeData = new NativeList<MapTileData>(rows * cols, Allocator.Persistent);
 
 			var offsetX =
 				Constants.Instance.CellSize / 2f - (Constants.Instance.CellSize * rows / 2f); // divide by 2 for center
@@ -38,7 +47,7 @@ namespace ProceduralGeneration {
 
 			for (var x = 0; x < map.GetLength(0); x++) {
 				for (var y = 0; y < map.GetLength(1); y++) {
-					var newData = new NodeData {
+					var newData = new MapTileData {
 						Position = new Vector2(
 							Constants.Instance.CellSize * x + offsetX,
 							Constants.Instance.CellSize * y + offsetY),
@@ -85,8 +94,8 @@ namespace ProceduralGeneration {
 						WalkableNodes      = ctx.data.nodeWalkable,
 						NodeNormals        = ctx.data.nodeNormals,
 						AstarNodePositions = ctx.data.nodePositions,
-						NodeData           = _nodeData,
-						IsWalkable         = new NativeArray<bool>(ctx.data.nodePositions.Length, Allocator.Persistent)
+						MapTileData        = _nodeData,
+						IsWalkable         = new NativeArray<bool>(ctx.data.nodePositions.Length, Allocator.Persistent),
 					};
 
 					var handle = walkabilityJob.Schedule(ctx.tracker.AllWritesDependency);
@@ -96,30 +105,27 @@ namespace ProceduralGeneration {
 
 		[BurstCompile]
 		public struct WalkabilityJob : IJob, INodeModifier {
-			public IntBounds            Bounds;
-			public NativeArray<float4>  NodeNormals;
-			public NativeArray<Vector3> AstarNodePositions;
-			public NativeArray<bool>    WalkableNodes;
-			public NativeList<NodeData> NodeData;
-
-			public NativeArray<bool> IsWalkable;
+			public IntBounds                       Bounds;
+			public NativeArray<float4>             NodeNormals;
+			public NativeArray<Vector3>            AstarNodePositions;
+			public NativeArray<bool>               WalkableNodes;
+			public NativeList<MapTileData>         MapTileData;
+			public NativeArray<bool>               IsWalkable;
 
 			public void Execute() {
+				float limit     = Constants.Instance.CellSize / math.sqrt(Constants.Instance.CellSize);
+
 				for (var i = 0; i < AstarNodePositions.Length; i++) {
 					var nodePosition = AstarNodePositions[i];
 
-					var nodeIndex = 0;
-					foreach (var node in NodeData) {
+					foreach (var node in MapTileData) {
 						var xComp = math.abs(node.Position.x - nodePosition.x);
 						var yComp = math.abs(node.Position.y - nodePosition.y);
 
-						if (xComp <= 0.005f && yComp <= 0.005f) {
+						if (xComp <= limit && yComp <= limit) {
 							IsWalkable[i] = !node.IsTile;
-							NodeData.RemoveAt(nodeIndex);
 							break;
 						}
-
-						nodeIndex++;
 					}
 				}
 
