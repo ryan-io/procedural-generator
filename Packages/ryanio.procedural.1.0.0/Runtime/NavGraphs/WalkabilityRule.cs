@@ -1,29 +1,33 @@
 using System;
+using Cathei.LinqGen;
 using Pathfinding;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Jobs;
 using Unity.Mathematics;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace ProceduralGeneration {
+	public struct AstarScanData {
+		public int     Index;
+		public int     XCoord;
+		public int     ZCoord;
+		public Vector3 Position;
+	}
+
 	public struct MapTileData : IEquatable<MapTileData> {
-		public static MapTileData Empty = new() {
-			IsTile   = false,
-			Position = Vector2.positiveInfinity,
-			Index    = -1
-		};
+		public MapTileData this[int x, int z] => x == XCoord && z == ZCoord ? this : default;
 
 		public Vector2 Position;
 		public bool    IsTile;
-		public int     Index;
+		public int     XCoord;
+		public int     ZCoord;
 
-		public bool Equals(MapTileData other) => Index == other.Index;
+		public bool Equals(MapTileData other) => XCoord == other.XCoord && ZCoord == other.ZCoord;
 
 		public override bool Equals(object obj) => obj is MapTileData other && Equals(other);
 
-		public override int GetHashCode() => HashCode.Combine(Position, IsTile, Index);
+		public override int GetHashCode() => HashCode.Combine(Position, IsTile, XCoord, ZCoord);
 	}
 
 	[Serializable, Pathfinding.Util.Preserve, BurstCompile]
@@ -51,7 +55,9 @@ namespace ProceduralGeneration {
 						Position = new Vector2(
 							Constants.Instance.CellSize * x + offsetX,
 							Constants.Instance.CellSize * y + offsetY),
-						IsTile = map[x, y] == 1
+						IsTile = map[x, y] == 1,
+						XCoord = x,
+						ZCoord = y
 					};
 
 					_nodeData.AddNoResize(newData);
@@ -90,12 +96,13 @@ namespace ProceduralGeneration {
 			rules.AddJobSystemPass(Pass.AfterConnections,
 				ctx => {
 					var walkabilityJob = new WalkabilityJob {
-						Bounds             = ctx.data.bounds,
-						WalkableNodes      = ctx.data.nodeWalkable,
-						NodeNormals        = ctx.data.nodeNormals,
+						Bounds = ctx.data.bounds,
+						WalkableNodes = ctx.data.nodeWalkable,
+						NodeNormals = ctx.data.nodeNormals,
 						AstarNodePositions = ctx.data.nodePositions,
-						MapTileData        = _nodeData,
-						IsWalkable         = new NativeArray<bool>(ctx.data.nodePositions.Length, Allocator.Persistent),
+						MapTileData = _nodeData,
+						ScanData = new NativeArray<AstarScanData>(ctx.data.nodePositions.Length, Allocator.Persistent),
+						IsWalkable = new NativeArray<bool>(ctx.data.nodePositions.Length, Allocator.Persistent),
 					};
 
 					var handle = walkabilityJob.Schedule(ctx.tracker.AllWritesDependency);
@@ -103,37 +110,63 @@ namespace ProceduralGeneration {
 				});
 		}
 
-		[BurstCompile]
+		public struct MapTilePredicate : IStructFunction<MapTileData, bool> {
+			public bool Invoke(AstarScanData arg1, MapTileData arg2)
+				=> arg1.XCoord == arg2.XCoord && arg1.ZCoord == arg2.ZCoord;
+
+			public bool Invoke(MapTileData arg) => throw new NotImplementedException();
+		}
+
+		[BurstCompile(CompileSynchronously = true)]
 		public struct WalkabilityJob : IJob, INodeModifier {
-			public IntBounds                       Bounds;
-			public NativeArray<float4>             NodeNormals;
-			public NativeArray<Vector3>            AstarNodePositions;
-			public NativeArray<bool>               WalkableNodes;
-			public NativeList<MapTileData>         MapTileData;
-			public NativeArray<bool>               IsWalkable;
+			public IntBounds                  Bounds;
+			public NativeArray<float4>        NodeNormals;
+			public NativeArray<Vector3>       AstarNodePositions;
+			public NativeArray<bool>          WalkableNodes;
+			public NativeList<MapTileData>    MapTileData;
+			public NativeArray<bool>          IsWalkable;
+			public NativeArray<AstarScanData> ScanData;
 
+			
 			public void Execute() {
-				float limit     = Constants.Instance.CellSize / math.sqrt(Constants.Instance.CellSize);
+				ForEachNode(Bounds, NodeNormals, ref this);
 
-				for (var i = 0; i < AstarNodePositions.Length; i++) {
-					var nodePosition = AstarNodePositions[i];
+				float limit = Constants.Instance.CellSize / 2f;
 
-					foreach (var node in MapTileData) {
-						var xComp = math.abs(node.Position.x - nodePosition.x);
-						var yComp = math.abs(node.Position.y - nodePosition.y);
-
-						if (xComp <= limit && yComp <= limit) {
-							IsWalkable[i] = !node.IsTile;
-							break;
-						}
-					}
+				for (var i = 0; i < MapTileData.Length; i++) {
+					var astarNode = ScanData[i];
+					var node      = MapTileData.Gen().Where(new MapTilePredicate()).First();
 				}
 
-				ForEachNode(Bounds, NodeNormals, ref this);
+				// for (var i = 0; i < AstarNodePositions.Length; i++) {
+				// 	var nodePosition = AstarNodePositions[i];
+				//
+				// 	foreach (var node in MapTileData) {
+				// 		var xComp = math.abs(node.Position.x - nodePosition.x);
+				// 		var yComp = math.abs(node.Position.y - nodePosition.y);
+				//
+				// 		if (xComp <= limit && yComp <= limit) {
+				// 			IsWalkable[i] = !node.IsTile;
+				// 			break;
+				// 		}
+				// 	}
+				// }
+
+				for (var i = 0; i < WalkableNodes.Length; i++) {
+					WalkableNodes[i] &= IsWalkable[i];
+				}
 			}
 
 			public void ModifyNode(int dataIndex, int dataX, int dataLayer, int dataZ) {
-				WalkableNodes[dataIndex] &= IsWalkable[dataIndex];
+				ScanData[dataIndex] = new AstarScanData {
+					Index    = dataIndex,
+					XCoord   = dataX,
+					ZCoord   = dataZ,
+					Position = AstarNodePositions[dataIndex]
+				};
+
+
+				//WalkableNodes[dataIndex] &= IsWalkable[dataIndex];
 			}
 		}
 	}
