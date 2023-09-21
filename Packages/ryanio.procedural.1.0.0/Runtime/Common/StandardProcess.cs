@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Pathfinding;
 using Unity.Profiling;
 using UnityBCL;
+using UnityEngine;
 
 namespace ProceduralGeneration {
 	/// <summary>
@@ -39,6 +40,8 @@ namespace ProceduralGeneration {
 			SetBoundaryColliderPoints(ctxCreator.GetNewColliderPointSetterCtx());
 			GenerateSpriteShapeBorder(ctxCreator.GetNewSpriteShapeBorderCtx());
 
+			Help.FlipYAxisSkipAstar(Actions.GetOwner(), 1);
+			
 			return new MapData(map, Actions.GetTileHashset(), Actions.GetMeshData());
 		}
 

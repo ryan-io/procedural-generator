@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using UnityBCL;
 using UnityBCL.Serialization;
+using UnityEngine;
 
 namespace ProceduralGeneration {
 	public static class Help {
@@ -75,6 +76,23 @@ namespace ProceduralGeneration {
 			var type     = assembly.GetType("UnityEditor.LogEntries");
 			var method   = type.GetMethod("Clear");
 			method?.Invoke(new object(), null);
+		}
+
+		/// <summary>
+		///  Flips the Y axis of the given owner's child component transforms up to the given depth.
+		/// </summary>
+		/// <param name="owner">Root game object</param>
+		/// <param name="depth">How deep the transforms should go. I.e. depth =1 will only include the first level of child transforms.</param>
+		public static void FlipYAxisSkipAstar(GameObject owner, int depth) {
+			for (var i = 0; i < owner.transform.childCount; i++) {
+				var tr = owner.transform.GetChild(i);
+				
+				if (tr == owner.transform || tr.HasComponent(typeof(AstarPath)))
+					continue;
+				
+				var currentScale = tr.localScale;
+				tr.localScale = new Vector3(currentScale.x, -currentScale.y, currentScale.z);
+			}
 		}
 	}
 }

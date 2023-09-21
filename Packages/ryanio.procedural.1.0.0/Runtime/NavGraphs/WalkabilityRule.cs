@@ -8,25 +8,8 @@ using UnityEngine;
 
 namespace ProceduralGeneration {
 	public struct AstarScanData {
-		public int     Index;
-		public int     XCoord;
-		public int     ZCoord;
-		public Vector3 Position;
-	}
-
-	public struct MapTileData : IEquatable<MapTileData> {
-		public MapTileData this[int x, int z] => x == XCoord && z == ZCoord ? this : default;
-
-		public Vector2 Position;
-		public bool    IsTile;
-		public int     XCoord;
-		public int     ZCoord;
-
-		public bool Equals(MapTileData other) => XCoord == other.XCoord && ZCoord == other.ZCoord;
-
-		public override bool Equals(object obj) => obj is MapTileData other && Equals(other);
-
-		public override int GetHashCode() => HashCode.Combine(Position, IsTile, XCoord, ZCoord);
+		public int XCoord;
+		public int ZCoord;
 	}
 
 	[Serializable, Pathfinding.Util.Preserve, BurstCompile]
@@ -38,14 +21,14 @@ namespace ProceduralGeneration {
 
 		public WalkabilityRule(ref int[,] map) {
 			var cellSize   = Constants.Instance.CellSize;
-			var rows       = map.GetLength(0)            * cellSize;
-			var cols       = map.GetLength(1)            * cellSize;
-			var hashBuffer = rows                        * cols;
+			var rows       = map.GetLength(0) * cellSize;
+			var cols       = map.GetLength(1) * cellSize;
+			var hashBuffer = rows             * cols;
 
 			_mapHash = new NativeParallelHashMap<int2, bool>(hashBuffer, Allocator.Persistent);
 
 			for (var i = 0; i < rows * cols; i++) {
-				var row = i / cols;  
+				var row = i / cols;
 				var col = i % cols;
 				_mapHash.TryAdd(new int2(row, col), map[row / cellSize, col / cellSize] != 1);
 			}
@@ -120,14 +103,7 @@ namespace ProceduralGeneration {
 			}
 
 			public void ModifyNode(int dataIndex, int dataX, int dataLayer, int dataZ) {
-				ScanData[dataIndex] = new AstarScanData {
-					Index    = dataIndex,
-					XCoord   = dataX,
-					ZCoord   = dataZ,
-					Position = AstarNodePositions[dataIndex]
-				};
-
-				//WalkableNodes[dataIndex] &= IsWalkable[dataIndex];
+				ScanData[dataIndex] = new AstarScanData { XCoord = dataX, ZCoord = dataZ, };
 			}
 		}
 	}

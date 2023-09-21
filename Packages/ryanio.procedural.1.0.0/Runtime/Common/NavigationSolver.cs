@@ -15,8 +15,7 @@ namespace ProceduralGeneration {
 			var graph = Builder.Build();
 			Solver.ResetGridGraphRules(graph);
 			Solver.SetGridGraphRules(graph, ref map);
-			//TODO: this can be removed if we leave scanning for after graph scaling; which I believe is the correct order
-			//Scanner.Fire(new GraphScanner.Args(graph, false), CancellationToken.None);
+			Scanner.Fire(new GraphScanner.Args(graph, false), CancellationToken.None);
 			new CutGraphColliders().Cut(ColliderCutters);
 		}
 
