@@ -21,6 +21,15 @@
       },
       "url": "https://arongranberg.com/packages/eb088f6cecf90e6a2451cf15241e7b955e94e8ec3fe14"
     },
+    "com.cathei.linqgen": {
+      "version": "https://github.com/cathei/LinqGen.git?path=LinqGen.Unity/Packages/com.cathei.linqgen",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.collections": "1.0.0"
+      },
+      "hash": "b69374f6586f3975896af5623095f809c62a3ff4"
+    },
     "com.cysharp.unitask": {
       "version": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask",
       "depth": 0,
