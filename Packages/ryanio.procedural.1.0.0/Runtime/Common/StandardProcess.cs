@@ -41,7 +41,7 @@ namespace ProceduralGeneration {
 			GenerateSpriteShapeBorder(ctxCreator.GetNewSpriteShapeBorderCtx());
 
 			Help.FlipYAxisSkipAstar(Actions.GetOwner(), 1);
-			
+
 			return new MapData(map, Actions.GetTileHashset(), Actions.GetMeshData());
 		}
 
@@ -68,7 +68,7 @@ namespace ProceduralGeneration {
 			}
 		}
 
-
+	
 		static void SetTiles(
 			ref int[,] map,
 			TileSolversCtx tileSolverCtx,
