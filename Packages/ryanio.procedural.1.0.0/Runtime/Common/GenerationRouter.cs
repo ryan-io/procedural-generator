@@ -20,9 +20,6 @@ namespace ProceduralGeneration {
 			//map.Clear();
 			
 			var data =_process.Run(ref map);
-
-			// var scanner = new GraphScanner();
-			// scanner.Fire(new GraphScanner.Args(AstarPath.active.graphs[0], false), CancellationToken.None);
 			
 			Actions.Log("'Standard Process' generation complete.", nameof(ProceduralGeneration.Run));
 			return data;

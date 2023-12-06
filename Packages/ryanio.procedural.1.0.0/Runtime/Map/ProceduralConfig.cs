@@ -5,17 +5,10 @@ using System.Linq;
 using NaughtyAttributes;
 using Pathfinding;
 using Sirenix.OdinInspector;
-using Sirenix.Utilities.Editor;
 using Unity.Burst.Intrinsics;
 using UnityBCL;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using static Unity.Burst.Intrinsics.X86.Sse3;
-using static Unity.Burst.Intrinsics.X86.Sse;
-using static Unity.Burst.Intrinsics.X86.Sse2;
-using static Unity.Burst.Intrinsics.X86.Sse4_1;
-using static Unity.Burst.Intrinsics.X86.Sse4_2;
-using static Unity.Burst.Intrinsics.v256;
 
 namespace ProceduralGeneration {
 	[Serializable]
