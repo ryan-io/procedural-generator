@@ -70,7 +70,6 @@
 <!-- ABOUT THE PROJECT -->
 
 # Overview
----
 This procedural generator started as a hobby project to learn about various procedural algorithms (cellular automata, marching squares and Bresenham's line algorithm to name a few). Inspiration was drawn from Sebastian Lague's video series on 'Procedural Cave Generation'.
 
 ##### Features
@@ -110,7 +109,6 @@ Integration with Odin Inspector
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 # Built With
----
 - Unity Game Engine
 - JetBrains Rider
 - Odin Inspector
@@ -121,7 +119,6 @@ Integration with Odin Inspector
 
 <!-- GETTING STARTED -->
 # Getting Started
----
 This project can be used as a new, standalone Unity project, installed into an existing project using UPM, or manually imported into a Unity project. 
 
 It needs to be stated that this generator is opinionated in how it is setup within a Unity scene. See the 'Usage' section for more information regarding this.
@@ -131,7 +128,6 @@ The generator is setup to run out of the box. You are more than welcome to defin
 It is opinionated. One of the primary goals was to create a new scene, import the generator and have the scene functionally ready within a few minutes. As such, I opted to implore the use of some outside projects that are defined in the 'Prerequisites and Dependencies' section.
 
 # Prerequisites and Dependencies
----
 ##### All dependencies are internal Unity systems or Unity projects that can be found on the asset store.
 
 **Newer versions of these packages should be compatible.**
@@ -154,7 +150,6 @@ It is opinionated. One of the primary goals was to create a new scene, import th
 ##### Please feel free to contact me with any issues or concerns in regards to the dependencies defined above. We can work around the majority of them if needed.
 
 # Installation
----
 > The generator and many dependencies can be installed via the UPM, a package manifest, or the asset store.
 
 ### UPM Installation
