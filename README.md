@@ -1,4 +1,3 @@
-
 <a name="readme-top"></a>
 <!-- PROJECT SHIELDS -->
 <!--
@@ -36,9 +35,9 @@
     <a href="https://github.com/ryan-io/procedural-generator/issues">Request Feature</a>
   </p>
 </div>
+<br/>
 
 ---
-<br/>
 <!-- TABLE OF CONTENTS -->
 <details>
   <summary>Table of Contents</summary>
@@ -64,9 +63,9 @@
     <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
 </details>
-<br/>
 
 ---
+<br/>
 
 <!-- ABOUT THE PROJECT -->
 
