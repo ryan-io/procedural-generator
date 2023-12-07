@@ -51,7 +51,7 @@
     <li>
       <a href="#getting-started">Getting Started</a>
       <ul>
-        <li><a href="#prerequisites">Dependencies</a></li>
+        <li><a href="#prerequisites-and-dependencies">Prerequisites and Dependencies</a></li>
         <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
@@ -69,57 +69,243 @@
 
 <!-- ABOUT THE PROJECT -->
 
-### Overview
+# Overview
 ---
-Here's a blank template to get started: To avoid retyping too much info. Do a search and replace with your text editor for the following: `github_username`, `repo_name`, `twitter_handle`, `linkedin_username`, `email_client`, `email`, `project_title`, `project_description`
+This procedural generator started as a hobby project to learn about various procedural algorithms (cellular automata, marching squares and Bresenham's line algorithm to name a few). Inspiration was drawn from Sebastian Lague's video series on 'Procedural Cave Generation'.
+
+##### Features
+<ol>
+<li>
+Create a 2-dimensional square or rectangular map
+</li>
+<li>
+ Generate colliders for use with 2D & 3D physics
+</li>
+<li>
+Generate sprite shape borders
+</li>
+<li>
+Integrates with the Astar Pathfinding Project and generates pathfinding with its API
+</li>
+<li>
+Generation occurs asynchronously and concurrently.
+</li>
+<li>
+Optionally supports integration with Unity's tilemap & tile system
+</li>
+<li>
+Define segments for "randomly" placing game objects
+</li>
+<li>
+Utilizes Unity's Burst compiler and the Jobs systems for performance
+</li>
+<li>
+Serialize and deserialize map, mesh, pathfinding, collider and sprite shape data
+</li>
+<li>
+Integration with Odin Inspector
+</li>
+</ol>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-### Built With
+# Built With
 ---
-- Unity3d
+- Unity Game Engine
 - JetBrains Rider
+- Odin Inspector
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 
 <!-- GETTING STARTED -->
-## Getting Started
+# Getting Started
 ---
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
+This project can be used as a new, standalone Unity project, installed into an existing project using UPM, or manually imported into a Unity project. 
 
-### Prerequisites
+It needs to be stated that this generator is opinionated in how it is setup within a Unity scene. See the 'Usage' section for more information regarding this.
 
-This is an example of how to list things you need to use the software and how to install them.
-* npm
-  ```sh
-  npm install npm@latest -g
-  ```
+The generator is setup to run out of the box. You are more than welcome to define your own generation process describe in the 'Usage' section. 
 
-### Installation
+It is opinionated. One of the primary goals was to create a new scene, import the generator and have the scene functionally ready within a few minutes. As such, I opted to implore the use of some outside projects that are defined in the 'Prerequisites and Dependencies' section.
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
-   ```sh
-   git clone https://github.com/github_username/repo_name.git
-   ```
-3. Install NPM packages
-   ```sh
-   npm install
-   ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
-   ```
+# Prerequisites and Dependencies
+---
+##### All dependencies are internal Unity systems or Unity projects that can be found on the asset store.
 
+**Newer versions of these packages should be compatible.**
+
+- Unity 2022.3.9.f1
+	- This project was originally created with Unity 2020.3.5. 2022.3 is required due to improvements in the Burst, Jobs, SpriteShape and TileMap systems
+* Unity Burst 1.6.5
+* Unity Collections 1.2.3
+* Unity Jobs 0.50.0-preview.9
+* UniTask 2.2.5
+* Unity TileMap 1.0.0
+* Unity Sprites 1.0.0
+* Universal Render Pipeline 12.1.6
+	* This is not a hard requirement. For demonstration using a 2D environment, URP was selected.
+* Unity Addressable 1.19.19
+* A* Pathfinding Project
+	* This is a paid asset. It is the most opinionated sub-system to this generator. Aron does *terrific* work with his asset and A* Pathfinding Project is simply a great asset to use.
+	* *This technically is NOT required*
+
+##### Please feel free to contact me with any issues or concerns in regards to the dependencies defined above. We can work around the majority of them if needed.
+
+# Installation
+---
+> The generator and many dependencies can be installed via the UPM, a package manifest, or the asset store.
+
+### UPM Installation
+> To install a package via UPM, open or create a project in Unity and open the Package Manager. Click "Add packge from git URL"
+> ![[Pasted image 20231207153832.png]]
+> Copy & paste the GIT url for the package you are installing and click "Add". You will need to navigate to "Packages/manifest.json" in your file explorer.
+
+### Manifest Installation
+> To install a package via a package manifest, open or create a project in Unity. 
+> Navigate to Packages/manifest.json in your file explorer
+> ![[Pasted image 20231207154432.png]]
+> Open your manifest JSON file; you will need to add the appropriate query to this file
+> An example manifest.json is given below. 
+> **NOTE**: do not simply copy and paste this example into your own manifest.json. This is just an example to show demonstrate how to add a dependency package.
+
+``` ExampleManifest
+{  
+  "scopedRegistries": [  
+    {  
+      "name": "A* Pathfinding Project",  
+      "url": "PROJECT_URL_TO_YOUR_VERSION",  
+      "scopes": [  
+        "com.arongranberg.astar"  
+      ]  
+    }  
+  ],  
+  "dependencies": {  
+    "com.arongranberg.astar": "4.3.60",  
+    "com.cysharp.unitask": https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask",  
+    "com.unity.adaptiveperformance": "4.0.1",  
+    "com.unity.addressables": "1.21.17",  
+    "com.unity.burst": "1.8.4",  
+    "com.unity.collab-proxy": "2.0.7",  
+    "com.unity.collections": "2.2.0",  
+    "com.unity.feature.2d": "2.0.0",  
+    "com.unity.ide.rider": "3.0.25",  
+    "com.unity.ide.visualstudio": "2.0.18",  
+    "com.unity.inputsystem": "1.7.0",  
+    "com.unity.profiling.core": "1.0.2",  
+    "com.unity.render-pipelines.universal": "14.0.8",  
+    "com.unity.textmeshpro": "3.0.6",  
+    "com.unity.timeline": "1.7.5",  
+    "com.unity.ugui": "1.0.0",  
+    "com.unity.visualscripting": "1.9.0",  
+    "com.unity.modules.androidjni": "1.0.0",  
+    "com.unity.modules.animation": "1.0.0",  
+    "com.unity.modules.assetbundle": "1.0.0",  
+    "com.unity.modules.audio": "1.0.0",  
+    "com.unity.modules.cloth": "1.0.0",  
+    "com.unity.modules.director": "1.0.0",  
+    "com.unity.modules.imageconversion": "1.0.0",  
+    "com.unity.modules.imgui": "1.0.0",  
+    "com.unity.modules.jsonserialize": "1.0.0",  
+    "com.unity.modules.particlesystem": "1.0.0",  
+    "com.unity.modules.physics": "1.0.0",  
+    "com.unity.modules.physics2d": "1.0.0",  
+    "com.unity.modules.screencapture": "1.0.0",  
+    "com.unity.modules.terrain": "1.0.0",  
+    "com.unity.modules.terrainphysics": "1.0.0",  
+    "com.unity.modules.tilemap": "1.0.0",  
+    "com.unity.modules.ui": "1.0.0",  
+    "com.unity.modules.uielements": "1.0.0",  
+    "com.unity.modules.umbra": "1.0.0",  
+    "com.unity.modules.unityanalytics": "1.0.0",  
+    "com.unity.modules.unitywebrequest": "1.0.0",  
+    "com.unity.modules.unitywebrequestassetbundle": "1.0.0",  
+    "com.unity.modules.unitywebrequestaudio": "1.0.0",  
+    "com.unity.modules.unitywebrequesttexture": "1.0.0",  
+    "com.unity.modules.unitywebrequestwww": "1.0.0",  
+    "com.unity.modules.vehicles": "1.0.0",  
+    "com.unity.modules.video": "1.0.0",  
+    "com.unity.modules.vr": "1.0.0",  
+    "com.unity.modules.wind": "1.0.0",  
+    "com.unity.modules.xr": "1.0.0"  
+  }  
+}
+```
+### UniTask
+```UPM
+ https://github.com/Cysharp/UniTask
+```
+
+```Manifest
+"com.cysharp.unitask": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask"
+```
+
+### A* Pathfinding Project
+```UPM
+Please visit this link to install via UPM:
+https://www.arongranberg.com/astar/download_upm
+```
+
+```Manifest
+"com.arongranberg.astar": "4.3.60"
+
+"scopedRegistries": [  
+  {  
+    "name": "A* Pathfinding Project",  
+    "url": "https://arongranberg.com/packages/eb088f6cecf90e6a2451cf15241e7b955e94e8ec3fe14/",  
+    "scopes": [  
+      "com.arongranberg.astar"  
+    ]  
+  }  
+]
+```
+
+### Addressables
+```
+"com.unity.addressables": "1.19.19",
+```
+
+### Burst
+```
+"com.unity.burst": "1.6.5",
+```
+
+### URP
+```
+"com.unity.render-pipelines.universal": "12.1.6",
+```
+
+### 2D Sprites
+```
+"com.unity.feature.2d": "2.0.0",
+```
+
+### Collections
+```
+"com.unity.collections": "1.2.3",
+```
+
+### Generator
+1. Clone or fork this repository to your PC
+	1. This repository is an entire project
+	2. You can use the project as a template or simply rip out anything you don't need
+
+```Shell
+git clone https://github.com/ryan-io/procedural-generator
+```
+
+2. Install via Unity UPM
+	1. See "UPM Installation" for how-to
+
+```Manifest
+"com.ryanio.procgen": "https://github.com/ryan-io/procedural-generator"
+```
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
-
 <!-- USAGE EXAMPLES -->
-## Usage
+# Usage
 
 Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
 
@@ -130,7 +316,7 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 
 
 <!-- ROADMAP -->
-## Roadmap
+# Roadmap
 
 - [ ] Feature 1
 - [ ] Feature 2
@@ -144,7 +330,7 @@ See the [open issues](https://github.com/github_username/repo_name/issues) for a
 
 
 <!-- CONTRIBUTING -->
-## Contributing
+# Contributing
 
 Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
@@ -162,7 +348,7 @@ Don't forget to give the project a star! Thanks again!
 
 
 <!-- LICENSE -->
-## License
+# License
 
 Distributed under the MIT License. See `LICENSE.txt` for more information.
 
@@ -171,7 +357,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 
 <!-- CONTACT -->
-## Contact
+# Contact
 
 Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - email@email_client.com
 
@@ -182,7 +368,7 @@ Project Link: [https://github.com/github_username/repo_name](https://github.com/
 
 
 <!-- ACKNOWLEDGMENTS -->
-## Acknowledgments
+# Acknowledgments
 
 * []()
 * []()
