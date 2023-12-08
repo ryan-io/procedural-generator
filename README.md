@@ -60,7 +60,7 @@
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
+    <li><a href="#acknowledgments-and-credit">Acknowledgments</a></li>
   </ol>
 </details>
 
@@ -107,6 +107,7 @@ Integration with Odin Inspector
 </ol>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+<br/>
 
 # Built With
 - Unity Game Engine
@@ -115,7 +116,7 @@ Integration with Odin Inspector
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
+<br/>
 
 <!-- GETTING STARTED -->
 # Getting Started
@@ -146,16 +147,23 @@ It is opinionated. One of the primary goals was to create a new scene, import th
 * A* Pathfinding Project
 	* This is a paid asset. It is the most opinionated sub-system to this generator. Aron does *terrific* work with his asset and A* Pathfinding Project is simply a great asset to use.
 	* *This technically is NOT required*
+* EasyWallCollider
+	* This is a paid asset. It is required if you want to generate primitive 3D colliders in a 2D environment. This is used for 2D games that want to use 3D physics with "2D colliders".
 
 ##### Please feel free to contact me with any issues or concerns in regards to the dependencies defined above. We can work around the majority of them if needed.
+<br/>
 
 # Installation
 > The generator and many dependencies can be installed via the UPM, a package manifest, or the asset store.
+
+<br/>
 
 ### UPM Installation
 > To install a package via UPM, open or create a project in Unity and open the Package Manager. Click "Add packge from git URL"
 > ![[Pasted image 20231207153832.png]]
 > Copy & paste the GIT url for the package you are installing and click "Add". You will need to navigate to "Packages/manifest.json" in your file explorer.
+
+<br/>
 
 ### Manifest Installation
 > To install a package via a package manifest, open or create a project in Unity. 
@@ -227,6 +235,9 @@ It is opinionated. One of the primary goals was to create a new scene, import th
   }  
 }
 ```
+
+<br/>
+
 ### UniTask
 ```UPM
  https://github.com/Cysharp/UniTask
@@ -235,6 +246,8 @@ It is opinionated. One of the primary goals was to create a new scene, import th
 ```Manifest
 "com.cysharp.unitask": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask"
 ```
+
+<br/>
 
 ### A* Pathfinding Project
 ```UPM
@@ -255,31 +268,49 @@ https://www.arongranberg.com/astar/download_upm
   }  
 ]
 ```
+<br/>
+
+### EasyWallCollider
+```AssetStore
+https://assetstore.unity.com/packages/tools/physics/easy-wall-collider-158206
+```
+
+<br/>
 
 ### Addressables
 ```
 "com.unity.addressables": "1.19.19",
 ```
 
+<br/>
+
 ### Burst
 ```
 "com.unity.burst": "1.6.5",
 ```
+
+<br/>
 
 ### URP
 ```
 "com.unity.render-pipelines.universal": "12.1.6",
 ```
 
+<br/>
+
 ### 2D Sprites
 ```
 "com.unity.feature.2d": "2.0.0",
 ```
 
+<br/>
+
 ### Collections
 ```
 "com.unity.collections": "1.2.3",
 ```
+
+<br/>
 
 ### Generator
 1. Clone or fork this repository to your PC
@@ -296,78 +327,90 @@ git clone https://github.com/ryan-io/procedural-generator
 ```Manifest
 "com.ryanio.procgen": "https://github.com/ryan-io/procedural-generator"
 ```
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+<br/>
 
 <!-- USAGE EXAMPLES -->
 # Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+### Settings
+### Generation
+### Serialization
+### Deserialization
+### Demo GIFs
 
 _For more examples, please refer to the [Documentation](https://example.com)_
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
+<br/>
 
 <!-- ROADMAP -->
 # Roadmap
-
-- [ ] Feature 1
-- [ ] Feature 2
-- [ ] Feature 3
-    - [ ] Nested Feature
-
-See the [open issues](https://github.com/github_username/repo_name/issues) for a full list of proposed features (and known issues).
+At this point in time, I do not intend to further this generator. This project was intended for personal learning.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
+<br/>
 
 
 <!-- CONTRIBUTING -->
 # Contributing
 
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+Contributions are absolutely welcome. This is an open source project. 
 
-If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
-Don't forget to give the project a star! Thanks again!
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+1. Fork the repository
+2. Create a feature branch
+```Shell
+git checkout -b feature/your-feature-branch
+```
+3. Commit changes on your feature branch
+```Shell
+git commit -m 'Summary feature'
+```
+4. Push your changes to your branch
+```Shell
+git push origin feature/your-feature-branch
+```
+5. Open a pull request to merge/incorporate your feature
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
 
 <!-- LICENSE -->
 # License
 
-Distributed under the MIT License. See `LICENSE.txt` for more information.
+Distributed under the MIT License.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+<br/>
 
 
 <!-- CONTACT -->
 # Contact
 
-Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - email@email_client.com
-
-Project Link: [https://github.com/github_username/repo_name](https://github.com/github_username/repo_name)
+<p align="center">
+<b><u>
+RyanIO</u></b> <br/> <a href = "mailto:ryan.io@programmer.net?subject=[RIO]%20Procedural%20Generator%20Project" >[Email]</a>
+<br/>
+<br/>
+[LinkedIn]
+<br/>
+[GitHub]
+</p>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
+<br/>
 
 
 <!-- ACKNOWLEDGMENTS -->
-# Acknowledgments
+# Acknowledgments and Credit
 
-* []()
-* []()
-* []()
+* [Sebastian Lague's YouTube Channel](https://www.youtube.com/@SebastianLague)
+* [Aron and the A* Pathfinding Project](https://arongranberg.com/astar/)
+* [Pepijn Willekens's EasyWallCollider](https://twitter.com/PepijnWillekens)
+* [Bruno from More Mountains](https://moremountains.com/unity-assets)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
