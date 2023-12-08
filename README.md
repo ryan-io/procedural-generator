@@ -107,7 +107,6 @@ Integration with Odin Inspector
 </ol>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-<br/>
 
 # Built With
 - Unity Game Engine
@@ -116,7 +115,6 @@ Integration with Odin Inspector
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-<br/>
 
 <!-- GETTING STARTED -->
 # Getting Started
@@ -127,6 +125,8 @@ It needs to be stated that this generator is opinionated in how it is setup with
 The generator is setup to run out of the box. You are more than welcome to define your own generation process describe in the 'Usage' section. 
 
 It is opinionated. One of the primary goals was to create a new scene, import the generator and have the scene functionally ready within a few minutes. As such, I opted to implore the use of some outside projects that are defined in the 'Prerequisites and Dependencies' section.
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 
 # Prerequisites and Dependencies
 ##### All dependencies are internal Unity systems or Unity projects that can be found on the asset store.
@@ -151,19 +151,18 @@ It is opinionated. One of the primary goals was to create a new scene, import th
 	* This is a paid asset. It is required if you want to generate primitive 3D colliders in a 2D environment. This is used for 2D games that want to use 3D physics with "2D colliders".
 
 ##### Please feel free to contact me with any issues or concerns in regards to the dependencies defined above. We can work around the majority of them if needed.
-<br/>
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 # Installation
 > The generator and many dependencies can be installed via the UPM, a package manifest, or the asset store.
 
-<br/>
 
 ### UPM Installation
 > To install a package via UPM, open or create a project in Unity and open the Package Manager. Click "Add packge from git URL"
 > ![[Pasted image 20231207153832.png]]
 > Copy & paste the GIT url for the package you are installing and click "Add". You will need to navigate to "Packages/manifest.json" in your file explorer.
 
-<br/>
 
 ### Manifest Installation
 > To install a package via a package manifest, open or create a project in Unity. 
@@ -236,8 +235,6 @@ It is opinionated. One of the primary goals was to create a new scene, import th
 }
 ```
 
-<br/>
-
 ### UniTask
 ```UPM
  https://github.com/Cysharp/UniTask
@@ -246,8 +243,6 @@ It is opinionated. One of the primary goals was to create a new scene, import th
 ```Manifest
 "com.cysharp.unitask": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask"
 ```
-
-<br/>
 
 ### A* Pathfinding Project
 ```UPM
@@ -268,49 +263,36 @@ https://www.arongranberg.com/astar/download_upm
   }  
 ]
 ```
-<br/>
 
 ### EasyWallCollider
 ```AssetStore
 https://assetstore.unity.com/packages/tools/physics/easy-wall-collider-158206
 ```
 
-<br/>
-
 ### Addressables
 ```
 "com.unity.addressables": "1.19.19",
 ```
-
-<br/>
 
 ### Burst
 ```
 "com.unity.burst": "1.6.5",
 ```
 
-<br/>
-
 ### URP
 ```
 "com.unity.render-pipelines.universal": "12.1.6",
 ```
-
-<br/>
 
 ### 2D Sprites
 ```
 "com.unity.feature.2d": "2.0.0",
 ```
 
-<br/>
-
 ### Collections
 ```
 "com.unity.collections": "1.2.3",
 ```
-
-<br/>
 
 ### Generator
 1. Clone or fork this repository to your PC
@@ -329,8 +311,6 @@ git clone https://github.com/ryan-io/procedural-generator
 ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<br/>
 
 <!-- USAGE EXAMPLES -->
 # Usage
@@ -352,8 +332,6 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 At this point in time, I do not intend to further this generator. This project was intended for personal learning.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-<br/>
-
 
 <!-- CONTRIBUTING -->
 # Contributing
@@ -384,8 +362,6 @@ Distributed under the MIT License.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-<br/>
-
 
 <!-- CONTACT -->
 # Contact
@@ -401,8 +377,6 @@ RyanIO</u></b> <br/> <a href = "mailto:ryan.io@programmer.net?subject=[RIO]%20Pr
 </p>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-<br/>
-
 
 <!-- ACKNOWLEDGMENTS -->
 # Acknowledgments and Credit
