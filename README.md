@@ -151,14 +151,18 @@ It is opinionated. One of the primary goals was to create a new scene, import th
 
 ### UPM Installation
 > To install a package via UPM, open or create a project in Unity and open the Package Manager. Click "Add packge from git URL"
-> ![[Pasted image 20231207153832.png]]
+<p align="center">
+<img  src="https://i.imgur.com/VO1LgrH.png">
+</p>
 > Copy & paste the GIT url for the package you are installing and click "Add". You will need to navigate to "Packages/manifest.json" in your file explorer.
 
 
 ### Manifest Installation
 > To install a package via a package manifest, open or create a project in Unity. 
 > Navigate to Packages/manifest.json in your file explorer
-> ![[Pasted image 20231207154432.png]]
+<p align="center">
+<img  src="https://i.imgur.com/GCzGPou.png">
+</p>
 > Open your manifest JSON file; you will need to add the appropriate query to this file
 > An example manifest.json is given below. 
 > **NOTE**: do not simply copy and paste this example into your own manifest.json. This is just an example to show demonstrate how to add a dependency package.
@@ -309,9 +313,11 @@ git clone https://github.com/ryan-io/procedural-generator
 ### Scene Setup
 ##### Manually
 1. Create an empty game object; add a 'Procedural Generator' monobehavior
-	1. ![[Pasted image 20231208103324.png]]
+	1. width="300" height="125"
 2. The monobehavior component will look like this
-	1. ![[Pasted image 20231208103447.png]]
+<p align="center">
+<img  src="https://i.imgur.com/u1sUljZ.png"/>
+</p>
 ##### Using Included Prefab
 1. If you are using the project repository (forked or cloned the entire Git repo), then you can also simply add the included Procedural Generator Prefab to a scene.
 2. The prefab can be found at 
@@ -319,16 +325,23 @@ git clone https://github.com/ryan-io/procedural-generator
 Packages\ryan-io-procedural-generator\Assets\Prefabs\procedural-generator
 ```
    within the Unity Editor.
-	1. ![[Pasted image 20231208103725.png]]
+<p align="center">
+<img  src="https://i.imgur.com/vlJnN5K.png"/>
+</p>
+
 ### Settings
 
 Settings are divided into two groups: 'Map Configuration' and 'SpriteShape Configuration'. 'Map Configuration' contains settings relevant to the map generation, serialization, deserialization, tiles, pathfinding, colliders, events and more. 'SpriteShape Configuration' contains settings relevent to sprite shape generation.
 
 These configurations are isolated from each other for serialization purposes.
-
+<p align="center">
+<img  src="https://i.imgur.com/Zo29Hqy.png"/>
+</p>
 ##### Setup
 > Setup is intended for high level configuration of the generator. This is the entry point for this package.
-> ![[Pasted image 20231209182407.png]]
+<p align="center">
+<img  src="https://i.imgur.com/tcauKhp.png"/>
+</p>
 
 - State
 	- Map Name/Id
@@ -341,7 +354,9 @@ These configurations are isolated from each other for serialization purposes.
 		- 'Deserialize Map' will deserialize generated data and re-instantiate monobehaviors from this data. 
 - Seed
 	- These settings allow for a more deterministic approach to procedural generation. Specifying your own seed allows for map generation to be more predictable. If you want "truly" randomization of each map, select 'Use Random Seed'. Otherwise, define your own (one will be generated if not specified).
-	- ![[Pasted image 20231208110226.png]]
+<p align="center">
+<img  src="https://i.imgur.com/hMQSyM0.png"/>
+</p>
 	- UseRandomSeed
 		- If 'Yes', a seed will be provided for you. If 'No', create your own or use a previously defined seed value
 	- Seed
@@ -354,14 +369,18 @@ These configurations are isolated from each other for serialization purposes.
 	- Any required monobehaviors are defined here.
 	- At this point in time, the only required monobehavior is the Pathfinder component from the A* Pathfinding Project
 	- If this is not set, one will be (try) created. Otherwise, no pathfinding will be calculated
-	- ![[Pasted image 20231208110857.png]]
 	- Pathfinder
 		- Scene reference to a game object that contains the Pathfinder component
+<p align="center">
+<img  src="https://i.imgur.com/Khho7Fy.png"/>
+</p>
 
 ##### Serialize & Deserialize
 > This grouping is for saving and loading generated data. Elements that can be serialized are: mesh, pathfinding, map prefab(EXPENSIVE), sprite shape and colliders.
 > *** Generating and serializing a map prefab will utilize a non-negligible amount of storage on your hard drive. Take care if you are repeatedly generating maps.
-> ![[Pasted image 20231209182350.png]]
+<p align="center">
+<img  src="https://i.imgur.com/8fBZ22g.png"/>
+</p>
 
 - Iteration Tracker
 	- Name Seed Iteration
@@ -376,7 +395,9 @@ These configurations are isolated from each other for serialization purposes.
 
 ##### Map 
 > These settings control the characteristics of your maps. Each setting will have a short written description, followed by two pictures contrasting the difference between values at the low and high end.
-> ![[Pasted image 20231209183409.png]]
+<p align="center">
+<img  src="https://i.imgur.com/0bWaEKJ.png"/>
+</p>
 
 ### Generation
 ### Serialization
