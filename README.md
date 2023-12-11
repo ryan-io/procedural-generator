@@ -7,19 +7,12 @@
 *** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
 *** https://www.markdownguide.org/basic-syntax/#reference-style-links
 -->
-[![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield]][license-url]
-[![LinkedIn][linkedin-shield]][linkedin-url]
-
 
 
 <!-- PROJECT LOGO -->
 
 <p align="center">
-<img width="300" height="125" src="C:\Development\[portfolio-website]\_logo\ryan-io-high-resolution-logo-transparent.png">
+<img width="300" height="125" src="https://i.imgur.com/w5hcUtR.png">
 </p>
 
 <div align="center">
@@ -35,7 +28,6 @@
     <a href="https://github.com/ryan-io/procedural-generator/issues">Request Feature</a>
   </p>
 </div>
-<br/>
 
 ---
 <!-- TABLE OF CONTENTS -->
@@ -65,7 +57,6 @@
 </details>
 
 ---
-<br/>
 
 <!-- ABOUT THE PROJECT -->
 
@@ -315,7 +306,78 @@ git clone https://github.com/ryan-io/procedural-generator
 <!-- USAGE EXAMPLES -->
 # Usage
 
+### Scene Setup
+##### Manually
+1. Create an empty game object; add a 'Procedural Generator' monobehavior
+	1. ![[Pasted image 20231208103324.png]]
+2. The monobehavior component will look like this
+	1. ![[Pasted image 20231208103447.png]]
+##### Using Included Prefab
+1. If you are using the project repository (forked or cloned the entire Git repo), then you can also simply add the included Procedural Generator Prefab to a scene.
+2. The prefab can be found at 
+```Directory
+Packages\ryan-io-procedural-generator\Assets\Prefabs\procedural-generator
+```
+   within the Unity Editor.
+	1. ![[Pasted image 20231208103725.png]]
 ### Settings
+
+Settings are divided into two groups: 'Map Configuration' and 'SpriteShape Configuration'. 'Map Configuration' contains settings relevant to the map generation, serialization, deserialization, tiles, pathfinding, colliders, events and more. 'SpriteShape Configuration' contains settings relevent to sprite shape generation.
+
+These configurations are isolated from each other for serialization purposes.
+
+##### Setup
+> Setup is intended for high level configuration of the generator. This is the entry point for this package.
+> ![[Pasted image 20231209182407.png]]
+
+- State
+	- Map Name/Id
+		- An identifier for the map. This is used in instantiated game objects and prefabs. All serialized data will append this ID to the file names.
+	- IsBuild
+		- Typically this should be left to 'No'
+		- There are optimizations for 'Yes' in place, but this setting is for runtime generation (not recommended).
+	- Run
+		- 'Create Map' will run the generator
+		- 'Deserialize Map' will deserialize generated data and re-instantiate monobehaviors from this data. 
+- Seed
+	- These settings allow for a more deterministic approach to procedural generation. Specifying your own seed allows for map generation to be more predictable. If you want "truly" randomization of each map, select 'Use Random Seed'. Otherwise, define your own (one will be generated if not specified).
+	- ![[Pasted image 20231208110226.png]]
+	- UseRandomSeed
+		- If 'Yes', a seed will be provided for you. If 'No', create your own or use a previously defined seed value
+	- Seed
+		- The value seed into the generated. Under the hood, is really just a hash code defined in an extension method.
+	- LastSeed
+		- ReadOnly; the last seed used by the generator
+	- LastIteration
+		- Readonly; if using the same seed, the iterator will simply increase its value by '1' each time you reuse a seed. This is to prevent overwriting data. Will always be '0' if using random seeds
+- Monobehaviors
+	- Any required monobehaviors are defined here.
+	- At this point in time, the only required monobehavior is the Pathfinder component from the A* Pathfinding Project
+	- If this is not set, one will be (try) created. Otherwise, no pathfinding will be calculated
+	- ![[Pasted image 20231208110857.png]]
+	- Pathfinder
+		- Scene reference to a game object that contains the Pathfinder component
+
+##### Serialize & Deserialize
+> This grouping is for saving and loading generated data. Elements that can be serialized are: mesh, pathfinding, map prefab(EXPENSIVE), sprite shape and colliders.
+> *** Generating and serializing a map prefab will utilize a non-negligible amount of storage on your hard drive. Take care if you are repeatedly generating maps.
+> ![[Pasted image 20231209182350.png]]
+
+- Iteration Tracker
+	- Name Seed Iteration
+		- This is a drop down that contains a list of all maps that have been generated AND serialized. If you do not serialize a map, the name seed iteration will not be added to this collection.
+		- Selecting a value from this drop down will allow you to deserialize or delete the data
+- Serialization
+	- Select 'Yes' do serialize data when you generate a map. Select 'No' for the elements you do NOT want data serialized for.
+- Deserialization
+	- These settings work identical to the serialization settings
+- Delete Selected Serialized Button
+	- The value of NameSeedIteration will have all of its data deleted.
+
+##### Map 
+> These settings control the characteristics of your maps. Each setting will have a short written description, followed by two pictures contrasting the difference between values at the low and high end.
+> ![[Pasted image 20231209183409.png]]
+
 ### Generation
 ### Serialization
 ### Deserialization
@@ -329,7 +391,7 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 
 <!-- ROADMAP -->
 # Roadmap
-At this point in time, I do not intend to further this generator. This project was intended for personal learning.
+At this point in time, I do not intend to further this generator. This project was intended for personal learning. I will be more than happy to implement a feature request (within reason).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -367,14 +429,13 @@ Distributed under the MIT License.
 # Contact
 
 <p align="center">
-<b><u>
-RyanIO</u></b> <br/> <a href = "mailto:ryan.io@programmer.net?subject=[RIO]%20Procedural%20Generator%20Project" >[Email]</a>
-<br/>
+<b><u>RyanIO</u></b> 
+<br/><br/> 
+<a href = "mailto:ryan.io@programmer.net?subject=[RIO]%20Procedural%20Generator%20Project" >[Email]</a>
 <br/>
 [LinkedIn]
 <br/>
-[GitHub]
-</p>
+<a href="https://github.com/ryan-io">[GitHub]</a></p>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
