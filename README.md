@@ -399,6 +399,109 @@ These configurations are isolated from each other for serialization purposes.
 <img  src="https://i.imgur.com/0bWaEKJ.png"/>
 </p>
 
+- Columns
+	- The number of columns the map should generate
+- Rows
+	- The number of rows the map should gneerate
+- CellSize
+	- Scalar factor for how 'large' a cell should be
+	- **Setting this to a value other than '1' make a few algorithms run with a quadratic time complexity
+- **Columns X Rows = TotalNumberOfCells
+- BorderSize
+	- An optional border around the map
+- SmoothingIterations
+	- How many times to run all algorithms on a generated map
+	- There are diminishing returns for high values, and not post-processing for lower values.
+	- 'Correct' vales can give a more a map with a more purposeful layout
+- WallRemovalThreshold
+	- How many cells can be in a cluster that do NOT enclose open space (think a room).
+	- And example of this:
+<p align="center">
+<img  src="https://i.imgur.com/urRNijf.png"/>
+</p>
+   - The larger the number, the less stand alone walls there will be. The small the number, the more there will be. This can make maps feel and appear more dense. 
+   - Lower numbers are great if you want to a lot of obstacles in your map(s).
+ 
+##### WallRemovalThreshold = 50
+<p align="center">
+<img  src="https://i.imgur.com/zzWnbZk.png"/>
+</p>
+##### WallRemovalThreshold = 3000
+<p align="center">
+<img  src="https://i.imgur.com/YUbKq0B.png"/>
+</p>
+- RoomRemovalThreshold
+	- Analogous to WallRemovalThreshold, but for rooms
+	- A room is defined as open/free map space that is enclose by a wall.
+	- An example of a room:
+<p align="center">
+<img  src="https://i.imgur.com/MsQNy0m.png"/>
+</p>
+   - Notice the area circle in 'red' is not closed off. This is an example of a passage
+   - **Rooms are not entirely isolated from other rooms. One of the generator's constraints is to create maps where all rooms are connected.
+##### RoomRemovalThreshold = 50
+<p align="center">
+<img  src="https://i.imgur.com/5PqSAGA.png"/>
+</p>
+##### RoomRemovalThreshold = 3000
+<p align="center">
+<img  src="https://i.imgur.com/pEJPZzg.png"/>
+</p>
+- LowerNeighborLimit
+	- The minimum number of cells that are generated as a cluster.
+	- This setting has DRASTIC consequences for a value too lower or too high
+	- Play around with it; I've used it as a simple customization option during my testing.
+	- **A value of '4' is appropriate for MOST maps
+- UpperNeighborLimit
+	- The maximum number of cells that are generated as a cluster.
+	- This setting has DRASTIC consequences for a value too lower or too high
+	- Play around with it; I've used it as a simple customization option during my testing.
+	- **A value of 6 is appropriate for MOST maps.
+- WallFillPercentage
+	- How dense the map is.
+	- Higher values will yield less rooms generated
+	- Lower values will yield more rooms genereated. Too low of a value and the map will appear empty.
+	- Values are limited between 40 & 55. The generation algorithm is very sensitive to fluctuations of this value. **47 is the default**.
+##### WallFillPercentage = 47
+<p align="center">
+<img  src="https://i.imgur.com/yvdADGD.png"/>
+</p>
+##### WallFillPercentage  = 45
+<p align="center">
+<img  src="https://i.imgur.com/yo5kYrk.png"/>
+</p>
+##### WallFillPercentage = 40
+<p align="center">
+<img  src="https://i.imgur.com/C4dG53v.png"/>
+</p>
+##### WallFillPercentage = 49
+<p align="center">
+<img  src="https://i.imgur.com/jp8o0Uf.png"/>
+</p>
+##### WallFillPercentage = 55
+<p align="center">
+<img  src="https://i.imgur.com/M3wDv9v.png"/>
+</p>
+- CorridorWidth
+	- How wide or narrow each connected room passageway is
+	- Below is an example with CorridorWidth => {3, 5}
+		- SOME passageways are circled in 'red'.
+<p align="center">
+<img  src="https://i.imgur.com/cdhfyEz.png"/>
+</p>
+- GroundLayerMask
+	- What layer mask the 'ground' should be on.
+- ObstacleLayerMask
+	- What layer mask 'obstacles' should be on.
+- BoundaryLayerMask
+	- What layer ask the 'boundary' of the map should be on.
+- MeshMaterial
+	- Optional: the material to apply to the generated mesh
+	- The example below shows a 'salmon' colored (very generic) material applied to a generated mesh
+<p align="center">
+<img  src="https://i.imgur.com/61Foupt.png"/>
+</p>
+
 ### Generation
 ### Serialization
 ### Deserialization
