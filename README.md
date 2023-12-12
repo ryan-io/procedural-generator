@@ -473,9 +473,11 @@ These configurations are isolated from each other for serialization purposes.
 </p>
 
 ##### RoomRemovalThreshold = 3000
+
 <p align="center">
 <img  src="https://i.imgur.com/pEJPZzg.png"/>
 </p>
+
 - LowerNeighborLimit
 	- The minimum number of cells that are generated as a cluster.
 	- This setting has DRASTIC consequences for a value too lower or too high
@@ -492,25 +494,35 @@ These configurations are isolated from each other for serialization purposes.
 	- Lower values will yield more rooms genereated. Too low of a value and the map will appear empty.
 	- Values are limited between 40 & 55. The generation algorithm is very sensitive to fluctuations of this value. **47 is the default**.
 ##### WallFillPercentage = 47
+
 <p align="center">
 <img  src="https://i.imgur.com/yvdADGD.png"/>
 </p>
+
 ##### WallFillPercentage  = 45
+
 <p align="center">
 <img  src="https://i.imgur.com/yo5kYrk.png"/>
 </p>
+
 ##### WallFillPercentage = 40
+
 <p align="center">
 <img  src="https://i.imgur.com/C4dG53v.png"/>
 </p>
+
 ##### WallFillPercentage = 49
+
 <p align="center">
 <img  src="https://i.imgur.com/jp8o0Uf.png"/>
 </p>
+
 ##### WallFillPercentage = 55
+
 <p align="center">
 <img  src="https://i.imgur.com/M3wDv9v.png"/>
 </p>
+
 - CorridorWidth
 	- How wide or narrow each connected room passageway is
 	- Below is an example with CorridorWidth => {3, 5}
