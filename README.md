@@ -151,18 +151,21 @@ It is opinionated. One of the primary goals was to create a new scene, import th
 
 ### UPM Installation
 > To install a package via UPM, open or create a project in Unity and open the Package Manager. Click "Add packge from git URL"
+
 <p align="center">
 <img  src="https://i.imgur.com/VO1LgrH.png">
 </p>
-> Copy & paste the GIT url for the package you are installing and click "Add". You will need to navigate to "Packages/manifest.json" in your file explorer.
 
+> Copy & paste the GIT url for the package you are installing and click "Add". You will need to navigate to "Packages/manifest.json" in your file explorer.
 
 ### Manifest Installation
 > To install a package via a package manifest, open or create a project in Unity. 
 > Navigate to Packages/manifest.json in your file explorer
+
 <p align="center">
 <img  src="https://i.imgur.com/GCzGPou.png">
 </p>
+
 > Open your manifest JSON file; you will need to add the appropriate query to this file
 > An example manifest.json is given below. 
 > **NOTE**: do not simply copy and paste this example into your own manifest.json. This is just an example to show demonstrate how to add a dependency package.
@@ -315,16 +318,21 @@ git clone https://github.com/ryan-io/procedural-generator
 1. Create an empty game object; add a 'Procedural Generator' monobehavior
 	1. width="300" height="125"
 2. The monobehavior component will look like this
+
 <p align="center">
 <img  src="https://i.imgur.com/u1sUljZ.png"/>
 </p>
+
 ##### Using Included Prefab
 1. If you are using the project repository (forked or cloned the entire Git repo), then you can also simply add the included Procedural Generator Prefab to a scene.
 2. The prefab can be found at 
+
 ```Directory
 Packages\ryan-io-procedural-generator\Assets\Prefabs\procedural-generator
 ```
+
    within the Unity Editor.
+
 <p align="center">
 <img  src="https://i.imgur.com/vlJnN5K.png"/>
 </p>
@@ -334,9 +342,11 @@ Packages\ryan-io-procedural-generator\Assets\Prefabs\procedural-generator
 Settings are divided into two groups: 'Map Configuration' and 'SpriteShape Configuration'. 'Map Configuration' contains settings relevant to the map generation, serialization, deserialization, tiles, pathfinding, colliders, events and more. 'SpriteShape Configuration' contains settings relevent to sprite shape generation.
 
 These configurations are isolated from each other for serialization purposes.
+
 <p align="center">
 <img  src="https://i.imgur.com/Zo29Hqy.png"/>
 </p>
+
 ##### Setup
 
 > Setup is intended for high level configuration of the generator. This is the entry point for this package.
