@@ -443,13 +443,13 @@ These configurations are isolated from each other for serialization purposes.
    - The larger the number, the less stand alone walls there will be. The small the number, the more there will be. This can make maps feel and appear more dense. 
    - Lower numbers are great if you want to a lot of obstacles in your map(s).
  
-##### WallRemovalThreshold = 50
+<p><b><i>WallRemovalThreshold = 50</i></b></p>
 
 <p align="center">
 <img  src="https://i.imgur.com/zzWnbZk.png"/>
 </p>
 
-##### WallRemovalThreshold = 3000
+<p><b><i>WallRemovalThreshold = 3000</i></b></p>
 
 <p align="center">
 <img  src="https://i.imgur.com/YUbKq0B.png"/>
@@ -467,13 +467,13 @@ These configurations are isolated from each other for serialization purposes.
    - Notice the area circle in 'red' is not closed off. This is an example of a passage
    - **Rooms are not entirely isolated from other rooms. One of the generator's constraints is to create maps where all rooms are connected.
 
-##### RoomRemovalThreshold = 50
+<p><b><i>RoomRemovalThreshold = 50</i></b></p>
 
 <p align="center">
 <img  src="https://i.imgur.com/5PqSAGA.png"/>
 </p>
 
-##### RoomRemovalThreshold = 3000
+<p><b><i>RoomRemovalThreshold = 3000</i></b></p>
 
 <p align="center">
 <img  src="https://i.imgur.com/pEJPZzg.png"/>
@@ -494,31 +494,32 @@ These configurations are isolated from each other for serialization purposes.
 	- Higher values will yield less rooms generated
 	- Lower values will yield more rooms genereated. Too low of a value and the map will appear empty.
 	- Values are limited between 40 & 55. The generation algorithm is very sensitive to fluctuations of this value. **47 is the default**.
-##### WallFillPercentage = 47
+
+<p><b><i>WallFillPercentage = 47</i></b></p>
 
 <p align="center">
 <img  src="https://i.imgur.com/yvdADGD.png"/>
 </p>
 
-##### WallFillPercentage  = 45
+<p><b><i>WallFillPercentage  = 45</i></b></p> 
 
 <p align="center">
 <img  src="https://i.imgur.com/yo5kYrk.png"/>
 </p>
 
-##### WallFillPercentage = 40
+<p><b><i>WallFillPercentage = 40</i></b></p> 
 
 <p align="center">
 <img  src="https://i.imgur.com/C4dG53v.png"/>
 </p>
 
-##### WallFillPercentage = 49
+<p><b><i>WallFillPercentage = 49</i></b></p> 
 
 <p align="center">
 <img  src="https://i.imgur.com/jp8o0Uf.png"/>
 </p>
 
-##### WallFillPercentage = 55
+<p><b><i>WallFillPercentage = 55</i></b></p> 
 
 <p align="center">
 <img  src="https://i.imgur.com/M3wDv9v.png"/>
@@ -547,7 +548,7 @@ These configurations are isolated from each other for serialization purposes.
 <img  src="https://i.imgur.com/61Foupt.png"/>
 </p>
 
-### Generation
+### Random Object Spawning
 ### Serialization
 ### Deserialization
 ### Demo GIFs
