@@ -338,7 +338,9 @@ These configurations are isolated from each other for serialization purposes.
 <img  src="https://i.imgur.com/Zo29Hqy.png"/>
 </p>
 ##### Setup
+
 > Setup is intended for high level configuration of the generator. This is the entry point for this package.
+
 <p align="center">
 <img  src="https://i.imgur.com/tcauKhp.png"/>
 </p>
@@ -354,10 +356,12 @@ These configurations are isolated from each other for serialization purposes.
 		- 'Deserialize Map' will deserialize generated data and re-instantiate monobehaviors from this data. 
 - Seed
 	- These settings allow for a more deterministic approach to procedural generation. Specifying your own seed allows for map generation to be more predictable. If you want "truly" randomization of each map, select 'Use Random Seed'. Otherwise, define your own (one will be generated if not specified).
+
 <p align="center">
 <img  src="https://i.imgur.com/hMQSyM0.png"/>
 </p>
-	- UseRandomSeed
+
+- UseRandomSeed
 		- If 'Yes', a seed will be provided for you. If 'No', create your own or use a previously defined seed value
 	- Seed
 		- The value seed into the generated. Under the hood, is really just a hash code defined in an extension method.
@@ -371,6 +375,7 @@ These configurations are isolated from each other for serialization purposes.
 	- If this is not set, one will be (try) created. Otherwise, no pathfinding will be calculated
 	- Pathfinder
 		- Scene reference to a game object that contains the Pathfinder component
+
 <p align="center">
 <img  src="https://i.imgur.com/Khho7Fy.png"/>
 </p>
@@ -378,6 +383,7 @@ These configurations are isolated from each other for serialization purposes.
 ##### Serialize & Deserialize
 > This grouping is for saving and loading generated data. Elements that can be serialized are: mesh, pathfinding, map prefab(EXPENSIVE), sprite shape and colliders.
 > *** Generating and serializing a map prefab will utilize a non-negligible amount of storage on your hard drive. Take care if you are repeatedly generating maps.
+
 <p align="center">
 <img  src="https://i.imgur.com/8fBZ22g.png"/>
 </p>
@@ -394,7 +400,9 @@ These configurations are isolated from each other for serialization purposes.
 	- The value of NameSeedIteration will have all of its data deleted.
 
 ##### Map 
+
 > These settings control the characteristics of your maps. Each setting will have a short written description, followed by two pictures contrasting the difference between values at the low and high end.
+
 <p align="center">
 <img  src="https://i.imgur.com/0bWaEKJ.png"/>
 </p>
@@ -416,33 +424,44 @@ These configurations are isolated from each other for serialization purposes.
 - WallRemovalThreshold
 	- How many cells can be in a cluster that do NOT enclose open space (think a room).
 	- And example of this:
+
 <p align="center">
 <img  src="https://i.imgur.com/urRNijf.png"/>
 </p>
+
    - The larger the number, the less stand alone walls there will be. The small the number, the more there will be. This can make maps feel and appear more dense. 
    - Lower numbers are great if you want to a lot of obstacles in your map(s).
  
 ##### WallRemovalThreshold = 50
+
 <p align="center">
 <img  src="https://i.imgur.com/zzWnbZk.png"/>
 </p>
+
 ##### WallRemovalThreshold = 3000
+
 <p align="center">
 <img  src="https://i.imgur.com/YUbKq0B.png"/>
 </p>
+
 - RoomRemovalThreshold
 	- Analogous to WallRemovalThreshold, but for rooms
 	- A room is defined as open/free map space that is enclose by a wall.
 	- An example of a room:
+
 <p align="center">
 <img  src="https://i.imgur.com/MsQNy0m.png"/>
 </p>
+
    - Notice the area circle in 'red' is not closed off. This is an example of a passage
    - **Rooms are not entirely isolated from other rooms. One of the generator's constraints is to create maps where all rooms are connected.
+
 ##### RoomRemovalThreshold = 50
+
 <p align="center">
 <img  src="https://i.imgur.com/5PqSAGA.png"/>
 </p>
+
 ##### RoomRemovalThreshold = 3000
 <p align="center">
 <img  src="https://i.imgur.com/pEJPZzg.png"/>
@@ -486,9 +505,11 @@ These configurations are isolated from each other for serialization purposes.
 	- How wide or narrow each connected room passageway is
 	- Below is an example with CorridorWidth => {3, 5}
 		- SOME passageways are circled in 'red'.
+
 <p align="center">
 <img  src="https://i.imgur.com/cdhfyEz.png"/>
 </p>
+
 - GroundLayerMask
 	- What layer mask the 'ground' should be on.
 - ObstacleLayerMask
@@ -498,6 +519,7 @@ These configurations are isolated from each other for serialization purposes.
 - MeshMaterial
 	- Optional: the material to apply to the generated mesh
 	- The example below shows a 'salmon' colored (very generic) material applied to a generated mesh
+
 <p align="center">
 <img  src="https://i.imgur.com/61Foupt.png"/>
 </p>
