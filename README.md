@@ -154,7 +154,7 @@ It is opinionated. One of the primary goals was to create a new scene, import th
 > To install a package via UPM, open or create a project in Unity and open the Package Manager. Click "Add packge from git URL"
 
 <p align="center">
-<img  src="https://i.imgur.com/VO1LgrH.png">
+<img  src="https://i.imgur.com/VO1LgrH.png" width="200">
 </p>
 
 > Copy & paste the GIT url for the package you are installing and click "Add". You will need to navigate to "Packages/manifest.json" in your file explorer.
@@ -164,7 +164,7 @@ It is opinionated. One of the primary goals was to create a new scene, import th
 > Navigate to Packages/manifest.json in your file explorer
 
 <p align="center">
-<img  src="https://i.imgur.com/GCzGPou.png">
+<img  src="https://i.imgur.com/GCzGPou.png" width="500">
 </p>
 
 > Open your manifest JSON file; you will need to add the appropriate query to this file
@@ -321,7 +321,7 @@ git clone https://github.com/ryan-io/procedural-generator
 2. The monobehavior component will look like this
 
 <p align="center">
-<img  src="https://i.imgur.com/u1sUljZ.png"/>
+<img  src="https://i.imgur.com/u1sUljZ.png" width="500"/>
 </p>
 
 ##### Using Included Prefab
@@ -335,7 +335,7 @@ Packages\ryan-io-procedural-generator\Assets\Prefabs\procedural-generator
    within the Unity Editor.
 
 <p align="center">
-<img  src="https://i.imgur.com/vlJnN5K.png"/>
+<img  src="https://i.imgur.com/vlJnN5K.png" width="400"/>
 </p>
 
 ### Settings
@@ -345,7 +345,7 @@ Settings are divided into two groups: 'Map Configuration' and 'SpriteShape Confi
 These configurations are isolated from each other for serialization purposes.
 
 <p align="center">
-<img  src="https://i.imgur.com/Zo29Hqy.png"/>
+<img  src="https://i.imgur.com/Zo29Hqy.png" width="500"/>
 </p>
 
 ##### Setup
@@ -353,7 +353,7 @@ These configurations are isolated from each other for serialization purposes.
 > Setup is intended for high level configuration of the generator. This is the entry point for this package.
 
 <p align="center">
-<img  src="https://i.imgur.com/tcauKhp.png"/>
+<img  src="https://i.imgur.com/tcauKhp.png" width="500"/>
 </p>
 
 - State
@@ -369,7 +369,7 @@ These configurations are isolated from each other for serialization purposes.
 	- These settings allow for a more deterministic approach to procedural generation. Specifying your own seed allows for map generation to be more predictable. If you want "truly" randomization of each map, select 'Use Random Seed'. Otherwise, define your own (one will be generated if not specified).
 
 <p align="center">
-<img  src="https://i.imgur.com/hMQSyM0.png"/>
+<img  src="https://i.imgur.com/hMQSyM0.png" width="600"/>
 </p>
 
 - UseRandomSeed
@@ -388,7 +388,7 @@ These configurations are isolated from each other for serialization purposes.
 		- Scene reference to a game object that contains the Pathfinder component
 
 <p align="center">
-<img  src="https://i.imgur.com/Khho7Fy.png"/>
+<img  src="https://i.imgur.com/Khho7Fy.png" width="600"/>
 </p>
 
 ##### Serialize & Deserialize
@@ -415,7 +415,7 @@ These configurations are isolated from each other for serialization purposes.
 > These settings control the characteristics of your maps. Each setting will have a short written description, followed by two pictures contrasting the difference between values at the low and high end.
 
 <p align="center">
-<img  src="https://i.imgur.com/0bWaEKJ.png"/>
+<img  src="https://i.imgur.com/0bWaEKJ.png" width="600"/>
 </p>
 
 - Columns
@@ -437,7 +437,7 @@ These configurations are isolated from each other for serialization purposes.
 	- And example of this:
 
 <p align="center">
-<img  src="https://i.imgur.com/urRNijf.png"/>
+<img  src="https://i.imgur.com/urRNijf.png" width="400"/>
 </p>
 
    - The larger the number, the less stand alone walls there will be. The small the number, the more there will be. This can make maps feel and appear more dense. 
@@ -446,7 +446,7 @@ These configurations are isolated from each other for serialization purposes.
 <p><b><i>WallRemovalThreshold = 50</i></b></p>
 
 <p align="center">
-<img  src="https://i.imgur.com/zzWnbZk.png"/>
+<img  src="https://i.imgur.com/zzWnbZk.png" width="600"/>
 </p>
 
 <p><b><i>WallRemovalThreshold = 3000</i></b></p>
@@ -461,7 +461,7 @@ These configurations are isolated from each other for serialization purposes.
 	- An example of a room:
 
 <p align="center">
-<img  src="https://i.imgur.com/MsQNy0m.png"/>
+<img  src="https://i.imgur.com/MsQNy0m.png" width="500"/>
 </p>
 
    - Notice the area circle in 'red' is not closed off. This is an example of a passage
@@ -470,13 +470,13 @@ These configurations are isolated from each other for serialization purposes.
 <p><b><i>RoomRemovalThreshold = 50</i></b></p>
 
 <p align="center">
-<img  src="https://i.imgur.com/5PqSAGA.png"/>
+<img  src="https://i.imgur.com/5PqSAGA.png" width="600"/>
 </p>
 
 <p><b><i>RoomRemovalThreshold = 3000</i></b></p>
 
 <p align="center">
-<img  src="https://i.imgur.com/pEJPZzg.png"/>
+<img  src="https://i.imgur.com/pEJPZzg.png" width="600"/>
 </p>
 
 - LowerNeighborLimit
@@ -498,31 +498,31 @@ These configurations are isolated from each other for serialization purposes.
 <p><b><i>WallFillPercentage = 47</i></b></p>
 
 <p align="center">
-<img  src="https://i.imgur.com/yvdADGD.png"/>
+<img  src="https://i.imgur.com/yvdADGD.png" width="600"/>
 </p>
 
 <p><b><i>WallFillPercentage  = 45</i></b></p> 
 
 <p align="center">
-<img  src="https://i.imgur.com/yo5kYrk.png"/>
+<img  src="https://i.imgur.com/yo5kYrk.png" width="600"/>
 </p>
 
 <p><b><i>WallFillPercentage = 40</i></b></p> 
 
 <p align="center">
-<img  src="https://i.imgur.com/C4dG53v.png"/>
+<img  src="https://i.imgur.com/C4dG53v.png" width="600"/>
 </p>
 
 <p><b><i>WallFillPercentage = 49</i></b></p> 
 
 <p align="center">
-<img  src="https://i.imgur.com/jp8o0Uf.png"/>
+<img  src="https://i.imgur.com/jp8o0Uf.png" width="600"/>
 </p>
 
 <p><b><i>WallFillPercentage = 55</i></b></p> 
 
 <p align="center">
-<img  src="https://i.imgur.com/M3wDv9v.png"/>
+<img  src="https://i.imgur.com/M3wDv9v.png" width="600"/>
 </p>
 
 - CorridorWidth
@@ -531,7 +531,7 @@ These configurations are isolated from each other for serialization purposes.
 		- SOME passageways are circled in 'red'.
 
 <p align="center">
-<img  src="https://i.imgur.com/cdhfyEz.png"/>
+<img  src="https://i.imgur.com/cdhfyEz.png" width="600"/>
 </p>
 
 - GroundLayerMask
@@ -545,9 +545,10 @@ These configurations are isolated from each other for serialization purposes.
 	- The example below shows a 'salmon' colored (very generic) material applied to a generated mesh
 
 <p align="center">
-<img  src="https://i.imgur.com/61Foupt.png"/>
+<img  src="https://i.imgur.com/61Foupt.png" width="600"/>
 </p>
 
+##### Tiles
 ### Random Object Spawning
 ### Serialization
 ### Deserialization
