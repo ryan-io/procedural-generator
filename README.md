@@ -133,6 +133,7 @@ It is opinionated. One of the primary goals was to create a new scene, import th
 * UniTask 2.2.5
 * Unity TileMap 1.0.0
 * Unity Sprites 1.0.0
+* Unity 2D Tilemap Extras 1.6.0
 * Universal Render Pipeline 12.1.6
 	* This is not a hard requirement. For demonstration using a 2D environment, URP was selected.
 * Unity Addressable 1.19.19
@@ -154,7 +155,7 @@ It is opinionated. One of the primary goals was to create a new scene, import th
 > To install a package via UPM, open or create a project in Unity and open the Package Manager. Click "Add packge from git URL"
 
 <p align="center">
-<img  src="https://i.imgur.com/VO1LgrH.png">
+<img  src="https://i.imgur.com/VO1LgrH.png" width="200">
 </p>
 
 > Copy & paste the GIT url for the package you are installing and click "Add". You will need to navigate to "Packages/manifest.json" in your file explorer.
@@ -164,7 +165,7 @@ It is opinionated. One of the primary goals was to create a new scene, import th
 > Navigate to Packages/manifest.json in your file explorer
 
 <p align="center">
-<img  src="https://i.imgur.com/GCzGPou.png">
+<img  src="https://i.imgur.com/GCzGPou.png" width="500">
 </p>
 
 > Open your manifest JSON file; you will need to add the appropriate query to this file
@@ -321,7 +322,7 @@ git clone https://github.com/ryan-io/procedural-generator
 2. The monobehavior component will look like this
 
 <p align="center">
-<img  src="https://i.imgur.com/u1sUljZ.png"/>
+<img  src="https://i.imgur.com/u1sUljZ.png" width="500"/>
 </p>
 
 ##### Using Included Prefab
@@ -335,7 +336,7 @@ Packages\ryan-io-procedural-generator\Assets\Prefabs\procedural-generator
    within the Unity Editor.
 
 <p align="center">
-<img  src="https://i.imgur.com/vlJnN5K.png"/>
+<img  src="https://i.imgur.com/vlJnN5K.png" width="400"/>
 </p>
 
 ### Settings
@@ -345,7 +346,7 @@ Settings are divided into two groups: 'Map Configuration' and 'SpriteShape Confi
 These configurations are isolated from each other for serialization purposes.
 
 <p align="center">
-<img  src="https://i.imgur.com/Zo29Hqy.png"/>
+<img  src="https://i.imgur.com/Zo29Hqy.png" width="500"/>
 </p>
 
 ##### Setup
@@ -353,7 +354,7 @@ These configurations are isolated from each other for serialization purposes.
 > Setup is intended for high level configuration of the generator. This is the entry point for this package.
 
 <p align="center">
-<img  src="https://i.imgur.com/tcauKhp.png"/>
+<img  src="https://i.imgur.com/tcauKhp.png" width="500"/>
 </p>
 
 - State
@@ -369,7 +370,7 @@ These configurations are isolated from each other for serialization purposes.
 	- These settings allow for a more deterministic approach to procedural generation. Specifying your own seed allows for map generation to be more predictable. If you want "truly" randomization of each map, select 'Use Random Seed'. Otherwise, define your own (one will be generated if not specified).
 
 <p align="center">
-<img  src="https://i.imgur.com/hMQSyM0.png"/>
+<img  src="https://i.imgur.com/hMQSyM0.png" width="600"/>
 </p>
 
 - UseRandomSeed
@@ -388,7 +389,7 @@ These configurations are isolated from each other for serialization purposes.
 		- Scene reference to a game object that contains the Pathfinder component
 
 <p align="center">
-<img  src="https://i.imgur.com/Khho7Fy.png"/>
+<img  src="https://i.imgur.com/Khho7Fy.png" width="600"/>
 </p>
 
 ##### Serialize & Deserialize
@@ -415,7 +416,7 @@ These configurations are isolated from each other for serialization purposes.
 > These settings control the characteristics of your maps. Each setting will have a short written description, followed by two pictures contrasting the difference between values at the low and high end.
 
 <p align="center">
-<img  src="https://i.imgur.com/0bWaEKJ.png"/>
+<img  src="https://i.imgur.com/0bWaEKJ.png" width="600"/>
 </p>
 
 - Columns
@@ -437,19 +438,19 @@ These configurations are isolated from each other for serialization purposes.
 	- And example of this:
 
 <p align="center">
-<img  src="https://i.imgur.com/urRNijf.png"/>
+<img  src="https://i.imgur.com/urRNijf.png" width="400"/>
 </p>
 
    - The larger the number, the less stand alone walls there will be. The small the number, the more there will be. This can make maps feel and appear more dense. 
    - Lower numbers are great if you want to a lot of obstacles in your map(s).
  
-##### WallRemovalThreshold = 50
+<p><b><i>WallRemovalThreshold = 50</i></b></p>
 
 <p align="center">
-<img  src="https://i.imgur.com/zzWnbZk.png"/>
+<img  src="https://i.imgur.com/zzWnbZk.png" width="600"/>
 </p>
 
-##### WallRemovalThreshold = 3000
+<p><b><i>WallRemovalThreshold = 3000</i></b></p>
 
 <p align="center">
 <img  src="https://i.imgur.com/YUbKq0B.png"/>
@@ -461,22 +462,22 @@ These configurations are isolated from each other for serialization purposes.
 	- An example of a room:
 
 <p align="center">
-<img  src="https://i.imgur.com/MsQNy0m.png"/>
+<img  src="https://i.imgur.com/MsQNy0m.png" width="500"/>
 </p>
 
    - Notice the area circle in 'red' is not closed off. This is an example of a passage
    - **Rooms are not entirely isolated from other rooms. One of the generator's constraints is to create maps where all rooms are connected.
 
-##### RoomRemovalThreshold = 50
+<p><b><i>RoomRemovalThreshold = 50</i></b></p>
 
 <p align="center">
-<img  src="https://i.imgur.com/5PqSAGA.png"/>
+<img  src="https://i.imgur.com/5PqSAGA.png" width="600"/>
 </p>
 
-##### RoomRemovalThreshold = 3000
+<p><b><i>RoomRemovalThreshold = 3000</i></b></p>
 
 <p align="center">
-<img  src="https://i.imgur.com/pEJPZzg.png"/>
+<img  src="https://i.imgur.com/pEJPZzg.png" width="600"/>
 </p>
 
 - LowerNeighborLimit
@@ -494,34 +495,35 @@ These configurations are isolated from each other for serialization purposes.
 	- Higher values will yield less rooms generated
 	- Lower values will yield more rooms genereated. Too low of a value and the map will appear empty.
 	- Values are limited between 40 & 55. The generation algorithm is very sensitive to fluctuations of this value. **47 is the default**.
-##### WallFillPercentage = 47
+
+<p><b><i>WallFillPercentage = 47</i></b></p>
 
 <p align="center">
-<img  src="https://i.imgur.com/yvdADGD.png"/>
+<img  src="https://i.imgur.com/yvdADGD.png" width="600"/>
 </p>
 
-##### WallFillPercentage  = 45
+<p><b><i>WallFillPercentage  = 45</i></b></p> 
 
 <p align="center">
-<img  src="https://i.imgur.com/yo5kYrk.png"/>
+<img  src="https://i.imgur.com/yo5kYrk.png" width="600"/>
 </p>
 
-##### WallFillPercentage = 40
+<p><b><i>WallFillPercentage = 40</i></b></p> 
 
 <p align="center">
-<img  src="https://i.imgur.com/C4dG53v.png"/>
+<img  src="https://i.imgur.com/C4dG53v.png" width="600"/>
 </p>
 
-##### WallFillPercentage = 49
+<p><b><i>WallFillPercentage = 49</i></b></p> 
 
 <p align="center">
-<img  src="https://i.imgur.com/jp8o0Uf.png"/>
+<img  src="https://i.imgur.com/jp8o0Uf.png" width="600"/>
 </p>
 
-##### WallFillPercentage = 55
+<p><b><i>WallFillPercentage = 55</i></b></p> 
 
 <p align="center">
-<img  src="https://i.imgur.com/M3wDv9v.png"/>
+<img  src="https://i.imgur.com/M3wDv9v.png" width="600"/>
 </p>
 
 - CorridorWidth
@@ -530,7 +532,7 @@ These configurations are isolated from each other for serialization purposes.
 		- SOME passageways are circled in 'red'.
 
 <p align="center">
-<img  src="https://i.imgur.com/cdhfyEz.png"/>
+<img  src="https://i.imgur.com/cdhfyEz.png" width="600"/>
 </p>
 
 - GroundLayerMask
@@ -544,11 +546,230 @@ These configurations are isolated from each other for serialization purposes.
 	- The example below shows a 'salmon' colored (very generic) material applied to a generated mesh
 
 <p align="center">
-<img  src="https://i.imgur.com/61Foupt.png"/>
+<img  src="https://i.imgur.com/61Foupt.png" width="600"/>
 </p>
 
-### Generation
+##### Tiles
+
+> The generator can also utilize the internal tile mapper. This mapper utilizes Unity's [Rule Tiles](https://docs.unity3d.com/Packages/com.unity.2d.tilemap.extras@1.6/manual/RuleTile.html) & [Tilemaps](https://docs.unity3d.com/Manual/Tilemap.html) systems. By default, this system is disabled and should be used sparingly. This is one of the systems I need to implement optimizations for. It does work, but will add on significant time to the generation process. The larger the map and/or the larger the cell size, the less performant this system becomes
+
+<p align="center">
+<img  src="https://i.imgur.com/kDEQizA.png" width="500"/>
+</p>
+
+- RenderTilemaps
+	- The generator can choose to calculate where tiles should go, but to not render them. 
+	- 'Yes' will still run the tile mapper. All tile map renderers will be disabled at the end of the generation process
+- CreateTileLabels
+	- If yes, debug labels will be displayed to indicate the tile dictionary key
+- CreateTileAngles
+	- A small optimization; selecting yes will allow rule tiles to calculate in up to 8 directions instead of 4. 
+- TileDictionary
+	- A pre-populated dictionary with keys for each boundary direction as well as the ground. Values should be assigned appropriate tiles (TileBase, Tile, RuleTile, etc.).
+
+##### Pathfinding
+
+> The generator integrates terrifically with the [A* Pathfinding Project](https://arongranberg.com/astar/). At its core, the A* Pathfinding Project uses the A* pathfinding algorithm. But it is much more than that. This generator integrates with the following systems: 2D pathfinding API, A* heuristics (Euclidean, Manhattan, & Diagonal Manhattan), 2D & 3D physics (collisions) and Erosion.
+> I highly recommend you read through the A* Pathfinding Project [documentation](https://arongranberg.com/astar/documentation/stable/) to learning more about these topics.
+> This generator exclusively uses [Grid](https://arongranberg.com/astar/documentation/dev_4_3_87_ed9ba20c0/graphtypes.html) graphs.
+
+<p align="center">
+<img  src="https://i.imgur.com/74tcSso.png" width="500"/>
+</p>
+
+- Astar
+	>Visit [here](https://arongranberg.com/astar/documentation/4_2_7_0b5deb87/getstarted.html) for a terrific overview on the A* package
+	
+	- GeneratedColliderType
+		- These are the colliders that are generated around the map border as well as the boundary of generated rooms.
+		- Edge
+			- A 2D collider that has a single AABB. This means if the collider is stationary (not moving), then only one edge needs to be check for collisions. On the contrary, a box collider has an AABB when all four edges need to be checked for collision. Use this if an EdgeCollider2D is appropriate for your setup
+			- [Unity documentation for EdgeCollider2D](https://docs.unity3d.com/Manual/class-EdgeCollider2D.html)
+		- Box
+			- Colliders are generated using BoxCollider2D
+			- [Unity documentation for BoxCollider2D](https://docs.unity3d.com/ScriptReference/BoxCollider2D.html)
+		- PrimitiveCombo
+			- FOR USE WITH 3D PHYSICS ONLY
+			- This option uses the [EasyWallCollider](https://assetstore.unity.com/packages/tools/physics/easy-wall-collider-158206) from Pepijn Willekens
+			- At its core, it uses 3D primitive colliders (Box & Capusle)
+			- The use case are for 2D games that utilize 3D physics
+	- NavGraphCollisionType
+		- This determines how collisions are calculated and is mostly used in the A* Pathfinding Project to check for collision on grid graphs.
+		- The default is a capsule shape. A sphere shape 
+	- NavGraphcollisionDetectionDiameter
+		- Sets the diameter for CollisionType.Sphere, the width for CollisionType.Capsule and is the length of CollisionType.Ray
+	- NavGraphCollisionDetectionHeight
+		- This is only used to set the height of CollisionType.Capsule. It is not used for CollisionType.Sphere or CollisionType.Ray.
+	- NavGraphNodeSize
+		- How large the A* grid node size is. This is the most performant and critical pathfinding setting. A much lower value results in many smaller nodes, but with better granularity and resolution for pathfinding. The large the value, the larger the grid node and the less "accurate" pathfinding becomes
+- Erosion
+	>[Erosion](https://arongranberg.com/astar/docs/gridgraph.html) is a way to make a node signify a penalty without making that node unwalkable. Eroding a nodes is simply assigning it a tag. From this tag, you can assign a penalty for selecting this node when calculating a path or make it unwalkable for a specific or group of game objects. 
+		- I like to think of Erosion as being analogous to the Unity Layer system. You define a set of layers. You can then assign a game object a layer. Knowing the layer a game object is on can help with physics interactions, transform manipulation and many other elements. Erosion is like this; only in the context of pathfinding. 
+		- Each game object in your game can utilize the seeker component. This component will allow you to choose what erosion node tags are traversable.
+
+	- ErodePathfindingGrid
+		- Is 'Yes', erosion around obstacles and unwalkable nodes will be eroded
+		- There is a great description that Aron (A* Pathfinding Project developer) gave for erosion:
+		-<p align="center">
+<img  src="https://i.imgur.com/U2pf32e.png" width="600"/>
+</p>
+	- ErosionCollisionDiameter
+		- When eroding a node, how large of a diameter should be applied to the surrounding nodes? If this value is less than the size of a single node, only that node will be eroded.
+	- NodesToErodeAtBoundaries
+		- How many nodes to erode starting around the boundary of the map
+	- StartingNodeIndexToErode
+		- This number represents the number of nodes that become unwalkable before being assigned a tag value.
+		- This number must be less than or equal to NodesToErodeAtBoundaries, otherwise all erosion nodes will be set to unwalkable
+		- For example, if NodesToErodeAtBoundaries = 5 and StartingNodeIndexToErode = 3, then boundaryNode + 1 = unwalkable, boundaryNode + 2 = unwalkable, boundaryNode + 3 = erosionTag1, boundaryNode + 4 = erosionTag2.
+	- DrawNodePositions
+		- For debugging
+		- Will create a gizmo for each node.transform.position
+	- DrawNodePositionsShifted
+		- For debugging
+		- Will create a gizmo for each nodeShifted.transform.position
+			- nodeShifted is the final representation of an "accurate" pathfinding node location. This setting isn't really pertinent to usage of the project, but I left it in just in case.
+
+##### Colliders
+
+> Collider solvers calculate and optimize collider location, geometry, and type. Two can be used right out of the box: [Edge]() & [Box](). Both of these are built into Unity only work with 2D physics.
+> If you want a more hybrid approach that utilizes 3D primitive colliders & works with 3D physics, there is an optional solver type: Primitive Combo. THIS SETTING IS DEPEDNENT ON EASYWALLCOLLIDER. This setting uses a combination of box and capsule colliders to generate boundaries that functionally are analogous to it's 2D alternatives. 
+
+- SolverType
+	- Edge
+		- Tells the generator to use the EdgeCollider2DSolver
+	- Box
+		- Tells the generator to use the BoxCollider2DSolver
+	- PrimitiveCombo
+		- Requires EasyWallCollider
+		- Tells the generator use PrimitiveComboColliderSolver
+- EdgeSolver
+	- EdgeColliderRadius
+		- Per Unity documentation: "Set a value that forms a radius around the edge of the Collider. This results in a larger Collider 2D with rounded convex corners".
+	- EdgeColliderOfset
+		- Sets the local offset values of the Collider 2D geometry. This setting helps aligning your boundary with the map.
+		- Default is 0,0
+- BoxSolver
+	- This option utilizes very thin BoxCollider2D components. A single collider is instantiated per each boundary segment.
+	- BoxColliderPrefab
+		- OPTIONAL
+		- If this is NOT null, a prefab that SHOULD contain a box collider will be instantiated at each calculated boundary segments
+	- BoxColliderSkinWidth
+		- The width (and depth) of the box collider (think of this as a 2D cross-section with square geometry)
+- PrimitiveCombo
+	- PrimitiveColliderRadius
+		- When the algorithm determines a capsule collider should be used at a control point, this setting defines the radius of the capsule.
+	- PrimitiveColliderSkinWidth
+		- When the algorithm determines a box collider should be used at a control point, this setting defines the length, width and depth of the box.
+	- NodeCullDistance
+		- If the algorithm determines two points are too close together, then it will skip adding that point as a control point
+		- This setting is the minimum distance required between two points.
+
+##### Events
+
+> The inspector exposes a container of serialized events that are invoked at specific points in the generation process. These are optional and you are NOT required to use this system.
+> This container functionality works like a [UnityEvent](https://docs.unity3d.com/ScriptReference/Events.UnityEvent.html).
+> You can add a listener to any of the following pre-defined generation checkpoints
+
+- SerializedEvent process
+	- Cleaning
+	- Initializing
+	- Running
+	- Completing
+	- Disposing
+	- Error
+
+##### SpriteShapeConfiguration
+
+> This system utilizes its own configuration process and is also isolated from the standard ProceduralGenerationConfiguration for serialization purposes. Please read Unity's documentation on [2D Sprite Shapes](https://docs.unity3d.com/Packages/com.unity.2d.spriteshape@3.0/manual/index.html).
+> Some of these settings will not make sense until you are familiar with the SpriteShape API.
+
+- PPU
+	- Pixels per unit
+	- How many pixels a sprite corresponds to in a single world unit
+	- The higher the value, the 'larger' pixels will appear, but can appear jagged
+	- The lower the value, the 'smaller' pixels will appear. This generally gives the appearance of increased quality.
+	- This setting should be the same the PPU used in creating the sprites for your boundary.
+- ScaleModifier
+	- Applies a scalar multiplier to the transform.scale of the SpriteBorder
+- OrderInLayer
+	- What order in the 'boundary' layer should the SpriteBorder be.
+	- This setting will allow for sprites in the 'boundary' layer to render on top or below the generated SpriteShape.
+- CornerThreshold
+	- This setting defines when a point should be defined as a corner. The value represents an angle. The larger this value, the larger the angle between two control points must be in order for them to be considered a corner.
+	- This setting has a great effect on what sprite in the sprite shape profile is used relative to the angle between two control points
+	- See Unity's documentation on [SpriteShapeController](https://docs.unity3d.com/Packages/com.unity.2d.spriteshape@10.0/manual/SSController.html). for more detail documentation.
+- IsSplineAdaptive
+	- This is enabled by default and is an intrinsic parameter to the SpriteShapeController
+	- Per Unity documentation: "When enabled, Unity attempts to seamlessly tile the Sprites along the Sprite Shape path by deforming the Sprites to between Control Points. Disable this property to tile Sprites with no deformation and at their exact width. Sprites may appear cutoff if the space between Control Points is shorter than the width of the Sprite."
+- Open/Closed
+	- If open, both ends of the sprite shape will join to form an enclosed boundary. If set to closed, the first and last points in the sprite shape will not be connected
+- SetTangents
+	- Whether tangents should be set. This allows you to "blend" each sprite shape control point with the next.
+- UseFillTesselation
+	- This is an optional setting. It utilizes Unity's C# jobs to offload memory and CPU work. This setting helps with rapid generation of maps.
+	- The default generation uses [LibNess.NET](https://github.com/speps/LibTessDotNet).
+- SplineTangentMode
+	- This setting helps in how the sprite shape transitions from one point to the next. This setting more specifically sets and defines how tangents appear at each control point.
+	- Linear
+		- There is no "smooth" transition between each point in the sprite shape. Each point is connected linearly.
+	- Continuous
+		- This setting will "smooth" the transitions to and from each point. This option provides to most natural looking boundaries. The angle between two tangents is also 180 degrees
+	- Broken
+		- Similar to continuous, but the angle does not have to be 180 degrees. This option allows you to define the angles of each tangent.
+- Profile
+	- You can read the documentation on sprite shape profiles [here](https://docs.unity3d.com/Packages/com.unity.2d.spriteshape@3.0/manual/SSProfile.html).
+	- This setting takes a serialized SpriteShapeProfile and uses it in generating the boundaries for generated maps.
+	- Per Unity documentation: "The **Sprite Shape Profile** contains the settings that determine which Sprites that appear on a Sprite Shape at specific Angle Ranges, as well as other display settings. You can use the same Profile for multiple **Sprite Shapes** in a Scene"
+- EdgeMaterial
+	- The material to use for the edge of the SpriteShapeProfile
+- FillMaterial
+	- The material to use to fill the SpriteShape per the SpriteShapeProfile
+ 
 ### Serialization
+
+- What can be serialized is defined in the ProceduralGenerationConfig under the "Serialize & Deserialize" setting tab. 
+- Each generated map is assigned a "Name-Seed-Iteration" identifier.
+	- This identifier is stored in a text file called "seedTracker"
+	- This file by default is stored under Assets -> SerializedData
+	- <p align="center">
+<img  src="https://i.imgur.com/0E8ApPp.png" width="350"/>
+</p>
+- Inside the seedTracker.txt file lies all generated map identifiers. The serializer looks for this identifier when deserializing data.
+
+##### Name-Seed-Iteration Anatomy
+
+- All Name-Seed-Iterations follow the same format:
+	- Example<p align="center">
+<img  src="https://i.imgur.com/Ls0YCun.png" width="200"/>
+</p>
+- "test-map" is defined in the 'MapNameId' setting under "Setup"
+- "m2b7a9yztzkf4g" is the 'Seed' setting under "Setup"
+- "uid-0" signifies a unique iteration identifier.
+	- This value is always "uid-0" when "UseRandomSeed" is set to 'Yes'
+	- When this setting is set to 'No', the iteration number replaces '0' and the 'MapNameId' & 'Seed' value remain the same
+
+##### Generated Data
+
+- Generated data can optionally (but recommended) to be serialized as JSON. 
+	- IF you don't mind allocated memory on your HDD/SSD, a prefab of the generated map can work. This is not recommended. Runtime deserialization is very fast.
+- Data is stored in a folder with the name equivalent to "Name-Seed-Iteration"
+	- <p align="center">
+<img  src="https://i.imgur.com/BqgtfIa.png" width="200"/>
+</p>
+- These folders contain JSON files for the following:
+	1) AstarGraph
+		-  fdsf
+	2) ColliderCoords
+		- faf
+	3) Mesh
+		- dfafd
+	4) SpriteShape
+		- dafafs
+
+
+
+
+
 ### Deserialization
 ### Demo GIFs
 
@@ -560,7 +781,7 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 
 <!-- ROADMAP -->
 # Roadmap
-At this point in time, I do not intend to further this generator. This project was intended for personal learning. I will be more than happy to implement a feature request (within reason).
+At this point in time , I do not intend to further this generator. This project was intended for personal learning. I will be more than happy to implement a feature request (within reason).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
