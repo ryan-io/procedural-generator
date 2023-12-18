@@ -731,17 +731,21 @@ These configurations are isolated from each other for serialization purposes.
 - Each generated map is assigned a "Name-Seed-Iteration" identifier.
 	- This identifier is stored in a text file called "seedTracker"
 	- This file by default is stored under Assets -> SerializedData
-	- <p align="center">
+
+<p align="center">
 <img  src="https://i.imgur.com/0E8ApPp.png" width="350"/>
 </p>
+
 - Inside the seedTracker.txt file lies all generated map identifiers. The serializer looks for this identifier when deserializing data.
 
 ##### Name-Seed-Iteration Anatomy
 
 - All Name-Seed-Iterations follow the same format:
-	- Example<p align="center">
+
+<p align="center">
 <img  src="https://i.imgur.com/Ls0YCun.png" width="200"/>
 </p>
+
 - "test-map" is defined in the 'MapNameId' setting under "Setup"
 - "m2b7a9yztzkf4g" is the 'Seed' setting under "Setup"
 - "uid-0" signifies a unique iteration identifier.
@@ -753,9 +757,11 @@ These configurations are isolated from each other for serialization purposes.
 - Generated data can optionally (but recommended) to be serialized as JSON. 
 	- IF you don't mind allocated memory on your HDD/SSD, a prefab of the generated map can work. This is not recommended. Runtime deserialization is very fast.
 - Data is stored in a folder with the name equivalent to "Name-Seed-Iteration"
-	- <p align="center">
+
+ <p align="center">
 <img  src="https://i.imgur.com/BqgtfIa.png" width="200"/>
 </p>
+
 - These folders contain JSON files for the following:
 	1) AstarGraph
 		-  fdsf
