@@ -631,14 +631,14 @@ These configurations are isolated from each other for serialization purposes.
 
 ##### Colliders
 
-> Collider solvers calculate and optimize collider location, geometry, and type. Two can be used right out of the box: [Edge]() & [Box](). Both of these are built into Unity only work with 2D physics.
+> Collider solvers calculate and optimize collider location, geometry, and type. ~~Two~~ One can be used right out of the box: [Edge]() ~~& [Box]()~~. ~~Both of these are~~ This is built into Unity and only works with 2D physics.
 > If you want a more hybrid approach that utilizes 3D primitive colliders & works with 3D physics, there is an optional solver type: Primitive Combo. THIS SETTING IS DEPEDNENT ON EASYWALLCOLLIDER. This setting uses a combination of box and capsule colliders to generate boundaries that functionally are analogous to it's 2D alternatives. 
 
 - SolverType
 	- Edge
 		- Tells the generator to use the EdgeCollider2DSolver
-	- Box
-		- Tells the generator to use the BoxCollider2DSolver
+	- ~~Box~~
+		- ~~Tells the generator to use the BoxCollider2DSolver~~
 	- PrimitiveCombo
 		- Requires EasyWallCollider
 		- Tells the generator use PrimitiveComboColliderSolver
@@ -648,13 +648,13 @@ These configurations are isolated from each other for serialization purposes.
 	- EdgeColliderOfset
 		- Sets the local offset values of the Collider 2D geometry. This setting helps aligning your boundary with the map.
 		- Default is 0,0
-- BoxSolver
-	- This option utilizes very thin BoxCollider2D components. A single collider is instantiated per each boundary segment.
-	- BoxColliderPrefab
-		- OPTIONAL
-		- If this is NOT null, a prefab that SHOULD contain a box collider will be instantiated at each calculated boundary segments
-	- BoxColliderSkinWidth
-		- The width (and depth) of the box collider (think of this as a 2D cross-section with square geometry)
+- ~~BoxSolver~~
+	- ~~This option utilizes very thin BoxCollider2D components. A single collider is instantiated per each boundary segment.~~
+	- ~~BoxColliderPrefab~~
+		- ~~OPTIONAL~~
+		- ~~If this is NOT null, a prefab that SHOULD contain a box collider will be instantiated at each calculated boundary segments~~
+	- ~~BoxColliderSkinWidth~~
+		- ~~The width (and depth) of the box collider (think of this as a 2D cross-section with square geometry)~~
 - PrimitiveCombo
 	- PrimitiveColliderRadius
 		- When the algorithm determines a capsule collider should be used at a control point, this setting defines the radius of the capsule.
@@ -764,19 +764,21 @@ These configurations are isolated from each other for serialization purposes.
 
 - These folders contain JSON files for the following:
 	1) AstarGraph
-		-  fdsf
+		- Creating, modifying and scanning pathfinding graphs are expensive. Once this data is generated, it is simply cached and recalled at the time of deserialization.
 	2) ColliderCoords
-		- faf
+		- Vector2 coordinates that are used in generating colliders, pathfinding and SpriteShape borders.
 	3) Mesh
 		- dfafd
 	4) SpriteShape
 		- dafafs
 
 
-
-
-
 ### Deserialization
+
+> Deserialization works just like serialization; choose the NameSeedIteration and what data you want to deserialize.
+> Deserialization is typically done at runtime. Not everything needs to be deserialized at runtime. Select what data you want to persist in your scene; this data does not need to be deserialized again.
+> The only data that needs (should) to be deserialized every time at runtime is the pathfinding data.
+
 ### Demo GIFs
 
 _For more examples, please refer to the [Documentation](https://example.com)_
