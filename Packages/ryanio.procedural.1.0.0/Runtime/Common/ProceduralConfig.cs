@@ -181,17 +181,17 @@ namespace ProceduralGeneration {
 		[field: SerializeField, Range(1, 125), TabGroup("Map", TabLayouting = TabLayouting.MultiRow)]
 		public int SmoothingIterations { get; private set; } = 5;
 
-		[field: SerializeField, Range(10, 1000), TabGroup("Map", TabLayouting = TabLayouting.MultiRow)]
-		public int WallRemovalThreshold { get; private set; } = 50;
+		[field: SerializeField, Range(1, 5000), TabGroup("Map", TabLayouting = TabLayouting.MultiRow)]
+		public int WallRemovalThreshold { get; private set; } = 500;
 
-		[field: SerializeField, Range(10, 1000), TabGroup("Map", TabLayouting = TabLayouting.MultiRow)]
-		public int RoomRemovalThreshold { get; private set; } = 50;
+		[field: SerializeField, Range(1, 5000), TabGroup("Map", TabLayouting = TabLayouting.MultiRow)]
+		public int RoomRemovalThreshold { get; private set; } = 500;
 
-		[field: SerializeField, Range(1, 4), TabGroup("Map", TabLayouting = TabLayouting.MultiRow)]
-		public int LowerNeighborLimit { get; private set; } = 4;
-
-		[field: SerializeField, Range(4, 8), TabGroup("Map", TabLayouting = TabLayouting.MultiRow)]
-		public int UpperNeighborLimit { get; private set; } = 4;
+		// [field: SerializeField, Range(1, 4), TabGroup("Map", TabLayouting = TabLayouting.MultiRow)]
+		// public int LowerNeighborLimit { get; private set; } = 4;
+		//
+		// [field: SerializeField, Range(4, 8), TabGroup("Map", TabLayouting = TabLayouting.MultiRow)]
+		// public int UpperNeighborLimit { get; private set; } = 4;
 
 		[field: SerializeField, PropertyTooltip(Message.PERCENTAGE_WALLS), Range(40, 55),
 		        TabGroup("Map", TabLayouting = TabLayouting.MultiRow)]
@@ -312,19 +312,6 @@ namespace ProceduralGeneration {
 		        Title("Solver")]
 		public ColliderSolverType SolverType { get; private set; } = ColliderSolverType.Edge;
 
-#region BOX_COLLIDER_SETTINGS
-
-		[field: SerializeField, Title("Box Solver"), Sirenix.OdinInspector.ShowIf("@IsBox"),
-		        Sirenix.OdinInspector.Required, TabGroup
-			        ("Colliders", TabLayouting = TabLayouting.MultiRow)]
-		public AssetReference BoxColliderPrefab { get; private set; }
-
-		[field: SerializeField, Sirenix.OdinInspector.ShowIf("@IsBox"), Range(0.1f, 1.5f),
-		        TabGroup("Colliders", TabLayouting = TabLayouting.MultiRow)]
-		public float BoxColliderSkinWidth { get; private set; } = 0.1f;
-
-#endregion
-
 #region EDGE_COLLIDER_SETTINGS
 
 		[field: SerializeField, Title("Edge Solver"), Sirenix.OdinInspector.ShowIf("@IsEdge"), Range(0.1f, 1f),
@@ -357,7 +344,6 @@ namespace ProceduralGeneration {
 		[field: SerializeField, Title("Cutters"), TabGroup("Colliders", TabLayouting = TabLayouting.MultiRow)]
 		public List<GraphColliderCutter> ColliderCutters { get; private set; } = new();
 
-		bool IsBox       => SolverType == ColliderSolverType.Box;
 		bool IsEdge      => SolverType == ColliderSolverType.Edge;
 		bool IsPrimitive => SolverType == ColliderSolverType.PrimitiveCombo;
 

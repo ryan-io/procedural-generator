@@ -31,8 +31,9 @@ namespace ProceduralGeneration {
 			SetGridCharacteristics(ctxCreator.GetNewGridCharacteristicsSolverCtx(), generatorToolsCtx);
 
 			BuildNavigation(ref map,
-				new GridGraphBuilder(ctxCreator.GetNewGridGraphBuilderCtx()),
-				ctxCreator.GetNewNavigationSolverCtx());
+				new GridGraphBuilder(
+					ctxCreator.GetNewGridGraphBuilderCtx()),
+					ctxCreator.GetNewNavigationSolverCtx());
 
 			var coordinates = CreateColliders(ctxCreator.GetNewColliderSolverCtx());
 

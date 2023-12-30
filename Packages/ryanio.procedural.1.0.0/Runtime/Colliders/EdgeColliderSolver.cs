@@ -27,24 +27,43 @@ namespace ProceduralGeneration {
 		int   NumOfRows          { get; }
 		int   NumOfCols          { get; }
 
-		/// <summary>
-		///					*****   THIS IS AN UNSAFE METHOD   *****
-		/// </summary>
-		/// <param name="dto">Relevant data transfer object to create colliders</param>
 		internal override Coordinates CreateCollider([CallerMemberName] string caller = "") {
-				var dict = new Dictionary<int, List<Vector2>>();
-				var outlineCounter = 0;
-				var edgePoints     = new List<Vector2>();
-				
-				
-				foreach (var outline in RoomOutlines) {
-					if (outline.Count < 2)
-						continue;
+			ColliderGo.MakeStatic(true);
+			ColliderGo.ZeroPosition();
 
-					outlineCounter = ProcessOutline(edgePoints, outlineCounter, outline);
-				}
+			for (var outlineIndex = 0; outlineIndex < RoomOutlines.Count; outlineIndex++) {
+				var currentOutline = RoomOutlines[outlineIndex];
+				var points         = Processor.Process(outlineIndex, ref currentOutline);
 
-				return new Coordinates(dict);
+				ProcessCoords(ref points, outlineIndex);
+			}
+
+			ColliderGo.SetLayerRecursive(LayerMask.NameToLayer(Constants.Layer.BOUNDARY));
+			
+			// foreach (var outline in RoomOutlines) {
+			// 	if (outline.Count < 2)
+			// 		continue;
+			//
+			// 	var points     = Processor.Process(outlineCounter);
+			// 	outlineCounter++;
+			// 	var edgePoints = new List<Vector2>();
+			// 	outlineCounter = ProcessOutline(edgePoints, outlineCounter, outline);
+			// 	dict.Add(outlineCounter, edgePoints);
+			// }
+
+			return new Coordinates(Processor.ProcessedPoints);
+		}
+
+		void ProcessCoords(ref List<Vector2> processedPoints, int currentOutlineIndex) {
+			var currentOutline = RoomOutlines[currentOutlineIndex];
+
+			if (currentOutline.Count <= 10)
+				return;
+			
+			var roomObject   = CreateRoom(currentOutlineIndex);
+			var edgeCollider = roomObject.AddComponent<EdgeCollider2D>();
+			edgeCollider.offset = EdgeColliderOffset;
+			edgeCollider.points = processedPoints.ToArray();
 		}
 
 		int GetLargestCount(List<List<int>> outlines) {
@@ -66,7 +85,7 @@ namespace ProceduralGeneration {
 			var edgeCollider = roomObject.AddComponent<EdgeCollider2D>();
 			edgeCollider.offset = EdgeColliderOffset;
 
-			var  array   = outline.ToArray();
+			var array = outline.ToArray();
 			for (var i = 0; i < array.Length; i++)
 				DetermineColliderOutline(array, i, edgePoints);
 
@@ -101,7 +120,7 @@ namespace ProceduralGeneration {
 				if (Vector2.Distance(pos, lastPoint) <= MAX_DISTANCE_BETWEEN_POINTS) {
 					// if (!IsInLine(pos.x, lastPoint.x) &&
 					//     !IsInLine(pos.y, lastPoint.y)) {
-						AddEdgePoint(edgePoints, pos);
+					AddEdgePoint(edgePoints, pos);
 					//}
 				}
 			}
@@ -141,7 +160,11 @@ namespace ProceduralGeneration {
 			return roomObject;
 		}
 
-		internal EdgeCollisionSolver(ColliderSolverCtx ctx) {
+		internal EdgeCollisionSolver(
+			ColliderSolverCtx ctx, 
+			ref List<Vector3> meshVertices,
+			int cutOffPoints = 10)
+			: base(ref meshVertices, cutOffPoints) {
 			_sB                = new StringBuilder();
 			Colliders          = new EdgeCollider2D[COLLIDER_ALLOCATION_SIZE];
 			ColliderGo         = ctx.ColliderGo;

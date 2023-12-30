@@ -10,14 +10,13 @@ namespace ProceduralGeneration {
 		CollisionSolver Solver { get; set; }
 
 		internal Coordinates Solve([CallerMemberName] string caller = "") {
-			if (_ctx.ColliderSolverType == ColliderSolverType.Box)
-				Solver = new BoxCollisionSolver(_ctx);
-
-			else if (_ctx.ColliderSolverType == ColliderSolverType.Edge)
-				Solver = new EdgeCollisionSolver(_ctx);
+			var meshVertices    = _ctx.MeshVertices;
+			
+			if (_ctx.ColliderSolverType == ColliderSolverType.Edge)
+				Solver = new EdgeCollisionSolver(_ctx, ref meshVertices);
 
 			else
-				Solver = new PrimitiveCollisionSolver(_ctx);
+				Solver = new PrimitiveCollisionSolver(_ctx, ref meshVertices);
 
 			return Solver.CreateCollider();
 		}

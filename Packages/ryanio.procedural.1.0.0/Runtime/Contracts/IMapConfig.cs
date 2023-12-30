@@ -7,8 +7,8 @@ namespace ProceduralGeneration {
 		Dimensions GetMapDimensions();
 		Vector2Int GetCorridorWidth();
 		int        GetWallFillPercentage();
-		int        GetUpperNeighborLimit();
-		int        GetLowerNeighborLimit();
+		// int        GetUpperNeighborLimit();
+		// int        GetLowerNeighborLimit();
 		int        GetSmoothingIterations();
 		int        GetWallRemoveThreshold();
 		int        GetRoomRemoveThreshold();

@@ -13,8 +13,8 @@ namespace ProceduralGeneration {
 
 		internal SmoothMapSolverCtx GetNewSmoothMapCtx() => new(
 			Actions.GetMapDimensions(),
-			Actions.GetUpperNeighborLimit(),
-			Actions.GetLowerNeighborLimit(),
+			// Actions.GetUpperNeighborLimit(),
+			// Actions.GetLowerNeighborLimit(),
 			Actions.GetSmoothingIterations());
 
 		internal RemoveRegionsSolverCtx GetNewRemoveRegionsCtx() => new(

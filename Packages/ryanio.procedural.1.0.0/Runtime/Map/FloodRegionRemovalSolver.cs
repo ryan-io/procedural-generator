@@ -88,7 +88,6 @@ namespace ProceduralGeneration {
 			return tiles;
 		}
 
-		// TODO: Need to determine an appropriate stackalloc size for handling adding Regions to a span
 		IEnumerable<Region> GetRegions(ref int[,] map, int tileType) {
 			var regions       = new List<Region>();
 			var mapFlagsArray = new bool[Rows, Columns];

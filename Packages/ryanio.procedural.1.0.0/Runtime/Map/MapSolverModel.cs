@@ -9,8 +9,8 @@ namespace ProceduralGeneration {
 		public int        RoomRemovalThreshold { get; }
 		public Vector2Int CorridorWidth        { get; }
 		public int        WallFillPercentage   { get; }
-		public int        UpperNeighborLimit   { get; }
-		public int        LowerNeighborLimit   { get; }
+		// public int        UpperNeighborLimit   { get; }
+		// public int        LowerNeighborLimit   { get; }
 		public int        Seed                 { get; }
 
 		public MapSolverModel(ProceduralConfig config) {
@@ -18,8 +18,8 @@ namespace ProceduralGeneration {
 			MapHeight            = config.Columns;
 			WallFillPercentage   = config.WallFillPercentage;
 			SmoothingIterations  = config.SmoothingIterations;
-			UpperNeighborLimit   = config.UpperNeighborLimit;
-			LowerNeighborLimit   = config.LowerNeighborLimit;
+			// UpperNeighborLimit   = config.UpperNeighborLimit;
+			// LowerNeighborLimit   = config.LowerNeighborLimit;
 			Seed                 = config.Seed.GetHashCode();
 			WallRemovalThreshold = config.WallRemovalThreshold;
 			RoomRemovalThreshold = config.RoomRemovalThreshold;
