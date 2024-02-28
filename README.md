@@ -64,9 +64,9 @@
 # Overview
 This procedural generator started as a hobby project to learn about various procedural algorithms (cellular automata, marching squares and Bresenham's line algorithm to name a few). Inspiration was drawn from Sebastian Lague's video series on 'Procedural Cave Generation'.
 
-<p align="center">
+<div align="center">
 <img  src="https://i.imgur.com/RW2xyFI.png" width="600">
-</p>
+</div>
 
 ##### Features
 <ol>
@@ -102,9 +102,7 @@ Integration with Odin Inspector
 </li>
 </ol>
 
-<p align="center">
 ![](https://github.com/ryan-io/procedural-generator/blob/main/proc-gen-demo-resized.gif)
-</p>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
