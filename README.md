@@ -477,7 +477,7 @@ These configurations are isolated from each other for serialization purposes.
 	- How many times to run all algorithms on a generated map
 	- This setting is more trial-and-error than anything. Setting this value to 1 is typically too low. Setting this value very high will not have any different effect than most lower values. The trick is to find how many smoothing iterations results in a 'clean' looking map. This value is typically between 5-20.
 
-| SmoothingIterations=1 | SmoothingIterations=5 | SmoothingIteratins=20 |
+| SmoothingIterations=1 | SmoothingIterations=5 | SmoothingIterations=20 |
 | ---- | ---- | ---- |
 | <p align="center"><br><img  src="https://i.imgur.com/i4H0RHS.png" width="200"/><br></p> | <p align="center"><br><img  src="https://i.imgur.com/eYMPGtx.png" width="200"/><br></p> | <p align="center"><br><img  src="https://i.imgur.com/D9nz4PI.png" width="200"/><br></p> |
 
