@@ -102,7 +102,9 @@ Integration with Odin Inspector
 </li>
 </ol>
 
+<p align="center">
 ![](https://github.com/ryan-io/procedural-generator/blob/main/proc-gen-demo-resized.gif)
+</p>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
