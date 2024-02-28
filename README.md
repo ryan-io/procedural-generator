@@ -102,6 +102,8 @@ Integration with Odin Inspector
 </li>
 </ol>
 
+![](https://github.com/Your_Repository_Name/Your_GIF_Name.gif](https://github.com/ryan-io/procedural-generator/blob/main/proc-gen-demo-resized.gif)
+
 <p align="center">
 <img  src="https://i.imgur.com/X4xsYEv.gifv" width="600">
 </p>
