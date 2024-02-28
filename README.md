@@ -67,6 +67,7 @@ This procedural generator started as a hobby project to learn about various proc
 <p align="center">
 <img  src="https://i.imgur.com/RW2xyFI.png" width="600">
 </p>
+
 <p style="text-align: center;">A level generated with this package</p>
 
 ##### Features
