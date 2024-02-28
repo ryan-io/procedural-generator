@@ -64,6 +64,9 @@
 # Overview
 This procedural generator started as a hobby project to learn about various procedural algorithms (cellular automata, marching squares and Bresenham's line algorithm to name a few). Inspiration was drawn from Sebastian Lague's video series on 'Procedural Cave Generation'.
 
+<p align="center">
+<img  src="https://i.imgur.com/RW2xyFI.png" width="800">
+</p>
 ##### Features
 <ol>
 <li>
@@ -338,7 +341,15 @@ Packages\ryan-io-procedural-generator\Assets\Prefabs\procedural-generator
 <p align="center">
 <img  src="https://i.imgur.com/vlJnN5K.png" width="400"/>
 </p>
+### Map Anatomy
 
+<p align="center">
+<img  src="https://i.imgur.com/YIHZHeY.png" width="600"/>
+</p>
+- 'Pink' background is a simple material to show the procedurally generated mesh.
+	- Behind this mesh are 'red' pathfinding nodes. These nodes are NOT walkable/searchable
+- The 'blue' are pathfinding nodes that ARE walkable/searchable.
+- The 'green' gizmo are the generated colliders. These act as the map boundary.
 ### Settings
 
 Settings are divided into two groups: 'Map Configuration' and 'SpriteShape Configuration'. 'Map Configuration' contains settings relevant to the map generation, serialization, deserialization, tiles, pathfinding, colliders, events and more. 'SpriteShape Configuration' contains settings relevent to sprite shape generation.
@@ -368,11 +379,6 @@ These configurations are isolated from each other for serialization purposes.
 		- 'Deserialize Map' will deserialize generated data and re-instantiate monobehaviors from this data. 
 - Seed
 	- These settings allow for a more deterministic approach to procedural generation. Specifying your own seed allows for map generation to be more predictable. If you want "truly" randomization of each map, select 'Use Random Seed'. Otherwise, define your own (one will be generated if not specified).
-
-<p align="center">
-<img  src="https://i.imgur.com/hMQSyM0.png" width="600"/>
-</p>
-
 - UseRandomSeed
 		- If 'Yes', a seed will be provided for you. If 'No', create your own or use a previously defined seed value
 	- Seed
@@ -381,6 +387,11 @@ These configurations are isolated from each other for serialization purposes.
 		- ReadOnly; the last seed used by the generator
 	- LastIteration
 		- Readonly; if using the same seed, the iterator will simply increase its value by '1' each time you reuse a seed. This is to prevent overwriting data. Will always be '0' if using random seeds
+
+<p align="center">
+<img  src="https://i.imgur.com/8GrwA68.gif" width="600"/>
+</p>
+
 - Monobehaviors
 	- Any required monobehaviors are defined here.
 	- At this point in time, the only required monobehavior is the Pathfinder component from the A* Pathfinding Project
@@ -415,27 +426,62 @@ These configurations are isolated from each other for serialization purposes.
 
 > These settings control the characteristics of your maps. Each setting will have a short written description, followed by two pictures contrasting the difference between values at the low and high end.
 
+##### Default Settings
 <p align="center">
-<img  src="https://i.imgur.com/0bWaEKJ.png" width="600"/>
+<img  src="https://i.imgur.com/1kN6iVv.png" width="600"/>
 </p>
 
 - Columns
 	- The number of columns the map should generate
+	- Colums = 50
+
+| Columns=50                                                                              |
+| --------------------------------------------------------------------------------------- |
+| <p align="center"><br><img  src="https://i.imgur.com/tVIHgul.png" width="225"/><br></p> |
+| **Columns=200**                                                                         |
+| <p align="center"><br><img  src="https://i.imgur.com/kaBeVSu.png" width="600"/><br></p>                                                                                        |
+
 - Rows
-	- The number of rows the map should gneerate
+	- The number of rows the map should generate
+
+| Rows=50                                                                              |
+| --------------------------------------------------------------------------------------- |
+| <p align="center"><br><img  src="https://i.imgur.com/tVIHgul.png" width="225"/><br></p> |
+| **Rows=200**                                                                         |
+| <p align="center"><br><img  src="https://i.imgur.com/5skUyEb.png" width="225"/><br></p>                                                                                        |
+
 - CellSize
-	- Scalar factor for how 'large' a cell should be
+	- THIS IS NOT A SCALAR FACTOR
+	- The larger this value, the more nodes will be generated; no nodes will be scaled.
 	- **Setting this to a value other than '1' make a few algorithms run with a quadratic time complexity
+
+| CellSize=1 & CellSize=2 |
+| ---- |
+| <p align="center"><br><img  src="https://i.imgur.com/LlcrrXV.gif" width="600"/><br></p> |
+
+> CellSize * Rows MUST be <= 1024 for pathfinding to generate
+> CellSize * Columns MUST be <= 1024 for pathfinding to generate
+
 - **Columns X Rows = TotalNumberOfCells
+
 - BorderSize
-	- An optional border around the map
+	- An optional border around the map.
+	- If a portion of your map is being generated 'outside' the bounds, setting this to a higher value will solve this issue.
 - SmoothingIterations
 	- How many times to run all algorithms on a generated map
-	- There are diminishing returns for high values, and not post-processing for lower values.
+	- This setting is more trial-and-error than anything. Setting this value to 1 is typically too low. Setting this value very high will not have any different effect than most lower values. The trick is to find how many smoothing iterations results in a 'clean' looking map. This value is typically between 5-20.
+
+| SmoothingIterations=1 | SmoothingIterations=5 | SmoothingIteratins=20 |
+| ---- | ---- | ---- |
+| <p align="center"><br><img  src="https://i.imgur.com/i4H0RHS.png" width="200"/><br></p> | <p align="center"><br><img  src="https://i.imgur.com/eYMPGtx.png" width="200"/><br></p> | <p align="center"><br><img  src="https://i.imgur.com/D9nz4PI.png" width="200"/><br></p> |
+
+*** There is variance once SmoothingIterations reaches it critical value. This has to do with the 'randomness' baked into the generator.
+
+- There are diminishing returns for high values, and not post-processing for lower values.
 	- 'Correct' vales can give a more a map with a more purposeful layout
+	- This setting has diminishing returns when working with smaller maps, high WallRemovalThreshold or high RoomRemovalThreshold values.
 - WallRemovalThreshold
 	- How many cells can be in a cluster that do NOT enclose open space (think a room).
-	- And example of this:
 
 <p align="center">
 <img  src="https://i.imgur.com/urRNijf.png" width="400"/>
@@ -443,18 +489,10 @@ These configurations are isolated from each other for serialization purposes.
 
    - The larger the number, the less stand alone walls there will be. The small the number, the more there will be. This can make maps feel and appear more dense. 
    - Lower numbers are great if you want to a lot of obstacles in your map(s).
- 
-<p><b><i>WallRemovalThreshold = 50</i></b></p>
 
-<p align="center">
-<img  src="https://i.imgur.com/zzWnbZk.png" width="600"/>
-</p>
-
-<p><b><i>WallRemovalThreshold = 3000</i></b></p>
-
-<p align="center">
-<img  src="https://i.imgur.com/YUbKq0B.png"/>
-</p>
+| WallRemovalThreshold=1 | WallRemovalThreshold=100 | WallRemovalThreshold=500 |
+| ---- | ---- | ---- |
+| <p align="center"><br><img  src="https://i.imgur.com/2ZJcvvI.png" width="200"/><br></p> | <p align="center"><br><img  src="https://i.imgur.com/DSQyy9B.png" width="200"/><br></p> | <p align="center"><br><img  src="https://i.imgur.com/TIluEM0.png" width="200"/><br></p> |
 
 - RoomRemovalThreshold
 	- Analogous to WallRemovalThreshold, but for rooms
@@ -468,17 +506,9 @@ These configurations are isolated from each other for serialization purposes.
    - Notice the area circle in 'red' is not closed off. This is an example of a passage
    - **Rooms are not entirely isolated from other rooms. One of the generator's constraints is to create maps where all rooms are connected.
 
-<p><b><i>RoomRemovalThreshold = 50</i></b></p>
-
-<p align="center">
-<img  src="https://i.imgur.com/5PqSAGA.png" width="600"/>
-</p>
-
-<p><b><i>RoomRemovalThreshold = 3000</i></b></p>
-
-<p align="center">
-<img  src="https://i.imgur.com/pEJPZzg.png" width="600"/>
-</p>
+| RoomRemovalThreshold=1 | RoomRemovalThreshold=100 | RoomRemovalThreshold=500 |
+| ---- | ---- | ---- |
+| <p align="center"><br><img  src="https://i.imgur.com/2ZJcvvI.png" width="200"/><br></p> | <p align="center"><br><img  src="https://i.imgur.com/2ZJcvvI.png" width="200"/><br></p> | <p align="center"><br><img  src="https://i.imgur.com/2ZJcvvI.png" width="200"/><br></p> |
 
 - LowerNeighborLimit
 	- The minimum number of cells that are generated as a cluster.
@@ -613,8 +643,6 @@ These configurations are isolated from each other for serialization purposes.
 		-<p align="center">
 <img  src="https://i.imgur.com/U2pf32e.png" width="600"/>
 </p>
-	- ErosionCollisionDiameter
-		- When eroding a node, how large of a diameter should be applied to the surrounding nodes? If this value is less than the size of a single node, only that node will be eroded.
 	- NodesToErodeAtBoundaries
 		- How many nodes to erode starting around the boundary of the map
 	- StartingNodeIndexToErode
