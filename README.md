@@ -102,6 +102,9 @@ Integration with Odin Inspector
 </li>
 </ol>
 
+##### Example
+Gameplay taken from map generated as shown in image above.
+
 ![](https://github.com/ryan-io/procedural-generator/blob/main/proc-gen-demo-resized.gif)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
