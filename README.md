@@ -105,7 +105,7 @@ Integration with Odin Inspector
 ##### Example
 
 Example of generating maps in the inspector, highlighting speed. Randomized grid, sprite shape bordres, primitive colliders 2D/3D colliders and pathfinding are all generated.
-![](https://github.com/ryan-io/procedural-generator/blob/main/proc-gen-demo-resized.gif)
+![](https://github.com/ryan-io/procedural-generator/blob/main/generation-gif.gif)
 
 Gameplay taken from map generated as shown in image above.
 proc-gen-demo-resized.gif
