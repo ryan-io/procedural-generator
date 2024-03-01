@@ -103,11 +103,16 @@ Integration with Odin Inspector
 </ol>
 
 ##### Example
-Gameplay taken from map generated as shown in image above.
 
+Example of generating maps in the inspector, highlighting speed. Randomized grid, sprite shape bordres, primitive colliders 2D/3D colliders and pathfinding are all generated.
+![](https://github.com/ryan-io/procedural-generator/blob/main/proc-gen-demo-resized.gif)
+
+Gameplay taken from map generated as shown in image above.
+proc-gen-demo-resized.gif
 ![](https://github.com/ryan-io/procedural-generator/blob/main/proc-gen-demo-resized.gif)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 
 # Built With
 - Unity Game Engine
